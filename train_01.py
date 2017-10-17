@@ -352,12 +352,14 @@ def main():
 #     Fully connected Layer
 #==============================================================================
     with tf.name_scope("Layer32_full") as scope:
-        W32 = tf.Variable(tf.truncated_normal(shape=[4096,7*7*30],dtype=tf.float32),name="W32")
-        b32 = tf.Variable(tf.truncated_normal(shape=[7*7*30],dtype=tf.float32),name="b32")
+        W32 = tf.Variable(tf.truncated_normal(shape=[4096,15*15*6],dtype=tf.float32),name="W32")
+        b32 = tf.Variable(tf.truncated_normal(shape=[15*15*6
+        ],dtype=tf.float32),name="b32")
         fully_32 = tf.nn.relu(tf.matmul(fully_31,W32)+b32,name="fully_32")
-        output = tf.reshape(tensor=fully_32, shape=[100,7,7,30])
-#     with tf.name_scope("cost_function") as scope:
-#         cost_function=
+        output_32 = tf.reshape(tensor=fully_32, shape=[100,15,15,6])
+        
+    with tf.name_scope("cost_function") as scope:
+         cost_function = -tf.reduce_sum(y*tf.log(output_32))
 
 
 
