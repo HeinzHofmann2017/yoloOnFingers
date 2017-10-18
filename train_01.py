@@ -22,7 +22,9 @@ def main():
 
 
               
-    origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"    
+    origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
+    batchSize = 2
+    learning_rate=0.005   
     filename_queue = tf.train.string_input_producer([origin_path])
     reader = tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
@@ -49,9 +51,10 @@ def main():
     #get the coordinates
     x_coord = features['x_coord']
     y_coord = features['y_coord']
+    prob    = features['P']
     #Make automatic shuffled batches out of the dataset('s)
-    images, x_coords, y_coords=tf.train.shuffle_batch([reshaped_image,x_coord,y_coord], 
-                                                      batch_size=100,#Number of Pictures&Labels per Batch
+    images, x_coords, y_coords, probs=tf.train.shuffle_batch([reshaped_image,x_coord,y_coord,prob], 
+                                                      batch_size=batchSize,#Number of Pictures&Labels per Batch
                                                       capacity=50000,#max Number of Elements in the queue 
                                                       num_threads=2, #Nr. of Threads, which enqueueing tensor-list.
                                                       min_after_dequeue=50
@@ -343,7 +346,7 @@ def main():
 #     Fully connected Layer
 #==============================================================================
     with tf.name_scope("Layer31_full") as scope:
-        input_31 = tf.reshape(tensor=mpool_30,shape=[100,7*7*1024])
+        input_31 = tf.reshape(tensor=mpool_30,shape=[batchSize,7*7*1024])
         W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],dtype=tf.float32),name="W31")
         b31 = tf.Variable(tf.truncated_normal(shape=[4096],dtype=tf.float32),name="b31")
         fully_31 = tf.nn.relu(tf.matmul(input_31,W31)+b31,name="fully_31")
@@ -352,44 +355,34 @@ def main():
 #     Fully connected Layer
 #==============================================================================
     with tf.name_scope("Layer32_full") as scope:
-        W32 = tf.Variable(tf.truncated_normal(shape=[4096,15*15*6],dtype=tf.float32),name="W32")
-        b32 = tf.Variable(tf.truncated_normal(shape=[15*15*6
-        ],dtype=tf.float32),name="b32")
+        W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],dtype=tf.float32),name="W32")
+        b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],dtype=tf.float32),name="b32")
         fully_32 = tf.nn.relu(tf.matmul(fully_31,W32)+b32,name="fully_32")
-        output_32 = tf.reshape(tensor=fully_32, shape=[100,15,15,6])
+        output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         
     with tf.name_scope("cost_function") as scope:
-         cost_function = -tf.reduce_sum(y*tf.log(output_32))
+        #make data ready for using with 
+        #cost_function = output_32[batchElement,hoehe,breite,tiefe]
+    #TODO: Additionen durch tf.funktionen ersetzen
+        cost_function = (tf.square(tf.subtract(output_32[:,0,0,0],x_coords))+
+                        tf.square(tf.subtract(output_32[:,0,0,1],y_coords))+
+                        tf.square(tf.subtract(output_32[:,0,0,2],probs)))
+        
+    with tf.name_scope("optimizer") as scope:
+        # Gradient descen
+    #TODO: durch ADAM ersetzen
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate, name='GradientDescentOptimizer')
+        
+        # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
+        # need to the 'gradient' part, for example cap them, etc.
+        grads_and_vars = optimizer.compute_gradients(cost_function)
+        
+        # Ask the optimizer to apply the capped gradients.
+        train_step = optimizer.apply_gradients(grads_and_vars)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
     with tf.Session() as sess:
@@ -402,7 +395,10 @@ def main():
         threads=tf.train.start_queue_runners(coord=coord)
         
         for i in range(3):
-            img, xcor, ycor = sess.run([images,x_coords,y_coords])
+            img, xcor, ycor, prb = sess.run([images,x_coords,y_coords,probs])
+
+            _ = sess.run(train_step)
+            
             
             print(img.shape)
             print(img[0,:,:,:].shape)
