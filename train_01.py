@@ -14,16 +14,18 @@
 
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 def main():
     print("TensorFlow version ", tf.__version__)
-    batchSize = 100
+    batchSize = 3
     learning_rate=0.005  
-    nr_of_epochs=100    
+    nr_of_epochs=100   
           
-    origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
+    origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/mini_Dataset/trainData/trainData.tfrecords"
+    origin_path="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"
+    #origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
     with tf.name_scope("Data") as scope:
         filename_queue = tf.train.string_input_producer([origin_path])
         reader = tf.TFRecordReader()
@@ -60,9 +62,9 @@ def main():
         
         images, x_coords, y_coords, probs, widths, heights =tf.train.shuffle_batch([reshaped_image,x,y,p,w,h], 
                                                                                        batch_size=batchSize,#Number of Pictures&Labels per Batch
-                                                                                       capacity=50000,#max Number of Elements in the queue 
+                                                                                       capacity=10,#max Number of Elements in the queue 
                                                                                        num_threads=2, #Nr. of Threads, which enqueueing tensor-list.
-                                                                                       min_after_dequeue=50
+                                                                                       min_after_dequeue=5
                                                                                        )
 
 #==============================================================================
@@ -419,8 +421,8 @@ def main():
 #==============================================================================
             
             _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
-            if(i%100):
-                print("  Kosten x =",cx,"  Kosten y =",cy,"  Kosten p =",cp,"  Kosten   =",c)
+            
+            print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
 #            
 
 #==============================================================================
