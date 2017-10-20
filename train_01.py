@@ -19,12 +19,12 @@ import numpy as np
 
 def main():
     print("TensorFlow version ", tf.__version__)
-    batchSize = 3
+    batchSize = 16
     learning_rate=0.005  
-    nr_of_epochs=100   
+    nr_of_epochs=1000   
           
     origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/mini_Dataset/trainData/trainData.tfrecords"
-    origin_path="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"
+    origin_path="/mnt/data/getfingers_heinz/trainData.tfrecords"
     #origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
     with tf.name_scope("Data") as scope:
         filename_queue = tf.train.string_input_producer([origin_path])
@@ -47,16 +47,16 @@ def main():
         WIDTH=1280
         CHANNELS=3
         image=tf.decode_raw(features["image_raw"],out_type=tf.uint8)    
-        image_float = tf.cast(image, tf.float32)
+        image_float = tf.cast(image, tf.float16)
         image_shape = tf.stack([HEIGHT, WIDTH, CHANNELS])
         reshaped_image       = tf.reshape(image_float, image_shape)
         
     
-        p = features['P']
-        w = tf.cast(features['width'], tf.float32)
-        h = tf.cast(features['height'], tf.float32)
-        x = tf.divide(features['x_coord'],w)
-        y = tf.divide(features['y_coord'],h)
+        p = tf.cast(features['P'], tf.float16)
+        w = tf.cast(features['width'], tf.float16)
+        h = tf.cast(features['height'], tf.float16)
+        x = tf.divide(tf.cast(features['x_coord'], tf.float16),w)
+        y = tf.divide(tf.cast(features['y_coord'], tf.float16),h)
         
         #Make automatic shuffled batches out of the dataset('s)
         
@@ -78,8 +78,8 @@ def main():
 #     Conv. Layer 7x7x64-s-2                                                  
 #==============================================================================
     with tf.name_scope("Layer1_Conv") as scope:
-        W1 = tf.Variable(tf.truncated_normal(shape=[7,7,3,64], stddev=0.01, dtype=tf.float32),name='W1')
-        b1 = tf.Variable(tf.truncated_normal(shape=[64],stddev=0.01,dtype=tf.float32),name='b1')
+        W1 = tf.Variable(tf.truncated_normal(shape=[7,7,3,64], stddev=0.01, dtype=tf.float16),name='W1')
+        b1 = tf.Variable(tf.truncated_normal(shape=[64],stddev=0.01,dtype=tf.float16),name='b1')
         conv_1_unbiased=tf.nn.conv2d(input=images,filter=W1,strides=[1,2,2,1],padding='SAME',name="conv_1_unbiased")
         conv_1_linear = tf.add(conv_1_unbiased, b1,name="conv_1_linear")
         conv_1 = tf.maximum(0.1*conv_1_linear,conv_1_linear,name="leaky_relu_1")
@@ -94,8 +94,8 @@ def main():
 #     Conv Layer 3x3x192
 #==============================================================================
     with tf.name_scope("Layer3_Conv") as scope:
-        W3 = tf.Variable(tf.truncated_normal(shape=[3,3,64,192],stddev=0.01,dtype=tf.float32), name='W3')
-        b3 = tf.Variable(tf.truncated_normal(shape=[192],stddev=0.01,dtype=tf.float32),name='b3')
+        W3 = tf.Variable(tf.truncated_normal(shape=[3,3,64,192],stddev=0.01,dtype=tf.float16), name='W3')
+        b3 = tf.Variable(tf.truncated_normal(shape=[192],stddev=0.01,dtype=tf.float16),name='b3')
         conv_3_unbiased = tf.nn.conv2d(input=mpool_2,filter=W3,strides=[1,1,1,1], padding='SAME',name="conv_3_unbiased")
         conv_3_linear = tf.add(conv_3_unbiased, b3, name="conv_3_linear")
         conv_3 = tf.maximum(0.1*conv_3_linear, conv_3_linear, name="leaky_relu_3")
@@ -110,8 +110,8 @@ def main():
 #     Conv Layer 1x1x128
 #==============================================================================
     with tf.name_scope("Layer5_Conv") as scope:     #TODO: ???
-        W5 = tf.Variable(tf.truncated_normal(shape=[1,1,192,128],stddev=0.01,dtype=tf.float32),name="W5")
-        b5 = tf.Variable(tf.truncated_normal(shape=[128],stddev=0.01,dtype=tf.float32),name="b5")
+        W5 = tf.Variable(tf.truncated_normal(shape=[1,1,192,128],stddev=0.01,dtype=tf.float16),name="W5")
+        b5 = tf.Variable(tf.truncated_normal(shape=[128],stddev=0.01,dtype=tf.float16),name="b5")
         conv_5_unbiased = tf.nn.conv2d(input=mpool_4, filter=W5,strides=[1,1,1,1], padding="SAME", name="conv_5_unbiased")
         conv_5_linear = tf.add(conv_5_unbiased, b5, name = "conv_5_linear")
         conv_5 = tf.maximum(0.1*conv_5_linear, conv_5_linear, name="leaky_relu_5")
@@ -120,8 +120,8 @@ def main():
 #     Conv Layer 3x3x256        
 #==============================================================================
     with tf.name_scope("Layer6_Conv") as scope:
-        W6 = tf.Variable(tf.truncated_normal(shape=[3,3,128,256],stddev=0.01, dtype=tf.float32),name="W6")
-        b6 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float32),name="b6")
+        W6 = tf.Variable(tf.truncated_normal(shape=[3,3,128,256],stddev=0.01, dtype=tf.float16),name="W6")
+        b6 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b6")
         conv_6_unbiased = tf.nn.conv2d(input=conv_5,filter=W6,strides=[1,1,1,1], padding="SAME", name="conv_6_unbiased")
         conv_6_linear = tf.add(conv_6_unbiased, b6, name="conv_6_linear")
         conv_6 = tf.maximum(0.1*conv_6_linear, conv_6_linear, name="leaky_relu_6")
@@ -130,8 +130,8 @@ def main():
 #     Conv Layer 1x1x256
 #==============================================================================
     with tf.name_scope("Layer7_Conv") as scope:
-        W7 = tf.Variable(tf.truncated_normal(shape=[1,1,256,256],stddev=0.01,dtype=tf.float32),name="W7")
-        b7 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float32),name="b7")
+        W7 = tf.Variable(tf.truncated_normal(shape=[1,1,256,256],stddev=0.01,dtype=tf.float16),name="W7")
+        b7 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b7")
         conv_7_unbiased = tf.nn.conv2d(input=conv_6,filter=W7,strides=[1,1,1,1],padding="SAME", name="conv_7_unbiased")
         conv_7_linear = tf.add(conv_7_unbiased, b7, name="conv_7_linear")
         conv_7 = tf.maximum(0.1*conv_7_linear, conv_7_linear, name="leaky_relu_7")
@@ -140,8 +140,8 @@ def main():
 #     Conv Layer 3x3x512
 #==============================================================================
     with tf.name_scope("Layer8_Conv") as scope:
-        W8 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float32),name="W8")
-        b8 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b8")
+        W8 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W8")
+        b8 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b8")
         conv_8_unbiased = tf.nn.conv2d(input=conv_7,filter=W8,strides=[1,1,1,1],padding="SAME",name="conv_8_unbiased")
         conv_8_linear = tf.add(conv_8_unbiased, b8, name="conv_8_linear")
         conv_8 = tf.maximum(0.1*conv_8_linear, conv_8_linear, name="leaky_relu_8")
@@ -156,8 +156,8 @@ def main():
 #     Conv Layer 1x1x256
 #==============================================================================
     with tf.name_scope("Layer10_Conv") as scope:    #Todo: ????
-        W10 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float32),name="W10")
-        b10 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float32),name="b10")
+        W10 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W10")
+        b10 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b10")
         conv_10_unbiased = tf.nn.conv2d(input=mpool_9,filter=W10,strides=[1,1,1,1],padding="SAME", name="conv_10_unbiased")
         conv_10_linear = tf.add(conv_10_unbiased, b10, name="conv_10_linear")
         conv_10 = tf.maximum(0.1*conv_10_linear, conv_10_linear, name="leaky_relu_10")
@@ -166,8 +166,8 @@ def main():
 #     Conv Layer 3x3x512
 #==============================================================================
     with tf.name_scope("Layer11_Conv") as scope:
-        W11 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float32),name="W11")
-        b11 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b11")
+        W11 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W11")
+        b11 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b11")
         conv_11_unbiased = tf.nn.conv2d(input=conv_10,filter=W11,strides=[1,1,1,1],padding="SAME",name="conv_11_unbiased")
         conv_11_linear = tf.add(conv_11_unbiased,b11,name="conv_11_linear")
         conv_11 = tf.maximum(0.1*conv_11_linear,conv_11_linear, name="leaky_relu_11")
@@ -176,8 +176,8 @@ def main():
 #     Conv Layer 1x1x256
 #==============================================================================
     with tf.name_scope("Layer12_Conv") as scope:    #Todo: ????
-        W12 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float32),name="W12")
-        b12 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float32),name="b12")
+        W12 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W12")
+        b12 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b12")
         conv_12_unbiased = tf.nn.conv2d(input=conv_11,filter=W12,strides=[1,1,1,1],padding="SAME", name="conv_12_unbiased")
         conv_12_linear = tf.add(conv_12_unbiased, b12, name="conv_12_linear")
         conv_12 = tf.maximum(0.1*conv_12_linear, conv_12_linear, name="leaky_relu_12")
@@ -186,8 +186,8 @@ def main():
 #     Conv Layer 3x3x512
 #==============================================================================
     with tf.name_scope("Layer13_Conv") as scope:
-        W13 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float32),name="W13")
-        b13 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b13")
+        W13 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W13")
+        b13 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b13")
         conv_13_unbiased = tf.nn.conv2d(input=conv_12,filter=W13,strides=[1,1,1,1],padding="SAME",name="conv_13_unbiased")
         conv_13_linear = tf.add(conv_13_unbiased,b13,name="conv_13_linear")
         conv_13 = tf.maximum(0.1*conv_13_linear,conv_13_linear, name="leaky_relu_13")
@@ -196,8 +196,8 @@ def main():
 #     Conv Layer 1x1x256
 #==============================================================================
     with tf.name_scope("Layer10_Conv") as scope:    #Todo: ????
-        W14 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float32),name="W14")
-        b14 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float32),name="b14")
+        W14 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W14")
+        b14 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b14")
         conv_14_unbiased = tf.nn.conv2d(input=conv_13,filter=W14,strides=[1,1,1,1],padding="SAME", name="conv_14_unbiased")
         conv_14_linear = tf.add(conv_14_unbiased, b14, name="conv_14_linear")
         conv_14 = tf.maximum(0.1*conv_14_linear, conv_14_linear, name="leaky_relu_14")
@@ -206,8 +206,8 @@ def main():
 #     Conv Layer 3x3x512
 #==============================================================================
     with tf.name_scope("Layer15_Conv") as scope:
-        W15 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float32),name="W15")
-        b15 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b15")
+        W15 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W15")
+        b15 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b15")
         conv_15_unbiased = tf.nn.conv2d(input=conv_14,filter=W15,strides=[1,1,1,1],padding="SAME",name="conv_15_unbiased")
         conv_15_linear = tf.add(conv_15_unbiased,b15,name="conv_15_linear")
         conv_15 = tf.maximum(0.1*conv_15_linear,conv_15_linear, name="leaky_relu_15")
@@ -216,8 +216,8 @@ def main():
 #     Conv Layer 1x1x256
 #==============================================================================
     with tf.name_scope("Layer16_Conv") as scope:    #Todo: ????
-        W16 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float32),name="W16")
-        b16 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float32),name="b16")
+        W16 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W16")
+        b16 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b16")
         conv_16_unbiased = tf.nn.conv2d(input=conv_15,filter=W16,strides=[1,1,1,1],padding="SAME", name="conv_16_unbiased")
         conv_16_linear = tf.add(conv_16_unbiased, b16, name="conv_16_linear")
         conv_16 = tf.maximum(0.1*conv_16_linear, conv_16_linear, name="leaky_relu_16")
@@ -226,8 +226,8 @@ def main():
 #     Conv Layer 3x3x512
 #==============================================================================
     with tf.name_scope("Layer17_Conv") as scope:
-        W17 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float32),name="W17")
-        b17 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b17")
+        W17 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W17")
+        b17 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b17")
         conv_17_unbiased = tf.nn.conv2d(input=conv_16,filter=W17,strides=[1,1,1,1],padding="SAME",name="conv_17_unbiased")
         conv_17_linear = tf.add(conv_17_unbiased,b17,name="conv_17_linear")
         conv_17 = tf.maximum(0.1*conv_17_linear,conv_17_linear, name="leaky_relu_17")   
@@ -236,8 +236,8 @@ def main():
 #     Conv Layer 1x1x512
 #==============================================================================
     with tf.name_scope("Layer18_Conv") as scope:
-        W18 = tf.Variable(tf.truncated_normal(shape=[1,1,512,512],stddev=0.01,dtype=tf.float32),name="W18")
-        b18 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b18")
+        W18 = tf.Variable(tf.truncated_normal(shape=[1,1,512,512],stddev=0.01,dtype=tf.float16),name="W18")
+        b18 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b18")
         conv_18_unbiased = tf.nn.conv2d(input=conv_17,filter=W18,strides=[1,1,1,1],padding="SAME", name="conv_18_unbiased")
         conv_18_linear = tf.add(conv_18_unbiased, b18, name="conv_18_linear")
         conv_18 = tf.maximum(0.1*conv_18_linear, conv_18_linear, name="leaky_relu_18")
@@ -246,8 +246,8 @@ def main():
 #     Conv Layer 3x3x1024
 #==============================================================================
     with tf.name_scope("Layer19_Conv") as scope:
-        W19 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float32),name="W19")
-        b19 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b19")
+        W19 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float16),name="W19")
+        b19 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b19")
         conv_19_unbiased = tf.nn.conv2d(input=conv_18,filter=W19,strides=[1,1,1,1],padding="SAME",name="conv_19_unbiased")
         conv_19_linear = tf.add(conv_19_unbiased,b19,name="conv_19_linear")
         conv_19 = tf.maximum(0.1*conv_19_linear,conv_19_linear, name="leaky_relu_19")
@@ -262,8 +262,8 @@ def main():
 #     Conv Layer 1x1x512
 #==============================================================================
     with tf.name_scope("Layer21_Conv") as scope:    #Todo: ????
-        W21 = tf.Variable(tf.truncated_normal(shape=[1,1,1024,512],stddev=0.01,dtype=tf.float32),name="W21")
-        b21 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b21")
+        W21 = tf.Variable(tf.truncated_normal(shape=[1,1,1024,512],stddev=0.01,dtype=tf.float16),name="W21")
+        b21 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b21")
         conv_21_unbiased = tf.nn.conv2d(input=mpool_20,filter=W21,strides=[1,1,1,1],padding="SAME", name="conv_21_unbiased")
         conv_21_linear = tf.add(conv_21_unbiased, b21, name="conv_21_linear")
         conv_21 = tf.maximum(0.1*conv_21_linear, conv_21_linear, name="leaky_relu_21")
@@ -272,8 +272,8 @@ def main():
 #     Conv Layer 3x3x1024
 #==============================================================================
     with tf.name_scope("Layer22_Conv") as scope:    
-        W22 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float32),name="W22")
-        b22 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b22")
+        W22 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float16),name="W22")
+        b22 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b22")
         conv_22_unbiased = tf.nn.conv2d(input=conv_21,filter=W22,strides=[1,1,1,1],padding="SAME", name="conv_22_unbiased")
         conv_22_linear = tf.add(conv_22_unbiased, b22, name="conv_22_linear")
         conv_22 = tf.maximum(0.1*conv_22_linear, conv_22_linear, name="leaky_relu_22")
@@ -282,8 +282,8 @@ def main():
 #     Conv Layer 1x1x512
 #==============================================================================
     with tf.name_scope("Layer23_Conv") as scope:    #Todo: ????
-        W23 = tf.Variable(tf.truncated_normal(shape=[1,1,1024,512],stddev=0.01,dtype=tf.float32),name="W23")
-        b23 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float32),name="b23")
+        W23 = tf.Variable(tf.truncated_normal(shape=[1,1,1024,512],stddev=0.01,dtype=tf.float16),name="W23")
+        b23 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b23")
         conv_23_unbiased = tf.nn.conv2d(input=conv_22,filter=W23,strides=[1,1,1,1],padding="SAME", name="conv_23_unbiased")
         conv_23_linear = tf.add(conv_23_unbiased, b23, name="conv_23_linear")
         conv_23 = tf.maximum(0.1*conv_23_linear, conv_23_linear, name="leaky_relu_23")
@@ -292,8 +292,8 @@ def main():
 #     Conv Layer 3x3x1024
 #==============================================================================
     with tf.name_scope("Layer24_Conv") as scope:    
-        W24 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float32),name="W24")
-        b24 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b24")
+        W24 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float16),name="W24")
+        b24 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b24")
         conv_24_unbiased = tf.nn.conv2d(input=conv_23,filter=W24,strides=[1,1,1,1],padding="SAME", name="conv_24_unbiased")
         conv_24_linear = tf.add(conv_24_unbiased, b24, name="conv_24_linear")
         conv_24 = tf.maximum(0.1*conv_24_linear, conv_24_linear, name="leaky_relu_24")
@@ -302,8 +302,8 @@ def main():
 #     Conv Layer 3x3x1024
 #==============================================================================
     with tf.name_scope("Layer25_Conv") as scope:    
-        W25 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float32),name="W25")
-        b25 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b25")
+        W25 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float16),name="W25")
+        b25 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b25")
         conv_25_unbiased = tf.nn.conv2d(input=conv_24,filter=W25,strides=[1,1,1,1],padding="SAME", name="conv_25_unbiased")
         conv_25_linear = tf.add(conv_25_unbiased, b25, name="conv_25_linear")
         conv_25 = tf.maximum(0.1*conv_25_linear, conv_25_linear, name="leaky_relu_25")
@@ -312,8 +312,8 @@ def main():
 #     Conv Layer 3x3x1024-s-2
 #==============================================================================
     with tf.name_scope("Layer26_Conv") as scope:    
-        W26 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float32),name="W26")
-        b26 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b26")
+        W26 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float16),name="W26")
+        b26 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b26")
         conv_26_unbiased = tf.nn.conv2d(input=conv_25,filter=W26,strides=[1,2,2,1],padding="SAME", name="conv_26_unbiased")
         conv_26_linear = tf.add(conv_26_unbiased, b26, name="conv_26_linear")
         conv_26 = tf.maximum(0.1*conv_26_linear, conv_26_linear, name="leaky_relu_26")
@@ -322,8 +322,8 @@ def main():
 #     Conv Layer 3x3x1024
 #==============================================================================
     with tf.name_scope("Layer27_Conv") as scope:    
-        W27 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float32),name="W27")
-        b27 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b27")
+        W27 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float16),name="W27")
+        b27 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b27")
         conv_27_unbiased = tf.nn.conv2d(input=conv_26,filter=W27,strides=[1,1,1,1],padding="SAME", name="conv_27_unbiased")
         conv_27_linear = tf.add(conv_27_unbiased, b27, name="conv_27_linear")
         conv_27 = tf.maximum(0.1*conv_27_linear, conv_27_linear, name="leaky_relu_27")
@@ -332,8 +332,8 @@ def main():
 #     Conv Layer 3x3x1024
 #==============================================================================
     with tf.name_scope("Layer28_Conv") as scope:    
-        W28 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float32),name="W28")
-        b28 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float32),name="b28")
+        W28 = tf.Variable(tf.truncated_normal(shape=[3,3,1024,1024],stddev=0.01,dtype=tf.float16),name="W28")
+        b28 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b28")
         conv_28_unbiased = tf.nn.conv2d(input=conv_27,filter=W28,strides=[1,1,1,1],padding="SAME", name="conv_28_unbiased")
         conv_28_linear = tf.add(conv_28_unbiased, b28, name="conv_28_linear")
         conv_28 = tf.maximum(0.1*conv_28_linear, conv_28_linear, name="leaky_relu_28")
@@ -355,16 +355,16 @@ def main():
 #==============================================================================
     with tf.name_scope("Layer31_full") as scope:
         input_31 = tf.reshape(tensor=mpool_30,shape=[batchSize,7*7*1024])
-        W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float32),name="W31")
-        b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float32),name="b31")
+        W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float16),name="W31")
+        b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float16),name="b31")
         fully_31 = tf.nn.relu(tf.matmul(input_31,W31)+b31,name="fully_31")
 #==============================================================================
 # Layer 32:
 #     Fully connected Layer
 #==============================================================================
     with tf.name_scope("Layer32_full") as scope:
-        W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float32),name="W32")
-        b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float32),name="b32")
+        W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
+        b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float16),name="b32")
         fully_32 = tf.nn.relu(tf.matmul(fully_31,W32)+b32,name="fully_32")
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         
@@ -438,7 +438,7 @@ def main():
         coord.join(threads)
         #print("Accuracy:", accuracy.eval())
     
-    plt.show()
+    # plt.show()
     print("finished")
     
 
