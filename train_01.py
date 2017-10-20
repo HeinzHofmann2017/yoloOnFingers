@@ -19,12 +19,13 @@ import numpy as np
 
 def main():
     print("TensorFlow version ", tf.__version__)
-    batchSize = 16
+    batchSize = 1
     learning_rate=0.005  
     nr_of_epochs=1000   
-          
-    origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/mini_Dataset/trainData/trainData.tfrecords"
-    origin_path="/mnt/data/getfingers_heinz/trainData.tfrecords"
+    
+    origin_path="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
+    origin_path="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+
     #origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
     with tf.name_scope("Data") as scope:
         filename_queue = tf.train.string_input_producer([origin_path])
@@ -393,7 +394,9 @@ def main():
 
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
-    x=[]
+    c_tp=[1,1,1,1,1,1,1,1]
+    x=1
+    i=0
     with tf.Session() as sess:
         sess.run(init_op)
         
@@ -403,7 +406,8 @@ def main():
         coord=tf.train.Coordinator()
         threads=tf.train.start_queue_runners(coord=coord)
         
-        for i in range(nr_of_epochs):
+        while(x>=0.1):
+            
 #==============================================================================
 #             img, xcor, ycor, prb = sess.run([images,x_coords,y_coords,probs])
 #             print(img.shape)
@@ -422,9 +426,10 @@ def main():
             
             _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
             
-            print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
-#            
-
+            #print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
+            c_tp[i%8]=c
+            x = c_tp[0]+c_tp[1]+c_tp[2]+c_tp[3]+c_tp[4]+c_tp[5]+c_tp[6]+c_tp[7]
+            print("Kosten im Mittel = ",x/8)
 #==============================================================================
 #             plt.figure(i*3)
 #             plt.imshow(img[0, :, :, :])
@@ -433,7 +438,7 @@ def main():
 #             plt.figure(i*3+2)
 #             plt.imshow(img[2, :, :, :])
 #==============================================================================
-        
+            i+=1
         coord.request_stop()
         coord.join(threads)
         #print("Accuracy:", accuracy.eval())
