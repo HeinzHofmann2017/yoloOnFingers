@@ -11,7 +11,7 @@
 # 
 # JSCH 2017-04-23
 
-
+from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 #import matplotlib.pyplot as plt
@@ -19,12 +19,29 @@ import numpy as np
 
 def main():
     print("TensorFlow version ", tf.__version__)
-    batchSize = 1
-    learning_rate=0.005  
-    nr_of_epochs=1000   
     
-    origin_path="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
-    origin_path="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+    #Environment = "dgx"
+    Environment = "Desktop"
+    print("Enviroment =", Environment)
+    
+    if (Environment         == "Desktop"):    
+        batchSize           = 1
+        learning_rate       = 0.005
+        capacity            = 10
+        num_threads         = 2
+        min_after_dequeue   = 5
+        origin_path         ="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+        #nr_of_epochs       = 3  
+        
+    elif (Environment       == "dgx"):
+        batchSize           = 16
+        learning_rate       = 0.005 
+        capacity            = 2000
+        num_threads         = 8
+        min_after_dequeue   = 1000
+        origin_path         ="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
+        #nr_of_epochs       = 1000  
+    
 
     #origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
     with tf.name_scope("Data") as scope:
@@ -63,9 +80,9 @@ def main():
         
         images, x_coords, y_coords, probs, widths, heights =tf.train.shuffle_batch([reshaped_image,x,y,p,w,h], 
                                                                                        batch_size=batchSize,#Number of Pictures&Labels per Batch
-                                                                                       capacity=10,#max Number of Elements in the queue 
-                                                                                       num_threads=2, #Nr. of Threads, which enqueueing tensor-list.
-                                                                                       min_after_dequeue=5
+                                                                                       capacity=capacity,#max Number of Elements in the queue 
+                                                                                       num_threads=num_threads, #Nr. of Threads, which enqueueing tensor-list.
+                                                                                       min_after_dequeue=min_after_dequeue #minimum Number of Pictures in the queue after give the data to the GPU
                                                                                        )
 
 #==============================================================================
@@ -110,7 +127,7 @@ def main():
 # Layer 5:
 #     Conv Layer 1x1x128
 #==============================================================================
-    with tf.name_scope("Layer5_Conv") as scope:     #TODO: ???
+    with tf.name_scope("Layer5_Conv") as scope:
         W5 = tf.Variable(tf.truncated_normal(shape=[1,1,192,128],stddev=0.01,dtype=tf.float16),name="W5")
         b5 = tf.Variable(tf.truncated_normal(shape=[128],stddev=0.01,dtype=tf.float16),name="b5")
         conv_5_unbiased = tf.nn.conv2d(input=mpool_4, filter=W5,strides=[1,1,1,1], padding="SAME", name="conv_5_unbiased")
@@ -372,10 +389,10 @@ def main():
     with tf.name_scope("cost_function") as scope:
         #make data ready for using with 
         #cost_function = output_32[batchElement,hoehe,breite,tiefe]
-        cost_x = tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)))
-        cost_y = tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))
-        cost_p = tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,2],probs)))
-        cost = tf.reduce_mean(cost_x+cost_y+cost_p)
+        cost_x =tf.square(tf.subtract(output_32[:,:,:,0],x_coords))
+        cost_y =tf.square(tf.subtract(output_32[:,:,:,1],y_coords))
+        cost_p =tf.square(tf.subtract(output_32[:,:,:,2],probs))
+        cost = tf.reduce_mean(tf.add(tf.add(cost_x,cost_y),cost_p))
         
     with tf.name_scope("optimizer") as scope:
         # Gradient descen
@@ -425,9 +442,10 @@ def main():
 #             print(out)
 #==============================================================================
             
-            _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
-            
+            #_,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
             #print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
+
+            _,c=sess.run([train_step,cost])
             c_tp[i%8]=c
             x = c_tp[0]+c_tp[1]+c_tp[2]+c_tp[3]+c_tp[4]+c_tp[5]+c_tp[6]+c_tp[7]
             print("Kosten im Mittel = ",x/8)
