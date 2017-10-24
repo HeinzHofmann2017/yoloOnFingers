@@ -14,6 +14,7 @@
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
+import mailer
 #import matplotlib.pyplot as plt
 
 
@@ -31,6 +32,7 @@ def main():
         num_threads         = 2
         min_after_dequeue   = 5
         origin_path         ="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+        mailtext            ="training on Desktop"
         #nr_of_epochs       = 3  
         
     elif (Environment       == "dgx"):
@@ -40,6 +42,7 @@ def main():
         num_threads         = 8
         min_after_dequeue   = 1000
         origin_path         ="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
+        mailtext            ="training on DGX"
         #nr_of_epochs       = 1000  
     
 
@@ -464,6 +467,16 @@ def main():
     
     # plt.show()
     print("finished")
+    mailtext += " finished \n"
+    mailtext += "\n cost                = " + str(x)
+    mailtext += "\n batchSize           = " + str(batchSize)
+    mailtext += "\n learningrate        = " + str(learning_rate)
+    mailtext += "\n num_threads         = " + str(num_threads)
+    mailtext += "\n min_after_dequeue   = " + str(min_after_dequeue)
+    mailtext += "\n trained on          = " + origin_path
+    mailtext += "\n number of iterations= " + str(i)
+
+    mailer.mailto(mailtext)
     
 
 
