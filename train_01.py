@@ -397,6 +397,7 @@ def main():
     c_tp=[1,1,1,1,1,1,1,1]
     x=1
     i=0
+    
     with tf.Session() as sess:
         sess.run(init_op)
         
