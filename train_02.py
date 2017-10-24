@@ -21,8 +21,8 @@ import mailer
 def main():
     print("TensorFlow version ", tf.__version__)
     
-    #Environment = "dgx"
-    Environment = "Desktop"
+    Environment = "dgx"
+    #Environment = "Desktop"
     print("Enviroment =", Environment)
     
     if (Environment         == "Desktop"):    
