@@ -19,12 +19,12 @@ import numpy as np
 
 def main():
     print("TensorFlow version ", tf.__version__)
-    batchSize = 1
+    batchSize = 16
     learning_rate=0.005  
     nr_of_epochs=1000   
     
     origin_path="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
-    origin_path="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+    #origin_path="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
 
     #origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
     with tf.name_scope("Data") as scope:
@@ -63,9 +63,9 @@ def main():
         
         images, x_coords, y_coords, probs, widths, heights =tf.train.shuffle_batch([reshaped_image,x,y,p,w,h], 
                                                                                        batch_size=batchSize,#Number of Pictures&Labels per Batch
-                                                                                       capacity=10,#max Number of Elements in the queue 
-                                                                                       num_threads=2, #Nr. of Threads, which enqueueing tensor-list.
-                                                                                       min_after_dequeue=5
+                                                                                       capacity=6001,#max Number of Elements in the queue 
+                                                                                       num_threads=8, #Nr. of Threads, which enqueueing tensor-list.
+                                                                                       min_after_dequeue=6000
                                                                                        )
 
 #==============================================================================
