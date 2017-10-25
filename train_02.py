@@ -414,8 +414,10 @@ def main():
 
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
-    c_tp=[1,1,1,1,1,1,1,1]
-    x=8
+    c_tp=np.zeros(64)
+    for i in range(64):
+        c_tp[i]=1
+    x=64
     i=0
     
     with tf.Session() as sess:
@@ -427,7 +429,7 @@ def main():
         coord=tf.train.Coordinator()
         threads=tf.train.start_queue_runners(coord=coord)
         
-        while(x>=7):
+        while(x>=32):
             
 #==============================================================================
 #             img, xcor, ycor, prb = sess.run([images,x_coords,y_coords,probs])
@@ -449,9 +451,11 @@ def main():
             #print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
 
             _,c=sess.run([train_step,cost])
-            c_tp[i%8]=c
-            x = c_tp[0]+c_tp[1]+c_tp[2]+c_tp[3]+c_tp[4]+c_tp[5]+c_tp[6]+c_tp[7]
-            print("Kosten im Mittel = ",x/8)
+            c_tp[i%64]=c
+            x=0
+            for j in range(64):
+                x += c_tp[j]
+            print("Kosten im Mittel = ",x/64)
 #==============================================================================
 #             plt.figure(i*3)
 #             plt.imshow(img[0, :, :, :])
