@@ -43,7 +43,7 @@ def main():
         num_threads         = 8
         min_after_dequeue   = 1000
         data_path           ="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
-        weights_path        ="/workspace/yoloOnFingers/weights/"#dgx-path
+        weights_path        ="/mnt/data/getfingers_heinz/weights/"#dgx-path
         mailtext            ="training on DGX"
         #nr_of_epochs       = 1000  
     
@@ -472,7 +472,7 @@ def main():
                 if((x/64)<lowest_cost):
                     lowest_cost             = x/64
                     count_of_improvement   += 1
-                    weights_path += "model"+ str(count_of_improvement) + ".ckpt"
+                    weights_path += "model.ckpt"
                     saver.save(sess=sess, save_path=weights_path)
                     print("model updatet")
                     text = "updatet model with average cost = " + str(lowest_cost) + "\n actual cx="+str(cx)+"\n actual cy="+str(cy)+"\n actual cp="+str(cp)+"\n actual c="+str(c)                    
