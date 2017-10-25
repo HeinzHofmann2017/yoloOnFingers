@@ -416,11 +416,13 @@ def main():
     saver = tf.train.Saver()
 
 
-    c_tp=np.zeros(64)
+    c_tp                    =np.zeros(64)
     for i in range(64):
-        c_tp[i]=1
-    x=64
-    i=0
+        c_tp[i]             =1
+    x                       =64
+    i                       =0
+    lowest_cost             =100#has to be higher than 2
+    count_of_improvement    =0
     
 
 
@@ -465,6 +467,19 @@ def main():
             for j in range(64):
                 x += c_tp[j]
             print("Kosten im Mittel = ",x/64)
+            if(i%64==0):
+                _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
+                if(x<lowest_cost):
+                    lowest_cost             = x
+                    count_of_improvement   += 1
+                    weights_path += "model"+ count_of_improvement + "ckpt"
+                    saver.save(sess=sess, save_path=weights_path)
+                    print("model updatet")
+                    text = "updatet model with cost = " + str(lowest_cost)                    
+                    mailer.mailto(text)
+                
+                
+            
 
             i+=1
         coord.request_stop()
