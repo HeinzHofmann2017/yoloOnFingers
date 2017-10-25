@@ -475,7 +475,7 @@ def main():
                     weights_path += "model"+ str(count_of_improvement) + ".ckpt"
                     saver.save(sess=sess, save_path=weights_path)
                     print("model updatet")
-                    text = "updatet model with average cost = " + str(lowest_cost) + "\n actual cx="+cx+"\n actual cy="+cy+"\n actual cp="+cp+"\n actual c="+c                    
+                    text = "updatet model with average cost = " + str(lowest_cost) + "\n actual cx="+str(cx)+"\n actual cy="+str(cy)+"\n actual cp="+str(cp)+"\n actual c="+str(c)                    
                     mailer.mailto(text)
                 
                 
