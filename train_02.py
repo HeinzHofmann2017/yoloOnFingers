@@ -394,10 +394,10 @@ def main():
     with tf.name_scope("cost_function") as scope:
         #make data ready for using with 
         #cost_function = output_32[batchElement,hoehe,breite,tiefe]
-        cost_x =tf.square(tf.subtract(output_32[:,:,:,0],x_coords))
-        cost_y =tf.square(tf.subtract(output_32[:,:,:,1],y_coords))
-        cost_p =tf.square(tf.subtract(output_32[:,:,:,2],probs))
-        cost = tf.reduce_mean(tf.add(tf.add(cost_x,cost_y),cost_p))
+        cost_x =tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)))
+        cost_y =tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))
+        cost_p =tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,2],probs)))
+        cost = tf.add(tf.add(cost_x,cost_y),cost_p)
         
     with tf.name_scope("optimizer") as scope:
         # Gradient descen
@@ -470,7 +470,7 @@ def main():
             if(i%64==0):
                 cx,cy,cp,c = sess.run([cost_x,cost_y,cost_p,cost])
                 if(x<lowest_cost):
-                    lowest_cost             = x
+                    lowest_cost             = x/64
                     count_of_improvement   += 1
                     weights_path += "model"+ str(count_of_improvement) + ".ckpt"
                     saver.save(sess=sess, save_path=weights_path)
