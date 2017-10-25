@@ -472,7 +472,7 @@ def main():
                 if(x<lowest_cost):
                     lowest_cost             = x
                     count_of_improvement   += 1
-                    weights_path += "model"+ count_of_improvement + "ckpt"
+                    weights_path += "model"+ str(count_of_improvement) + ".ckpt"
                     saver.save(sess=sess, save_path=weights_path)
                     print("model updatet")
                     text = "updatet model with average cost = " + str(lowest_cost) + "\n actual cx="+cx+"\n actual cy="+cy+"\n actual cp="+cp+"\n actual c="+c                    
