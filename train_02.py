@@ -415,7 +415,7 @@ def main():
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
     c_tp=[1,1,1,1,1,1,1,1]
-    x=1
+    x=8
     i=0
     
     with tf.Session() as sess:
@@ -427,7 +427,7 @@ def main():
         coord=tf.train.Coordinator()
         threads=tf.train.start_queue_runners(coord=coord)
         
-        while(x>=0.5):
+        while(x>=4):
             
 #==============================================================================
 #             img, xcor, ycor, prb = sess.run([images,x_coords,y_coords,probs])
