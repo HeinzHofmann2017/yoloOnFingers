@@ -469,7 +469,7 @@ def main():
             print("Kosten im Mittel = ",x/64)
             if(i%64==0):
                 cx,cy,cp,c = sess.run([cost_x,cost_y,cost_p,cost])
-                if(x<lowest_cost):
+                if((x/64)<lowest_cost):
                     lowest_cost             = x/64
                     count_of_improvement   += 1
                     weights_path += "model"+ str(count_of_improvement) + ".ckpt"
