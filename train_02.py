@@ -31,7 +31,8 @@ def main():
         capacity            = 10
         num_threads         = 2
         min_after_dequeue   = 5
-        origin_path         ="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+        data_path           ="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
+        weights_path        ="/home/hhofmann/Schreibtisch/Step2_trainData/weights/"#Desktop-path       
         mailtext            ="training on Desktop"
         #nr_of_epochs       = 3  
         
@@ -41,14 +42,15 @@ def main():
         capacity            = 2000
         num_threads         = 8
         min_after_dequeue   = 1000
-        origin_path         ="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
+        data_path           ="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
+        weights_path        ="/workspace/yoloOnFingers/weights/"#dgx-path
         mailtext            ="training on DGX"
         #nr_of_epochs       = 1000  
     
 
-    #origin_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
+    #data_path="/home/hhofmann/Schreibtisch/Daten/indexfinger_right/3000_readyTOlearn/trainData/trainData.tfrecords"
     with tf.name_scope("Data") as scope:
-        filename_queue = tf.train.string_input_producer([origin_path])
+        filename_queue = tf.train.string_input_producer([data_path])
         reader = tf.TFRecordReader()
         _, serialized_example = reader.read(filename_queue)
         features = tf.parse_single_example(serialized_example,features={
@@ -409,17 +411,19 @@ def main():
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(grads_and_vars)
 
-
-
-
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
+    saver = tf.train.Saver()
+
+
     c_tp=np.zeros(64)
     for i in range(64):
         c_tp[i]=1
     x=64
     i=0
     
+
+
     with tf.Session() as sess:
         sess.run(init_op)
         
@@ -438,25 +442,14 @@ def main():
 #             print(xcor.shape)
 #             print(ycor.shape)
 #            
-#            _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
-# 
+#             _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
+#             print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
 #             out = sess.run(padded_29[0,:,4,0])#gibt eine Bildzeile aus, wobei rechts und links zerogepadded wurde
 #             out = sess.run(padded_29[0,4,:,0])#gibt eine Bildkolonne aus, wobei oben zerogepadded wurde...
 #             out = sess.run(fully_31)
 #             out = sess.run(mpool_30[0,:,4,1]) # 100x7x7x1024
 #             print(out)
-#==============================================================================
             
-            #_,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
-            #print(i, " Kosten x=",cx," Kosten y=",cy," Kosten p=",cp," Kosten=",c)
-
-            _,c=sess.run([train_step,cost])
-            c_tp[i%64]=c
-            x=0
-            for j in range(64):
-                x += c_tp[j]
-            print("Kosten im Mittel = ",x/64)
-#==============================================================================
 #             plt.figure(i*3)
 #             plt.imshow(img[0, :, :, :])
 #             plt.figure(i*3+1)
@@ -464,6 +457,15 @@ def main():
 #             plt.figure(i*3+2)
 #             plt.imshow(img[2, :, :, :])
 #==============================================================================
+
+
+            _,c=sess.run([train_step,cost])
+            c_tp[i%64]=c
+            x=0
+            for j in range(64):
+                x += c_tp[j]
+            print("Kosten im Mittel = ",x/64)
+
             i+=1
         coord.request_stop()
         coord.join(threads)
@@ -477,7 +479,7 @@ def main():
     mailtext += "\n learningrate        = " + str(learning_rate)
     mailtext += "\n num_threads         = " + str(num_threads)
     mailtext += "\n min_after_dequeue   = " + str(min_after_dequeue)
-    mailtext += "\n trained on          = " + origin_path
+    mailtext += "\n trained on          = " + data_path
     mailtext += "\n number of iterations= " + str(i)
 
     mailer.mailto(mailtext)
