@@ -468,14 +468,14 @@ def main():
                 x += c_tp[j]
             print("Kosten im Mittel = ",x/64)
             if(i%64==0):
-                _,cx,cy,cp,c = sess.run([train_step,cost_x,cost_y,cost_p,cost])
+                cx,cy,cp,c = sess.run([cost_x,cost_y,cost_p,cost])
                 if(x<lowest_cost):
                     lowest_cost             = x
                     count_of_improvement   += 1
                     weights_path += "model"+ count_of_improvement + "ckpt"
                     saver.save(sess=sess, save_path=weights_path)
                     print("model updatet")
-                    text = "updatet model with cost = " + str(lowest_cost)                    
+                    text = "updatet model with average cost = " + str(lowest_cost) + "\n actual cx="+cx+"\n actual cy="+cy+"\n actual cp="+cp+"\n actual c="+c                    
                     mailer.mailto(text)
                 
                 
