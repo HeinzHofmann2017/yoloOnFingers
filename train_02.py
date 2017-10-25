@@ -435,7 +435,7 @@ def main():
         coord=tf.train.Coordinator()
         threads=tf.train.start_queue_runners(coord=coord)
         
-        while(x>=32):
+        while(x>=6.4):
             
 #==============================================================================
 #             img, xcor, ycor, prb = sess.run([images,x_coords,y_coords,probs])
