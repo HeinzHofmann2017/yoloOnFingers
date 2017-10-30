@@ -32,7 +32,7 @@ def main():
         num_threads         = 2
         min_after_dequeue   = 5
         data_path           ="/home/hhofmann/Schreibtisch/Daten/mini_Dataset/trainData/trainDataMini.tfrecords"#Desktop-path
-        weights_path        ="/home/hhofmann/Schreibtisch/Step2_trainData/weights/"#Desktop-path       
+        weights_path        ="/home/hhofmann/Schreibtisch/Step2_trainData/weights/model.ckpt"#Desktop-path       
         mailtext            ="training on Desktop"
         #nr_of_epochs       = 3  
         
@@ -43,7 +43,7 @@ def main():
         num_threads         = 8
         min_after_dequeue   = 1000
         data_path           ="/mnt/data/getfingers_heinz/trainData.tfrecords"#dgx-path
-        weights_path        ="/mnt/data/getfingers_heinz/weights/"#dgx-path
+        weights_path        ="/mnt/data/getfingers_heinz/weights/model.ckpt"#dgx-path
         mailtext            ="training on DGX"
         #nr_of_epochs       = 1000  
     
@@ -413,7 +413,12 @@ def main():
 
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
-    saver = tf.train.Saver()
+    saver = tf.train.Saver(
+        max_to_keep=5,
+        keep_checkpoint_every_n_hours=4.0, 
+        pad_step_number=True,
+        save_relative_paths=True,
+    )
 
 
     c_tp                    =np.zeros(64)
@@ -472,8 +477,7 @@ def main():
                 if((x/64)<lowest_cost):
                     lowest_cost             = x/64
                     count_of_improvement   += 1
-                    weights_path += "model.ckpt"
-                    saver.save(sess=sess, save_path=weights_path)
+                    saver.save(sess=sess, save_path=weights_path, global_step=i)
                     print("model updatet")
                     text = "updatet model with average cost = " + str(lowest_cost) + "\n actual cx="+str(cx)+"\n actual cy="+str(cy)+"\n actual cp="+str(cp)+"\n actual c="+str(c)                    
                     mailer.mailto(text)
