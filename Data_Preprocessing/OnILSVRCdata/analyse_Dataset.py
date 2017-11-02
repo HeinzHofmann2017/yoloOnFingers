@@ -6,11 +6,16 @@ Created on Wed Nov  1 10:20:51 2017
 """
 
 from __future__ import print_function
+from PIL import Image
 import numpy as np
 import os
+import sys
 import csv
 import pickle
 import random
+this_folder =  os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, this_folder+ '/../../helperfunctions/')
+import mailer
 
 
 class Dataset_Heinz(object):
@@ -86,18 +91,70 @@ class Dataset_Heinz(object):
     def get_all_picture_names(self, origin_path = "/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"):
         return pickle.load(open(origin_path + "all_picture_names.pkl", "rb"))
 
-    
+    def save_pics_as_grayscale(self, origin_path="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"):
+        train_picnames = self.get_train_picnames(origin_path=origin_path)        
+        valid_picnames = self.get_valid_picnames(origin_path=origin_path)
+        for i in range(len(train_picnames)):
+            img = Image.open(origin_path+ "../ILSVRC2012_img_train_t12/" + train_picnames[i]).convert('L')
+            old_size=img.size
+            if old_size[0]<244 or old_size[1]<244:
+                if old_size[0]>= 244:
+                    #Todo: eine Seite zeropadden
+                    new_size=(old_size[0],244)
+                elif old_size[1]>= 244:
+                    new_size=(244,old_size[1])                    
+                    #Todo: andere Seite zeropadden
+                else:
+                    new_size=(244,244)
+                    #Todo: beide Seiten Zeropadden
+                new_img = Image.new("L",new_size)
+                new_img.paste(img,((new_size[0]-old_size[0])/2,
+                                   (new_size[1]-old_size[1])/2))
+                new_img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+train_picnames[i])
+            else:
+                img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+train_picnames[i])
+            if(i%100000==0):
+                mailer.mailto("Trainingdata "+str(i)+" done")
+      
+        for i in range(len(valid_picnames)):
+            img = Image.open(origin_path+ "../ILSVRC2012_img_train_t12/" + valid_picnames[i]).convert('L')
+            old_size=img.size
+            if old_size[0]<244 or old_size[1]<244:
+                if old_size[0]>= 244:
+                    #Todo: eine Seite zeropadden
+                    new_size=(old_size[0],244)
+                elif old_size[1]>= 244:
+                    new_size=(244,old_size[1])                    
+                    #Todo: andere Seite zeropadden
+                else:
+                    new_size=(244,244)
+                    #Todo: beide Seiten Zeropadden
+                new_img = Image.new("L",new_size)
+                new_img.paste(img,((new_size[0]-old_size[0])/2,
+                                   (new_size[1]-old_size[1])/2))
+                new_img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+valid_picnames[i])
+            else:
+                img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+valid_picnames[i])
+            if(i%10000==0):
+                mailer.mailto("Validationdata "+str(i)+" done")
+        mailer.mailto("finished with creating grayscale pictures")
+         
     
     
     
 if __name__ == '__main__':
 
     
-    ImageNetData=Dataset_Heinz()
-    ImageNetData.make_lists()
-    del ImageNetData
+#==============================================================================
+#     ImageNetData=Dataset_Heinz()
+#     ImageNetData.make_lists()
+#     del ImageNetData
+#==============================================================================
     
-    ReadData=Dataset_Heinz()   
+    ReadData=Dataset_Heinz() 
+
+    ReadData.save_pics_as_grayscale()    
+    
     train_picnames = ReadData.get_train_picnames() 
     train_labels = ReadData.get_train_labels()
     valid_picnames = ReadData.get_valid_picnames() 
