@@ -21,9 +21,10 @@ from tensorflow.python.ops import array_ops
 from tensorflow.contrib.data import Dataset, Iterator
 from tensorflow.python.platform import gfile
 
-sys.path.insert(0, '../Data_Preprocessing/OnILSVRCdata/')
+this_folder =  os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, this_folder+ '/../Data_Preprocessing/OnILSVRCdata/')
 import analyse_Dataset
-sys.path.insert(0,"../helperfunctions/")
+sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 
 #import matplotlib.pyplot as plt
