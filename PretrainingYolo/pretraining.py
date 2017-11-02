@@ -51,7 +51,7 @@ elif (Environment       == "dgx"):
     min_after_dequeue   = 1000
     buffer_size         = 100000
     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
-    image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12"
+    image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
     mailtext            ="training on DGX"
     nr_of_epochs       = 1000  
 
