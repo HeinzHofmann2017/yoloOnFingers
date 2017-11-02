@@ -50,14 +50,17 @@ elif (Environment       == "dgx"):
     min_after_dequeue   = 1000
     buffer_size         = 100000
     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
+    image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12"
     mailtext            ="training on DGX"
     nr_of_epochs       = 1000  
 
 def dataset_preprocessor(picname,labels):
-    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12/" + picname)
+    #content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12/" + picname)
+    content = tf.read_file(image_path + "../ILSVRC2012_img_train_t12/" + picname)
     image = tf.image.decode_jpeg(content,channels=3)
     image = tf.image.convert_image_dtype(image,tf.float16)
     image = tf.image.rgb_to_grayscale(image)
+    if(tf.shape(image)[1]>224 & tf.shape(image)[2]>)
     image = tf.random_crop(image,[224,224,1])
     return image,labels
 def main():
