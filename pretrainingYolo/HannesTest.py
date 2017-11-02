@@ -58,8 +58,8 @@ elif (Environment       == "dgx"):
     nr_of_epochs       = 10000  
 
 def dataset_preprocessor(picname,labels):
-    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12/" + picname)
-    #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12/"+picname)
+    #content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12/" + picname)
+    content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12/"+picname)
     image = tf.image.decode_jpeg(content,channels=3)
     image = tf.image.convert_image_dtype(image,tf.float16)
     image = tf.image.rgb_to_grayscale(image)
