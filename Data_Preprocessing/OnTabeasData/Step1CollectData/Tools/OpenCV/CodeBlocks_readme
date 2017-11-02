@@ -1,0 +1,21 @@
+% How to setup a c++ project in codeblocks
+
+- Create new project
+	File -> New -> Project -> OpenCV Project
+- chose a project folder and a project name
+- chose GNU GCC Compiler 
+
+
+- Go to Settings-> Compiler
+	Chose GNU GCC Compiler 
+	go to writer Compiler settings-> Compiler flags
+		set: Have g++ follow the c++11 ISO c11 language standard [-std=c++11]
+		set: Enable all common compiler warnings [-Wall]
+	go to writer Search directories-> Compiler
+		add path: "/usr/local/include/opencv "
+		          "/usr/local/include/opencv2 "
+		          "/usr/local/include" (für libserialport)
+	go to writer Linker Settings
+		add all opencv-libraries in /usr/local/lib
+		add all libserialport-libraries in /usr/local/lib
+		add '-pthread' to 'other linker options'

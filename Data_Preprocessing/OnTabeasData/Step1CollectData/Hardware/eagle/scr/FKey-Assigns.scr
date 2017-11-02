@@ -1,0 +1,33 @@
+#Tastenzuweisungen Tabea
+
+
+
+ASSIGN  A+G   'group'
+ASSIGN  C+C   'cut;'
+ASSIGN  C+F   'run find;'
+ASSIGN  A+M   'move'
+ASSIGN  A+C   'copy'
+ASSIGN  A+N   'name'
+ASSIGN  A+V   'value'
+ASSIGN  A+W   'net'
+ASSIGN  A+S   'smash'
+ASSIGN  A+D   'delete'
+ASSIGN  A+P   'paste'
+ASSIGN  A+L   'label'
+ASSIGN  A+R   'route'
+ASSIGN  A+U   'ripup'
+ASSIGN  A+E   'show'
+ASSIGN  C+T   'DISPLAY None Unrouted Top tOrigins tPlace  Dimension Pad Via 45 milling tTest tDocu tStop'
+ASSIGN  C+B   'DISPLAY None Unrouted Bottom bPlace bOrigins  Dimension Pad Via 45 bTest bDocu bStop'
+#ASSIGN  C+H   'DISPLAY None Unrouted GND VCC bPlace Bottom bOrigins Dimension Pad Via 45 milling bStop tPlace Top tOrigins Dimension Pad Via 45 tStop'
+#ASSIGN  C+H   'DISPLAY None Unrouted SIGNAL1 SIGNAL2 bPlace Bottom bOrigins Dimension Pad Via 45 milling bStop tPlace Top tOrigins Dimension Pad Via 45 tStop'
+ASSIGN  C+H   'DISPLAY None Unrouted Bottom bOrigins Dimension Pad Via 45 milling bStop Top tOrigins Dimension Pad Via 45 tStop'
+ASSIGN  C+U   'DISPLAY None Dimension Unrouted'
+ASSIGN  C+P   'DISPLAY None Dimension 200bmp 201bmp 202bmp 203bmp 204bmp 205bmp 206bmp 207bmp 208bmp 209bmp 210bmp 211bmp 212bmp 213bmp 214bmp 215bmp 216bmp 217bmp 218bmp 219bmp 220bmp'
+ASSIGN  F5    'Ratsnest'
+ASSIGN  C+A   'DISPLAY all'
+
+#Nur Befehle fürs Schema
+SCH:
+ASSIGN  C+N 'run editnext-sheet.ulp;';          # Control-N edit next
+ASSIGN  C+P 'run editprev-sheet.ulp;';          # Control-P edit previous

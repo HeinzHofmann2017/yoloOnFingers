@@ -1,0 +1,21 @@
+
+% Packages Installieren
+
+sudo apt-get install gcc-arm-none-eabi
+
+sudo apt-get install libstdc++-arm-none-eabi-newlib
+
+sudo apt-get install binutils-arm-none-eabi
+
+sudo apt-get install libnewlib-arm-none-eabi
+
+
+% CodeBlocks installieren
+
+Current stable version of Code::Blocks IDE (16.01)
+
+To install Code::Blocks from this PPA, open a terminal and type:
+
+sudo add-apt-repository ppa:damien-moore/codeblocks-stable
+sudo apt-get update
+sudo apt-get install codeblocks codeblocks-contrib

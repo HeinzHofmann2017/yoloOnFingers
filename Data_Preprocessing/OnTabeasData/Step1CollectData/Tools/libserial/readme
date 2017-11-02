@@ -1,0 +1,10 @@
+% install libserialport library
+
+sudo apt-get install autoconf autogen intltool libtool
+
+git clone git://sigrok.org/libserialport
+cd libserialport/
+./autogen.sh
+./configure
+make
+sudo make install
