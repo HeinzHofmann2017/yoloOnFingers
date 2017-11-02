@@ -39,6 +39,7 @@ if (Environment         == "Desktop"):
     min_after_dequeue   = 5
     buffer_size         = 20
     origin_path         ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path  
+    image_path          ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path 
     mailtext            ="training on Desktop"
     nr_of_epochs       = 3  
     
@@ -60,8 +61,13 @@ def dataset_preprocessor(picname,labels):
     image = tf.image.decode_jpeg(content,channels=3)
     image = tf.image.convert_image_dtype(image,tf.float16)
     image = tf.image.rgb_to_grayscale(image)
-    if(tf.shape(image)[1]>224 & tf.shape(image)[2]>)
+
+    #image = tf.cond(tf.shape(image)[1]224)    
+    
+    #if(tf.shape(image)[1]>224 and tf.shape(image)[2]>224):
     image = tf.random_crop(image,[224,224,1])
+    #else:
+    #    image = tf.image.resize_image_with_crop_or_pad(image, 224, 224)
     return image,labels
 def main():
     print("TensorFlow version ", tf.__version__)
