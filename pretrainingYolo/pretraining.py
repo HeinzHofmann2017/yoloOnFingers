@@ -28,8 +28,8 @@ import mailer
 
 #import matplotlib.pyplot as plt
 
-Environment = "dgx"
-#Environment = "Desktop"
+#Environment = "dgx"
+Environment = "Desktop"
 print("Enviroment =", Environment)
 
 if (Environment         == "Desktop"):    
