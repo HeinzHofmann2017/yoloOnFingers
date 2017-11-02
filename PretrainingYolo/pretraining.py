@@ -13,6 +13,7 @@
 
 from __future__ import print_function
 
+import os
 import sys
 
 import tensorflow as tf
@@ -57,15 +58,18 @@ elif (Environment       == "dgx"):
 
 def dataset_preprocessor(picname,labels):
     #content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12/" + picname)
-    content = tf.read_file(image_path + "../ILSVRC2012_img_train_t12/" + picname)
+    content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12/"+picname)
     image = tf.image.decode_jpeg(content,channels=3)
     image = tf.image.convert_image_dtype(image,tf.float16)
     image = tf.image.rgb_to_grayscale(image)
 
-    #image = tf.cond(tf.shape(image)[1]224)    
+    image = tf.cond(tf.logical_and(tf.greater_equal(tf.shape(image)[0],224),
+                                   tf.greater_equal(tf.shape(image)[1],224)),
+                    lambda: tf.random_crop(image,[224,224,1]),
+                    lambda: tf.image.resize_image_with_crop_or_pad(image,224,224))    
     
     #if(tf.shape(image)[1]>224 and tf.shape(image)[2]>224):
-    image = tf.random_crop(image,[224,224,1])
+    #image = tf.random_crop(image,[224,224,1])
     #else:
     #    image = tf.image.resize_image_with_crop_or_pad(image, 224, 224)
     return image,labels
