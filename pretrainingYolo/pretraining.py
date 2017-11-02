@@ -414,15 +414,14 @@ def main():
         writer=tf.summary.FileWriter("summary") 
         writer.add_graph(sess.graph)     
         
-        
+        print("start training....")
         for i in range(nr_of_epochs):
 
-            print("start training....")
             _, c, = sess.run([train_step, cost])
             print(str(c))
-            
-            saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
-            print("model updatet")
+            if(i%100==0):
+                saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
+                print("model updatet")
                 
     
     # plt.show()
