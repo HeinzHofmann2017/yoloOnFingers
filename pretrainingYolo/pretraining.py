@@ -459,6 +459,7 @@ def main():
                         if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
                             nr_of_matches += 1
                 print(str(predicted_fully[k]))
+                print(str(predicted_tensor[k][0]))
                 match_probability = 100 * nr_of_matches / batchSize
                 print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
                 if(nr_of_matches > validation_matches):
