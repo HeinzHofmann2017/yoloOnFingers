@@ -430,7 +430,7 @@ def main():
         for i in range(nr_of_epochs):
             
             #training:
-            _, c, = sess.run([train_step, cost])
+            _ = sess.run([train_step])
             
             #testing (on traindata and on validationdata)
             if(i%nr_of_epochs_until_save_model ==0):
