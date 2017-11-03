@@ -35,7 +35,7 @@ print("Enviroment =", Environment)
 
 if (Environment         == "Desktop"):    
     batchSize           = 2
-    learning_rate       = 0.005
+    learning_rate       = 0.01
     capacity            = 10
     num_threads         = 2
     min_after_dequeue   = 5
@@ -48,7 +48,7 @@ if (Environment         == "Desktop"):
     
 elif (Environment       == "dgx"):
     batchSize           = 128
-    learning_rate       = 0.005 
+    learning_rate       = 0.01 
     capacity            = 2000
     num_threads         = 8
     min_after_dequeue   = 1000
