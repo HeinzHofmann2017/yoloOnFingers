@@ -465,7 +465,7 @@ def main():
                     mailer.mailto("Number of Matches in the validation Set reached "+str(match_probability)+" %. Done in "+ str(i)+ " Steps")
                 sess.run(training_init_op)
 
-                saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
+                saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights_higher_learnrate/pretrain_model.ckpt", global_step=i)
                 print("model updatet\n")
 
                 
