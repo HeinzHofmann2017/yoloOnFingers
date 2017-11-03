@@ -43,7 +43,8 @@ if (Environment         == "Desktop"):
     origin_path         ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path  
     image_path          ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path 
     mailtext            ="training on Desktop"
-    nr_of_epochs       = 3  
+    nr_of_epochs       = 3
+    nr_of_epochs_until_save_model = 1
     
 elif (Environment       == "dgx"):
     batchSize           = 16
@@ -55,19 +56,24 @@ elif (Environment       == "dgx"):
     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
     image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
     mailtext            ="training on DGX"
-    nr_of_epochs       = 10000  
+    nr_of_epochs       = 10000 
+    nr_of_epochs_until_save_model = 1000
 
 def dataset_preprocessor(picname,labels):
-    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12/" + picname)
+    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
     #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12/"+picname)
-    image = tf.image.decode_jpeg(content,channels=3)
+    image = tf.image.decode_jpeg(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float16)
-    image = tf.image.rgb_to_grayscale(image)
-
-    image = tf.cond(tf.logical_and(tf.greater_equal(tf.shape(image)[0],224),
-                                   tf.greater_equal(tf.shape(image)[1],224)),
-                    lambda: tf.random_crop(image,[224,224,1]),
-                    lambda: tf.image.resize_image_with_crop_or_pad(image,224,224))    
+    image = tf.random_crop(image,[224,224,1])
+    
+    #When everything with preprocessing outside of dgx works fine, the following commented code can be deletet!!
+    #image = tf.image.rgb_to_grayscale(image)
+#==============================================================================
+#     image = tf.cond(tf.logical_and(tf.greater_equal(tf.shape(image)[0],224),
+#                                    tf.greater_equal(tf.shape(image)[1],224)),
+#                     lambda: tf.random_crop(image,[224,224,1]),
+#                     lambda: tf.image.resize_image_with_crop_or_pad(image,224,224))    
+#==============================================================================
     
     #if(tf.shape(image)[1]>224 and tf.shape(image)[2]>224):
     #image = tf.random_crop(image,[224,224,1])
@@ -419,8 +425,8 @@ def main():
         for i in range(nr_of_epochs):
 
             _, c, = sess.run([train_step, cost])
-            print(str(c))
-            if(i%1000==0):
+            if(i%nr_of_epochs_until_save_model ==0):
+                print(str(c))              
                 saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
                 print("model updatet")
                 
