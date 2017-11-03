@@ -426,7 +426,7 @@ def main():
         
         training_matches = 0
         validation_matches = 0
-        print("start training....")
+        print("start training....\n")
         for i in range(nr_of_epochs):
             
             #training:
@@ -466,7 +466,7 @@ def main():
                 sess.run(training_init_op)
 
                 saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
-                print("model updatet")
+                print("model updatet\n")
 
                 
     
