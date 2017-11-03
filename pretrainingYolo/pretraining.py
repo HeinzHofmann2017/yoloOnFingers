@@ -401,7 +401,7 @@ def main():
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(grads_and_vars)
         
-    with tf.name_scope("tester") as scope:
+    with tf.name_scope("onehot_from_prediction") as scope:
         test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
 
     
@@ -430,9 +430,9 @@ def main():
         for i in range(nr_of_epochs):
             
             #training:
-            _, c, = sess.run([train_step, cost])#Todo: reable training, when validation is working
+            _, c, = sess.run([train_step, cost])
             
-            
+            #testing (on traindata and on validationdata)
             if(i%nr_of_epochs_until_save_model ==0):
                 c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
                 #print("full predicted tensor: " + str(predicted_tensor))
@@ -458,6 +458,7 @@ def main():
                     for number_of_Elements in range(1000):                                      
                         if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
                             nr_of_matches += 1
+                print(str(predicted_tensor[k][0]))
                 match_probability = 100 * nr_of_matches / batchSize
                 print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
                 if(nr_of_matches > validation_matches):
