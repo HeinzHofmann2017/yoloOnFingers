@@ -22,7 +22,7 @@ from tensorflow.contrib.data import Dataset, Iterator
 from tensorflow.python.platform import gfile
 
 this_folder =  os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, this_folder+ '/../datapreprocessing/OnILSVRCdata/')
+sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnILSVRCdata/')
 import analyse_Dataset
 sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
