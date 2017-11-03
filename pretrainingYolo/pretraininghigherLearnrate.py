@@ -35,7 +35,7 @@ print("Enviroment =", Environment)
 
 if (Environment         == "Desktop"):    
     batchSize           = 2
-    learning_rate       = 0.01
+    learning_rate       = 0.05
     capacity            = 10
     num_threads         = 2
     min_after_dequeue   = 5
@@ -446,7 +446,7 @@ def main():
                 print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
                 if(nr_of_matches > training_matches):
                     training_matches+=3
-                    mailer.mailto("Number of Matches in the training Set reached (with higher learnrat(0.05)) "+str(nr_of_matches)+" %. Done in "+ str(i)+ " Steps")
+                    mailer.mailto("Number of Matches in the training Set reached "+str(nr_of_matches)+" %. Done in "+ str(i)+ " Steps")
                 
                 #validation:
                 sess.run(validation_init_op)
@@ -462,7 +462,7 @@ def main():
                 print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
                 if(nr_of_matches > validation_matches):
                     validation_matches+=3
-                    mailer.mailto("Number of Matches in the validation Set reached (with higher learnrat(0.05)) "+str(nr_of_matches)+" %. Done in "+ str(i)+ " Steps")
+                    mailer.mailto("Number of Matches in the validation Set reached "+str(nr_of_matches)+" %. Done in "+ str(i)+ " Steps")
                 sess.run(training_init_op)
 
                 saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
