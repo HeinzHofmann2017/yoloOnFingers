@@ -57,7 +57,7 @@ elif (Environment       == "dgx"):
     image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
     mailtext            ="training on DGX"
     nr_of_epochs        = 10000000 
-    nr_of_epochs_until_save_model = 1000
+    nr_of_epochs_until_save_model = 100
 
 def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
