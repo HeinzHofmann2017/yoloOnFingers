@@ -424,7 +424,8 @@ def main():
         writer=tf.summary.FileWriter("summary") 
         writer.add_graph(sess.graph) 
         
-        
+        training_matches = 0
+        validation_matches = 0
         print("start training....")
         for i in range(nr_of_epochs):
             
@@ -443,8 +444,9 @@ def main():
                             nr_of_matches += 1
                 match_probability = 100 * nr_of_matches / batchSize
                 print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
-                if(nr_of_matches > 50):
-                    mailer.mailto("Number of Matches in the validation Set is bigger than 50%. Done in "+ str(i)+ " Steps")
+                if(nr_of_matches > training_matches):
+                    training_matches+=3
+                    mailer.mailto("Number of Matches in the training Set reached "+str(nr_of_matches)+" %. Done in "+ str(i)+ " Steps")
                 
                 #validation:
                 sess.run(validation_init_op)
@@ -458,8 +460,9 @@ def main():
                             nr_of_matches += 1
                 match_probability = 100 * nr_of_matches / batchSize
                 print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
-                if(nr_of_matches > 50):
-                    mailer.mailto("Number of Matches in the validation Set is bigger than 50%. Done in "+ str(i)+ " Steps")
+                if(nr_of_matches > validation_matches):
+                    validation_matches+=3
+                    mailer.mailto("Number of Matches in the validation Set reached "+str(nr_of_matches)+" %. Done in "+ str(i)+ " Steps")
                 sess.run(training_init_op)
 
                 saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
