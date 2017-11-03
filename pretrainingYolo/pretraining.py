@@ -56,12 +56,12 @@ elif (Environment       == "dgx"):
     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
     image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
     mailtext            ="training on DGX"
-    nr_of_epochs       = 1000000 
+    nr_of_epochs        = 1000000 
     nr_of_epochs_until_save_model = 10000
 
 def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
-    #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12/"+picname)
+    #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12_grayscale/"+picname)
     image = tf.image.decode_jpeg(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float16)
     image = tf.random_crop(image,[224,224,1])
@@ -429,6 +429,8 @@ def main():
                 print(str(c))              
                 saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
                 print("model updatet")
+                if(c<6.8):
+                    mailer.mailto("improved model from 6.9 to under 6.8 after "+ str(i)+ " Steps")
                 
     
     # plt.show()
