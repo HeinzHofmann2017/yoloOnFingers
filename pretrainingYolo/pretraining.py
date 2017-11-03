@@ -34,7 +34,7 @@ Environment = "dgx"
 print("Enviroment =", Environment)
 
 if (Environment         == "Desktop"):    
-    batchSize           = 1
+    batchSize           = 2
     learning_rate       = 0.005
     capacity            = 10
     num_threads         = 2
@@ -47,7 +47,7 @@ if (Environment         == "Desktop"):
     nr_of_epochs_until_save_model = 1
     
 elif (Environment       == "dgx"):
-    batchSize           = 16
+    batchSize           = 32#Todo: play a little with the batchsize, maybe it works with higher batchsize
     learning_rate       = 0.005 
     capacity            = 2000
     num_threads         = 8
@@ -56,8 +56,8 @@ elif (Environment       == "dgx"):
     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
     image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
     mailtext            ="training on DGX"
-    nr_of_epochs        = 1000000 
-    nr_of_epochs_until_save_model = 10000
+    nr_of_epochs        = 10000000 
+    nr_of_epochs_until_save_model = 1000
 
 def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
@@ -400,6 +400,9 @@ def main():
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(grads_and_vars)
+        
+    with tf.name_scope("tester") as scope:
+        test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
 
     
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
@@ -419,18 +422,49 @@ def main():
         sess.run(init_op)
         
         writer=tf.summary.FileWriter("summary") 
-        writer.add_graph(sess.graph)     
+        writer.add_graph(sess.graph) 
+        
         
         print("start training....")
         for i in range(nr_of_epochs):
-
-            _, c, = sess.run([train_step, cost])
+            
+            #training:
+            _, c, = sess.run([train_step, cost])#Todo: reable training, when validation is working
+            
+            
             if(i%nr_of_epochs_until_save_model ==0):
-                print(str(c))              
+                c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
+                #print("full predicted tensor: " + str(predicted_tensor))
+                print("one shot training-cost: " +str(c))
+                nr_of_matches = 0                 
+                for k in range(batchSize):
+                    for number_of_Elements in range(1000):                                      
+                        if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
+                            nr_of_matches += 1
+                match_probability = 100 * nr_of_matches / batchSize
+                print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
+                if(nr_of_matches > 50):
+                    mailer.mailto("Number of Matches in the validation Set is bigger than 50%. Done in "+ str(i)+ " Steps")
+                
+                #validation:
+                sess.run(validation_init_op)
+                c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
+                #print("full predicted tensor: " + str(predicted_tensor))
+                print("validation cost: " +str(c))
+                nr_of_matches = 0                 
+                for k in range(batchSize):
+                    for number_of_Elements in range(1000):                                      
+                        if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
+                            nr_of_matches += 1
+                match_probability = 100 * nr_of_matches / batchSize
+                print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
+                if(nr_of_matches > 50):
+                    mailer.mailto("Number of Matches in the validation Set is bigger than 50%. Done in "+ str(i)+ " Steps")
+                sess.run(training_init_op)
+
                 saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/pretrain_model.ckpt", global_step=i)
                 print("model updatet")
-                if(c<6.8):
-                    mailer.mailto("improved model from 6.9 to under 6.8 after "+ str(i)+ " Steps")
+
                 
     
     # plt.show()
