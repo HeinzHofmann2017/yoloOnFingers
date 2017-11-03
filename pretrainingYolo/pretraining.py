@@ -450,7 +450,7 @@ def main():
                 
                 #validation:
                 sess.run(validation_init_op)
-                c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
+                c,predicted_tensor,label_tensor,predicted_fully = sess.run([cost,test_vectors,labels,fully_26])
                 #print("full predicted tensor: " + str(predicted_tensor))
                 print("validation cost: " +str(c))
                 nr_of_matches = 0                 
@@ -458,7 +458,7 @@ def main():
                     for number_of_Elements in range(1000):                                      
                         if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
                             nr_of_matches += 1
-                print(str(predicted_tensor[k][0]))
+                print(str(predicted_fully[k][0]))
                 match_probability = 100 * nr_of_matches / batchSize
                 print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
                 if(nr_of_matches > validation_matches):
