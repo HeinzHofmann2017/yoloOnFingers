@@ -139,6 +139,7 @@ def main():
         b1_h = tf.summary.histogram("biases1",b1)
         conv_1_unbiased=tf.nn.conv2d(input=images,filter=W1,strides=[1,2,2,1],padding='SAME',name="conv_1_unbiased")
         conv_1_linear = tf.add(conv_1_unbiased, b1,name="conv_1_linear")
+        prerelu1_h = tf.summary.histogram("prerelu1",conv_1_linear)
         conv_1 = tf.maximum(0.1*conv_1_linear,conv_1_linear,name="leaky_relu_1")
 #==============================================================================
 # Layer 2:
@@ -157,6 +158,7 @@ def main():
         b3_h = tf.summary.histogram("biases3",b3)
         conv_3_unbiased = tf.nn.conv2d(input=mpool_2,filter=W3,strides=[1,1,1,1], padding='SAME',name="conv_3_unbiased")
         conv_3_linear = tf.add(conv_3_unbiased, b3, name="conv_3_linear")
+        prerelu3_h = tf.summary.histogram("prerelu3",conv_3_linear)
         conv_3 = tf.maximum(0.1*conv_3_linear, conv_3_linear, name="leaky_relu_3")
 #==============================================================================
 # Layer 4:
@@ -175,6 +177,7 @@ def main():
         b5_h = tf.summary.histogram("biases5",b5)
         conv_5_unbiased = tf.nn.conv2d(input=mpool_4, filter=W5,strides=[1,1,1,1], padding="SAME", name="conv_5_unbiased")
         conv_5_linear = tf.add(conv_5_unbiased, b5, name = "conv_5_linear")
+        prerelu5_h = tf.summary.histogram("prerelu5",conv_5_linear)
         conv_5 = tf.maximum(0.1*conv_5_linear, conv_5_linear, name="leaky_relu_5")
 #==============================================================================
 # Layer 6:
@@ -186,7 +189,8 @@ def main():
         W6_h = tf.summary.histogram("weights6",W6)
         b6_h = tf.summary.histogram("biases6",b6)
         conv_6_unbiased = tf.nn.conv2d(input=conv_5,filter=W6,strides=[1,1,1,1], padding="SAME", name="conv_6_unbiased")
-        conv_6_linear = tf.add(conv_6_unbiased, b6, name="conv_6_linear")
+        conv_6_linear = tf.add(conv_6_unbiased, b6)
+        prerelu6_h = tf.summary.histogram("prerelu6",conv_6_linear)
         conv_6 = tf.maximum(0.1*conv_6_linear, conv_6_linear, name="leaky_relu_6")
 #==============================================================================
 # Layer 7:
@@ -198,7 +202,8 @@ def main():
         W7_h = tf.summary.histogram("weights7",W7)
         b7_h = tf.summary.histogram("biases7",b7)
         conv_7_unbiased = tf.nn.conv2d(input=conv_6,filter=W7,strides=[1,1,1,1],padding="SAME", name="conv_7_unbiased")
-        conv_7_linear = tf.add(conv_7_unbiased, b7, name="conv_7_linear")
+        conv_7_linear = tf.add(conv_7_unbiased, b7)
+        prerelu7_h = tf.summary.histogram("prerelu7",conv_7_linear)
         conv_7 = tf.maximum(0.1*conv_7_linear, conv_7_linear, name="leaky_relu_7")
 #==============================================================================
 # Layer 8:
@@ -211,6 +216,7 @@ def main():
         b8_h = tf.summary.histogram("biases8",b8)
         conv_8_unbiased = tf.nn.conv2d(input=conv_7,filter=W8,strides=[1,1,1,1],padding="SAME",name="conv_8_unbiased")
         conv_8_linear = tf.add(conv_8_unbiased, b8, name="conv_8_linear")
+        prerelu8_h = tf.summary.histogram("prerelu8",conv_8_linear)
         conv_8 = tf.maximum(0.1*conv_8_linear, conv_8_linear, name="leaky_relu_8")
 #==============================================================================
 # Layer 9:
@@ -229,6 +235,7 @@ def main():
         b10_h = tf.summary.histogram("biases10",b10)
         conv_10_unbiased = tf.nn.conv2d(input=mpool_9,filter=W10,strides=[1,1,1,1],padding="SAME", name="conv_10_unbiased")
         conv_10_linear = tf.add(conv_10_unbiased, b10, name="conv_10_linear")
+        prerelu10_h = tf.summary.histogram("prerelu10",conv_10_linear)
         conv_10 = tf.maximum(0.1*conv_10_linear, conv_10_linear, name="leaky_relu_10")
 #==============================================================================
 # Layer 11:
@@ -241,6 +248,7 @@ def main():
         b11_h = tf.summary.histogram("biases11",b11)
         conv_11_unbiased = tf.nn.conv2d(input=conv_10,filter=W11,strides=[1,1,1,1],padding="SAME",name="conv_11_unbiased")
         conv_11_linear = tf.add(conv_11_unbiased,b11,name="conv_11_linear")
+        prerelu11_h = tf.summary.histogram("prerelu11",conv_11_linear)
         conv_11 = tf.maximum(0.1*conv_11_linear,conv_11_linear, name="leaky_relu_11")
 #==============================================================================
 # Layer 12:
@@ -253,6 +261,7 @@ def main():
         b12_h = tf.summary.histogram("biases12",b12)
         conv_12_unbiased = tf.nn.conv2d(input=conv_11,filter=W12,strides=[1,1,1,1],padding="SAME", name="conv_12_unbiased")
         conv_12_linear = tf.add(conv_12_unbiased, b12, name="conv_12_linear")
+        prerelu12_h = tf.summary.histogram("prerelu12",conv_12_linear)
         conv_12 = tf.maximum(0.1*conv_12_linear, conv_12_linear, name="leaky_relu_12")
 #==============================================================================
 # Layer 13:
@@ -265,6 +274,7 @@ def main():
         b13_h = tf.summary.histogram("biases13",b13)
         conv_13_unbiased = tf.nn.conv2d(input=conv_12,filter=W13,strides=[1,1,1,1],padding="SAME",name="conv_13_unbiased")
         conv_13_linear = tf.add(conv_13_unbiased,b13,name="conv_13_linear")
+        prerelu13_h = tf.summary.histogram("prerelu13",conv_13_linear)
         conv_13 = tf.maximum(0.1*conv_13_linear,conv_13_linear, name="leaky_relu_13")
 #==============================================================================
 # Layer 14:
@@ -277,6 +287,7 @@ def main():
         b14_h = tf.summary.histogram("biases14",b14)
         conv_14_unbiased = tf.nn.conv2d(input=conv_13,filter=W14,strides=[1,1,1,1],padding="SAME", name="conv_14_unbiased")
         conv_14_linear = tf.add(conv_14_unbiased, b14, name="conv_14_linear")
+        prerelu14_h = tf.summary.histogram("prerelu14",conv_14_linear)
         conv_14 = tf.maximum(0.1*conv_14_linear, conv_14_linear, name="leaky_relu_14")
 #==============================================================================
 # Layer 15:
@@ -289,6 +300,7 @@ def main():
         b15_h = tf.summary.histogram("biases15",b15)
         conv_15_unbiased = tf.nn.conv2d(input=conv_14,filter=W15,strides=[1,1,1,1],padding="SAME",name="conv_15_unbiased")
         conv_15_linear = tf.add(conv_15_unbiased,b15,name="conv_15_linear")
+        prerelu15_h = tf.summary.histogram("prerelu15",conv_15_linear)
         conv_15 = tf.maximum(0.1*conv_15_linear,conv_15_linear, name="leaky_relu_15")
 #==============================================================================
 # Layer 16:
@@ -301,6 +313,7 @@ def main():
         b16_h = tf.summary.histogram("biases16",b16)
         conv_16_unbiased = tf.nn.conv2d(input=conv_15,filter=W16,strides=[1,1,1,1],padding="SAME", name="conv_16_unbiased")
         conv_16_linear = tf.add(conv_16_unbiased, b16, name="conv_16_linear")
+        prerelu16_h = tf.summary.histogram("prerelu16",conv_16_linear)
         conv_16 = tf.maximum(0.1*conv_16_linear, conv_16_linear, name="leaky_relu_16")
 #==============================================================================
 # Layer 17:
@@ -313,6 +326,7 @@ def main():
         b17_h = tf.summary.histogram("biases17",b17)
         conv_17_unbiased = tf.nn.conv2d(input=conv_16,filter=W17,strides=[1,1,1,1],padding="SAME",name="conv_17_unbiased")
         conv_17_linear = tf.add(conv_17_unbiased,b17,name="conv_17_linear")
+        prerelu17_h = tf.summary.histogram("prerelu17",conv_17_linear)
         conv_17 = tf.maximum(0.1*conv_17_linear,conv_17_linear, name="leaky_relu_17")   
 #==============================================================================
 # Layer 18:
@@ -325,6 +339,7 @@ def main():
         b18_h = tf.summary.histogram("biases18",b18)
         conv_18_unbiased = tf.nn.conv2d(input=conv_17,filter=W18,strides=[1,1,1,1],padding="SAME", name="conv_18_unbiased")
         conv_18_linear = tf.add(conv_18_unbiased, b18, name="conv_18_linear")
+        prerelu18_h = tf.summary.histogram("prerelu18",conv_18_linear)
         conv_18 = tf.maximum(0.1*conv_18_linear, conv_18_linear, name="leaky_relu_18")
 #==============================================================================
 # Layer 19:
@@ -337,6 +352,7 @@ def main():
         b19_h = tf.summary.histogram("biases19",b19)
         conv_19_unbiased = tf.nn.conv2d(input=conv_18,filter=W19,strides=[1,1,1,1],padding="SAME",name="conv_19_unbiased")
         conv_19_linear = tf.add(conv_19_unbiased,b19,name="conv_19_linear")
+        prerelu19_h = tf.summary.histogram("prerelu19",conv_19_linear)
         conv_19 = tf.maximum(0.1*conv_19_linear,conv_19_linear, name="leaky_relu_19")
 #==============================================================================
 # Layer 20:
@@ -355,6 +371,7 @@ def main():
         b21_h = tf.summary.histogram("biases21",b21)
         conv_21_unbiased = tf.nn.conv2d(input=mpool_20,filter=W21,strides=[1,1,1,1],padding="SAME", name="conv_21_unbiased")
         conv_21_linear = tf.add(conv_21_unbiased, b21, name="conv_21_linear")
+        prerelu21_h = tf.summary.histogram("prerelu21",conv_21_linear)
         conv_21 = tf.maximum(0.1*conv_21_linear, conv_21_linear, name="leaky_relu_21")
 #==============================================================================
 # Layer 22:
@@ -367,6 +384,7 @@ def main():
         b22_h = tf.summary.histogram("biases22",b22)
         conv_22_unbiased = tf.nn.conv2d(input=conv_21,filter=W22,strides=[1,1,1,1],padding="SAME", name="conv_22_unbiased")
         conv_22_linear = tf.add(conv_22_unbiased, b22, name="conv_22_linear")
+        prerelu22_h = tf.summary.histogram("prerelu22",conv_22_linear)
         conv_22 = tf.maximum(0.1*conv_22_linear, conv_22_linear, name="leaky_relu_22")
 #==============================================================================
 # Layer 23:
@@ -379,6 +397,7 @@ def main():
         b23_h = tf.summary.histogram("biases23",b23)
         conv_23_unbiased = tf.nn.conv2d(input=conv_22,filter=W23,strides=[1,1,1,1],padding="SAME", name="conv_23_unbiased")
         conv_23_linear = tf.add(conv_23_unbiased, b23, name="conv_23_linear")
+        prerelu23_h = tf.summary.histogram("prerelu23",conv_23_linear)
         conv_23 = tf.maximum(0.1*conv_23_linear, conv_23_linear, name="leaky_relu_23")
 #==============================================================================
 # Layer 24:
@@ -391,6 +410,7 @@ def main():
         b24_h = tf.summary.histogram("biases24",b24)
         conv_24_unbiased = tf.nn.conv2d(input=conv_23,filter=W24,strides=[1,1,1,1],padding="SAME", name="conv_24_unbiased")
         conv_24_linear = tf.add(conv_24_unbiased, b24, name="conv_24_linear")
+        prerelu24_h = tf.summary.histogram("prerelu24",conv_24_linear)
         conv_24 = tf.maximum(0.1*conv_24_linear, conv_24_linear, name="leaky_relu_24")
 
 
@@ -417,7 +437,9 @@ def main():
         b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float16),name="b26")
         W26_h = tf.summary.histogram("weights26",W26)
         b26_h = tf.summary.histogram("biases26",b26)
-        fully_26 = tf.nn.relu(tf.matmul(input_26,W26)+b26)
+        prerelu26 = tf.matmul(input_26,W26)+b26
+        prerelu26_h = tf.summary.histogram("prerelu26",prerelu26)
+        fully_26 = tf.nn.relu(prerelu26)
 
 
 
