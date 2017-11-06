@@ -48,7 +48,7 @@ if (Environment         == "Desktop"):
     
 elif (Environment       == "dgx"):
     batchSize           = 128
-    learning_rate       = 0.01 
+    learning_rate       = 1 
     capacity            = 2000
     num_threads         = 8
     min_after_dequeue   = 1000
