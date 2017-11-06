@@ -446,7 +446,7 @@ def main():
         
     with tf.name_scope("cost_function") as scope:
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=fully_26))
-        cost_h = tf.summary.histogram("Costs",cost)
+        cost_h = tf.summary.scalar("Costs",cost)
 
         
     with tf.name_scope("optimizer") as scope:
