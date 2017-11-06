@@ -29,8 +29,8 @@ import mailer
 
 #import matplotlib.pyplot as plt
 
-Environment = "dgx"
-#Environment = "Desktop"
+#Environment = "dgx"
+Environment = "Desktop"
 print("Enviroment =", Environment)
 
 if (Environment         == "Desktop"):    
@@ -135,6 +135,8 @@ def main():
     with tf.name_scope("Layer1_Conv") as scope:
         W1 = tf.Variable(tf.truncated_normal(shape=[7,7,1,64], stddev=0.01, dtype=tf.float16),name='W1')
         b1 = tf.Variable(tf.truncated_normal(shape=[64],stddev=0.01,dtype=tf.float16),name='b1')
+        W1_h = tf.summary.histogram("weights1",W1)
+        b1_h = tf.summary.histogram("biases1",b1)
         conv_1_unbiased=tf.nn.conv2d(input=images,filter=W1,strides=[1,2,2,1],padding='SAME',name="conv_1_unbiased")
         conv_1_linear = tf.add(conv_1_unbiased, b1,name="conv_1_linear")
         conv_1 = tf.maximum(0.1*conv_1_linear,conv_1_linear,name="leaky_relu_1")
@@ -151,6 +153,8 @@ def main():
     with tf.name_scope("Layer3_Conv") as scope:
         W3 = tf.Variable(tf.truncated_normal(shape=[3,3,64,192],stddev=0.01,dtype=tf.float16), name='W3')
         b3 = tf.Variable(tf.truncated_normal(shape=[192],stddev=0.01,dtype=tf.float16),name='b3')
+        W3_h = tf.summary.histogram("weights3",W3)
+        b3_h = tf.summary.histogram("biases3",b3)
         conv_3_unbiased = tf.nn.conv2d(input=mpool_2,filter=W3,strides=[1,1,1,1], padding='SAME',name="conv_3_unbiased")
         conv_3_linear = tf.add(conv_3_unbiased, b3, name="conv_3_linear")
         conv_3 = tf.maximum(0.1*conv_3_linear, conv_3_linear, name="leaky_relu_3")
@@ -167,6 +171,8 @@ def main():
     with tf.name_scope("Layer5_Conv") as scope:
         W5 = tf.Variable(tf.truncated_normal(shape=[1,1,192,128],stddev=0.01,dtype=tf.float16),name="W5")
         b5 = tf.Variable(tf.truncated_normal(shape=[128],stddev=0.01,dtype=tf.float16),name="b5")
+        W5_h = tf.summary.histogram("weights5",W5)
+        b5_h = tf.summary.histogram("biases5",b5)
         conv_5_unbiased = tf.nn.conv2d(input=mpool_4, filter=W5,strides=[1,1,1,1], padding="SAME", name="conv_5_unbiased")
         conv_5_linear = tf.add(conv_5_unbiased, b5, name = "conv_5_linear")
         conv_5 = tf.maximum(0.1*conv_5_linear, conv_5_linear, name="leaky_relu_5")
@@ -177,6 +183,8 @@ def main():
     with tf.name_scope("Layer6_Conv") as scope:
         W6 = tf.Variable(tf.truncated_normal(shape=[3,3,128,256],stddev=0.01, dtype=tf.float16),name="W6")
         b6 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b6")
+        W6_h = tf.summary.histogram("weights6",W6)
+        b6_h = tf.summary.histogram("biases6",b6)
         conv_6_unbiased = tf.nn.conv2d(input=conv_5,filter=W6,strides=[1,1,1,1], padding="SAME", name="conv_6_unbiased")
         conv_6_linear = tf.add(conv_6_unbiased, b6, name="conv_6_linear")
         conv_6 = tf.maximum(0.1*conv_6_linear, conv_6_linear, name="leaky_relu_6")
@@ -187,6 +195,8 @@ def main():
     with tf.name_scope("Layer7_Conv") as scope:
         W7 = tf.Variable(tf.truncated_normal(shape=[1,1,256,256],stddev=0.01,dtype=tf.float16),name="W7")
         b7 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b7")
+        W7_h = tf.summary.histogram("weights7",W7)
+        b7_h = tf.summary.histogram("biases7",b7)
         conv_7_unbiased = tf.nn.conv2d(input=conv_6,filter=W7,strides=[1,1,1,1],padding="SAME", name="conv_7_unbiased")
         conv_7_linear = tf.add(conv_7_unbiased, b7, name="conv_7_linear")
         conv_7 = tf.maximum(0.1*conv_7_linear, conv_7_linear, name="leaky_relu_7")
@@ -197,6 +207,8 @@ def main():
     with tf.name_scope("Layer8_Conv") as scope:
         W8 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W8")
         b8 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b8")
+        W8_h = tf.summary.histogram("weights8",W8)
+        b8_h = tf.summary.histogram("biases8",b8)
         conv_8_unbiased = tf.nn.conv2d(input=conv_7,filter=W8,strides=[1,1,1,1],padding="SAME",name="conv_8_unbiased")
         conv_8_linear = tf.add(conv_8_unbiased, b8, name="conv_8_linear")
         conv_8 = tf.maximum(0.1*conv_8_linear, conv_8_linear, name="leaky_relu_8")
@@ -213,6 +225,8 @@ def main():
     with tf.name_scope("Layer10_Conv") as scope:    #Todo: ????
         W10 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W10")
         b10 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b10")
+        W10_h = tf.summary.histogram("weights10",W10)
+        b10_h = tf.summary.histogram("biases10",b10)
         conv_10_unbiased = tf.nn.conv2d(input=mpool_9,filter=W10,strides=[1,1,1,1],padding="SAME", name="conv_10_unbiased")
         conv_10_linear = tf.add(conv_10_unbiased, b10, name="conv_10_linear")
         conv_10 = tf.maximum(0.1*conv_10_linear, conv_10_linear, name="leaky_relu_10")
@@ -223,6 +237,8 @@ def main():
     with tf.name_scope("Layer11_Conv") as scope:
         W11 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W11")
         b11 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b11")
+        W11_h = tf.summary.histogram("weights11",W11)
+        b11_h = tf.summary.histogram("biases11",b11)
         conv_11_unbiased = tf.nn.conv2d(input=conv_10,filter=W11,strides=[1,1,1,1],padding="SAME",name="conv_11_unbiased")
         conv_11_linear = tf.add(conv_11_unbiased,b11,name="conv_11_linear")
         conv_11 = tf.maximum(0.1*conv_11_linear,conv_11_linear, name="leaky_relu_11")
@@ -233,6 +249,8 @@ def main():
     with tf.name_scope("Layer12_Conv") as scope:    #Todo: ????
         W12 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W12")
         b12 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b12")
+        W12_h = tf.summary.histogram("weights12",W12)
+        b12_h = tf.summary.histogram("biases12",b12)
         conv_12_unbiased = tf.nn.conv2d(input=conv_11,filter=W12,strides=[1,1,1,1],padding="SAME", name="conv_12_unbiased")
         conv_12_linear = tf.add(conv_12_unbiased, b12, name="conv_12_linear")
         conv_12 = tf.maximum(0.1*conv_12_linear, conv_12_linear, name="leaky_relu_12")
@@ -243,6 +261,8 @@ def main():
     with tf.name_scope("Layer13_Conv") as scope:
         W13 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W13")
         b13 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b13")
+        W13_h = tf.summary.histogram("weights13",W13)
+        b13_h = tf.summary.histogram("biases13",b13)
         conv_13_unbiased = tf.nn.conv2d(input=conv_12,filter=W13,strides=[1,1,1,1],padding="SAME",name="conv_13_unbiased")
         conv_13_linear = tf.add(conv_13_unbiased,b13,name="conv_13_linear")
         conv_13 = tf.maximum(0.1*conv_13_linear,conv_13_linear, name="leaky_relu_13")
@@ -253,6 +273,8 @@ def main():
     with tf.name_scope("Layer10_Conv") as scope:    #Todo: ????
         W14 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W14")
         b14 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b14")
+        W14_h = tf.summary.histogram("weights14",W14)
+        b14_h = tf.summary.histogram("biases14",b14)
         conv_14_unbiased = tf.nn.conv2d(input=conv_13,filter=W14,strides=[1,1,1,1],padding="SAME", name="conv_14_unbiased")
         conv_14_linear = tf.add(conv_14_unbiased, b14, name="conv_14_linear")
         conv_14 = tf.maximum(0.1*conv_14_linear, conv_14_linear, name="leaky_relu_14")
@@ -263,6 +285,8 @@ def main():
     with tf.name_scope("Layer15_Conv") as scope:
         W15 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W15")
         b15 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b15")
+        W15_h = tf.summary.histogram("weights15",W15)
+        b15_h = tf.summary.histogram("biases15",b15)
         conv_15_unbiased = tf.nn.conv2d(input=conv_14,filter=W15,strides=[1,1,1,1],padding="SAME",name="conv_15_unbiased")
         conv_15_linear = tf.add(conv_15_unbiased,b15,name="conv_15_linear")
         conv_15 = tf.maximum(0.1*conv_15_linear,conv_15_linear, name="leaky_relu_15")
@@ -273,6 +297,8 @@ def main():
     with tf.name_scope("Layer16_Conv") as scope:    #Todo: ????
         W16 = tf.Variable(tf.truncated_normal(shape=[1,1,512,256],stddev=0.01,dtype=tf.float16),name="W16")
         b16 = tf.Variable(tf.truncated_normal(shape=[256],stddev=0.01,dtype=tf.float16),name="b16")
+        W16_h = tf.summary.histogram("weights16",W16)
+        b16_h = tf.summary.histogram("biases16",b16)
         conv_16_unbiased = tf.nn.conv2d(input=conv_15,filter=W16,strides=[1,1,1,1],padding="SAME", name="conv_16_unbiased")
         conv_16_linear = tf.add(conv_16_unbiased, b16, name="conv_16_linear")
         conv_16 = tf.maximum(0.1*conv_16_linear, conv_16_linear, name="leaky_relu_16")
@@ -283,6 +309,8 @@ def main():
     with tf.name_scope("Layer17_Conv") as scope:
         W17 = tf.Variable(tf.truncated_normal(shape=[3,3,256,512],stddev=0.01,dtype=tf.float16),name="W17")
         b17 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b17")
+        W17_h = tf.summary.histogram("weights17",W17)
+        b17_h = tf.summary.histogram("biases17",b17)
         conv_17_unbiased = tf.nn.conv2d(input=conv_16,filter=W17,strides=[1,1,1,1],padding="SAME",name="conv_17_unbiased")
         conv_17_linear = tf.add(conv_17_unbiased,b17,name="conv_17_linear")
         conv_17 = tf.maximum(0.1*conv_17_linear,conv_17_linear, name="leaky_relu_17")   
@@ -293,6 +321,8 @@ def main():
     with tf.name_scope("Layer18_Conv") as scope:
         W18 = tf.Variable(tf.truncated_normal(shape=[1,1,512,512],stddev=0.01,dtype=tf.float16),name="W18")
         b18 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b18")
+        W18_h = tf.summary.histogram("weights18",W18)
+        b18_h = tf.summary.histogram("biases18",b18)
         conv_18_unbiased = tf.nn.conv2d(input=conv_17,filter=W18,strides=[1,1,1,1],padding="SAME", name="conv_18_unbiased")
         conv_18_linear = tf.add(conv_18_unbiased, b18, name="conv_18_linear")
         conv_18 = tf.maximum(0.1*conv_18_linear, conv_18_linear, name="leaky_relu_18")
@@ -303,6 +333,8 @@ def main():
     with tf.name_scope("Layer19_Conv") as scope:
         W19 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float16),name="W19")
         b19 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b19")
+        W19_h = tf.summary.histogram("weights19",W19)
+        b19_h = tf.summary.histogram("biases19",b19)
         conv_19_unbiased = tf.nn.conv2d(input=conv_18,filter=W19,strides=[1,1,1,1],padding="SAME",name="conv_19_unbiased")
         conv_19_linear = tf.add(conv_19_unbiased,b19,name="conv_19_linear")
         conv_19 = tf.maximum(0.1*conv_19_linear,conv_19_linear, name="leaky_relu_19")
@@ -319,6 +351,8 @@ def main():
     with tf.name_scope("Layer21_Conv") as scope:    #Todo: ????
         W21 = tf.Variable(tf.truncated_normal(shape=[1,1,1024,512],stddev=0.01,dtype=tf.float16),name="W21")
         b21 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b21")
+        W21_h = tf.summary.histogram("weights21",W21)
+        b21_h = tf.summary.histogram("biases21",b21)
         conv_21_unbiased = tf.nn.conv2d(input=mpool_20,filter=W21,strides=[1,1,1,1],padding="SAME", name="conv_21_unbiased")
         conv_21_linear = tf.add(conv_21_unbiased, b21, name="conv_21_linear")
         conv_21 = tf.maximum(0.1*conv_21_linear, conv_21_linear, name="leaky_relu_21")
@@ -329,6 +363,8 @@ def main():
     with tf.name_scope("Layer22_Conv") as scope:    
         W22 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float16),name="W22")
         b22 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b22")
+        W22_h = tf.summary.histogram("weights22",W22)
+        b22_h = tf.summary.histogram("biases22",b22)
         conv_22_unbiased = tf.nn.conv2d(input=conv_21,filter=W22,strides=[1,1,1,1],padding="SAME", name="conv_22_unbiased")
         conv_22_linear = tf.add(conv_22_unbiased, b22, name="conv_22_linear")
         conv_22 = tf.maximum(0.1*conv_22_linear, conv_22_linear, name="leaky_relu_22")
@@ -339,6 +375,8 @@ def main():
     with tf.name_scope("Layer23_Conv") as scope:    #Todo: ????
         W23 = tf.Variable(tf.truncated_normal(shape=[1,1,1024,512],stddev=0.01,dtype=tf.float16),name="W23")
         b23 = tf.Variable(tf.truncated_normal(shape=[512],stddev=0.01,dtype=tf.float16),name="b23")
+        W23_h = tf.summary.histogram("weights23",W23)
+        b23_h = tf.summary.histogram("biases23",b23)
         conv_23_unbiased = tf.nn.conv2d(input=conv_22,filter=W23,strides=[1,1,1,1],padding="SAME", name="conv_23_unbiased")
         conv_23_linear = tf.add(conv_23_unbiased, b23, name="conv_23_linear")
         conv_23 = tf.maximum(0.1*conv_23_linear, conv_23_linear, name="leaky_relu_23")
@@ -349,6 +387,8 @@ def main():
     with tf.name_scope("Layer24_Conv") as scope:    
         W24 = tf.Variable(tf.truncated_normal(shape=[3,3,512,1024],stddev=0.01,dtype=tf.float16),name="W24")
         b24 = tf.Variable(tf.truncated_normal(shape=[1024],stddev=0.01,dtype=tf.float16),name="b24")
+        W24_h = tf.summary.histogram("weights24",W24)
+        b24_h = tf.summary.histogram("biases24",b24)
         conv_24_unbiased = tf.nn.conv2d(input=conv_23,filter=W24,strides=[1,1,1,1],padding="SAME", name="conv_24_unbiased")
         conv_24_linear = tf.add(conv_24_unbiased, b24, name="conv_24_linear")
         conv_24 = tf.maximum(0.1*conv_24_linear, conv_24_linear, name="leaky_relu_24")
@@ -375,19 +415,17 @@ def main():
         input_26 = tf.reshape(tensor=avgpool_25, shape=[batchSize,4*4*1024])
         W26 = tf.Variable(tf.truncated_normal(shape=[4*4*1024,1000],stddev=0.01,dtype=tf.float16),name="W26")
         b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float16),name="b26")
-        fully_26 = tf.nn.relu(tf.matmul(input_26,W26)+b26,name="fully_26")
+        W26_h = tf.summary.histogram("weights26",W26)
+        b26_h = tf.summary.histogram("biases26",b26)
+        fully_26 = tf.nn.relu(tf.matmul(input_26,W26)+b26)
 
 
 
         
     with tf.name_scope("cost_function") as scope:
-        #make data ready for using with 
-        #cost_function = output_32[batchElement,hoehe,breite,tiefe]
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=fully_26))
-        #cost_x =tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)))
-        #cost_y =tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))
-        #cost_p =tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,2],probs)))
-        #cost = tf.add(tf.add(cost_x,cost_y),cost_p)
+        cost_h = tf.summary.histogram("Costs",cost)
+
         
     with tf.name_scope("optimizer") as scope:
         # Gradient descen
@@ -413,7 +451,7 @@ def main():
         save_relative_paths=True,)
 
     
-
+    merged_summary_op = tf.summary.merge_all()
 
     with tf.Session() as sess:
         
@@ -421,7 +459,7 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        writer=tf.summary.FileWriter("summary") 
+        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary")
         writer.add_graph(sess.graph) 
         
         training_matches = 0
@@ -431,6 +469,7 @@ def main():
             
             #training:
             _ = sess.run([train_step])
+            writer.add_summary(sess.run(merged_summary_op),i)
             
             #testing (on traindata and on validationdata)
             if(i%nr_of_epochs_until_save_model ==0):
