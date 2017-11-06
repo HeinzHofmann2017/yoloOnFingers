@@ -439,7 +439,7 @@ def main():
         b26_h = tf.summary.histogram("biases26",b26)
         prerelu26 = tf.matmul(input_26,W26)+b26
         prerelu26_h = tf.summary.histogram("prerelu26",prerelu26)
-        fully_26 = tf.nn.relu(prerelu26)
+        fully_26 = prerelu26#tf.nn.relu(prerelu26)
 
 
 
