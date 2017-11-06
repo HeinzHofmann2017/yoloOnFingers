@@ -435,9 +435,13 @@ def main():
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
         grads_and_vars = optimizer.compute_gradients(cost)
+
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(grads_and_vars)
+    for grad, var in grads_and_vars:
+        if grad is not None:
+            tf.summary.histogram("gradients", grad)
         
     with tf.name_scope("onehot_from_prediction") as scope:
         test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
