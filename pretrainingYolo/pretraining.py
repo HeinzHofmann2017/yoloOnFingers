@@ -184,14 +184,14 @@ def main():
 #     Averagepool 3x3 -s-3
 #==============================================================================
     with tf.name_scope("25_AvgPool_Layer") as scope:
-        avgpool_25 = tf.nn.avg_pool(output_24,ksize=[1,3,3,1],strides=[1,3,3,1],padding="SAME", name="avgpool_25")
+        avgpool_25 = tf.nn.avg_pool(output_24,ksize=[1,7,7,1],strides=[1,7,7,1],padding="SAME", name="avgpool_25")
 #==============================================================================
 # Layer 26:
 #     Fully connected Layer
 #==============================================================================
     with tf.name_scope("26_full_Layer") as scope:
-        input_26 = tf.reshape(tensor=avgpool_25, shape=[batchSize,2*2*1024])
-        W26 = tf.Variable(tf.truncated_normal(shape=[2*2*1024,1000],stddev=0.01,dtype=tf.float16),name="W26")
+        input_26 = tf.reshape(tensor=avgpool_25, shape=[batchSize,1*1*1024])
+        W26 = tf.Variable(tf.truncated_normal(shape=[1*1*1024,1000],stddev=0.01,dtype=tf.float16),name="W26")
         b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float16),name="b26")
         W26_h = tf.summary.histogram("weights26",W26)
         b26_h = tf.summary.histogram("biases26",b26)
