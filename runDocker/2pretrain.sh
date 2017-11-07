@@ -1,4 +1,4 @@
-NV_GPU=1  \
+NV_GPU=2  \
 nvidia-docker run --rm -t -i \
 -v /home/hhofmann/data:/mnt/data \
 -v /mnt/iscsi:/mnt/fast \
