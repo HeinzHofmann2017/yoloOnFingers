@@ -60,7 +60,7 @@ def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides):
         tensor = batchnorm(input_tensor=tensor)
         with tf.name_scope("summary"):
             variable_summaries(variable=W,name="W")
-            variable_summaries(variable=b,name="b")
+            #variable_summaries(variable=b,name="b")
             variable_summaries(variable=preactivate, name="preactivate")
         return tensor
         
