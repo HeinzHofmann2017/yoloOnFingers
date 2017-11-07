@@ -190,8 +190,8 @@ def main():
 #     Fully connected Layer
 #==============================================================================
     with tf.name_scope("26_full_Layer") as scope:
-        input_26 = tf.reshape(tensor=avgpool_25, shape=[batchSize,3*3*1024]) #Todo: Set the 1 back to 3
-        W26 = tf.Variable(tf.truncated_normal(shape=[3*3*1024,1000],stddev=0.01,dtype=tf.float16),name="W26") #Todo: Set the 1 back to 3
+        input_26 = tf.reshape(tensor=avgpool_25, shape=[batchSize,4*4*1024]) #Todo: Set the 1 back to 4
+        W26 = tf.Variable(tf.truncated_normal(shape=[4*4*1024,1000],stddev=0.01,dtype=tf.float16),name="W26") #Todo: Set the 1 back to 4
         b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float16),name="b26")
         W26_h = tf.summary.histogram("weights26",W26)
         b26_h = tf.summary.histogram("biases26",b26)
