@@ -254,7 +254,7 @@ def main():
             #training:
             _ = sess.run([train_step])
             writer.add_summary(sess.run(merged_summary_op),i)
-            print(str(i))
+            #print(str(i))
             
             #testing (on traindata and on validationdata)
             if(i%nr_of_epochs_until_save_model ==0):
