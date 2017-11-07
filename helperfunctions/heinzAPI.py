@@ -37,7 +37,7 @@ def batchnorm(input_tensor):
                                              variance_epsilon=1e-4,
                                              name=None)
 
-def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides):
+def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, batchnorm_=False):
     '''
     tensor:     "Tensor" Input-Tensor 4 dimensional [batches,width,height,depth] (Width and height could also be changed with each other)
     layerNr:    "Scalar" The number of the Layer in the whole context
@@ -57,7 +57,8 @@ def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides):
         #preactivate = tf.add(preactivate, b)
         with tf.name_scope("leaky_relu"):
             tensor = tf.maximum(0.1*preactivate,preactivate)
-        tensor = batchnorm(input_tensor=tensor)
+        if batchnorm_ == True:
+            tensor = batchnorm(input_tensor=tensor)
         with tf.name_scope("summary"):
             variable_summaries(variable=W,name="W")
             #variable_summaries(variable=b,name="b")
