@@ -49,7 +49,7 @@ if (Environment         == "Desktop"):
     nr_of_epochs_until_save_model = 1
     
 elif (Environment       == "dgx"):
-    batchSize           = 64
+    batchSize           = 1
     learning_rate       = 1 
     capacity            = 2000
     num_threads         = 8
