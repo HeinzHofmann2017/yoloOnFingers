@@ -35,6 +35,7 @@ import parserClass as pC
 parser_object = pC.make_parser()
 
 name                            = parser_object.modelname
+print(name)
 batchSize                       = parser_object.batch_Size
 learning_rate                   = parser_object.learning_rate
 num_threads                     = parser_object.num_Threads
