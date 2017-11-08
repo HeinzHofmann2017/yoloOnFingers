@@ -47,7 +47,7 @@ nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 
 
 def dataset_preprocessor(picname,labels):
-    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
+    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale_old/" + picname)
     #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12_grayscale/"+picname)
     image = tf.image.decode_jpeg(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float16)
@@ -215,54 +215,52 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/" + name)
+        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary" + name)
         writer.add_graph(sess.graph) 
         
         training_matches = 0
         validation_matches = 0
         print("start training....\n")
-        for i in range(nr_of_epochs):
-            
+        for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
-            _ = sess.run([train_step])
-            writer.add_summary(sess.run(merged_summary_op),i)
-            #print(str(i))
-            
-            #testing (on traindata and on validationdata)
-            if(i%nr_of_epochs_until_save_model ==0):
-                c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
-                #print("full predicted tensor: " + str(predicted_tensor))
-                print("one shot training-cost: " +str(c))
-                nr_of_matches = 0                 
-                for k in range(batchSize):
-                    for number_of_Elements in range(1000):                                      
-                        if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
-                            nr_of_matches += 1
-                match_probability = 100 * nr_of_matches / batchSize
-                print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
-                if(match_probability > training_matches):
-                    training_matches+=3
-                    mailer.mailto("Number of Matches in the training Set reached (with higher learnrat(0.05)) "+str(match_probability)+" %. Done in "+ str(i)+ " Steps")
+            for j in range(nr_of_epochs_until_save_model):        
+                _ = sess.run([train_step])
                 
-                #validation:
-                sess.run(validation_init_op)
-                c,predicted_tensor,label_tensor,predicted_fully = sess.run([cost,test_vectors,labels,fully_26])
-                #print("full predicted tensor: " + str(predicted_tensor))
-                print("validation cost: " +str(c))
-                nr_of_matches = 0                 
-                for k in range(batchSize):
-                    for number_of_Elements in range(1000):                                      
-                        if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
-                            nr_of_matches += 1
-                match_probability = 100 * nr_of_matches / batchSize
-                print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
-                if(match_probability > validation_matches):
-                    validation_matches+=3
-                    mailer.mailto("Number of Matches in the validation Set reached (with higher learnrat(0.05)) "+str(match_probability)+" %. Done in "+ str(i)+ " Steps")
-                sess.run(training_init_op)
+            #testing (on traindata and on validationdata)
+            writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
+            c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
+            #print("full predicted tensor: " + str(predicted_tensor))
+            print("one shot training-cost: " +str(c))
+            nr_of_matches = 0                 
+            for k in range(batchSize):
+                for number_of_Elements in range(1000):                                      
+                    if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
+                        nr_of_matches += 1
+            match_probability = 100 * nr_of_matches / batchSize
+            print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
+            if(match_probability > training_matches):
+                training_matches+=3
+                mailer.mailto("Number of Matches in the training Set reached  "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
+            
+            #validation:
+            sess.run(validation_init_op)
+            c,predicted_tensor,label_tensor,predicted_fully = sess.run([cost,test_vectors,labels,fully_26])
+            #print("full predicted tensor: " + str(predicted_tensor))
+            print("validation cost: " +str(c))
+            nr_of_matches = 0                 
+            for k in range(batchSize):
+                for number_of_Elements in range(1000):                                      
+                    if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
+                        nr_of_matches += 1
+            match_probability = 100 * nr_of_matches / batchSize
+            print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
+            if(match_probability > validation_matches):
+                validation_matches+=3
+                mailer.mailto("Number of Matches in the validation Set reached "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
+            sess.run(training_init_op)
 
-                saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights_normal/pretrain_model.ckpt", global_step=i)
-                print("model updatet\n")
+            saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/pretrained_weights/"+name+".ckpt", global_step=(i*nr_of_epochs_until_save_model+j))
+            print("model updatet\n")
 
                 
     
