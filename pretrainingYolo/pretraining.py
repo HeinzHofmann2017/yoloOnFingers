@@ -215,7 +215,7 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary" + name)
+        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary_" + name)
         writer.add_graph(sess.graph) 
         
         training_matches = 0
