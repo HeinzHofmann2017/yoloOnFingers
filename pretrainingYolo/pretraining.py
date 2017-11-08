@@ -44,37 +44,7 @@ origin_path                     = parser_object.origin_Path
 nr_of_epochs                    = parser_object.nr_of_epochs
 nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 
-#==============================================================================
-# #Environment = "dgx"
-# Environment = "Desktop"
-# print("Enviroment =", Environment)
-# 
-# if (Environment         == "Desktop"):    
-#     batchSize           = 2
-#     learning_rate       = 0.001
-#     num_threads         = 16
-#     buffer_size         = 20
-#     origin_path         ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path  
-#     image_path          ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path 
-#     summarypath         = origin_path + "../../getfingers_heinz/summarys/summarydesktop"
-#     mailtext            ="training on Desktop"
-#     nr_of_epochs       = 3
-#     nr_of_epochs_until_save_model = 1
-#==============================================================================
-    
-#==============================================================================
-# elif (Environment       == "dgx"):
-#     batchSize           = 128
-#     learning_rate       = 0.001
-#     num_threads         = 16
-#     buffer_size         = 100000
-#     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
-#     image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
-#     summarypath         = origin_path + "../../getfingers_heinz/summarys/summary_batchnorm"
-#     mailtext            ="training on DGX"
-#     nr_of_epochs        = 10000000 
-#     nr_of_epochs_until_save_model = 1000#all 10minutes
-#==============================================================================
+
 
 def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
@@ -123,6 +93,8 @@ def main():
                         off_value   =   0.0,
                         axis        =   -1,
                         dtype       =   tf.float32)    
+                        
+    images = hAPI.normalize_pictures(tensor=images)
 #==============================================================================
 #                                                       
 # HIer Graph aufbauen:                                                      
@@ -199,7 +171,6 @@ def main():
         prerelu26 = tf.matmul(input_26,W26)+b26
         prerelu26_h = tf.summary.histogram("prerelu26",prerelu26)
         fully_26 = prerelu26#tf.nn.relu(prerelu26)
-
 
 
         

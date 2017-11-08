@@ -80,3 +80,11 @@ def variable_summaries(variable, name=" "):
     tf.summary.scalar('max_'+name, tf.reduce_max(variable))
     tf.summary.scalar('min_'+name, tf.reduce_min(variable))
     tf.summary.histogram('histogram_'+name, variable)
+
+def normalize_pictures(tensor):
+    mean,var = tf.nn.moments(x=tensor, axes=[1,2],keep_dims=True)
+    tensor = tf.subtract(tensor , mean)
+    var = var + 1e-4
+    tensor = tf.div(tensor,var)
+    return tensor
+    
