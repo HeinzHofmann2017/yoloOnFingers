@@ -27,40 +27,53 @@ import analyse_Dataset
 sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
+import parserClass as pC
 
 #import matplotlib.pyplot as plt
 
-Environment = "dgx"
-#Environment = "Desktop"
-print("Enviroment =", Environment)
+#get default-Hyperparameters, btw. Parameters from shell-script:
+parser_object = pC.make_parser()
 
-if (Environment         == "Desktop"):    
-    batchSize           = 2
-    learning_rate       = 0.001
-    capacity            = 10
-    num_threads         = 2
-    min_after_dequeue   = 5
-    buffer_size         = 20
-    origin_path         ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path  
-    image_path          ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path 
-    summarypath         = origin_path + "../../getfingers_heinz/summarys/summarydesktop"
-    mailtext            ="training on Desktop"
-    nr_of_epochs       = 3
-    nr_of_epochs_until_save_model = 1
+name                            = parser_object.modelname
+batchSize                       = parser_object.batch_Size
+learning_rate                   = parser_object.learning_rate
+num_threads                     = parser_object.num_Threads
+buffer_size                     = parser_object.buffer_Size
+origin_path                     = parser_object.origin_Path
+nr_of_epochs                    = parser_object.nr_of_epochs
+nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
+
+#==============================================================================
+# #Environment = "dgx"
+# Environment = "Desktop"
+# print("Enviroment =", Environment)
+# 
+# if (Environment         == "Desktop"):    
+#     batchSize           = 2
+#     learning_rate       = 0.001
+#     num_threads         = 16
+#     buffer_size         = 20
+#     origin_path         ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path  
+#     image_path          ="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"#Desktop-path 
+#     summarypath         = origin_path + "../../getfingers_heinz/summarys/summarydesktop"
+#     mailtext            ="training on Desktop"
+#     nr_of_epochs       = 3
+#     nr_of_epochs_until_save_model = 1
+#==============================================================================
     
-elif (Environment       == "dgx"):
-    batchSize           = 128
-    learning_rate       = 0.001 
-    capacity            = 2000
-    num_threads         = 8
-    min_after_dequeue   = 1000
-    buffer_size         = 100000
-    origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
-    image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
-    summarypath         = origin_path + "../../getfingers_heinz/summarys/summary_batchnorm"
-    mailtext            ="training on DGX"
-    nr_of_epochs        = 10000000 
-    nr_of_epochs_until_save_model = 1000#all 10minutes
+#==============================================================================
+# elif (Environment       == "dgx"):
+#     batchSize           = 128
+#     learning_rate       = 0.001
+#     num_threads         = 16
+#     buffer_size         = 100000
+#     origin_path         ="/mnt/data/ilsvrc2012/LabelList_Heinz/"#dgx-path
+#     image_path          ="/mnt/fast/ilsvrc2012/ILSVRC2012_img_train_t12/"
+#     summarypath         = origin_path + "../../getfingers_heinz/summarys/summary_batchnorm"
+#     mailtext            ="training on DGX"
+#     nr_of_epochs        = 10000000 
+#     nr_of_epochs_until_save_model = 1000#all 10minutes
+#==============================================================================
 
 def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
@@ -68,21 +81,8 @@ def dataset_preprocessor(picname,labels):
     image = tf.image.decode_jpeg(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float16)
     image = tf.random_crop(image,[224,224,1])
-    
-    #When everything with preprocessing outside of dgx works fine, the following commented code can be deletet!!
-    #image = tf.image.rgb_to_grayscale(image)
-#==============================================================================
-#     image = tf.cond(tf.logical_and(tf.greater_equal(tf.shape(image)[0],224),
-#                                    tf.greater_equal(tf.shape(image)[1],224)),
-#                     lambda: tf.random_crop(image,[224,224,1]),
-#                     lambda: tf.image.resize_image_with_crop_or_pad(image,224,224))    
-#==============================================================================
-    
-    #if(tf.shape(image)[1]>224 and tf.shape(image)[2]>224):
-    #image = tf.random_crop(image,[224,224,1])
-    #else:
-    #    image = tf.image.resize_image_with_crop_or_pad(image, 224, 224)
     return image,labels
+    
 def main():
     print("TensorFlow version ", tf.__version__)
     
@@ -96,7 +96,7 @@ def main():
     train_data      = train_data.repeat()
     train_data      = train_data.shuffle(buffer_size=buffer_size)
     train_data      = train_data.map(map_func=dataset_preprocessor,
-                                     num_threads=16,
+                                     num_threads=num_threads,
                                      output_buffer_size=10000)
     train_data      = train_data.batch(batchSize)
     
@@ -106,7 +106,7 @@ def main():
     valid_data      = valid_data.repeat()
     valid_data      = valid_data.shuffle(buffer_size=buffer_size)
     valid_data      = valid_data.map(map_func=dataset_preprocessor,
-                                     num_threads=16,
+                                     num_threads=num_threads,
                                      output_buffer_size=10000)
     valid_data      = valid_data.batch(batchSize)
     
@@ -243,7 +243,7 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        writer=tf.summary.FileWriter(summarypath)
+        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/" + name)
         writer.add_graph(sess.graph) 
         
         training_matches = 0

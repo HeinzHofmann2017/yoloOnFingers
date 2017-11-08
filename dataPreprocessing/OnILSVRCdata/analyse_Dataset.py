@@ -91,56 +91,37 @@ class Dataset_Heinz(object):
     def get_all_picture_names(self, origin_path = "/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"):
         return pickle.load(open(origin_path + "all_picture_names.pkl", "rb"))
 #==============================================================================
-# Commented out, because the library PIL isn't supportet in our docker container on the dgx and this Function is only used on the desktop
+# should be Commented out, because the library PIL isn't supportet in our docker container on the dgx and this Function is only used on the desktop
 #==============================================================================
+    def save_pics_as_grayscale(self, origin_path="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"):
+        '''
+        1. gets Pictures from origin-directory(training and label-pictures)
+        2. converts Pictures to grayscale
+        3. resize Images so the smaller of both dimensions is 300
+        4. Stores Pictures to target-directory
+        '''
+        train_picnames = self.get_train_picnames(origin_path=origin_path)        
+        valid_picnames = self.get_valid_picnames(origin_path=origin_path)
+        target_size = 300
 #==============================================================================
-#     def save_pics_as_grayscale(self, origin_path="/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/"):
-#         train_picnames = self.get_train_picnames(origin_path=origin_path)        
-#         valid_picnames = self.get_valid_picnames(origin_path=origin_path)
 #         for i in range(len(train_picnames)):
-#             img = Image.open(origin_path+ "../ILSVRC2012_img_train_t12/" + train_picnames[i]).convert('L')
-#             old_size=img.size
-#             if old_size[0]<244 or old_size[1]<244:
-#                 if old_size[0]>= 244:
-#                     #Todo: eine Seite zeropadden
-#                     new_size=(old_size[0],244)
-#                 elif old_size[1]>= 244:
-#                     new_size=(244,old_size[1])                    
-#                     #Todo: andere Seite zeropadden
-#                 else:
-#                     new_size=(244,244)
-#                     #Todo: beide Seiten Zeropadden
-#                 new_img = Image.new("L",new_size)
-#                 new_img.paste(img,((new_size[0]-old_size[0])/2,
-#                                    (new_size[1]-old_size[1])/2))
-#                 new_img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+train_picnames[i])
-#             else:
-#                 img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+train_picnames[i])
-#             if(i%100000==0):
-#                 mailer.mailto("Trainingdata "+str(i)+" done")
-#       
+#             img = Image.open(origin_path+ "../ILSVRC2012_img_train_t12/" + train_picnames[i]).convert('L')#Load and convert to grayscale
+#             old_dimension_sizes=img.size
+#             smallest_size = min(old_dimension_sizes[0],old_dimension_sizes[1])#get the size of the smaller dimension, so we can adapt the size of this dimension to the target-size.
+#             ratio = float(target_size)/float(smallest_size)
+#             new_dimension_sizes = int(old_dimension_sizes[0]*ratio),int(old_dimension_sizes[1]*ratio)
+#             img = img.resize(new_dimension_sizes,Image.ANTIALIAS)   
+#             img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+train_picnames[i])
+#         mailer.mailto("finished with creating grayscale on train pictures")
 #         for i in range(len(valid_picnames)):
-#             img = Image.open(origin_path+ "../ILSVRC2012_img_train_t12/" + valid_picnames[i]).convert('L')
-#             old_size=img.size
-#             if old_size[0]<244 or old_size[1]<244:
-#                 if old_size[0]>= 244:
-#                     #Todo: eine Seite zeropadden
-#                     new_size=(old_size[0],244)
-#                 elif old_size[1]>= 244:
-#                     new_size=(244,old_size[1])                    
-#                     #Todo: andere Seite zeropadden
-#                 else:
-#                     new_size=(244,244)
-#                     #Todo: beide Seiten Zeropadden
-#                 new_img = Image.new("L",new_size)
-#                 new_img.paste(img,((new_size[0]-old_size[0])/2,
-#                                    (new_size[1]-old_size[1])/2))
-#                 new_img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+valid_picnames[i])
-#             else:
-#                 img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+valid_picnames[i])
-#             if(i%10000==0):
-#                 mailer.mailto("Validationdata "+str(i)+" done")
-#         mailer.mailto("finished with creating grayscale pictures")
+#             img = Image.open(origin_path+ "../ILSVRC2012_img_train_t12/" + valid_picnames[i]).convert('L')#Load and convert to grayscale
+#             old_dimension_sizes=img.size
+#             smallest_size = min(old_dimension_sizes[0],old_dimension_sizes[1])#get the size of the smaller dimension, so we can adapt the size of this dimension to the target-size.
+#             ratio = float(target_size)/float(smallest_size)
+#             new_dimension_sizes = int(old_dimension_sizes[0]*ratio),int(old_dimension_sizes[1]*ratio)
+#             img = img.resize(new_dimension_sizes,Image.ANTIALIAS)   
+#             img.save(origin_path+"../ILSVRC2012_img_train_t12_grayscale/"+valid_picnames[i])
+#         mailer.mailto("finished with creating grayscale on validation pictures")
 #==============================================================================
          
     
@@ -154,7 +135,7 @@ if __name__ == '__main__':
 #     ImageNetData.make_lists()
 #     del ImageNetData
 #==============================================================================
-    
+
     ReadData=Dataset_Heinz() 
 
     ReadData.save_pics_as_grayscale()    

@@ -37,7 +37,7 @@ def batchnorm(input_tensor):
                                              variance_epsilon=1e-4,
                                              name=None)
 
-def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, batchnorm_=False):
+def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, batchnorm_=True):
     '''
     tensor:     "Tensor" Input-Tensor 4 dimensional [batches,width,height,depth] (Width and height could also be changed with each other)
     layerNr:    "Scalar" The number of the Layer in the whole context
