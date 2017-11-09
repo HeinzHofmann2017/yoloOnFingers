@@ -192,7 +192,7 @@ def main():
         test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
         number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))
         matches_in_percent= tf.div(x=tf.multiply(x=number_of_matches,y=100),y=batchSize)
-        hAPI.variable_summaries(matches_in_percent, name=" ")
+        test_h = tf.summary.scalar("Test",matches_in_percent)
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(grads_and_vars)
