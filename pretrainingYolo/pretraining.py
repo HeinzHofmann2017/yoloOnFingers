@@ -187,7 +187,12 @@ def main():
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
         grads_and_vars = optimizer.compute_gradients(cost)
-
+        
+    with tf.name_scope("Test") as scope:
+        test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
+        number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))
+        matches_in_percent= tf.div(x=tf.multiply(x=number_of_matches,y=100),y=batchSize)
+        hAPI.variable_summaries(matches_in_percent, name=" ")
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(grads_and_vars)
@@ -215,50 +220,36 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary_" + name)
-        writer.add_graph(sess.graph) 
+        train_writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary_" + name + "_train")
+        train_writer.add_graph(sess.graph) 
+        valid_writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary_" + name + "_valid")
+        valid_writer.add_graph(sess.graph) 
         
-        training_matches = 0
-        validation_matches = 0
+        training_matches = 0.1#%
+        validation_matches = 0.1#%
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
-            for j in range(nr_of_epochs_until_save_model):        
+            for j in range(nr_of_epochs_until_save_model):
                 _ = sess.run([train_step])
                 
-            #testing (on traindata and on validationdata)
-            writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
-            c,predicted_tensor,label_tensor = sess.run([cost,test_vectors,labels])
-            #print("full predicted tensor: " + str(predicted_tensor))
-            print("one shot training-cost: " +str(c))
-            nr_of_matches = 0                 
-            for k in range(batchSize):
-                for number_of_Elements in range(1000):                                      
-                    if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
-                        nr_of_matches += 1
-            match_probability = 100 * nr_of_matches / batchSize
-            print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
-            if(match_probability > training_matches):
-                training_matches+=3
-                mailer.mailto("\n\n"+name+"\n\n training \n\n Number of Matches reached  "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
+            #testing on traindata
+            train_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
+            matches = sess.run([matches_in_percent])
+            if(matches > training_matches):
+                training_matches+=5
+                mailer.mailto("\n\n"+name+"\n\n training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
             
-            #validation:
+            #testing on validationdata:
             sess.run(validation_init_op)
-            c,predicted_tensor,label_tensor,predicted_fully = sess.run([cost,test_vectors,labels,fully_26])
-            #print("full predicted tensor: " + str(predicted_tensor))
-            print("validation cost: " +str(c))
-            nr_of_matches = 0                 
-            for k in range(batchSize):
-                for number_of_Elements in range(1000):                                      
-                    if label_tensor[k][number_of_Elements] == 1 and predicted_tensor[k][0][number_of_Elements] == 1:
-                        nr_of_matches += 1
-            match_probability = 100 * nr_of_matches / batchSize
-            print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
-            if(match_probability > validation_matches):
-                validation_matches+=3
-                mailer.mailto("\n\n"+name+"\n\n validation \n\n Number of Matches reached "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
+            train_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
+            matches = sess.run([matches_in_percent])
+            if(matches > validation_matches):
+                validation_matches+=5
+                mailer.mailto("\n\n"+name+"\n\n validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j)+" Steps")
             sess.run(training_init_op)
-
+            
+            #save Model
             saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/"+name+".ckpt", global_step=(i*nr_of_epochs_until_save_model+j))
             print("model updatet\n")
 
