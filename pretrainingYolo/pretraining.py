@@ -240,7 +240,7 @@ def main():
             print("How well does the training-Prediction match on the Labels: " + str(match_probability)+" %")
             if(match_probability > training_matches):
                 training_matches+=3
-                mailer.mailto("Number of Matches in the training Set reached  "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
+                mailer.mailto("\n\n"+name+"\n\n training \n\n Number of Matches reached  "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
             
             #validation:
             sess.run(validation_init_op)
@@ -256,7 +256,7 @@ def main():
             print("How well does the validation-Prediction match on the Labels: " + str(match_probability)+" %")
             if(match_probability > validation_matches):
                 validation_matches+=3
-                mailer.mailto("Number of Matches in the validation Set reached "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
+                mailer.mailto("\n\n"+name+"\n\n validation \n\n Number of Matches reached "+str(match_probability)+" %. Done in "+ str(i*nr_of_epochs_until_save_model+j)+ " Steps")
             sess.run(training_init_op)
 
             saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/"+name+".ckpt", global_step=(i*nr_of_epochs_until_save_model+j))
