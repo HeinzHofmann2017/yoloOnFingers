@@ -47,7 +47,7 @@ nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 
 
 def dataset_preprocessor(picname,labels):
-    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale_old/" + picname)
+    content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
     #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12_grayscale/"+picname)
     image = tf.image.decode_jpeg(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float16)
