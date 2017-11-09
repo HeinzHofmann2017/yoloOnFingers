@@ -58,43 +58,43 @@ def main():
     print("TensorFlow version ", tf.__version__)
     
 
-    
-    print("read in all Picture-Names & Labels and shuffle them")
-    ReadData        = analyse_Dataset.Dataset_Heinz()
-    train_picnames  = ReadData.get_train_picnames(origin_path=origin_path)
-    train_labels    = ReadData.get_train_labels(origin_path=origin_path)#labels between 0 & 999
-    train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
-    train_data      = train_data.repeat()
-    train_data      = train_data.shuffle(buffer_size=buffer_size)
-    train_data      = train_data.map(map_func=dataset_preprocessor,
-                                     num_threads=num_threads,
-                                     output_buffer_size=10000)
-    train_data      = train_data.batch(batchSize)
-    
-    valid_picnames  = ReadData.get_valid_picnames(origin_path=origin_path)
-    valid_labels    = ReadData.get_valid_labels(origin_path=origin_path)
-    valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
-    valid_data      = valid_data.repeat()
-    valid_data      = valid_data.shuffle(buffer_size=buffer_size)
-    valid_data      = valid_data.map(map_func=dataset_preprocessor,
-                                     num_threads=num_threads,
-                                     output_buffer_size=10000)
-    valid_data      = valid_data.batch(batchSize)
-    
-    iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
-    images, labels  = iterator.get_next()
-    
-    training_init_op    = iterator.make_initializer(train_data)
-    validation_init_op  = iterator.make_initializer(valid_data)
-
-    labels = tf.one_hot(indices     =   labels,
-                        depth       =   1000,
-                        on_value    =   1.0,
-                        off_value   =   0.0,
-                        axis        =   -1,
-                        dtype       =   tf.float32)    
-                        
-    images = hAPI.normalize_pictures(tensor=images)
+    with tf.name_scope("Data") as scope:
+        print("read in all Picture-Names & Labels and shuffle them")
+        ReadData        = analyse_Dataset.Dataset_Heinz()
+        train_picnames  = ReadData.get_train_picnames(origin_path=origin_path)
+        train_labels    = ReadData.get_train_labels(origin_path=origin_path)#labels between 0 & 999
+        train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
+        train_data      = train_data.repeat()
+        train_data      = train_data.shuffle(buffer_size=buffer_size)
+        train_data      = train_data.map(map_func=dataset_preprocessor,
+                                         num_threads=num_threads,
+                                         output_buffer_size=10000)
+        train_data      = train_data.batch(batchSize)
+        
+        valid_picnames  = ReadData.get_valid_picnames(origin_path=origin_path)
+        valid_labels    = ReadData.get_valid_labels(origin_path=origin_path)
+        valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
+        valid_data      = valid_data.repeat()
+        valid_data      = valid_data.shuffle(buffer_size=buffer_size)
+        valid_data      = valid_data.map(map_func=dataset_preprocessor,
+                                         num_threads=num_threads,
+                                         output_buffer_size=10000)
+        valid_data      = valid_data.batch(batchSize)
+    with tf.name_scope("Iterator") as scope:        
+        iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
+        images, labels  = iterator.get_next()
+        
+        training_init_op    = iterator.make_initializer(train_data)
+        validation_init_op  = iterator.make_initializer(valid_data)
+    with tf.name_scope("make_labels") as scope:
+        labels = tf.one_hot(indices     =   labels,
+                            depth       =   1000,
+                            on_value    =   1.0,
+                            off_value   =   0.0,
+                            axis        =   -1,
+                            dtype       =   tf.float32)    
+    with tf.name_scope("normalize_pictures") as scope:                            
+        images = hAPI.normalize_pictures(tensor=images)
 #==============================================================================
 #                                                       
 # HIer Graph aufbauen:                                                      
@@ -240,7 +240,7 @@ def main():
             
             #testing on validationdata:
             sess.run(validation_init_op)
-            train_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
+            valid_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
             matches = sess.run([matches_in_percent])
             if(matches > validation_matches):
                 validation_matches+=5
