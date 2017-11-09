@@ -51,7 +51,9 @@ def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, bat
     with tf.name_scope(str(layerNr)+"_conv_Layer") as scope:
         with tf.name_scope("W"):
             #calculate stdev for weights, to pretend vanishing Gradients
-            weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
+                        
+            #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
+            weightdev = 0.01
             W = tf.Variable(tf.truncated_normal(shape=[filterwidth,filterwidth,inputdepth,outputdepth], stddev=weightdev, dtype=tf.float16))
         with tf.name_scope("b"):
             b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
