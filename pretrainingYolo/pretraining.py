@@ -197,7 +197,7 @@ def main():
     with tf.name_scope("Test") as scope:
         test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
         #number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))#this is the original Line...
-        tensor_of_ones = tf.ones([batchSize,1000],dtype=tf.float16)        
+        tensor_of_ones = tf.ones([batchSize,1000],dtype=tf.float32)        
         #number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=tensor_of_ones))#This line is only to test, if there everything works fine..
         number_of_matches = tf.reduce_sum(tf.multiply(x=labels,y=tensor_of_ones))#this line tooo        
         matches_in_percent= tf.div(x=tf.multiply(x=number_of_matches,y=100),y=batchSize)
