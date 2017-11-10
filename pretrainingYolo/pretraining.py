@@ -183,7 +183,7 @@ def main():
         # Gradient descen
         #TODO: Gradient Decent durch ADAM ersetzen
         #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        optimizer = tf.train.AdamOptimizer()
+        optimizer = tf.train.AdamOptimizer(epsilon=1e-04)
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
