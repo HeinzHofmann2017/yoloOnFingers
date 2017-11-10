@@ -195,12 +195,9 @@ def main():
             tf.summary.histogram(var.op.name +"gradients", grad)
     
     with tf.name_scope("Test") as scope:
-        test_vectors = tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1])
-        test_vectors_ = tf.squeeze(test_vectors)
-        #number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))#this is the original Line...
-        tensor_of_ones = tf.ones([batchSize,1000],dtype=tf.float32)        
-        number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=tensor_of_ones))#This line is only to test, if there everything works fine..
-        #number_of_matches = tf.reduce_sum(tf.multiply(x=labels,y=tensor_of_ones))#this line tooo        
+        #squeeze is important to remove not needed dimensions. such dimensions would affect the result
+        test_vectors = tf.squeeze(tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1]))
+        number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))    
         matches_in_percent= tf.div(x=tf.multiply(x=number_of_matches,y=100),y=batchSize)
         test_h = tf.summary.scalar("Test",matches_in_percent)
 
@@ -232,11 +229,8 @@ def main():
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
-#==============================================================================
-#             for j in range(nr_of_epochs_until_save_model):
-#                 _ = sess.run([train_step])
-            j=0
-#==============================================================================
+            for j in range(nr_of_epochs_until_save_model):
+                _ = sess.run([train_step])
 
             #testing on traindata
             train_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j+1))

@@ -11,6 +11,6 @@ python code/pretrainingYolo/pretraining.py  --name $1 \
                                             --numThreads 16 \
                                             --bufferSize 100000 \
                                             --originPath "/mnt/data/ilsvrc2012/LabelList_Heinz/" \
-                                            --nrOfEpochs 100 \
-                                            --nrOfEpochsUntilSaveModel 10
+                                            --nrOfEpochs 10000000 \
+                                            --nrOfEpochsUntilSaveModel 100
 #for make directly something inside the docker-container, make a backslash after 17.09 and type the command you want to have processed on a new line. 
