@@ -7,7 +7,7 @@ nvidia-docker run --rm -t -i \
 nvcr.io/nvidia/tensorflow:17.09 \
 python code/pretrainingYolo/pretraining.py  --name $1 \
                                             --learningrate 0.001 \
-                                            --batchSize 128 \
+                                            --batchSize 16 \
                                             --numThreads 16 \
                                             --bufferSize 100000 \
                                             --originPath "/mnt/data/ilsvrc2012/LabelList_Heinz/" \
