@@ -80,7 +80,7 @@ def main():
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         valid_data      = valid_data.batch(batchSize)
-    with tf.name_scope("Iterator") as scope:        
+    with tf.name_scope("Data-Iterator") as scope:        
         iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
         images, labels  = iterator.get_next()
         
