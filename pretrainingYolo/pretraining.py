@@ -182,7 +182,8 @@ def main():
     with tf.name_scope("optimizer") as scope:
         # Gradient descen
         #TODO: Gradient Decent durch ADAM ersetzen
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate, name='GradientDescentOptimizer')
+        #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+        optimizer = tf.train.AdamOptimizer()
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
