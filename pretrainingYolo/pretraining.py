@@ -201,6 +201,14 @@ def main():
         number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))    
         matches_in_percent= tf.div(x=tf.multiply(x=number_of_matches,y=100),y=batchSize)
         test_h = tf.summary.scalar("Test",matches_in_percent)
+        
+    with tf.name_scope("Test_top5") as scope:
+        #make one-hot-vector for every top-5 Probability  and reduce them together (squeezes are for get rid of unused dimensionalities)
+        top5_test_vectors = tf.squeeze(tf.reduce_sum(tf.squeeze(tf.one_hot(tf.nn.top_k(fully_26,k=5).indices,tf.shape(fully_26)[1])),axis=1))
+        top5_number_of_matches = tf.reduce_sum(tf.multiply(x=top5_test_vectors,y=labels))    
+        top5_matches_in_percent= tf.div(x=tf.multiply(x=top5_number_of_matches,y=100),y=batchSize)
+        top5_test_h = tf.summary.scalar("Top5_Test",top5_matches_in_percent)
+        
 
 
     
@@ -236,17 +244,19 @@ def main():
             #testing on traindata
             train_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j+1))
             matches = sess.run(matches_in_percent)
+            matches = sess.run(top5_matches_in_percent)
             if(matches > training_matches):
                 training_matches=matches
-                mailer.mailto("\n\n"+name+"\n\n training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j+1)+ " Steps")
+                mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j+1)+ " Steps")
             
             #testing on validationdata:
             sess.run(validation_init_op)
             valid_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
             matches = sess.run(matches_in_percent)
+            matches = sess.run(top5_matches_in_percent)
             if(matches > validation_matches):
                 validation_matches=matches
-                mailer.mailto("\n\n"+name+"\n\n validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j+1)+" Steps")
+                mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j+1)+" Steps")
             sess.run(training_init_op)
             
             #save Model
