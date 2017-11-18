@@ -57,12 +57,13 @@ def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, bat
             W = tf.Variable(tf.truncated_normal(shape=[filterwidth,filterwidth,inputdepth,outputdepth], stddev=weightdev, dtype=tf.float16))
         with tf.name_scope("b"):
             b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
-        preactivate=tf.nn.conv2d(input=tensor,filter=W,strides=[1,strides,strides,1],padding='SAME')
+        preactivate = tf.nn.conv2d(input=tensor,filter=W,strides=[1,strides,strides,1],padding='SAME')
         preactivate = tf.add(preactivate, b)
+        if batchnorm_ == True:
+            preactivate = batchnorm(input_tensor=preactivate)
         with tf.name_scope("leaky_relu"):
             tensor = tf.maximum(0.1*preactivate,preactivate)
-        if batchnorm_ == True:
-            tensor = batchnorm(input_tensor=tensor)
+
         with tf.name_scope("summary"):
             variable_summaries(variable=W,name="W")
             variable_summaries(variable=b,name="b")
