@@ -188,12 +188,16 @@ def main():
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
         grads_and_vars = optimizer.compute_gradients(cost)
+        capped_gvs = [(tf.clip_by_value(grad, -5., 5.), var) for grad, var in grads_and_vars]
         
         # Ask the optimizer to apply the capped gradients.
-        train_step = optimizer.apply_gradients(grads_and_vars)
+        train_step = optimizer.apply_gradients(capped_gvs)
     for grad, var in grads_and_vars:
         if grad is not None:
             tf.summary.histogram(var.op.name +"gradients", grad)
+    for grad, var in capped_gvs:
+        if grad is not None:
+            tf.summary.histogram(var.op.name +"capped_gradients",grad)
     
     with tf.name_scope("Test") as scope:
         #squeeze is important to remove not needed dimensions. such dimensions would affect the result
