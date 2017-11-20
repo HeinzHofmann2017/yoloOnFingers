@@ -251,7 +251,7 @@ def main():
             
             #testing on validationdata:
             sess.run(validation_init_op)
-            valid_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j))
+            valid_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j+1))
             matches = sess.run(matches_in_percent)
             matches = sess.run(top5_matches_in_percent)
             if(matches > validation_matches):

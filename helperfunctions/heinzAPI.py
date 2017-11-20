@@ -61,8 +61,12 @@ def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, bat
         preactivate = tf.add(preactivate, b)
         if batchnorm_ == True:
             preactivate = batchnorm(input_tensor=preactivate)
-        with tf.name_scope("leaky_relu"):
-            tensor = tf.maximum(0.1*preactivate,preactivate)
+        with tf.name_scope("relu"):
+            tensor = tf.maximum(0*preactivate,preactivate)
+#==============================================================================
+#         with tf.name_scope("leaky_relu"):
+#             tensor = tf.maximum(0.1*preactivate,preactivate)
+#==============================================================================
 
         with tf.name_scope("summary"):
             variable_summaries(variable=W,name="W")
