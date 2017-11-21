@@ -43,8 +43,6 @@ buffer_size                     = parser_object.buffer_Size
 origin_path                     = parser_object.origin_Path
 nr_of_epochs                    = parser_object.nr_of_epochs
 nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
-dropout                         = parser_object.dropout_bool
-batchnorm                       = parser_object.batchnorm_bool
 
 
 
@@ -98,9 +96,7 @@ def main():
                             on_value    =   1.0,
                             off_value   =   0.0,
                             axis        =   -1,
-                            dtype       =   tf.float32)
-    #is true,if the model is training right now, and is False, if the model is testing.
-    training = tf.placeholder(tf.bool, name='training')
+                            dtype       =   tf.float32)    
     with tf.name_scope("normalize_pictures") as scope:                            
         images = hAPI.normalize_pictures(tensor=images)
 #==============================================================================
@@ -109,57 +105,57 @@ def main():
 #                                                       
 #==============================================================================
     #Conv. Layer 7x7x64-s-2                                                  
-    output_1 = hAPI.convLayer(tensor=images,layerNr=1,batchSize=batchSize, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_1 = hAPI.convLayer(tensor=images,layerNr=1, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=True)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("2_Maxpool_Layer") as scope:
         output_2 = tf.nn.max_pool(output_1,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME', name="maxpool_2")
     #Conv Layer 3x3x192
-    output_3 = hAPI.convLayer(tensor=output_2,layerNr=3,batchSize=batchSize, filterwidth=3, inputdepth=64, outputdepth=192, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_3 = hAPI.convLayer(tensor=output_2,layerNr=3, filterwidth=3, inputdepth=64, outputdepth=192, strides=1, batchnorm_=True)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("4_Maxpool_Layer") as scope:
         output_4 = tf.nn.max_pool(output_3,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME', name="maxpool_4")
     #Conv Layer 1x1x128
-    output_5 = hAPI.convLayer(tensor=output_4,layerNr=5,batchSize=batchSize, filterwidth=1, inputdepth=192, outputdepth=128, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_5 = hAPI.convLayer(tensor=output_4,layerNr=5, filterwidth=1, inputdepth=192, outputdepth=128, strides=1, batchnorm_=True)
     #Conv Layer 3x3x256 
-    output_6 = hAPI.convLayer(tensor=output_5,layerNr=6,batchSize=batchSize, filterwidth=3, inputdepth=128, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_6 = hAPI.convLayer(tensor=output_5,layerNr=6, filterwidth=3, inputdepth=128, outputdepth=256, strides=1, batchnorm_=True)
     #Conv Layer 1x1x256
-    output_7 = hAPI.convLayer(tensor=output_6,layerNr=7,batchSize=batchSize, filterwidth=1, inputdepth=256, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_7 = hAPI.convLayer(tensor=output_6,layerNr=7, filterwidth=1, inputdepth=256, outputdepth=256, strides=1, batchnorm_=True)
     #Conv Layer 3x3x512
-    output_8 = hAPI.convLayer(tensor=output_7,layerNr=8,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_8 = hAPI.convLayer(tensor=output_7,layerNr=8, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=True)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("9_Maxpool_Layer") as scope:
         output_9 = tf.nn.max_pool(output_8,ksize=[1,2,2,1],strides=[1,2,2,1], padding="SAME", name="maxpool_9")
     #Conv Layer 1x1x256
-    output_10 = hAPI.convLayer(tensor=output_9,layerNr=10,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_10 = hAPI.convLayer(tensor=output_9,layerNr=10, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=True)
     #Conv Layer 3x3x512
-    output_11 = hAPI.convLayer(tensor=output_10,layerNr=11,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_11 = hAPI.convLayer(tensor=output_10,layerNr=11, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 1x1x256
-    output_12 = hAPI.convLayer(tensor=output_11,layerNr=12,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_12 = hAPI.convLayer(tensor=output_11,layerNr=12, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=True)
     #Conv Layer 3x3x512
-    output_13 = hAPI.convLayer(tensor=output_12,layerNr=13,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_13 = hAPI.convLayer(tensor=output_12,layerNr=13, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 1x1x256
-    output_14 = hAPI.convLayer(tensor=output_13,layerNr=14,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_14 = hAPI.convLayer(tensor=output_13,layerNr=14, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=True)
     #Conv Layer 3x3x512
-    output_15 = hAPI.convLayer(tensor=output_14,layerNr=15,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_15 = hAPI.convLayer(tensor=output_14,layerNr=15, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 1x1x256
-    output_16 = hAPI.convLayer(tensor=output_15,layerNr=16,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_16 = hAPI.convLayer(tensor=output_15,layerNr=16, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=True)
     #Conv Layer 3x3x512
-    output_17 = hAPI.convLayer(tensor=output_16,layerNr=17,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_17 = hAPI.convLayer(tensor=output_16,layerNr=17, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 1x1x512
-    output_18 = hAPI.convLayer(tensor=output_17,layerNr=18,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_18 = hAPI.convLayer(tensor=output_17,layerNr=18, filterwidth=1, inputdepth=512, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 3x3x1024
-    output_19 = hAPI.convLayer(tensor=output_18,layerNr=19,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_19 = hAPI.convLayer(tensor=output_18,layerNr=19, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=True)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("20_Maxpool_Layer") as scope:
         output_20 = tf.nn.max_pool(output_19,ksize=[1,2,2,1],strides=[1,2,2,1], padding="SAME", name="maxpool_20")
     #Conv Layer 1x1x512
-    output_21 = hAPI.convLayer(tensor=output_20,layerNr=21,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_21 = hAPI.convLayer(tensor=output_20,layerNr=21, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 3x3x1024
-    output_22 = hAPI.convLayer(tensor=output_21,layerNr=22,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_22 = hAPI.convLayer(tensor=output_21,layerNr=22, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=True)
     #Conv Layer 1x1x512
-    output_23 = hAPI.convLayer(tensor=output_22,layerNr=23,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_23 = hAPI.convLayer(tensor=output_22,layerNr=23, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=True)
     #Conv Layer 3x3x1024
-    output_24 = hAPI.convLayer(tensor=output_23,layerNr=24,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_24 = hAPI.convLayer(tensor=output_23,layerNr=24, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=True)
 #==============================================================================
 # Layer 25:
 #     Averagepool 3x3 -s-3
@@ -251,29 +247,28 @@ def main():
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
             for j in range(nr_of_epochs_until_save_model):
-                _ = sess.run([train_step],feed_dict={training: True})
+                _ = sess.run([train_step])
 
             #testing on traindata
-            numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
-            train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+            train_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j+1))
+            matches = sess.run(matches_in_percent)
+            matches = sess.run(top5_matches_in_percent)
             if(matches > training_matches):
                 training_matches=matches
-                mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j+1)+ " Steps")
             
             #testing on validationdata:
             sess.run(validation_init_op)
-            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+            valid_writer.add_summary(sess.run(merged_summary_op),(i*nr_of_epochs_until_save_model+j+1))
+            matches = sess.run(matches_in_percent)
+            matches = sess.run(top5_matches_in_percent)
             if(matches > validation_matches):
                 validation_matches=matches
-                mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
+                mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(i*nr_of_epochs_until_save_model+j+1)+" Steps")
             sess.run(training_init_op)
             
             #save Model
-            saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
+            saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/"+name+".ckpt", global_step=(i*nr_of_epochs_until_save_model+j+1))
             print("model updatet\n")
 
                 

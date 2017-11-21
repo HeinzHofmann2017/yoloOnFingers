@@ -60,6 +60,17 @@ class make_parser(object):
                             default = '/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/',
                             help = "Path to the list with all Files, this is the origin-path, from it everything will be handled",
                             type=str)
+        parser.add_argument('--noDropout',
+                            dest='dropout',
+                            action='store_false',
+                            help = "If flag --noDropout is activated, Dropout wont be used.")
+        parser.set_defaults(dropout=True)
+        
+        parser.add_argument('--noBatchnorm',
+                            dest='batchnorm',
+                            action='store_False',
+                            help = "If flag --noBatchnorm is activated, batchnorm wont be used.")
+        parser.set_defaults(batchnorm=True)
                                     
         args = parser.parse_args()
         self.modelname                      = args.name
@@ -70,6 +81,8 @@ class make_parser(object):
         self.nr_of_epochs                   = args.nrOfEpochs
         self.nr_of_epochs_until_save_model  = args.nrOfEpochsUntilSaveModel        
         self.origin_Path                    = args.originPath
+        self.dropout_bool                   = args.dropout
+        self.batchnorm_bool                 = args.batchnorm
 
         
         
@@ -88,3 +101,5 @@ if __name__ == "__main__":
     print("nrOfEpochs       = "+ str(lokal_parser.nr_of_epochs))
     print("nrOfEpUntilSave  = "+ str(lokal_parser.nr_of_epochs_until_save_model))    
     print("Modelname        = "+ str(lokal_parser.modelname))
+    print("Dropout_bool     = "+ str(lokal_parser.dropout_bool))
+    print("Batchnorm_bool   = "+ str(lokal_parser.batchnorm_bool))

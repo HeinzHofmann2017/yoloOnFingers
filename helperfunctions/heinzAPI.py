@@ -37,7 +37,7 @@ def batchnorm(input_tensor):
                                              variance_epsilon=1e-4,
                                              name=None)
 
-def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, batchnorm_=True):
+def convLayer(tensor,layerNr,batchSize, filterwidth, inputdepth, outputdepth, strides, batchnorm_=True, dropout_=True,training=False):
     '''
     tensor:     "Tensor" Input-Tensor 4 dimensional [batches,width,height,depth] (Width and height could also be changed with each other)
     layerNr:    "Scalar" The number of the Layer in the whole context
@@ -61,6 +61,11 @@ def convLayer(tensor,layerNr, filterwidth, inputdepth, outputdepth, strides, bat
         preactivate = tf.add(preactivate, b)
         if batchnorm_ == True:
             preactivate = batchnorm(input_tensor=preactivate)
+        if dropout_ == True:
+            #dropout only over all the feature-maps and batches.
+            preactivate = tf.cond(training,
+                                  lambda:tf.nn.dropout(x=preactivate, keep_prob=0.5,noise_shape=[batchSize,1,1,outputdepth]),
+                                  lambda:preactivate)
         with tf.name_scope("relu"):
             tensor = tf.maximum(0*preactivate,preactivate)
 #==============================================================================
