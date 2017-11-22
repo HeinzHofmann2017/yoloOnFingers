@@ -9,6 +9,7 @@ from __future__ import print_function
 
 import os
 import sys
+import pickle
 
 import tensorflow as tf
 from tensorflow.python.ops import array_ops
@@ -102,3 +103,64 @@ def normalize_pictures(tensor):
     tensor = tf.div(tensor,var)
     return tensor
     
+def batchnormPretrained(input_tensor,layerNr,origin_path):
+    with tf.name_scope("batch_norm"):
+        input_depth = input_tensor.get_shape().as_list()[-1]#takes the last element which is in this case 64
+    #make new mean and new Variance
+        with tf.name_scope("beta"):
+            pythonbeta = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_beta_beta.pkl", "rb" ) )
+            beta = tf.Variable(pythonbeta, name="beta",trainable=True,dtype=tf.float16)
+        with tf.name_scope("gamma"):
+            pythongamma = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_gamma_gamma.pkl", "rb" ) )
+            gamma = tf.Variable(pythongamma,name="gamma",trainable=True,dtype=tf.float16)
+        batch_mean, batch_variance = tf.nn.moments(x=input_tensor,axes=[0,1,2])
+        return tf.nn.batch_normalization(x=input_tensor,
+                                             mean=batch_mean,
+                                             variance=batch_variance,
+                                             offset=beta,
+                                             scale=gamma,
+                                             variance_epsilon=1e-4,
+                                             name=None)
+
+def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outputdepth, strides, origin_path, batchnorm_=True, dropout_=True,training=False):
+    '''
+    tensor:     "Tensor" Input-Tensor 4 dimensional [batches,width,height,depth] (Width and height could also be changed with each other)
+    layerNr:    "Scalar" The number of the Layer in the whole context
+    filterwidth:"Scalar" the width and the height of the convolutional filtermask
+    inputdepth: "Scalar" The depth of the input
+    outputdepth:"Scalar" The depth of the output (also the depth of the convolutional Filtermask)
+    strides:    "Scalar" The number of Elements overhopped by learning in height and with
+    
+    returns:    "Tensor" 4 Dimensional Tensor with shapes []
+    '''
+    with tf.name_scope(str(layerNr)+"_conv_Layer") as scope:
+        with tf.name_scope("W"):
+            #calculate stdev for weights, to pretend vanishing Gradients
+                        
+            #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
+            weightdev = 0.01
+            pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
+            W = tf.Variable(pythonW,dtype=tf.float16)
+        #with tf.name_scope("b"):
+            #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
+        preactivate = tf.nn.conv2d(input=tensor,filter=W,strides=[1,strides,strides,1],padding='SAME')
+        #preactivate = tf.add(preactivate, b)
+        if batchnorm_ == True:
+            preactivate = batchnormPretrained(input_tensor=preactivate,layerNr=layerNr,origin_path=origin_path)
+        if dropout_ == True:
+            #dropout only over all the feature-maps and batches.
+            preactivate = tf.cond(training,
+                                  lambda:tf.nn.dropout(x=preactivate, keep_prob=0.8,noise_shape=[batchSize,1,1,outputdepth]),
+                                  lambda:preactivate)
+        with tf.name_scope("relu"):
+            tensor = tf.maximum(0*preactivate,preactivate)
+#==============================================================================
+#         with tf.name_scope("leaky_relu"):
+#             tensor = tf.maximum(0.1*preactivate,preactivate)
+#==============================================================================
+
+        with tf.name_scope("summary"):
+            variable_summaries(variable=W,name="W")
+            #variable_summaries(variable=b,name="b")
+            variable_summaries(variable=preactivate, name="preactivate")
+        return tensor
