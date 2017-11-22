@@ -10,7 +10,7 @@ python code/fingerYolo/training.py          --name $1 \
                                             --batchSize 128 \
                                             --numThreads 16 \
                                             --bufferSize 100000 \
-                                            --originPath "/mnt/data/ilsvrc2012/LabelList_Heinz/" \
+                                            --originPath "/mnt/data/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/" \
                                             --nrOfEpochs 10000000 \
                                             --nrOfEpochsUntilSaveModel 1000 
 #for make directly something inside the docker-container, make a backslash after 17.09 and type the command you want to have processed on a new line. 
