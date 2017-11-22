@@ -7,9 +7,9 @@ nvidia-docker run --rm -t -i \
 nvcr.io/nvidia/tensorflow:17.09 \
 python code/fingerYolo/training.py          --name $1 \
                                             --learningrate 0.001 \
-                                            --batchSize 7 \
+                                            --batchSize 16 \
                                             --numThreads 16 \
-                                            --bufferSize 500 \
+                                            --bufferSize 400 \
                                             --originPath "/mnt/data/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/" \
                                             --nrOfEpochs 10000000 \
                                             --nrOfEpochsUntilSaveModel 1000 \
