@@ -1,0 +1,20 @@
+                                                                                                                                                
+================
+== TensorFlow ==
+================
+
+NVIDIA Release 17.09 (build 165319)
+
+Container image Copyright (c) 2017, NVIDIA CORPORATION.  All rights reserved.
+Copyright 2017 The TensorFlow Authors.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION.  All rights reserved.
+NVIDIA modifications are covered by the license terms that apply to the underlying project or file.
+
+NOTE: The SHMEM allocation limit is set to the default of 64MB.  This may be
+   insufficient for TensorFlow.  NVIDIA recommends the use of the following flags:
+   nvidia-docker run --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 ...
+
+4Adam
+TensorFlow version  1.3.0
+read in all Picture-Names & Labels and shuffle them
