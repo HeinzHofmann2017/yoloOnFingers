@@ -15,6 +15,7 @@ from __future__ import print_function
 
 import os
 import sys
+import numpy as np
 
 import tensorflow as tf
 from tensorflow.python.ops import array_ops
@@ -22,12 +23,12 @@ from tensorflow.contrib.data import Dataset, Iterator
 from tensorflow.python.platform import gfile
 
 this_folder =  os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnTabeasData/')
+sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnTabeasData/Step4CollectTogether/')
 import analyse_Fingerset
 sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
-import parserClass as pC
+import parserClassFingers as pC
 
 #import matplotlib.pyplot as plt
 
@@ -60,35 +61,29 @@ def main():
     
 
     with tf.name_scope("Data") as scope:
-        print("read in all Picture-Names & Labels and shuffle them")
+        print("read in all Train Picture-Names & Labels and shuffle them")
         ReadData        = analyse_Fingerset.Dataset_Heinz()
-        train_picnames  = ReadData.get_train_picnames(origin_path=origin_path)
-        train_labels    = ReadData.get_train_labels(origin_path=origin_path)#labels between 0 & 999
-        train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
+        
+        
+        train_data  = ReadData.get_train_data(origin_path=origin_path)
+        train_picnames  = [row[0] for row in train_data]
+        train_x_coords  = np.float16([row[1] for row in train_data])
+        train_y_coords  = np.float16([row[2] for row in train_data])
+        train_probs     = np.float16([row[3] for row in train_data])
+        train_data      = Dataset.from_tensor_slices((train_picnames,train_x_coords, train_y_coords, train_probs))
         train_data      = train_data.repeat()
         train_data      = train_data.shuffle(buffer_size=buffer_size)
         train_data      = train_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         train_data      = train_data.batch(batchSize)
-        
-        valid_picnames  = 
-        valid_x_coords  = 
-        valid_y_coords  =
-        valid_probs     =   
-        valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
-
-
-
-
-
-
-
-
-
-
-
-
+        print("read in all Valid Picture-Names & Labels and shuffle them")  
+        valid_data  = ReadData.get_valid_data(origin_path=origin_path)
+        valid_picnames  = [row[0] for row in valid_data]
+        valid_x_coords  = np.float16([row[1] for row in valid_data])
+        valid_y_coords  = np.float16([row[2] for row in valid_data])
+        valid_probs     = np.float16([row[3] for row in valid_data]) 
+        valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_x_coords, valid_y_coords, valid_probs))
         valid_data      = valid_data.repeat()
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)
         valid_data      = valid_data.map(map_func=dataset_preprocessor,
@@ -106,13 +101,6 @@ def main():
         #To test, how the croped picters look like, when they are used to learn...
         tf.summary.image('images_after_crop',tensor = images , max_outputs=20)
             
-    with tf.name_scope("make_labels") as scope:
-        labels = tf.one_hot(indices     =   labels,
-                            depth       =   1000,
-                            on_value    =   1.0,
-                            off_value   =   0.0,
-                            axis        =   -1,
-                            dtype       =   tf.float32)
     #is true,if the model is training right now, and is False, if the model is testing.
     training = tf.placeholder(tf.bool, name='training')
         
@@ -199,14 +187,14 @@ def main():
     with tf.name_scope("Layer32_full") as scope:
         W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
         b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float16),name="b32")
-        fully_32 = tf.nn.relu(tf.matmul(fully_31,W32)+b32,name="fully_32")
+        fully_32 = tf.nn.relu(tf.matmul(output_31,W32)+b32,name="fully_32")
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         
     with tf.name_scope("cost_function") as scope:
-        cost_x = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,0],x_coords))),probs)
-        cost_y = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,1],y_coords))),probs)
+        cost_x = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),probs))
+        cost_y = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,1],y_coords)),probs))
         cost_p = tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,2],probs)))
-        cost = tf.add(tf.add(cost_x,cost_y)cost_p)
+        cost = tf.add(tf.add(cost_x,cost_y),cost_p)
         cost_h = tf.summary.scalar("Costs",cost)
 
         
@@ -232,39 +220,41 @@ def main():
             
     with tf.name_scope("Test") as scope:
         test_vector = tf.ones([batchSize],dtype=tf.float16)
-        probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.subtract(output_32[:,:,:,2],probs))),0.5)
-        with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
-            bool_vector_visible = tf.logical_not(probability_isnt_correct)
-            result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
-            visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
-        with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
-            probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
-            #                       =sqrt((x-x)²+(y-y)²)>0.25
-            distance_is_greater_0_5 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
-                                                                tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.25)
-            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_5 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5)))
-            result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),batchSize)
-            in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
-        with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
-            probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
-            #                       =sqrt((x-x)²+(y-y)²)>0.15
-            distance_is_greater_0_3 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
-                                                                tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.15)
-            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_3 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3)))
-            result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),batchSize)
-            in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
-        with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
-            probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
-            #                       =sqrt((x-x)²+(y-y)²)>0.05
-            distance_is_greater_0_1 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
-                                                                tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.05)
-            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
-            result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),batchSize)
-            in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
-            
+        probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.squeeze(tf.subtract(output_32[:,:,:,2],probs)))),0.5)
+#==============================================================================
+#         with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
+#             bool_vector_visible = tf.logical_not(probability_isnt_correct)
+#             result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
+#             visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
+#         with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
+#             probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
+#             #                       =sqrt((x-x)^2+(y-y)^2)>0.25
+#             distance_is_greater_0_5 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
+#                                                                 tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.25)
+#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+#             bool_vector_0_5 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5)))
+#             result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),batchSize)
+#             in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
+#         with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
+#             probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
+#             #                       =sqrt((x-x)^2+(y-y)^2)>0.15
+#             distance_is_greater_0_3 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
+#                                                                 tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.15)
+#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+#             bool_vector_0_3 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3)))
+#             result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),batchSize)
+#             in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
+#         with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
+#             probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
+#             #                       =sqrt((x-x)^2+(y-y)^2)>0.05
+#             distance_is_greater_0_1 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
+#                                                                 tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.05)
+#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+#             bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
+#             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),batchSize)
+#             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
+#             
+#==============================================================================
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
     saver = tf.train.Saver(
@@ -282,14 +272,14 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        train_writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary_" + name + "_train")
+        train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/summary_" + name + "_train")
         train_writer.add_graph(sess.graph) 
-        valid_writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/summary_" + name + "_valid")
+        valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/summary_" + name + "_valid")
         valid_writer.add_graph(sess.graph) 
         
         training_matches = 0.1#%
         validation_matches = 0.1#%
-        saver.restore(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/7BnormBeforeRelu2.ckpt-00103000")
+        saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
@@ -317,7 +307,7 @@ def main():
             sess.run(training_init_op)
             
             #save Model
-            saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
+            saver.save(sess=sess, save_path=origin_path + "../../../../weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
             print("model updatet\n")
 
                 

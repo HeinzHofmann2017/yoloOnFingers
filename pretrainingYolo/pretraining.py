@@ -188,8 +188,6 @@ def main():
 
         
     with tf.name_scope("optimizer") as scope:
-        # Gradient descen
-        #TODO: Gradient Decent durch ADAM ersetzen
         #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
         optimizer = tf.train.AdamOptimizer(epsilon=1e-04)
         

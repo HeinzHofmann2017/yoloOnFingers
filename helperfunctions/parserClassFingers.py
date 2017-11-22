@@ -56,8 +56,8 @@ class make_parser(object):
         
         parser.add_argument('--originPath',
                             nargs = '?',
-                            const = '/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/',
-                            default = '/media/hhofmann/deeplearning/ilsvrc2012/LabelList_Heinz/',
+                            const = "/media/hhofmann/deeplearning/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/",
+                            default = "/media/hhofmann/deeplearning/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/",
                             help = "Path to the list with all Files, this is the origin-path, from it everything will be handled",
                             type=str)
         parser.add_argument('--noDropout',
