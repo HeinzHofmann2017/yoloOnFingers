@@ -32,7 +32,7 @@ class Dataset_Heinz(object):
         
         
     def make_lists(self,origin_path="/media/hhofmann/deeplearning/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/",nrOfCams=4):
-        
+        self.all_picture_names = 12
         #has to be commented out, because there is no cv2 in the docker for learning
 #==============================================================================
 #         #if path doesn't allready exist, create it.
