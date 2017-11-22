@@ -220,41 +220,39 @@ def main():
             
     with tf.name_scope("Test") as scope:
         test_vector = tf.ones([batchSize],dtype=tf.float16)
-        probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.squeeze(tf.subtract(output_32[:,:,:,2],probs)))),0.5)
-#==============================================================================
-#         with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
-#             bool_vector_visible = tf.logical_not(probability_isnt_correct)
-#             result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
-#             visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
-#         with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
-#             probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
-#             #                       =sqrt((x-x)^2+(y-y)^2)>0.25
-#             distance_is_greater_0_5 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
-#                                                                 tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.25)
-#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-#             bool_vector_0_5 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5)))
-#             result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),batchSize)
-#             in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
-#         with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
-#             probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
-#             #                       =sqrt((x-x)^2+(y-y)^2)>0.15
-#             distance_is_greater_0_3 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
-#                                                                 tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.15)
-#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-#             bool_vector_0_3 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3)))
-#             result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),batchSize)
-#             in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
-#         with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
-#             probability_is_higher_0_5 = tf.greater(output_32[:,:,:,2],0.5)
-#             #                       =sqrt((x-x)^2+(y-y)^2)>0.05
-#             distance_is_greater_0_1 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),   
-#                                                                 tf.square(tf.subtract(output_32[:,:,:,1],y_coords)))) ,0.05)
-#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-#             bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
-#             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),batchSize)
-#             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
-#             
-#==============================================================================
+        probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs))),0.5)
+        with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
+            bool_vector_visible = tf.logical_not(probability_isnt_correct)
+            result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
+            visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
+        with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
+            probability_is_higher_0_5 = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
+            #                       =sqrt((x-x)^2+(y-y)^2)>0.25
+            distance_is_greater_0_5 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+                                                                tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.25)
+            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+            bool_vector_0_5 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5)))
+            result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),batchSize)
+            in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
+        with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
+            probability_is_higher_0_5 = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
+            #                       =sqrt((x-x)^2+(y-y)^2)>0.15
+            distance_is_greater_0_3 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+                                                                tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.15)
+            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+            bool_vector_0_3 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3)))
+            result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),batchSize)
+            in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
+        with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
+            probability_is_higher_0_5 = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
+            #                       =sqrt((x-x)^2+(y-y)^2)>0.05
+            distance_is_greater_0_1 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+                                                                tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.05)
+            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+            bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
+            result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),batchSize)
+            in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
+            
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
     saver = tf.train.Saver(
@@ -279,7 +277,7 @@ def main():
         
         training_matches = 0.1#%
         validation_matches = 0.1#%
-        saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
+        #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
@@ -287,11 +285,11 @@ def main():
                 _ = sess.run([train_step],feed_dict={training: True})
 
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
-            #testing on traindata            
+            #testing on traindata
             train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(result_in_percent_visible,   feed_dict={training: False})            
-            matches = sess.run(result_in_percent_05,        feed_dict={training: False})            
-            matches = sess.run(result_in_percent_03,        feed_dict={training: False})      
+            matches = sess.run(result_in_percent_visible,   feed_dict={training: False})      
+            matches = sess.run(result_in_percent_05,        feed_dict={training: False}) 
+            matches = sess.run(result_in_percent_03,        feed_dict={training: False})
             matches = sess.run(result_in_percent_01,        feed_dict={training: False})
             if(matches > training_matches):
                 training_matches=matches
@@ -299,8 +297,10 @@ def main():
             #testing on validationdata:
             sess.run(validation_init_op)
             valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+            matches = sess.run(result_in_percent_visible,   feed_dict={training: False}) 
+            matches = sess.run(result_in_percent_05,        feed_dict={training: False})         
+            matches = sess.run(result_in_percent_03,        feed_dict={training: False})
+            matches = sess.run(result_in_percent_01,        feed_dict={training: False})
             if(matches > validation_matches):
                 validation_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
