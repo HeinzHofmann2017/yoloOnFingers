@@ -55,10 +55,10 @@ def convLayer(tensor,layerNr,batchSize, filterwidth, inputdepth, outputdepth, st
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
             W = tf.Variable(tf.truncated_normal(shape=[filterwidth,filterwidth,inputdepth,outputdepth], stddev=weightdev, dtype=tf.float16))
-        with tf.name_scope("b"):
-            b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
+        #with tf.name_scope("b"):
+            #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
         preactivate = tf.nn.conv2d(input=tensor,filter=W,strides=[1,strides,strides,1],padding='SAME')
-        preactivate = tf.add(preactivate, b)
+        #preactivate = tf.add(preactivate, b)
         if batchnorm_ == True:
             preactivate = batchnorm(input_tensor=preactivate)
         if dropout_ == True:
