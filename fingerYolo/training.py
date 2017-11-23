@@ -259,33 +259,33 @@ def main():
     with tf.name_scope("Test") as scope:
         test_vector = tf.ones([batchSize],dtype=tf.float16)
         probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs))),0.5)
-        probability_is_higher_0_5 = tf.greater(probs,0.5)
+        finger_is_there = tf.greater(probs,0.5)
         with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
             bool_vector_visible = tf.logical_not(probability_isnt_correct)
             result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
             visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
         with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
             #                       =sqrt((x-x)^2+(y-y)^2)>0.25
-            distance_is_greater_0_5 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+            distance_is_less_0_5 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.25)
             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_5 = tf.logical_not(tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5))
+            bool_vector_0_5 = tf.logical_and(finger_is_there,distance_is_less_0_5)
             result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),tf.add(tf.reduce_sum(probs),1e-4))
             in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
         with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
             #                       =sqrt((x-x)^2+(y-y)^2)>0.15
-            distance_is_greater_0_3 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+            distance_is_less_0_3 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.15)
             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_3 = tf.logical_not(tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3))
+            bool_vector_0_3 = tf.logical_and(finger_is_there,distance_is_less_0_3)
             result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),tf.add(tf.reduce_sum(probs),1e-4))
             in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
         with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
             #                       =sqrt((x-x)^2+(y-y)^2)>0.05
-            distance_is_greater_0_1 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+            distance_is_less_0_1 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.05)
             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_1 = tf.logical_not(tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1))
+            bool_vector_0_1 = tf.logical_and(finger_is_there,distance_is_less_0_1)
             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),tf.add(tf.reduce_sum(probs),1e-4))
             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
         with tf.name_scope("NormalizedNrOfPredictedFingers"):
@@ -315,8 +315,8 @@ def main():
         valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
         valid_writer.add_graph(sess.graph) 
         
-        training_matches = 0.1#%
-        validation_matches = 0.1#%
+        training_matches = 50#%
+        validation_matches = 50#%
         #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
@@ -331,6 +331,7 @@ def main():
             matches = sess.run(result_in_percent_05,        feed_dict={training: False}) 
             matches = sess.run(result_in_percent_03,        feed_dict={training: False})
             matches = sess.run(result_in_percent_01,        feed_dict={training: False})
+            print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
             if(matches > training_matches):
                 training_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
@@ -341,6 +342,7 @@ def main():
             matches = sess.run(result_in_percent_05,        feed_dict={training: False})         
             matches = sess.run(result_in_percent_03,        feed_dict={training: False})
             matches = sess.run(result_in_percent_01,        feed_dict={training: False})
+            print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
             if(matches > validation_matches):
                 validation_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
