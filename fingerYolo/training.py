@@ -180,6 +180,12 @@ def main():
     #Fully-Connected Layer ==> make vector
     with tf.name_scope("Layer31_full") as scope:
         input_31 = tf.reshape(tensor=output_30,shape=[batchSize,7*7*1024])
+        if dropout == True:
+            with tf.name_scope("dropout"):        
+                #dropout only over all the feature-maps and batches.
+                input_31 = tf.cond(training,
+                                      lambda:tf.nn.dropout(x=input_31, keep_prob=0.8,noise_shape=[batchSize,7*7*1024]),
+                                      lambda:input_31)
         W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float16),name="W31")
         b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float16),name="b31")
         preactivate_31 = tf.add(tf.matmul(input_31,W31),b31)
@@ -192,12 +198,6 @@ def main():
                 gamma31 = tf.Variable(tf.constant(1.0,shape=[input_depth_31],dtype=tf.float16),name="gamma",trainable=True)
             batch_mean31, batch_variance31 = tf.nn.moments(x=preactivate_31,axes=[0,1])
             preactivate_31 = tf.nn.batch_normalization(x=preactivate_31,mean=batch_mean31,variance=batch_variance31,offset=beta31,scale=gamma31,variance_epsilon=1e-4,name=None) 
-        if dropout == True:
-            with tf.name_scope("dropout"):        
-                #dropout only over all the feature-maps and batches.
-                preactivate_31 = tf.cond(training,
-                                      lambda:tf.nn.dropout(x=preactivate_31, keep_prob=0.5,noise_shape=[batchSize,4096]),
-                                      lambda:preactivate_31)
         output_31 = tf.nn.relu(preactivate_31)
         with tf.name_scope("summary"):
             hAPI.variable_summaries(variable=W31,name="W31")
@@ -206,6 +206,12 @@ def main():
             hAPI.variable_summaries(variable=output_31, name="output31")
     #Fully-Connected Layer ==> make tensor again.
     with tf.name_scope("Layer32_full") as scope:
+        if dropout == True:
+            with tf.name_scope("dropout"):        
+                #dropout only over all the feature-maps and batches.
+                output_31 = tf.cond(training,
+                                      lambda:tf.nn.dropout(x=output_31, keep_prob=0.8,noise_shape=[batchSize,4096]),
+                                      lambda:output_31)
         W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
         b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float16),name="b32")
         preactivate_32 = tf.add(tf.matmul(output_31,W32),b32)
