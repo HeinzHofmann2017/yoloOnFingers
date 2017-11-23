@@ -182,7 +182,16 @@ def main():
         input_31 = tf.reshape(tensor=output_30,shape=[batchSize,7*7*1024])
         W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float16),name="W31")
         b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float16),name="b31")
-        preactivate_31 = tf.add(tf.matmul(input_31,W31),b31)        
+        preactivate_31 = tf.add(tf.matmul(input_31,W31),b31)
+        with tf.name_scope("batch_norm"):
+            input_depth_31 = preactivate_31.get_shape().as_list()[-1]#takes the last element which is in this case 64
+            #make new weights and new bias
+            with tf.name_scope("beta"):
+                beta31 = tf.Variable(tf.constant(0.0,shape=[input_depth_31],dtype=tf.float16), name="beta",trainable=True)
+            with tf.name_scope("gamma"):
+                gamma31 = tf.Variable(tf.constant(1.0,shape=[input_depth_31],dtype=tf.float16),name="gamma",trainable=True)
+            batch_mean31, batch_variance31 = tf.nn.moments(x=preactivate_31,axes=[0,1])
+            preactivate_31 = tf.nn.batch_normalization(x=preactivate_31,mean=batch_mean31,variance=batch_variance31,offset=beta31,scale=gamma31,variance_epsilon=1e-4,name=None)        
         output_31 = tf.nn.relu(preactivate_31)
         with tf.name_scope("summary"):
             hAPI.variable_summaries(variable=W31,name="W31")
@@ -193,7 +202,16 @@ def main():
     with tf.name_scope("Layer32_full") as scope:
         W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
         b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float16),name="b32")
-        preactivate_32 = tf.add(tf.matmul(output_31,W32),b32)    
+        preactivate_32 = tf.add(tf.matmul(output_31,W32),b32)
+        with tf.name_scope("batch_norm"):
+            input_depth_32 = preactivate_32.get_shape().as_list()[-1]#takes the last element which is in this case 64
+            #make new weights and new bias
+            with tf.name_scope("beta"):
+                beta32 = tf.Variable(tf.constant(0.0,shape=[input_depth_32],dtype=tf.float16), name="beta",trainable=True)
+            with tf.name_scope("gamma"):
+                gamma32 = tf.Variable(tf.constant(1.0,shape=[input_depth_32],dtype=tf.float16),name="gamma",trainable=True)
+            batch_mean32, batch_variance32 = tf.nn.moments(x=preactivate_32,axes=[0,1])
+            preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
         fully_32 = tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         with tf.name_scope("summary"):
