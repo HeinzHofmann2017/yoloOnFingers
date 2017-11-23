@@ -183,6 +183,15 @@ def main():
         W26_h = tf.summary.histogram("weights26",W26)
         b26_h = tf.summary.histogram("biases26",b26)
         prerelu26 = tf.matmul(input_26,W26)+b26
+        with tf.name_scope("batch_norm"):
+            input_depth_26 = prerelu26.get_shape().as_list()[-1]#takes the last element which is in this case 64
+            #make new weights and new bias
+            with tf.name_scope("beta"):
+                beta26 = tf.Variable(tf.constant(0.0,shape=[input_depth_26],dtype=tf.float16), name="beta",trainable=True)
+            with tf.name_scope("gamma"):
+                gamma26 = tf.Variable(tf.constant(1.0,shape=[input_depth_26],dtype=tf.float16),name="gamma",trainable=True)
+            batch_mean26, batch_variance26 = tf.nn.moments(x=prerelu26,axes=[0,1])
+            prerelu26 = tf.nn.batch_normalization(x=prerelu26,mean=batch_mean26,variance=batch_variance26,offset=beta26,scale=gamma26,variance_epsilon=1e-4,name=None)
         prerelu26_h = tf.summary.histogram("prerelu26",prerelu26)
         fully_26 = prerelu26#tf.nn.relu(prerelu26)
 
