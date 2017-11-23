@@ -269,7 +269,7 @@ def main():
             distance_is_greater_0_5 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.25)
             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_5 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5)))
+            bool_vector_0_5 = tf.logical_not(tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_5))
             result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),tf.add(tf.reduce_sum(probs),1e-4))
             in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
         with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
@@ -277,7 +277,7 @@ def main():
             distance_is_greater_0_3 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.15)
             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_3 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3)))
+            bool_vector_0_3 = tf.logical_not(tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_3))
             result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),tf.add(tf.reduce_sum(probs),1e-4))
             in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
         with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
@@ -285,7 +285,7 @@ def main():
             distance_is_greater_0_1 = tf.greater(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.05)
             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
+            bool_vector_0_1 = tf.logical_not(tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1))
             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),tf.add(tf.reduce_sum(probs),1e-4))
             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
         with tf.name_scope("NormalizedNrOfPredictedFingers"):
