@@ -182,13 +182,25 @@ def main():
         input_31 = tf.reshape(tensor=output_30,shape=[batchSize,7*7*1024])
         W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float16),name="W31")
         b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float16),name="b31")
-        output_31 = tf.nn.relu(tf.matmul(input_31,W31)+b31)
+        preactivate_31 = tf.add(tf.matmul(input_31,W31),b31)        
+        output_31 = tf.nn.relu(preactivate_31)
+        with tf.name_scope("summary"):
+            hAPI.variable_summaries(variable=W31,name="W31")
+            hAPI.variable_summaries(variable=b31,name="b31")
+            hAPI.variable_summaries(variable=preactivate_31, name="preactivate31")
+            hAPI.variable_summaries(variable=output31, name="output31")
     #Fully-Connected Layer ==> make tensor again.
     with tf.name_scope("Layer32_full") as scope:
         W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
         b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float16),name="b32")
-        fully_32 = tf.nn.relu(tf.matmul(output_31,W32)+b32,name="fully_32")
+        preactivate_32 = tf.add(tf.matmul(output_31,W32),b32)    
+        fully_32 = tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
+        with tf.name_scope("summary"):
+            hAPI.variable_summaries(variable=W32,name="W32")
+            hAPI.variable_summaries(variable=b32,name="b32")
+            hAPI.variable_summaries(variable=preactivate_32, name="preactivate32")
+            hAPI.variable_summaries(variable=output32, name="output32")
         
     with tf.name_scope("cost_function") as scope:
         cost_x = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),probs))
