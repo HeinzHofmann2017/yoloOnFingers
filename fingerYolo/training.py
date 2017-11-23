@@ -234,9 +234,9 @@ def main():
             
         
     with tf.name_scope("cost_function") as scope:
-        cost_x = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),probs))
-        cost_y = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,1],y_coords)),probs))
-        cost_p = tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,2],probs)))
+        cost_x = tf.reduce_mean(tf.multiply(tf.multiply(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),probs),5))
+        cost_y = tf.reduce_mean(tf.multiply(tf.multiply(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)),probs),5))
+        cost_p = tf.reduce_mean(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs)))
         cost = tf.add(tf.add(cost_x,cost_y),cost_p)
         
         cost_h = tf.summary.scalar("Costs",cost)
