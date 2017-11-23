@@ -188,7 +188,7 @@ def main():
             hAPI.variable_summaries(variable=W31,name="W31")
             hAPI.variable_summaries(variable=b31,name="b31")
             hAPI.variable_summaries(variable=preactivate_31, name="preactivate31")
-            hAPI.variable_summaries(variable=output31, name="output31")
+            hAPI.variable_summaries(variable=output_31, name="output31")
     #Fully-Connected Layer ==> make tensor again.
     with tf.name_scope("Layer32_full") as scope:
         W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
@@ -200,7 +200,7 @@ def main():
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
             hAPI.variable_summaries(variable=preactivate_32, name="preactivate32")
-            hAPI.variable_summaries(variable=output32, name="output32")
+            hAPI.variable_summaries(variable=output_32, name="output32")
         
     with tf.name_scope("cost_function") as scope:
         cost_x = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),probs))
