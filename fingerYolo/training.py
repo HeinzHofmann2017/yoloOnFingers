@@ -225,7 +225,7 @@ def main():
             batch_mean32, batch_variance32 = tf.nn.moments(x=preactivate_32,axes=[0,1])
             preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
         fully_32 = preactivate_32#tf.nn.relu(preactivate_32)
-        output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
+        output_32 = tf.sigmoid(tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3]))
         with tf.name_scope("summary"):                        
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
@@ -258,9 +258,11 @@ def main():
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(capped_gvs)
-    for grad, var in grads_and_vars:
-        if grad is not None:
-            tf.summary.histogram(var.op.name +"gradients", grad)
+#==============================================================================
+#     for grad, var in grads_and_vars:
+#         if grad is not None:
+#             tf.summary.histogram(var.op.name +"gradients", grad)
+#==============================================================================
     for grad, var in capped_gvs:
         if grad is not None:
             tf.summary.histogram(var.op.name +"capped_gradients",grad)
