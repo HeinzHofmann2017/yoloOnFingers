@@ -288,7 +288,10 @@ def main():
             bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),tf.reduce_sum(probs))
             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
-        tf.summary.scalar("NormalizedNrOfPredictedFingers",tf.div(tf.reduce_sum(output_32[:,:,:,2]),batchSize))
+        with tf.name_scope("NormalizedNrOfPredictedFingers"):
+            bool_fingerIsDetected = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
+            normalizedNumberOfDetectedFingers = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,fingerIsDetected)),100),batchSize)
+            tf.summary.scalar("NormalizedNrOfPredictedFingers",normalizedNumberOfDetectedFingers)
             
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
