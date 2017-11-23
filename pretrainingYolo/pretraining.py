@@ -109,46 +109,46 @@ def main():
 #                                                       
 #==============================================================================
     #Conv. Layer 7x7x64-s-2                                                  
-    output_1 = hAPI.convLayer(tensor=images,layerNr=1,batchSize=batchSize, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_1 = hAPI.convLayer(tensor=images,layerNr=1,batchSize=batchSize, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=batchnorm, dropout_=False,training=training)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("2_Maxpool_Layer") as scope:
         output_2 = tf.nn.max_pool(output_1,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME', name="maxpool_2")
     #Conv Layer 3x3x192
-    output_3 = hAPI.convLayer(tensor=output_2,layerNr=3,batchSize=batchSize, filterwidth=3, inputdepth=64, outputdepth=192, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_3 = hAPI.convLayer(tensor=output_2,layerNr=3,batchSize=batchSize, filterwidth=3, inputdepth=64, outputdepth=192, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("4_Maxpool_Layer") as scope:
         output_4 = tf.nn.max_pool(output_3,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME', name="maxpool_4")
     #Conv Layer 1x1x128
-    output_5 = hAPI.convLayer(tensor=output_4,layerNr=5,batchSize=batchSize, filterwidth=1, inputdepth=192, outputdepth=128, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_5 = hAPI.convLayer(tensor=output_4,layerNr=5,batchSize=batchSize, filterwidth=1, inputdepth=192, outputdepth=128, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x256 
-    output_6 = hAPI.convLayer(tensor=output_5,layerNr=6,batchSize=batchSize, filterwidth=3, inputdepth=128, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_6 = hAPI.convLayer(tensor=output_5,layerNr=6,batchSize=batchSize, filterwidth=3, inputdepth=128, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 1x1x256
-    output_7 = hAPI.convLayer(tensor=output_6,layerNr=7,batchSize=batchSize, filterwidth=1, inputdepth=256, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_7 = hAPI.convLayer(tensor=output_6,layerNr=7,batchSize=batchSize, filterwidth=1, inputdepth=256, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x512
-    output_8 = hAPI.convLayer(tensor=output_7,layerNr=8,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_8 = hAPI.convLayer(tensor=output_7,layerNr=8,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("9_Maxpool_Layer") as scope:
         output_9 = tf.nn.max_pool(output_8,ksize=[1,2,2,1],strides=[1,2,2,1], padding="SAME", name="maxpool_9")
     #Conv Layer 1x1x256
-    output_10 = hAPI.convLayer(tensor=output_9,layerNr=10,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_10 = hAPI.convLayer(tensor=output_9,layerNr=10,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x512
-    output_11 = hAPI.convLayer(tensor=output_10,layerNr=11,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_11 = hAPI.convLayer(tensor=output_10,layerNr=11,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 1x1x256
-    output_12 = hAPI.convLayer(tensor=output_11,layerNr=12,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_12 = hAPI.convLayer(tensor=output_11,layerNr=12,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x512
-    output_13 = hAPI.convLayer(tensor=output_12,layerNr=13,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_13 = hAPI.convLayer(tensor=output_12,layerNr=13,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 1x1x256
-    output_14 = hAPI.convLayer(tensor=output_13,layerNr=14,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_14 = hAPI.convLayer(tensor=output_13,layerNr=14,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x512
-    output_15 = hAPI.convLayer(tensor=output_14,layerNr=15,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_15 = hAPI.convLayer(tensor=output_14,layerNr=15,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 1x1x256
-    output_16 = hAPI.convLayer(tensor=output_15,layerNr=16,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_16 = hAPI.convLayer(tensor=output_15,layerNr=16,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x512
-    output_17 = hAPI.convLayer(tensor=output_16,layerNr=17,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_17 = hAPI.convLayer(tensor=output_16,layerNr=17,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 1x1x512
-    output_18 = hAPI.convLayer(tensor=output_17,layerNr=18,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_18 = hAPI.convLayer(tensor=output_17,layerNr=18,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x1024
-    output_19 = hAPI.convLayer(tensor=output_18,layerNr=19,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_19 = hAPI.convLayer(tensor=output_18,layerNr=19,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("20_Maxpool_Layer") as scope:
         output_20 = tf.nn.max_pool(output_19,ksize=[1,2,2,1],strides=[1,2,2,1], padding="SAME", name="maxpool_20")
@@ -159,7 +159,7 @@ def main():
     #Conv Layer 1x1x512
     output_23 = hAPI.convLayer(tensor=output_22,layerNr=23,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
     #Conv Layer 3x3x1024
-    output_24 = hAPI.convLayer(tensor=output_23,layerNr=24,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_24 = hAPI.convLayer(tensor=output_23,layerNr=24,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
 #==============================================================================
 # Layer 25:
 #     Averagepool 3x3 -s-3
@@ -172,6 +172,12 @@ def main():
 #==============================================================================
     with tf.name_scope("26_full_Layer") as scope:
         input_26 = tf.reshape(tensor=avgpool_25, shape=[batchSize,4*4*1024]) #Todo: Set the 1 back to 4
+        if dropout == True:
+            with tf.name_scope("dropout"):        
+                #dropout only over all the feature-maps and batches.
+                input_26 = tf.cond(training,
+                                      lambda:tf.nn.dropout(x=input_26, keep_prob=0.8,noise_shape=[batchSize,4*4*1024]),
+                                      lambda:input_26)
         W26 = tf.Variable(tf.truncated_normal(shape=[4*4*1024,1000],stddev=0.01,dtype=tf.float16),name="W26") #Todo: Set the 1 back to 4
         b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float16),name="b26")
         W26_h = tf.summary.histogram("weights26",W26)

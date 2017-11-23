@@ -65,7 +65,7 @@ def convLayer(tensor,layerNr,batchSize, filterwidth, inputdepth, outputdepth, st
         if dropout_ == True:
             #dropout only over all the feature-maps and batches.
             preactivate = tf.cond(training,
-                                  lambda:tf.nn.dropout(x=preactivate, keep_prob=0.8,noise_shape=[batchSize,1,1,outputdepth]),
+                                  lambda:tf.nn.dropout(x=preactivate, keep_prob=0.9,noise_shape=[batchSize,1,1,outputdepth]),
                                   lambda:preactivate)
         with tf.name_scope("relu"):
             tensor = tf.maximum(0*preactivate,preactivate)
