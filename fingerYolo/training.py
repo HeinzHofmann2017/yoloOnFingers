@@ -218,7 +218,7 @@ def main():
                 gamma32 = tf.Variable(tf.constant(1.0,shape=[input_depth_32],dtype=tf.float16),name="gamma",trainable=True)
             batch_mean32, batch_variance32 = tf.nn.moments(x=preactivate_32,axes=[0,1])
             preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
-        fully_32 = tf.nn.relu(preactivate_32)
+        fully_32 = preactivate_32#tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         with tf.name_scope("summary"):                        
             hAPI.variable_summaries(variable=W32,name="W32")
