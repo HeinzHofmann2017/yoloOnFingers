@@ -218,16 +218,9 @@ def main():
                 gamma32 = tf.Variable(tf.constant(1.0,shape=[input_depth_32],dtype=tf.float16),name="gamma",trainable=True)
             batch_mean32, batch_variance32 = tf.nn.moments(x=preactivate_32,axes=[0,1])
             preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
-        if dropout == True:
-            with tf.name_scope("dropout"):        
-                #dropout only over all the feature-maps and batches.
-                preactivate_32 = tf.cond(training,
-                                      lambda:tf.nn.dropout(x=preactivate_32, keep_prob=0.5,noise_shape=[batchSize,1*1*3]),
-                                      lambda:preactivate_32)
         fully_32 = tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
-        with tf.name_scope("summary"):
-            tf.summary.scalar("NrOfPredictedFingers",tf.div(tf.reduce_sum(output_32[:,:,:,2]),batchSize))            
+        with tf.name_scope("summary"):                        
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
             hAPI.variable_summaries(variable=preactivate_32, name="preactivate32")
@@ -297,6 +290,7 @@ def main():
             bool_vector_0_1 = tf.logical_not(tf.logical_or(probability_isnt_correct,tf.logical_and(probability_is_higher_0_5,distance_is_greater_0_1)))
             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),batchSize)
             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
+        tf.summary.scalar("NormalizedNrOfPredictedFingers",tf.div(tf.reduce_sum(output_32[:,:,:,2]),batchSize))
             
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
