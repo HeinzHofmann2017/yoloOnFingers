@@ -227,16 +227,19 @@ def main():
         fully_32 = tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         with tf.name_scope("summary"):
+            tf.summary.scalar("NrOfPredictedFingers",tf.reduce_sum(output_32[:,:,:,2]))            
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
             hAPI.variable_summaries(variable=preactivate_32, name="preactivate32")
             hAPI.variable_summaries(variable=output_32, name="output32")
+            
         
     with tf.name_scope("cost_function") as scope:
         cost_x = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,0],x_coords)),probs))
         cost_y = tf.reduce_mean(tf.multiply(tf.square(tf.subtract(output_32[:,:,:,1],y_coords)),probs))
         cost_p = tf.reduce_mean(tf.square(tf.subtract(output_32[:,:,:,2],probs)))
         cost = tf.add(tf.add(cost_x,cost_y),cost_p)
+        
         cost_h = tf.summary.scalar("Costs",cost)
 
         
