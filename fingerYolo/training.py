@@ -196,7 +196,7 @@ def main():
             with tf.name_scope("dropout"):        
                 #dropout only over all the feature-maps and batches.
                 preactivate_31 = tf.cond(training,
-                                      lambda:tf.nn.dropout(x=preactivate_31, keep_prob=0.5,noise_shape=[batchSize,7*7*1024]),
+                                      lambda:tf.nn.dropout(x=preactivate_31, keep_prob=0.5,noise_shape=[batchSize,4096]),
                                       lambda:preactivate_31)
         output_31 = tf.nn.relu(preactivate_31)
         with tf.name_scope("summary"):
@@ -222,7 +222,7 @@ def main():
             with tf.name_scope("dropout"):        
                 #dropout only over all the feature-maps and batches.
                 preactivate_32 = tf.cond(training,
-                                      lambda:tf.nn.dropout(x=preactivate_32, keep_prob=0.5,noise_shape=[4096,1*1*3]),
+                                      lambda:tf.nn.dropout(x=preactivate_32, keep_prob=0.5,noise_shape=[batchSize,1*1*3]),
                                       lambda:preactivate_32)
         fully_32 = tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
