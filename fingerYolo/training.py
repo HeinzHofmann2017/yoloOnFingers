@@ -239,6 +239,9 @@ def main():
         cost_p = tf.reduce_mean(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs)))
         cost = tf.add(tf.add(cost_x,cost_y),cost_p)
         
+        cost_xh = tf.summary.scalar("Costx",cost_x)
+        cost_yh = tf.summary.scalar("Costy",cost_y)
+        cost_ph = tf.summary.scalar("Costp",cost_p)
         cost_h = tf.summary.scalar("Costs",cost)
 
         
