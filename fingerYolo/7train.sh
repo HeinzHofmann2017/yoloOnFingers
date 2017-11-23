@@ -1,4 +1,4 @@
-NV_GPU=6  \
+NV_GPU=7  \
 nvidia-docker run --rm -t -i \
 -v /home/hhofmann/data:/mnt/data \
 -v /mnt/iscsi:/mnt/fast \
@@ -6,7 +6,7 @@ nvidia-docker run --rm -t -i \
 -u $(id -u):$(id -g) \
 nvcr.io/nvidia/tensorflow:17.09 \
 python code/fingerYolo/training.py          --name $1 \
-                                            --learningrate 0.1 \
+                                            --learningrate 0.001 \
                                             --batchSize 7 \
                                             --numThreads 16 \
                                             --bufferSize 1000 \
