@@ -227,7 +227,7 @@ def main():
         fully_32 = tf.nn.relu(preactivate_32)
         output_32 = tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3])
         with tf.name_scope("summary"):
-            tf.summary.scalar("NrOfPredictedFingers",tf.reduce_sum(output_32[:,:,:,2]))            
+            tf.summary.scalar("NrOfPredictedFingers",tf.div(tf.reduce_sum(output_32[:,:,:,2]),batchSize))            
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
             hAPI.variable_summaries(variable=preactivate_32, name="preactivate32")
