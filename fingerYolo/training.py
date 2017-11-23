@@ -290,7 +290,7 @@ def main():
             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
         with tf.name_scope("NormalizedNrOfPredictedFingers"):
             bool_fingerIsDetected = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
-            normalizedNumberOfDetectedFingers = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,fingerIsDetected)),100),batchSize)
+            normalizedNumberOfDetectedFingers = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_fingerIsDetected)),100),batchSize)
             tf.summary.scalar("NormalizedNrOfPredictedFingers",normalizedNumberOfDetectedFingers)
             
 
