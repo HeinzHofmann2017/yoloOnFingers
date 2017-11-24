@@ -449,7 +449,7 @@ def main():
             
             
             #testimage[y,x,0]
-            print(testimage)
+            #print(testimage)
     # plt.show()
     print("finished")
 
