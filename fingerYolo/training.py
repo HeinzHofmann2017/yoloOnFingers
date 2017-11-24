@@ -399,8 +399,8 @@ def main():
             for i in range(len(test_picnames)/batchSize):
                 testimages,x_coords_pred,y_coords_pred,probs_pred,output = sess.run([images_unnormalized, tf.squeeze(output_32[:,:,:,0]),tf.squeeze(output_32[:,:,:,1]),tf.squeeze(output_32[:,:,:,2]),tf.squeeze(output_32)],        feed_dict={training: False})
                 print(output) 
-                test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
-                print("made summary")
+                #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
+                #print("made summary")
                 for j in range(batchSize-1):
                     x_coords_pred_n = output[j,0]
                     y_coords_pred_n = output[j,1]
