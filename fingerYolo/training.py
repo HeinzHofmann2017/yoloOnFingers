@@ -397,39 +397,28 @@ def main():
             
 
             for i in range(len(test_picnames)/batchSize):
-                testimages,x_coords_pred,y_coords_pred,probs_pred,output = sess.run([images_unnormalized, tf.squeeze(output_32[:,:,:,0]),tf.squeeze(output_32[:,:,:,1]),tf.squeeze(output_32[:,:,:,2]),tf.squeeze(output_32)],        feed_dict={training: False})
-                print(output) 
+                testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
+                print(output) #output[batchelements, [x_coords, y_coords, probs]]
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
                 #print("made summary")
                 for j in range(batchSize-1):
-                    x_coords_pred_n = output[j,0]
-                    y_coords_pred_n = output[j,1]
-                    probs_pred_n = output[j,2]
-                    print("The following numbers should be the same:")
-                    print("x_tensorflow = " + str(x_coords_pred[j]))
-                    print("x_python = "     + str(x_coords_pred_n))
-                    print("y_tensorflow = " + str(y_coords_pred[j]))
-                    print("y_python = "     + str(y_coords_pred_n))
-                    print("probs_tensorflow = " + str(probs_pred[j]))
-                    print("probs_python = " + str(probs_pred_n))
-#==============================================================================
-#                     if(probs_pred[j] > 0.5):
-#                         pred_x = int(x_coords_pred[j] *1280)
-#                         pred_y = int(y_coords_pred[j] *960)
-#                         #mark point on picture
-#                         for x in range((pred_x-20),(pred_x+20)):
-#                             for y in range((pred_y-20),(pred_y+20)):
-#                                 if(x%2 == 0):                    
-#                                     testimage[y,x,0]=255
-#                                 else:
-#                                     testimage[y,x,0]=0
-#                         print(tf.image.encode_png(testimages[0]))
-#                         #TODO: save picture in own folder for recognized fingers 
-#                         tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimages[0]))
-#                     else:
-#                         #tf.image.encode_png(testimages[0])
-#                         #TODO: save picture in own folder for not recognized fingers
-#==============================================================================
+                    testimage = testimages[j]
+                    probs_pred = output[j,2]                        
+                    if(probs_pred > 0.5):
+                        pred_x = int(output[j,0]*1280)
+                        pred_y = int(output[j,1]*960)
+                        #mark point on picture
+                        for x in range((pred_x-20),(pred_x+20)):
+                            for y in range((pred_y-20),(pred_y+20)):
+                                if(x%2 == 0):                    
+                                    testimage[y,x,0]=255
+                                else:
+                                    testimage[y,x,0]=0
+                        #save picture in own folder for recognized fingers 
+                        tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimages))
+                    else:
+                        #save picture in own folder for NOTrecognized fingers 
+                        tf.write_file(origin_path+"picsNOTrecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimages))                        
 #==============================================================================
 #             testimages= sess.run(images_unnormalized,        feed_dict={training: False})
 #             #pred_x = int(x_coords_pred[0] *1280)
