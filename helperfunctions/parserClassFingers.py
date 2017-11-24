@@ -71,6 +71,12 @@ class make_parser(object):
                             action='store_false',
                             help = "If flag --noBatchnorm is activated, batchnorm wont be used.")
         parser.set_defaults(batchnorm=True)
+        
+        parser.add_argument('--Test',
+                            dest='Test',
+                            action='store_true',
+                            help = "If Flag Test is activatet, there will be a test applied to the Validation Set and Saved anywhere...")
+        parser.set_defaults(batchnorm=False)
                                     
         args = parser.parse_args()
         self.modelname                      = args.name
@@ -83,6 +89,7 @@ class make_parser(object):
         self.origin_Path                    = args.originPath
         self.dropout_bool                   = args.dropout
         self.batchnorm_bool                 = args.batchnorm
+        self.test_bool                      = args.Test
 
         
         
@@ -103,3 +110,4 @@ if __name__ == "__main__":
     print("Modelname        = "+ str(lokal_parser.modelname))
     print("Dropout_bool     = "+ str(lokal_parser.dropout_bool))
     print("Batchnorm_bool   = "+ str(lokal_parser.batchnorm_bool))
+    pritn("test_bool        = "+ str(lokal_parser.test_bool))

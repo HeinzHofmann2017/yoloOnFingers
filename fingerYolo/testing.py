@@ -46,7 +46,6 @@ nr_of_epochs                    = parser_object.nr_of_epochs
 nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 dropout                         = parser_object.dropout_bool
 batchnorm                       = parser_object.batchnorm_bool
-test                            = parser_object.test_bool
 
 
 
@@ -91,45 +90,22 @@ def main():
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         valid_data      = valid_data.batch(batchSize)
-        print("read in all Test Picture-Names & Labels and shuffle them")  
-        test_data       = ReadData.get_valid_data(origin_path=origin_path)
-        test_picnames   = [row[0] for row in test_data]
-        test_x_coords   = np.float16([row[1] for row in test_data])
-        test_y_coords   = np.float16([row[2] for row in test_data])
-        test_probs      = np.float16([row[3] for row in test_data]) 
-        test_data      = Dataset.from_tensor_slices((test_picnames,test_x_coords, test_y_coords, test_probs))
-        test_data      = test_data.map(map_func=dataset_preprocessor,
-                                         num_threads=num_threads,
-                                         output_buffer_size=10000)
-        test_data       = test_data.batch(batchSize)
-#==============================================================================
-#==============================================================================
-#==============================================================================
-#==============================================================================
-#==============================================================================
-# # # # #   Here stopped to implement test...
-#==============================================================================
-#==============================================================================
-#==============================================================================
-#==============================================================================
-# 
-#==============================================================================
+
     with tf.name_scope("Data-Iterator") as scope:        
         iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
-        images_unnormalized, x_coords, y_coords, probs  = iterator.get_next()
+        images, x_coords, y_coords, probs  = iterator.get_next()
         
         training_init_op    = iterator.make_initializer(train_data)
         validation_init_op  = iterator.make_initializer(valid_data)
-        testing_init_op     = iterator.make_initializer(test_data)
         
         #To test, how the croped picters look like, when they are used to learn...
-        tf.summary.image('images_after_crop',tensor = images_unnormalized , max_outputs=20)
+        tf.summary.image('images_after_crop',tensor = images , max_outputs=20)
             
     #is true,if the model is training right now, and is False, if the model is testing.
     training = tf.placeholder(tf.bool, name='training')
         
     with tf.name_scope("normalize_pictures") as scope:                            
-        images = hAPI.normalize_pictures(tensor=images_unnormalized)
+        images = hAPI.normalize_pictures(tensor=images)
 #==============================================================================
 #                                                       
 # HIer Graph aufbauen:                                                      
@@ -340,116 +316,55 @@ def main():
     merged_summary_op = tf.summary.merge_all()
 
     with tf.Session() as sess:
-        sess.run(testing_init_op)
+        
         sess.run(validation_init_op)
         sess.run(training_init_op)
         sess.run(init_op)
-                
-        if(test==False):
-            train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_train")
-            train_writer.add_graph(sess.graph) 
-            valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
-            valid_writer.add_graph(sess.graph) 
+        
+        train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_train")
+        train_writer.add_graph(sess.graph) 
+        valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
+        valid_writer.add_graph(sess.graph) 
+        
+        training_matches = 50#%
+        validation_matches = 50#%
+        #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
+        print("start training....\n")
+        for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
+            #training:
+            for j in range(nr_of_epochs_until_save_model):
+                _ = sess.run([train_step],feed_dict={training: True})
+
+            numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
+            #testing on traindata
+            train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
+            matches = sess.run(result_in_percent_visible,   feed_dict={training: False})      
+            matches = sess.run(result_in_percent_05,        feed_dict={training: False}) 
+            matches = sess.run(result_in_percent_03,        feed_dict={training: False})
+            matches = sess.run(result_in_percent_01,        feed_dict={training: False})
+            print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
+            if(matches > training_matches):
+                training_matches=matches
+                mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
+            #testing on validationdata:
+            sess.run(validation_init_op)
+            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
+            matches = sess.run(result_in_percent_visible,   feed_dict={training: False}) 
+            matches = sess.run(result_in_percent_05,        feed_dict={training: False})         
+            matches = sess.run(result_in_percent_03,        feed_dict={training: False})
+            matches = sess.run(result_in_percent_01,        feed_dict={training: False})
+            print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
+            if(matches > validation_matches):
+                validation_matches=matches
+                mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
+            sess.run(training_init_op)
             
-            training_matches = 50#%
-            validation_matches = 50#%
-            #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
-            print("start training....\n")
-            for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
-                #training:
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True})
+            #save Model
+            saver.save(sess=sess, save_path=origin_path + "../../../../weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
+            print("model updatet\n")
+
+                
     
-                numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
-                #testing on traindata
-                train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                matches = sess.run(result_in_percent_visible,   feed_dict={training: False})      
-                matches = sess.run(result_in_percent_05,        feed_dict={training: False}) 
-                matches = sess.run(result_in_percent_03,        feed_dict={training: False})
-                matches = sess.run(result_in_percent_01,        feed_dict={training: False})
-                print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
-                if(matches > training_matches):
-                    training_matches=matches
-                    mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
-                #testing on validationdata:
-                sess.run(validation_init_op)
-                valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                matches = sess.run(result_in_percent_visible,   feed_dict={training: False}) 
-                matches = sess.run(result_in_percent_05,        feed_dict={training: False})         
-                matches = sess.run(result_in_percent_03,        feed_dict={training: False})
-                matches = sess.run(result_in_percent_01,        feed_dict={training: False})
-                print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
-                if(matches > validation_matches):
-                    validation_matches=matches
-                    mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
-                sess.run(training_init_op)
-                
-                #save Model
-                saver.save(sess=sess, save_path=origin_path + "../../../../weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
-                print("model updatet\n")
-
-        else:
-            print("Try to restore")
-            saver.restore(sess,origin_path + "../../../../weights/64lRate0_1.ckpt-00069000")                
-            print("Restored")
-            test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
-            test_writer.add_graph(sess.graph)   
-            
-
-            for i in range(len(test_picnames)/batchSize):
-                testimages,x_coords_pred,y_coords_pred,probs_pred,output = sess.run([images_unnormalized, tf.squeeze(output_32[:,:,:,0]),tf.squeeze(output_32[:,:,:,1]),tf.squeeze(output_32[:,:,:,2]),tf.squeeze(output_32)],        feed_dict={training: False})
-                print(output) 
-                test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
-                print("made summary")
-                for j in range(batchSize-1):
-                    x_coords_pred_n = output[j,0]
-                    y_coords_pred_n = output[j,1]
-                    probs_pred_n = output[j,2]
-                    print("The following numbers should be the same:")
-                    print("x_tensorflow = " + str(x_coords_pred[j]))
-                    print("x_python = "     + str(x_coords_pred_n))
-                    print("y_tensorflow = " + str(y_coords_pred[j]))
-                    print("y_python = "     + str(y_coords_pred_n))
-                    print("probs_tensorflow = " + str(probs_pred[j]))
-                    print("probs_python = " + str(probs_pred_n))
-#==============================================================================
-#                     if(probs_pred[j] > 0.5):
-#                         pred_x = int(x_coords_pred[j] *1280)
-#                         pred_y = int(y_coords_pred[j] *960)
-#                         #mark point on picture
-#                         for x in range((pred_x-20),(pred_x+20)):
-#                             for y in range((pred_y-20),(pred_y+20)):
-#                                 if(x%2 == 0):                    
-#                                     testimage[y,x,0]=255
-#                                 else:
-#                                     testimage[y,x,0]=0
-#                         print(tf.image.encode_png(testimages[0]))
-#                         #TODO: save picture in own folder for recognized fingers 
-#                         tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimages[0]))
-#                     else:
-#                         #tf.image.encode_png(testimages[0])
-#                         #TODO: save picture in own folder for not recognized fingers
-#==============================================================================
-#==============================================================================
-#             testimages= sess.run(images_unnormalized,        feed_dict={training: False})
-#             #pred_x = int(x_coords_pred[0] *1280)
-#             #pred_y = int(y_coords_pred[0] *960)
-#             testimage = testimages[0]*200
-#             x_in=640
-#             y_in=480
-#             for x in range((pred_x-20),(pred_x+20)):
-#                 for y in range((pred_y-20),(pred_y+20)):
-#                     if(x%2 == 0):                    
-#                         testimage[y,x,0]=255
-#                     else:
-#                         testimage[y,x,0]=0
-# 
-#             sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(2)+".png",tf.image.encode_png(testimage)))
-#==============================================================================
-            
-            
-            #testimage[y,x,0]
-            print(testimage)
     # plt.show()
     print("finished")
 
