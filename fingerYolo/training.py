@@ -402,7 +402,7 @@ def main():
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
                 #print("made summary")
                 for j in range(batchSize-1):
-                    testimage = testimages[j]
+                    testimage = testimages[j]*200
                     probs_pred = output[j,2]                        
                     if(probs_pred > 0.5):
                         pred_x = int(output[j,0]*1280)
