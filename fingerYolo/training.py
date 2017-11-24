@@ -415,10 +415,10 @@ def main():
                                 else:
                                     testimage[y,x,0]=0
                         #save picture in own folder for recognized fingers 
-                        tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimages))
+                        tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage))
                     else:
                         #save picture in own folder for NOTrecognized fingers 
-                        tf.write_file(origin_path+"picsNOTrecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimages))                        
+                        tf.write_file(origin_path+"picsNOTrecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage))                        
 #==============================================================================
 #             testimages= sess.run(images_unnormalized,        feed_dict={training: False})
 #             #pred_x = int(x_coords_pred[0] *1280)
