@@ -50,73 +50,56 @@ test                            = parser_object.test_bool
 
 
 
-def dataset_preprocessor(picname,x_coord,y_coord,prob):
+def dataset_preprocessor(picname,label):
     content = tf.read_file(origin_path + picname)
     image = tf.image.decode_png(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float16)
     #ToDo: random Crop here (is a kind of complicated because of the x and y labels.)
-    return image,x_coord,y_coord,prob
+    return image,label
     
 def main():
     print("TensorFlow version ", tf.__version__)
-    
-
     with tf.name_scope("Data") as scope:
         print("read in all Train Picture-Names & Labels and shuffle them")
         ReadData        = analyse_Fingerset.Dataset_Heinz()
         
-        
-        train_data  = ReadData.get_train_data(origin_path=origin_path)
+        train_data      = ReadData.get_train_data()
         train_picnames  = [row[0] for row in train_data]
-        train_x_coords  = np.float16([row[1] for row in train_data])
-        train_y_coords  = np.float16([row[2] for row in train_data])
-        train_probs     = np.float16([row[3] for row in train_data])
-        train_data      = Dataset.from_tensor_slices((train_picnames,train_x_coords, train_y_coords, train_probs))
+        train_labels    = np.float16([row[1] for row in train_data])#puts a 4 Dimensional Vector to train_labels
+        train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
         train_data      = train_data.repeat()
         train_data      = train_data.shuffle(buffer_size=buffer_size)
         train_data      = train_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         train_data      = train_data.batch(batchSize)
-        print("read in all Valid Picture-Names & Labels and shuffle them")  
-        valid_data  = ReadData.get_valid_data(origin_path=origin_path)
+
+        print("read in all Valid Picture-Names & Labels and shuffle them")
+        valid_data      = ReadData.get_valid_data(origin_path=origin_path)
         valid_picnames  = [row[0] for row in valid_data]
-        valid_x_coords  = np.float16([row[1] for row in valid_data])
-        valid_y_coords  = np.float16([row[2] for row in valid_data])
-        valid_probs     = np.float16([row[3] for row in valid_data]) 
-        valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_x_coords, valid_y_coords, valid_probs))
+        valid_labels    = np.float16([row[1] for row in valid_data])
+        valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
         valid_data      = valid_data.repeat()
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)
         valid_data      = valid_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         valid_data      = valid_data.batch(batchSize)
+
         print("read in all Test Picture-Names & Labels and shuffle them")  
         test_data       = ReadData.get_valid_data(origin_path=origin_path)
         test_picnames   = [row[0] for row in test_data]
-        test_x_coords   = np.float16([row[1] for row in test_data])
-        test_y_coords   = np.float16([row[2] for row in test_data])
-        test_probs      = np.float16([row[3] for row in test_data]) 
-        test_data      = Dataset.from_tensor_slices((test_picnames,test_x_coords, test_y_coords, test_probs))
+        test_labels    = np.float16([row[1] for row in test_data])
+        test_data      = Dataset.from_tensor_slices((test_picnames,test_labels))
         test_data      = test_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         test_data       = test_data.batch(batchSize)
-#==============================================================================
-#==============================================================================
-#==============================================================================
-#==============================================================================
-#==============================================================================
-# # # # #   Here stopped to implement test...
-#==============================================================================
-#==============================================================================
-#==============================================================================
-#==============================================================================
-# 
-#==============================================================================
+
+    print("finished read all Pictures and Labels, start Data-iterator")
     with tf.name_scope("Data-Iterator") as scope:        
         iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
-        images_unnormalized, x_coords, y_coords, probs  = iterator.get_next()
+        images_unnormalized, labels  = iterator.get_next()
         
         training_init_op    = iterator.make_initializer(train_data)
         validation_init_op  = iterator.make_initializer(valid_data)
@@ -236,8 +219,8 @@ def main():
                 output_31 = tf.cond(training,
                                       lambda:tf.nn.dropout(x=output_31, keep_prob=0.8,noise_shape=[batchSize,4096]),
                                       lambda:output_31)
-        W32 = tf.Variable(tf.truncated_normal(shape=[4096,1*1*3],stddev=0.01,dtype=tf.float16),name="W32")
-        b32 = tf.Variable(tf.truncated_normal(shape=[1*1*3],stddev=0.01,dtype=tf.float16),name="b32")
+        W32 = tf.Variable(tf.truncated_normal(shape=[4096,7*7*6],stddev=0.01,dtype=tf.float16),name="W32")
+        b32 = tf.Variable(tf.truncated_normal(shape=[7*7*6],stddev=0.01,dtype=tf.float16),name="b32")
         preactivate_32 = tf.add(tf.matmul(output_31,W32),b32)
         with tf.name_scope("batch_norm"):
             input_depth_32 = preactivate_32.get_shape().as_list()[-1]#takes the last element which is in this case 64
@@ -249,7 +232,7 @@ def main():
             batch_mean32, batch_variance32 = tf.nn.moments(x=preactivate_32,axes=[0,1])
             preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
         fully_32 = preactivate_32#tf.nn.relu(preactivate_32)
-        output_32 = tf.sigmoid(tf.reshape(tensor=fully_32, shape=[batchSize,1,1,3]))
+        output_32 = tf.sigmoid(tf.reshape(tensor=fully_32, shape=[batchSize,7,7,6]))
         with tf.name_scope("summary"):                        
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
@@ -258,15 +241,130 @@ def main():
             
         
     with tf.name_scope("cost_function") as scope:
-        cost_x = tf.reduce_mean(tf.multiply(tf.multiply(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),probs),5))
-        cost_y = tf.reduce_mean(tf.multiply(tf.multiply(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)),probs),5))
-        cost_p = tf.reduce_mean(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs)))
-        cost = tf.add(tf.add(cost_x,cost_y),cost_p)
+        x1_output = tf.squeeze(output_32[:,:,:,0])
+        x_label   = tf.squeeze(labels[:,:,:,0])
+
+        y1_output = tf.squeeze(output_32[:,:,:,1])
+        y_label   = tf.squeeze(labels[:,:,:,1])
+
+        h1_output = tf.squeeze(output_32[:,:,:,2])
+        h_label  = tf.squeeze(labels[:,:,:,2])
         
-        cost_xh = tf.summary.scalar("Costx",cost_x)
-        cost_yh = tf.summary.scalar("Costy",cost_y)
-        cost_ph = tf.summary.scalar("Costp",cost_p)
-        cost_h = tf.summary.scalar("Costs",cost)
+        w1_output = tf.squeeze(output_32[:,:,:,3])
+        w_label   = tf.squeeze(labels[:,:,:,3])
+
+        c1_output = tf.squeeze(output_32[:,:,:,4])
+        
+        p_output  = tf.squeeze(output_32[:,:,:,5])
+        p_label   = tf.squeeze(labels[:,:,:,4])
+        
+        with tf.name_scope("x-costs"):
+            x1_difference = tf.subtract(x1_output,x_label)           
+            x1_squared = tf.square(x1_difference)
+            x1_costs = tf.multiply(p_label,x1_squared)
+            x1_costs = tf.reduce_sum(x1_costs)
+            x1_costs = tf.multiply(x1_costs,5)#like in the yolo-paper...
+        with tf.name_scope("y-costs"):
+            y1_difference = tf.subtract(y1_output,y_label)           
+            y1_squared = tf.square(y1_difference)
+            y1_costs = tf.multiply(p_label,y1_squared)
+            y1_costs = tf.reduce_sum(y1_costs)
+            y1_costs = tf.multiply(y1_costs,5)#like in the yolo-paper...
+        with tf.name_scope("h-costs"):
+            h1_output_root = tf.sqrt(h1_output)
+            h_label_root = tf.sqrt(h_label)
+            h1_difference = tf.subtract(h1_output_root,h_label_root)
+            h1_squared = tf.square(h1_difference)
+            h1_costs = tf.multiply(p_label,h1_squared)
+            h1_costs = tf.reduce_sum(h1_costs)
+            h1_costs = tf.multiply(h1_costs,5)#like in the yolo-paper...
+        with tf.name_scope("w-costs"):
+            w1_output_root = tf.sqrt(w1_output)
+            w_label_root = tf.sqrt(w_label)
+            w1_difference = tf.subtract(w1_output_root,w_label_root)
+            w1_squared = tf.square(w1_difference)
+            w1_costs = tf.multiply(p_label,w1_squared)
+            w1_costs = tf.reduce_sum(w1_costs)
+            w1_costs = tf.multiply(w1_costs,5)
+        with tf.name_scope("C-costs"):
+            w_label_half = tf.div(w_label,2)
+            h_label_half = tf.div(h_label,2)
+
+            w1_output_half= tf.div(w1_output,2)
+            h1_output_half= tf.div(h1_output,2)
+            
+            label_left = tf.subtract(x_label,w_label_half)
+            label_right= tf.add(x_label,w_label_half)
+            label_top = tf.subtract(y_label,h_label_half)
+            label_bottom=tf.add(y_label,h_label_half)
+            
+            output1_left = tf.subtract(x1_output,w1_output_half)
+            output1_right= tf.add(x1_output,w1_output_half)
+            output1_top = tf.subtract(y1_output,h1_output_half)
+            output1_bottom= tf.add(y1_output,h1_output_half)
+
+            overlap1_left = tf.maximum(label_left,output1_left)
+            overlap1_right= tf.minimum(label_right,output1_right)
+            overlap1_top = tf.maximum(label_top,output1_top)
+            overlap1_bottom= tf.minimum(label_bottom,output1_bottom)
+            
+            overlap1_width = tf.subtract(overlap1_right,overlap1_left)
+            overlap1_width = tf.maximum(np.float16(0),overlap1_width)
+            overlap1_height = tf.subtract(overlap1_bottom,overlap1_top)
+            overlap1_height = tf.maximum(np.float16(0),overlap1_height)
+            area_of_overlap1 = tf.multiply(overlap1_width, overlap1_height)
+            
+            output1_area = tf.multiply(h1_output,w1_output)
+            label_area = tf.multiply(h_label,w_label)
+            
+            area_of_union1 = tf.subtract(tf.add(output1_area,label_area),area_of_overlap1)
+            
+            IoU1 = tf.div(area_of_overlap1,area_of_union1)
+            IoU1_scalar = tf.reduce_mean(IoU1)            
+            
+            c1_label = tf.multiply(IoU1,p_label)#with more than one finger use here p_label=max(p_label1,p_label2,...)
+                                                
+            c1_difference = tf.subtract(c1_output,c1_label)
+            c1_squared = tf.square(c1_difference)
+            
+            with tf.name_scope("obj_present"):
+                c1_obj = tf.multiply(c1_squared, p_label)
+                c1_obj_costs = tf.reduce_sum(c1_obj)
+            with tf.name_scope("noobj_present"):
+                p_label_invers = tf.subtract(np.float16(1),p_label)# y=1-x   x=0|y=1  & x=1|y=0
+                c1_noobj = tf.multiply(c1_squared, p_label_invers)
+                c1_noobj_costs = tf.reduce_sum(c1_noobj)
+                c1_noobj_costs = tf.multiply(c1_noobj_costs,0.5)#like in the yolo paper...
+        with tf.name_scope("p_costs"):
+            p_difference = tf.subtract(p_output,p_label)
+            p_squared = tf.square(p_difference)
+            p_costs = tf.multiply(p_label,p_squared)
+            p_costs = tf.reduce_sum(p_costs)
+        
+        center_costs = tf.add(x1_costs,y1_costs)        
+        box_costs = tf.add(h1_costs,w1_costs)
+        conf_costs = tf.add(c1_obj_costs,c1_noobj_costs)
+        spatial_costs = tf.add(center_costs,box_costs)
+        prob_costs = tf.add(conf_costs,p_costs)
+        costs = tf.add(spatial_costs,prob_costs)
+        
+        tf.summary.scalar("Costx",x1_costs)
+        tf.summary.scalar("Costy",y1_costs)
+        tf.summary.scalar("Costh",h1_costs)
+        tf.summary.scalar("Costw",w1_costs)
+        tf.summary.scalar("IoU_mean",IoU1_scalar)
+        tf.summary.scalar("CostcObj",c1_obj_costs)
+        tf.summary.scalar("CostcNoObj",c1_noobj_costs)
+        tf.summary.scalar("Costp",p_costs)
+        
+        tf.summary.scalar("CostCenter",center_costs)
+        tf.summary.scalar("CostBox",box_costs)
+        tf.summary.scalar("CostConf",conf_costs)
+        
+        tf.summary.scalar("CostSpatial",spatial_costs)
+        tf.summary.scalar("CostProb",prob_costs)
+        
+        tf.summary.scalar("Costs",costs)
 
         
     with tf.name_scope("optimizer") as scope:
@@ -277,7 +375,7 @@ def main():
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
-        grads_and_vars = optimizer.compute_gradients(cost)
+        grads_and_vars = optimizer.compute_gradients(costs)
         capped_gvs = [(tf.clip_by_value(grad, -5., 5.), var) for grad, var in grads_and_vars]
         
         # Ask the optimizer to apply the capped gradients.
@@ -292,41 +390,81 @@ def main():
             tf.summary.histogram(var.op.name +"capped_gradients",grad)
             
     with tf.name_scope("Test") as scope:
-        test_vector = tf.ones([batchSize],dtype=tf.float16)
-        probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs))),0.5)
-        finger_is_there = tf.greater(probs,0.5)
-        with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
-            bool_vector_visible = tf.logical_not(probability_isnt_correct)
-            result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
-            visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
-        with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
-            #                       =sqrt((x-x)^2+(y-y)^2)>0.25
-            distance_is_less_0_5 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
-                                                                tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.25)
-            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_5 = tf.logical_and(finger_is_there,distance_is_less_0_5)
-            result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),tf.add(tf.reduce_sum(probs),1e-4))
-            in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
-        with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
-            #                       =sqrt((x-x)^2+(y-y)^2)>0.15
-            distance_is_less_0_3 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
-                                                                tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.15)
-            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_3 = tf.logical_and(finger_is_there,distance_is_less_0_3)
-            result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),tf.add(tf.reduce_sum(probs),1e-4))
-            in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
-        with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
-            #                       =sqrt((x-x)^2+(y-y)^2)>0.05
-            distance_is_less_0_1 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
-                                                                tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.05)
-            #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-            bool_vector_0_1 = tf.logical_and(finger_is_there,distance_is_less_0_1)
-            result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),tf.add(tf.reduce_sum(probs),1e-4))
-            in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
-        with tf.name_scope("NormalizedNrOfPredictedFingers"):
-            bool_fingerIsDetected = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
-            normalizedNumberOfDetectedFingers = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_fingerIsDetected)),100),batchSize)
-            tf.summary.scalar("NormalizedNrOfPredictedFingers",normalizedNumberOfDetectedFingers)
+        true_probs = tf.multiply(p_output,p_label)
+        false_probs = tf.multiply(p_output,p_label_invers)
+        total_nr_of_Gridcells = tf.reduce_sum(tf.maximum(tf.add(p_label,2),1))
+        with tf.name_scope("true_positives"):        
+            normed_probs_tp = tf.subtract(true_probs,0.5)
+            deleted_probs_tp = tf.maximum(normed_probs_tp,np.float16(0))
+            residual_probs_tp = tf.multiply(deleted_probs_tp,1000.0)
+            true_positives = tf.minimum(residual_probs_tp,np.float16(1))
+            true_positives = tf.reduce_sum(true_positives)
+            true_positives_normed = tf.div(true_positives,total_nr_of_Gridcells)
+            tf.summary.scalar("true_positives",true_positives_normed)
+        with tf.name_scope("false_positives"):           
+            normed_probs_fp = tf.subtract(false_probs,0.5)
+            deleted_probs_fp = tf.maximum(normed_probs_fp,np.float16(0))
+            residual_probs_fp = tf.multiply(deleted_probs_fp,1000.0)
+            false_positives = tf.minimum(residual_probs_fp,np.float16(1))
+            false_positives = tf.reduce_sum(false_positives)            
+            false_positives_normed = tf.div(false_positives,total_nr_of_Gridcells)
+            tf.summary.scalar("false_positives",false_positives_normed)
+        with tf.name_scope("true_negatives"):
+            normed_probs_tn = tf.subtract(false_probs,0.5)
+            deleted_probs_tn = tf.minimum(normed_probs_tn,np.float16(0))
+            residual_probs_tn = tf.multiply(deleted_probs_tn,-1000.0)
+            true_negatives = tf.minimum(residual_probs_tn,np.float16(1))
+            true_negatives = tf.reduce_sum(true_negatives)
+            true_negatives_normed = tf.div(true_negatives,total_nr_of_Gridcells)
+            tf.summary.scalar("true_negatives",true_negatives_normed)
+        with tf.name_scope("false_negatives"):
+            normed_probs_fn = tf.subtract(true_probs,0.5)
+            deleted_probs_fn = tf.minimum(normed_probs_fn,np.float16(0))
+            residual_probs_fn = tf.multiply(deleted_probs_fn,-1000.0)
+            false_negatives = tf.minimum(residual_probs_fn,np.float16(1))
+            false_negatives = tf.reduce_sum(false_negatives)
+            false_negatives_normed = tf.div(false_negatives,total_nr_of_Gridcells)
+            tf.summary.scalar("flase_negatives",false_negatives_normed)
+        
+            
+            
+#==============================================================================
+#         test_vector = tf.ones([batchSize],dtype=tf.float16)
+#         probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs))),0.5)
+#         finger_is_there = tf.greater(probs,0.5)
+#         with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
+#             bool_vector_visible = tf.logical_not(probability_isnt_correct)
+#             result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
+#             visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
+#         with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
+#             #                       =sqrt((x-x)^2+(y-y)^2)>0.25
+#             distance_is_less_0_5 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+#                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.25)
+#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+#             bool_vector_0_5 = tf.logical_and(finger_is_there,distance_is_less_0_5)
+#             result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),tf.add(tf.reduce_sum(probs),1e-4))
+#             in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
+#         with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
+#             #                       =sqrt((x-x)^2+(y-y)^2)>0.15
+#             distance_is_less_0_3 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+#                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.15)
+#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+#             bool_vector_0_3 = tf.logical_and(finger_is_there,distance_is_less_0_3)
+#             result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),tf.add(tf.reduce_sum(probs),1e-4))
+#             in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
+#         with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
+#             #                       =sqrt((x-x)^2+(y-y)^2)>0.05
+#             distance_is_less_0_1 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
+#                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.05)
+#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
+#             bool_vector_0_1 = tf.logical_and(finger_is_there,distance_is_less_0_1)
+#             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),tf.add(tf.reduce_sum(probs),1e-4))
+#             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
+#         with tf.name_scope("NormalizedNrOfPredictedFingers"):
+#             bool_fingerIsDetected = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
+#             normalizedNumberOfDetectedFingers = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_fingerIsDetected)),100),batchSize)
+#             tf.summary.scalar("NormalizedNrOfPredictedFingers",normalizedNumberOfDetectedFingers)
+#==============================================================================
             
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
@@ -351,8 +489,8 @@ def main():
             valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
             valid_writer.add_graph(sess.graph) 
             
-            training_matches = 50#%
-            validation_matches = 50#%
+            training_matches = 0.01#%
+            validation_matches = 0.01#%
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
@@ -363,62 +501,62 @@ def main():
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
                 train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                matches = sess.run(result_in_percent_visible,   feed_dict={training: False})      
-                matches = sess.run(result_in_percent_05,        feed_dict={training: False}) 
-                matches = sess.run(result_in_percent_03,        feed_dict={training: False})
-                matches = sess.run(result_in_percent_01,        feed_dict={training: False})
-                print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
-                if(matches > training_matches):
-                    training_matches=matches
-                    mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                tp = sess.run(true_positives,   feed_dict={training: False})      
+                fp = sess.run(false_positives,        feed_dict={training: False}) 
+                tn = sess.run(true_negatives,        feed_dict={training: False})
+                fn = sess.run(false_negatives,        feed_dict={training: False})
+                if((tp+tn) > training_matches):
+                    training_matches=(tp+tn)
+                    mailer.mailto("\n\n"+name+" Training \n\n true-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 #testing on validationdata:
                 sess.run(validation_init_op)
                 valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                matches = sess.run(result_in_percent_visible,   feed_dict={training: False}) 
-                matches = sess.run(result_in_percent_05,        feed_dict={training: False})         
-                matches = sess.run(result_in_percent_03,        feed_dict={training: False})
-                matches = sess.run(result_in_percent_01,        feed_dict={training: False})
-                print(sess.run(tf.squeeze(output_32[:,:,:,2]),feed_dict={training:False}))
-                if(matches > validation_matches):
-                    validation_matches=matches
-                    mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
+                tp = sess.run(true_positives,       feed_dict={training: False})      
+                fp = sess.run(false_positives,        feed_dict={training: False}) 
+                tn = sess.run(true_negatives,        feed_dict={training: False})
+                fn = sess.run(false_negatives,        feed_dict={training: False})
+                if((tp+tn) > validation_matches):
+                    validation_matches=(tp+tn)
+                    mailer.mailto("\n\n"+name+" Validation  \n\n true-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 sess.run(training_init_op)
                 
                 #save Model
                 saver.save(sess=sess, save_path=origin_path + "../../../../weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
                 print("model updatet\n")
 
-        else:
-            print("Try to restore")
-            saver.restore(sess,origin_path + "../../../../weights/66lRate0_001.ckpt-00072000")                
-            print("Restored")
-            test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
-            test_writer.add_graph(sess.graph)   
-            
-
-            for i in range(len(test_picnames)/batchSize):
-                testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
-                print(output) #output[batchelements, [x_coords, y_coords, probs]]
-                #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
-                #print("made summary")
-                for j in range(batchSize-1):
-                    testimage = testimages[j]*200
-                    probs_pred = output[j,2]                        
-                    if(probs_pred > 0.5):
-                        pred_x = int(output[j,0]*1280)
-                        pred_y = int(output[j,1]*960)
-                        #mark point on picture
-                        for x in range((pred_x-20),(pred_x+20)):
-                            for y in range((pred_y-20),(pred_y+20)):
-                                if(x%2 == 0):                    
-                                    testimage[y,x,0]=255
-                                else:
-                                    testimage[y,x,0]=0
-                        #save picture in own folder for recognized fingers 
-                        sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage)))
-                    else:
-                        #save picture in own folder for NOTrecognized fingers 
-                        sess.run(tf.write_file(origin_path+"picsNOTrecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage)))                        
+#==============================================================================
+#         else:
+#             print("Try to restore")
+#             saver.restore(sess,origin_path + "../../../../weights/66lRate0_001.ckpt-00072000")                
+#             print("Restored")
+#             test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
+#             test_writer.add_graph(sess.graph)   
+#             
+# 
+#             for i in range(len(test_picnames)/batchSize):
+#                 testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
+#                 print(output) #output[batchelements, [x_coords, y_coords, probs]]
+#                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
+#                 #print("made summary")
+#                 for j in range(batchSize-1):
+#                     testimage = testimages[j]*200
+#                     probs_pred = output[j,2]                        
+#                     if(probs_pred > 0.5):
+#                         pred_x = int(output[j,0]*1280)
+#                         pred_y = int(output[j,1]*960)
+#                         #mark point on picture
+#                         for x in range((pred_x-20),(pred_x+20)):
+#                             for y in range((pred_y-20),(pred_y+20)):
+#                                 if(x%2 == 0):                    
+#                                     testimage[y,x,0]=255
+#                                 else:
+#                                     testimage[y,x,0]=0
+#                         #save picture in own folder for recognized fingers 
+#                         sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage)))
+#                     else:
+#                         #save picture in own folder for NOTrecognized fingers 
+#                         sess.run(tf.write_file(origin_path+"picsNOTrecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage)))                        
+#==============================================================================
 #==============================================================================
 #             testimages= sess.run(images_unnormalized,        feed_dict={training: False})
 #             #pred_x = int(x_coords_pred[0] *1280)

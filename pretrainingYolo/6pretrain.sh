@@ -1,6 +1,6 @@
 NV_GPU=6  \
 nvidia-docker run --rm -t -i \
--v /home/hhofmann/data:/mnt/data \
+-v /mnt/data:/mnt/data \
 -v /mnt/iscsi:/mnt/fast \
 -v /home/hhofmann/code:/workspace/code \
 -u $(id -u):$(id -g) \
