@@ -13,7 +13,7 @@ import sys
 import csv
 import pickle
 import random
-import cv2
+#import cv2
 this_folder =  os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, this_folder+ '/../../../helperfunctions/')
 import mailer
@@ -34,104 +34,106 @@ class Dataset_Heinz(object):
     def make_lists(self,origin_path="/media/hhofmann/deeplearning/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/",nrOfCams=4):
         self.all_picture_names = 12
 
-        #has to be commented out, because there is no cv2 in the docker for learning
-        #if path doesn't allready exist, create it.
-        if not os.path.exists(origin_path):
-            os.makedirs(origin_path + "../trainData")
-                
-        #get number of Pictures
-        nrOfElements = 0
-        for camera_nr in range(nrOfCams):
-            with open(origin_path + "../Camera_"+str(camera_nr)+"/UV_Bin/fingers.csv") as csvfile_read:
-                reader = csv.DictReader(csvfile_read,fieldnames=["picName","x_coord","y_coord","width","height","C","P"])
-                for row in reader:
-                    nrOfElements+=1
-
-                    
-        nrOfTestElements = int(nrOfElements/10)            
-        self.data       = [[]for i in range(nrOfElements)]     
-        self.validdata  = [[]for i in range(nrOfTestElements)]
-        self.traindata  = [[]for i in range(nrOfElements-nrOfTestElements)]
-        label_tensor    = np.zeros((nrOfElements,7,7,5))
-        
-        #save picture information in Array and store pictures with new names in new folder.
-        global_index = 0
-        print("copy pictures will need about 1.5 minute per 1000 pictures")            
-        for camera_nr in range(nrOfCams):
-            #read Data from csv-file
-            print("start with Camera " + str(camera_nr))
-            with open(origin_path + "../Camera_"+str(camera_nr)+"/UV_Bin/fingers.csv") as csvfile_read:
-                reader = csv.DictReader(csvfile_read,fieldnames=["picName","x_coord","y_coord","width","height","C","P"])
-                #for every picture do
-                                                
-                for row in reader:
-                    global_picName = "pic"+str(global_index)+".png"
-                    for cellHeight in range(7):#counts from cell 0 to cell 6
-                        for cellWidth in range(7):#counts from cell 0 to cell 6                               
-                            for i in range(5):
-                                label_tensor[global_index,cellHeight,cellWidth,i]=0
-                    if float(row["P"]) > 0:
-                        x_coord = (float(row["x_coord"])/1280)*7#This coordinates are between 0 and 7 like the Grid on the picture has 7*7 fields
-                        y_coord = (float(row["y_coord"])/960)*7#This coordinates are between 0 and 7 like the Grid on the picture has 7*7 fields
-                        x_box_and_offset = int(x_coord - 0.0000001) #round down the coordinates to the next lower integer                             
-                        y_box_and_offset = int(y_coord - 0.0000001) #round down the coordinates to the next lower integer
-                        x_fine = x_coord - x_box_and_offset#get the coordinates from the minibox, which is between 0 and 1
-                        y_fine = y_coord -y_box_and_offset#get the coordinates from the minibox, which is between 0 and 1
-                        if(x_coord < 0 or x_coord>7):
-                            print("Error, x_coord is "+str(x_coord)+" in "+str(row["picName"]))
-                            x_coord=7
-                        elif(y_coord < 0 or y_coord>7):
-                            print("Error, y_coord is "+str(y_coord)+" in "+str(row["picName"]))
-                            y_coord=7
-                        elif(x_box_and_offset < 0 or x_box_and_offset>=7):
-                            print("Error, x_box_and_offset is "+str(x_box_and_offset)+" in "+str(row["picName"]))
-                            x_box_and_offset = 6
-                        elif(y_box_and_offset < 0 or y_box_and_offset>=7):
-                            print("Error, y_box_and_offset is "+str(y_box_and_offset)+" in "+str(row["picName"]))
-                            y_box_and_offset = 6
-                        elif(x_fine < 0 or x_fine>1.00001):
-                            print("Error, x_fine is "+str(x_fine)+" in "+str(row["picName"]))
-                            x_fine = 1
-                        elif(y_fine < 0 or y_fine>1.00001):
-                            print("Error, y_fine is "+str(y_fine)+" in "+str(row["picName"]))
-                            x_fine = 1
-                        else:
-                            #Write the x-coords and y-coords in the correct Grid-Cell.
-                            # x-dimension
-                            label_tensor[global_index,y_box_and_offset,x_box_and_offset,0]=x_fine
-                            # y dimension
-                            label_tensor[global_index,y_box_and_offset,x_box_and_offset,1]=y_fine
-                            # height
-                            label_tensor[global_index,y_box_and_offset,x_box_and_offset,2]=float(row["height"])/1280
-                            # width
-                            label_tensor[global_index,y_box_and_offset,x_box_and_offset,3]=float(row["width"])/960
-                            # Probability, that there is a finger
-                            label_tensor[global_index,y_box_and_offset,x_box_and_offset,4]=1  
-                    img = cv2.imread(origin_path + "../Camera_"+str(camera_nr)+"/WHITE/"+row["picName"])
-                    self.data[global_index].append(global_picName)
-                    self.data[global_index].append(label_tensor[global_index,:,:,:])
-                    #to show special Feature enable this print and remove nrOfElements and global_index from label_tensor XD
-                    #print(self.data)
-
-                    cv2.imwrite(origin_path+global_picName,img)            
-                    global_index += 1
-                    
-
-      
-        print("start shuffling")
-        random.seed(448)
-        np.random.shuffle(self.data)
-        random.seed(543)
-        np.random.shuffle(self.data)
-    
-        self.validdata = self.data[0:nrOfTestElements]
-        self.traindata = self.data[nrOfTestElements+1:nrOfElements-1]
-
-        
-        print("store lists with pickle")
-        pickle.dump(self.data,      open(origin_path + "data.pkl",      "wb"))
-        pickle.dump(self.validdata, open(origin_path + "validdata.pkl", "wb"))
-        pickle.dump(self.traindata, open(origin_path + "traindata.pkl", "wb"))
+#==============================================================================
+#         #has to be commented out, because there is no cv2 in the docker for learning
+#         #if path doesn't allready exist, create it.
+#         if not os.path.exists(origin_path):
+#             os.makedirs(origin_path + "../trainData")
+#                 
+#         #get number of Pictures
+#         nrOfElements = 0
+#         for camera_nr in range(nrOfCams):
+#             with open(origin_path + "../Camera_"+str(camera_nr)+"/UV_Bin/fingers.csv") as csvfile_read:
+#                 reader = csv.DictReader(csvfile_read,fieldnames=["picName","x_coord","y_coord","width","height","C","P"])
+#                 for row in reader:
+#                     nrOfElements+=1
+# 
+#                     
+#         nrOfTestElements = int(nrOfElements/10)            
+#         self.data       = [[]for i in range(nrOfElements)]     
+#         self.validdata  = [[]for i in range(nrOfTestElements)]
+#         self.traindata  = [[]for i in range(nrOfElements-nrOfTestElements)]
+#         label_tensor    = np.zeros((nrOfElements,7,7,5))
+#         
+#         #save picture information in Array and store pictures with new names in new folder.
+#         global_index = 0
+#         print("copy pictures will need about 1.5 minute per 1000 pictures")            
+#         for camera_nr in range(nrOfCams):
+#             #read Data from csv-file
+#             print("start with Camera " + str(camera_nr))
+#             with open(origin_path + "../Camera_"+str(camera_nr)+"/UV_Bin/fingers.csv") as csvfile_read:
+#                 reader = csv.DictReader(csvfile_read,fieldnames=["picName","x_coord","y_coord","width","height","C","P"])
+#                 #for every picture do
+#                                                 
+#                 for row in reader:
+#                     global_picName = "pic"+str(global_index)+".png"
+#                     for cellHeight in range(7):#counts from cell 0 to cell 6
+#                         for cellWidth in range(7):#counts from cell 0 to cell 6                               
+#                             for i in range(5):
+#                                 label_tensor[global_index,cellHeight,cellWidth,i]=0
+#                     if float(row["P"]) > 0:
+#                         x_coord = (float(row["x_coord"])/1280)*7#This coordinates are between 0 and 7 like the Grid on the picture has 7*7 fields
+#                         y_coord = (float(row["y_coord"])/960)*7#This coordinates are between 0 and 7 like the Grid on the picture has 7*7 fields
+#                         x_box_and_offset = int(x_coord - 0.0000001) #round down the coordinates to the next lower integer                             
+#                         y_box_and_offset = int(y_coord - 0.0000001) #round down the coordinates to the next lower integer
+#                         x_fine = x_coord - x_box_and_offset#get the coordinates from the minibox, which is between 0 and 1
+#                         y_fine = y_coord -y_box_and_offset#get the coordinates from the minibox, which is between 0 and 1
+#                         if(x_coord < 0 or x_coord>7):
+#                             print("Error, x_coord is "+str(x_coord)+" in "+str(row["picName"]))
+#                             x_coord=7
+#                         elif(y_coord < 0 or y_coord>7):
+#                             print("Error, y_coord is "+str(y_coord)+" in "+str(row["picName"]))
+#                             y_coord=7
+#                         elif(x_box_and_offset < 0 or x_box_and_offset>=7):
+#                             print("Error, x_box_and_offset is "+str(x_box_and_offset)+" in "+str(row["picName"]))
+#                             x_box_and_offset = 6
+#                         elif(y_box_and_offset < 0 or y_box_and_offset>=7):
+#                             print("Error, y_box_and_offset is "+str(y_box_and_offset)+" in "+str(row["picName"]))
+#                             y_box_and_offset = 6
+#                         elif(x_fine < 0 or x_fine>1.00001):
+#                             print("Error, x_fine is "+str(x_fine)+" in "+str(row["picName"]))
+#                             x_fine = 1
+#                         elif(y_fine < 0 or y_fine>1.00001):
+#                             print("Error, y_fine is "+str(y_fine)+" in "+str(row["picName"]))
+#                             x_fine = 1
+#                         else:
+#                             #Write the x-coords and y-coords in the correct Grid-Cell.
+#                             # x-dimension
+#                             label_tensor[global_index,y_box_and_offset,x_box_and_offset,0]=x_fine
+#                             # y dimension
+#                             label_tensor[global_index,y_box_and_offset,x_box_and_offset,1]=y_fine
+#                             # height
+#                             label_tensor[global_index,y_box_and_offset,x_box_and_offset,2]=float(row["height"])/1280
+#                             # width
+#                             label_tensor[global_index,y_box_and_offset,x_box_and_offset,3]=float(row["width"])/960
+#                             # Probability, that there is a finger
+#                             label_tensor[global_index,y_box_and_offset,x_box_and_offset,4]=1  
+#                     img = cv2.imread(origin_path + "../Camera_"+str(camera_nr)+"/WHITE/"+row["picName"])
+#                     self.data[global_index].append(global_picName)
+#                     self.data[global_index].append(label_tensor[global_index,:,:,:])
+#                     #to show special Feature enable this print and remove nrOfElements and global_index from label_tensor XD
+#                     #print(self.data)
+# 
+#                     cv2.imwrite(origin_path+global_picName,img)            
+#                     global_index += 1
+#                     
+# 
+#       
+#         print("start shuffling")
+#         random.seed(448)
+#         np.random.shuffle(self.data)
+#         random.seed(543)
+#         np.random.shuffle(self.data)
+#     
+#         self.validdata = self.data[0:nrOfTestElements]
+#         self.traindata = self.data[nrOfTestElements+1:nrOfElements-1]
+# 
+#         
+#         print("store lists with pickle")
+#         pickle.dump(self.data,      open(origin_path + "data.pkl",      "wb"))
+#         pickle.dump(self.validdata, open(origin_path + "validdata.pkl", "wb"))
+#         pickle.dump(self.traindata, open(origin_path + "traindata.pkl", "wb"))
+#==============================================================================
               
           
     def get_train_data(self, origin_path = "/media/hhofmann/deeplearning/getfingers_heinz/Data/indexfinger_right/3000_readyTOlearn/trainData/"):
