@@ -63,7 +63,7 @@ def main():
         print("read in all Train Picture-Names & Labels and shuffle them")
         ReadData        = analyse_Fingerset.Dataset_Heinz()
         
-        train_data      = ReadData.get_train_data()
+        train_data      = ReadData.get_train_data(origin_path = origin_path)
         train_picnames  = [row[0] for row in train_data]
         train_labels    = np.float16([row[1] for row in train_data])#puts a 4 Dimensional Vector to train_labels
         train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
