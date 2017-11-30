@@ -145,7 +145,7 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             if layerNr == 7:
                 print("\n\n\n\n\n\n\n")
                 for q in np.nditer(pythonW):
-                    if q>10:
+                    if q>0.5:
                         print(q)
 #==============================================================================
 #             #Test
