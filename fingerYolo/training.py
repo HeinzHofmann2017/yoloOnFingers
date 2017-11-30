@@ -497,7 +497,8 @@ def main():
             
             training_matches = 0.01#%
             validation_matches = 0.01#%
-            j = 0
+            for j in range(nr_of_epochs_until_save_model):
+                _ = sess.run([train_step],feed_dict={training: True})
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
@@ -509,9 +510,7 @@ def main():
                 fp = sess.run(false_positives,        feed_dict={training: False}) 
                 tn = sess.run(true_negatives,        feed_dict={training: False})
                 fn = sess.run(false_negatives,        feed_dict={training: False})
-                if((tp+tn) > training_matches):
-                    training_matches=(tp+tn)
-                    mailer.mailto("\n\n"+name+" Training \n\n true-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                print("\n\nTraining\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 #testing on validationdata:
                 sess.run(validation_init_op)
                 valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
@@ -519,9 +518,7 @@ def main():
                 fp = sess.run(false_positives,        feed_dict={training: False}) 
                 tn = sess.run(true_negatives,        feed_dict={training: False})
                 fn = sess.run(false_negatives,        feed_dict={training: False})
-                if((tp+tn) > validation_matches):
-                    validation_matches=(tp+tn)
-                    mailer.mailto("\n\n"+name+" Validation  \n\n true-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                print("\n\nValidation\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 sess.run(training_init_op)
                 
                 #save Model
@@ -529,8 +526,7 @@ def main():
                 print("model updatet\n")
 
                 #training:
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True})
+
 
 #==============================================================================
 #         else:
