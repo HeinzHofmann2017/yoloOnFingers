@@ -141,7 +141,7 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             weightdev = 0.01
             pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
             #Test
-            pythonW[1,1,1]=1e15
+            pythonW[1,1]=1e15
             W = tf.Variable(pythonW,dtype=tf.float16)
         #with tf.name_scope("b"):
             #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
