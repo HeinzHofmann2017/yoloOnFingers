@@ -95,7 +95,7 @@ def variable_summaries(variable, name=" "):
     tf.summary.scalar('stddev_'+name, stddev)
     tf.summary.scalar('max_'+name, tf.reduce_max(variable))
     tf.summary.scalar('min_'+name, tf.reduce_min(variable))
-    tf.summary.histogram('histogram_'+name, variable)
+    #tf.summary.histogram('histogram_'+name, variable)
 
 def normalize_pictures(tensor):
     mean,var = tf.nn.moments(x=tensor, axes=[1,2],keep_dims=True)
@@ -110,12 +110,9 @@ def batchnormPretrained(input_tensor,layerNr,origin_path):
     #make new mean and new Variance
         with tf.name_scope("beta"):
             pythonbeta = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_beta_beta.pkl", "rb" ) )
-            pythonbeta = np.zeros(shape=pythonbeta.shape)
-
             beta = tf.Variable(pythonbeta, name="beta",trainable=True,dtype=tf.float16)
         with tf.name_scope("gamma"):
             pythongamma = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_gamma_gamma.pkl", "rb" ) )
-            pythongamma = np.ones(shape=pythongamma.shape)
             gamma = tf.Variable(pythongamma,name="gamma",trainable=True,dtype=tf.float16)
         batch_mean, batch_variance = tf.nn.moments(x=input_tensor,axes=[0,1,2])
         return tf.nn.batch_normalization(x=input_tensor,
@@ -144,17 +141,19 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
             pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
-            
-            if layerNr <8:
-                print("\n\n\n\n start with Layer"+str(layerNr))
-                for q in np.nditer(pythonW):
-                    if q>1:
-                        print(q)
-                print("finished with layer "+str(layerNr))
-
 #==============================================================================
-#             #Test
-#             pythonW[:,:,:]=1e15
+#             
+#             if layerNr <8:
+#                 print("\n\n\n\n start with Layer"+str(layerNr))
+#                 for q in np.nditer(pythonW):
+#                     if q>1:
+#                         print(q)
+#                 print("finished with layer "+str(layerNr))
+# 
+# #==============================================================================
+# #             #Test
+# #             pythonW[:,:,:]=1e15
+# #==============================================================================
 #==============================================================================
             W = tf.Variable(pythonW,dtype=tf.float16)
         #with tf.name_scope("b"):
