@@ -6,7 +6,7 @@ nvidia-docker run --rm -t -i \
 -u $(id -u):$(id -g) \
 nvcr.io/nvidia/tensorflow:17.09 \
 python code/fingerYolo/training.py          --name $1 \
-                                            --learningrate 0.001 \
+                                            --learningrate 0.0001 \
                                             --batchSize 7 \
                                             --numThreads 16 \
                                             --bufferSize 1000 \
