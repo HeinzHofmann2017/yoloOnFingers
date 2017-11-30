@@ -56,8 +56,8 @@ class make_parser(object):
         
         parser.add_argument('--originPath',
                             nargs = '?',
-                            const = "/home/hhofmann/Schreibtisch/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/",
-                            default = "/home/hhofmann/Schreibtisch/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/",
+                            const = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/",
+                            default = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/",
                             help = "Path to the list with all Files, this is the origin-path, from it everything will be handled",
                             type=str)
         parser.add_argument('--noDropout',
@@ -76,7 +76,7 @@ class make_parser(object):
                             dest='Test',
                             action='store_true',
                             help = "If Flag Test is activatet, there will be a test applied to the Validation Set and Saved anywhere...")
-        parser.set_defaults(batchnorm=False)
+        parser.set_defaults(Test=False)
                                     
         args = parser.parse_args()
         self.modelname                      = args.name

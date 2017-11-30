@@ -528,55 +528,107 @@ def main():
                 #training:
 
 
-#==============================================================================
-#         else:
-#             print("Try to restore")
-#             saver.restore(sess,origin_path + "../../../../weights/66lRate0_001.ckpt-00072000")                
-#             print("Restored")
-#             test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
-#             test_writer.add_graph(sess.graph)   
-#             
-# 
-#             for i in range(len(test_picnames)/batchSize):
-#                 testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
-#                 print(output) #output[batchelements, [x_coords, y_coords, probs]]
-#                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
-#                 #print("made summary")
-#                 for j in range(batchSize-1):
-#                     testimage = testimages[j]*200
-#                     probs_pred = output[j,2]                        
-#                     if(probs_pred > 0.5):
-#                         pred_x = int(output[j,0]*1280)
-#                         pred_y = int(output[j,1]*960)
-#                         #mark point on picture
-#                         for x in range((pred_x-20),(pred_x+20)):
-#                             for y in range((pred_y-20),(pred_y+20)):
-#                                 if(x%2 == 0):                    
-#                                     testimage[y,x,0]=255
-#                                 else:
-#                                     testimage[y,x,0]=0
-#                         #save picture in own folder for recognized fingers 
-#                         sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage)))
-#                     else:
-#                         #save picture in own folder for NOTrecognized fingers 
-#                         sess.run(tf.write_file(origin_path+"picsNOTrecognized/pic" + str(batchSize*i+j)+".png",tf.image.encode_png(testimage)))                        
-#==============================================================================
-#==============================================================================
-#             testimages= sess.run(images_unnormalized,        feed_dict={training: False})
-#             #pred_x = int(x_coords_pred[0] *1280)
-#             #pred_y = int(y_coords_pred[0] *960)
-#             testimage = testimages[0]*200
-#             x_in=640
-#             y_in=480
-#             for x in range((pred_x-20),(pred_x+20)):
-#                 for y in range((pred_y-20),(pred_y+20)):
-#                     if(x%2 == 0):                    
-#                         testimage[y,x,0]=255
-#                     else:
-#                         testimage[y,x,0]=0
-# 
-#             sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(2)+".png",tf.image.encode_png(testimage)))
-#==============================================================================
+        else:
+            print("Try to restore")
+            saver.restore(sess,origin_path + "../../../../weights/103fixed_test.ckpt-00012000")                
+            print("Restored")
+            test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
+            test_writer.add_graph(sess.graph)   
+            
+
+            for i in range(len(test_picnames)/batchSize):
+                testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
+                print(output) #output[batchelements, [x_coords, y_coords, probs]]
+                #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
+                #print("made summary")
+                for b in range(batchSize):
+                    testimage = testimages[b]*200
+                    conf_max = 0
+                    prob_max = 0
+                    conf_x_offset = 0
+                    conf_x_fine = 0
+                    conf_y_offset = 0
+                    conf_y_fine = 0
+                    conf_h = 0
+                    conf_w = 0
+                    prob_x_offset = 0
+                    prob_x_fine = 0
+                    prob_y_offset = 0
+                    prob_y_fine = 0
+                    prob_h = 0
+                    prob_w = 0
+                    for h in range(7):
+                        for w in range(7):
+                            conf_pred = output[b,h,w,4]
+                            prob_pred = output[b,h,w,5]
+                            if(conf_pred>conf_max):
+                                conf_max = conf_pred
+                                conf_x_offset   = w
+                                conf_x_fine     = output[b,h,w,0]
+                                conf_y_offset   = h
+                                conf_y_fine     = output[b,h,w,1]
+                                conf_h          = output[b,h,w,2]
+                                conf_w          = output[b,h,w,3]                       
+                            if(prob_pred>prob_max):
+                                prob_max = prob_pred
+                                prob_x_offset   = w
+                                prob_x_fine     = output[b,h,w,0]
+                                prob_y_offset   = h
+                                prob_y_fine     = output[b,h,w,1]
+                                prob_h          = output[b,h,w,2]
+                                prob_w          = output[b,h,w,3] 
+                    conf_x_offset = float(conf_x_offset)/7
+                    conf_y_offset = float(conf_y_offset)/7
+                    conf_x_fine = conf_x_fine/7
+                    conf_y_fine = conf_y_fine/7
+                    conf_x = int((conf_x_offset + conf_x_fine)*1280)
+                    conf_y = int((conf_y_offset + conf_y_fine)*960)
+                    conf_h = int(conf_h * 960)
+                    conf_w = int(conf_w *1280)
+                    
+                    prob_x_offset = float(prob_x_offset)/7
+                    prob_y_offset = float(prob_y_offset)/7
+                    prob_x_fine = float(prob_x_fine)/7
+                    prob_y_fine = float(prob_y_fine)/7
+                    prob_x = int((prob_x_offset + prob_x_fine)*1280)
+                    prob_y = int((prob_y_offset + prob_y_fine)*960)
+                    prob_h = int(prob_h * 960)
+                    prob_w = int(prob_w * 1280)
+                            
+                    #vertical lines for box with the highest confidence
+                    for x in range((conf_x-conf_w),(conf_x+conf_w)):
+                        for y in range((conf_y-conf_h),(conf_y+conf_h)):
+                            if(x<0):
+                                x=0
+                            if(x>1279):
+                                x=1279
+                            if(y<0):
+                                y=0
+                            if(y>959):
+                                y=959
+                            if(x%2 == 0):                    
+                                testimage[y,x,0]=255
+                            else:
+                                testimage[y,x,0]=0
+                    #horizontal lines for box with the highest probability
+                    for y in range((prob_y-prob_h),(prob_y+prob_h)):
+                        for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
+                            if(x<0):
+                                x=0
+                            if(x>1279):
+                                x=1279
+                            if(y<0):
+                                y=0
+                            if(y>959):
+                                y=959
+                            if(x%2 == 0):                    
+                                testimage[y,x,0]=255
+                            else:
+                                testimage[y,x,0]=0                    
+                    #save picture in own folder for recognized fingers 
+                    sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+"conf%.3f"%conf_max +"prob%.3f"%prob_max+".png",tf.image.encode_png(testimage)))
+                       
+
             
             
             #testimage[y,x,0]
