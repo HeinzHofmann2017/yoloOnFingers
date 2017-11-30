@@ -10,6 +10,7 @@ from __future__ import print_function
 import os
 import sys
 import pickle
+import numpy as np
 
 import tensorflow as tf
 from tensorflow.python.ops import array_ops
@@ -140,11 +141,12 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
             pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
-            if layerNr == 6:
-                print(pythonW)            
+           
             if layerNr == 7:
                 print("\n\n\n\n\n\n\n")
-                print(pythonW)
+                for q in np.nditer(pythonW):
+                    if q>10:
+                        print(q)
 #==============================================================================
 #             #Test
 #             pythonW[:,:,:]=1e15
