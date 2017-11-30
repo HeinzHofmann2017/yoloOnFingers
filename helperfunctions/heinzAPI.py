@@ -140,8 +140,15 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
             pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
-            #Test
-            pythonW[:,:,:]=1e15
+            if layerNr == 6:
+                print(pythonW)            
+            if layerNr == 7:
+                print("\n\n\n\n\n\n\n")
+                print(pythonW)
+#==============================================================================
+#             #Test
+#             pythonW[:,:,:]=1e15
+#==============================================================================
             W = tf.Variable(pythonW,dtype=tf.float16)
         #with tf.name_scope("b"):
             #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
