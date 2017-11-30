@@ -141,20 +141,14 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
             pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
+            
+            if layerNr <10:
+                print("\n\n\n\n start with Layer"+str(layerNr))
+                for q in np.nditer(pythonW):
+                    if q>1:
+                        print(q)
+                print("finished with layer "+str(layerNr))
 
-            if layerNr == 6:
-                print("Layer6")
-                for q in np.nditer(pythonW):
-                    if q>1:
-                        print(q)
-                print("finished with layer 6")
-           
-            if layerNr == 7:
-                print("Layer7")
-                for q in np.nditer(pythonW):
-                    if q>1:
-                        print(q)
-                print("finished with layer 7")
 #==============================================================================
 #             #Test
 #             pythonW[:,:,:]=1e15
