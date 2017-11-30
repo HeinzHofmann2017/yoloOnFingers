@@ -495,13 +495,13 @@ def main():
             valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
             valid_writer.add_graph(sess.graph) 
             
-            training_matches = 0.01#%
-            validation_matches = 0.01#%
-            for j in range(nr_of_epochs_until_save_model):
-                _ = sess.run([train_step],feed_dict={training: True})
+
+
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
+                for j in range(nr_of_epochs_until_save_model):
+                    _ = sess.run([train_step],feed_dict={training: True})
     
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
