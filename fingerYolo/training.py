@@ -491,12 +491,10 @@ def main():
             
             training_matches = 0.01#%
             validation_matches = 0.01#%
+            j = 0
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
-                #training:
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True})
     
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
@@ -523,6 +521,10 @@ def main():
                 #save Model
                 saver.save(sess=sess, save_path=origin_path + "../../../../weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
                 print("model updatet\n")
+
+                #training:
+                for j in range(nr_of_epochs_until_save_model):
+                    _ = sess.run([train_step],feed_dict={training: True})
 
 #==============================================================================
 #         else:
