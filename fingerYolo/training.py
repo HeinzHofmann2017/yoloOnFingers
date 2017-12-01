@@ -598,20 +598,22 @@ def main():
                     prob_w = int(prob_w * 1280)
                             
                     #vertical lines for box with the highest confidence
-                    for x in range((conf_x-conf_w),(conf_x+conf_w)):
-                        for y in range((conf_y-conf_h),(conf_y+conf_h)):
-                            if(x<0):
-                                x=0
-                            if(x>1279):
-                                x=1279
-                            if(y<0):
-                                y=0
-                            if(y>959):
-                                y=959
-                            if(x%2 == 0):                    
-                                testimage[y,x,0]=255
-                            else:
-                                testimage[y,x,0]=0
+#==============================================================================
+#                     for x in range((conf_x-conf_w),(conf_x+conf_w)):
+#                         for y in range((conf_y-conf_h),(conf_y+conf_h)):
+#                             if(x<0):
+#                                 x=0
+#                             if(x>1279):
+#                                 x=1279
+#                             if(y<0):
+#                                 y=0
+#                             if(y>959):
+#                                 y=959
+#                             if(x%2 == 0):                    
+#                                 testimage[y,x,0]=255
+#                             else:
+#                                 testimage[y,x,0]=0
+#==============================================================================
                     #horizontal lines for box with the highest probability
                     for y in range((prob_y-prob_h),(prob_y+prob_h)):
                         for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
