@@ -388,10 +388,21 @@ def main():
     for grad, var in capped_gvs:
         if grad is not None:
             tf.summary.histogram(var.op.name +"capped_gradients",grad)
-            
+    with tf.name_scope("Validation_Numbers") as scope:
+            true_probabilities = tf.reduce_mean(tf.multiply(p_output,p_label))
+            max_probabilities = tf.reduce_mean(tf.reduce_max(p_output,[1,2]))
+            mean_probabilities = tf.reduce_mean(p_output)
+            true_confidence = tf.reduce_mean(tf.multiply(c1_output,p_label))
+            max_confidence = tf.reduce_mean(tf.reduce_max(c1_output,[1,2]))
+            mean_confidence = tf.reduce_mean(c1_output)
+            tf.summary.scalar("true_probabilities",true_probabilities)
+            tf.summary.scalar("max_probabilities",max_probabilities)
+            tf.summary.scalar("mean_probabilities",mean_probabilities)
+            tf.summary.scalar("true_confidence",true_confidence)
+            tf.summary.scalar("max_confidence",max_confidence)
+            tf.summary.scalar("mean_confidence",mean_confidence)
+        
     with tf.name_scope("Test") as scope:
-        
-        
         total_nr_of_Gridcells = tf.reduce_sum(tf.maximum(tf.add(p_label,2),1))
         with tf.name_scope("true_positives"):     
             true_probs = tf.multiply(p_output,p_label)
@@ -431,6 +442,7 @@ def main():
             false_negatives = tf.reduce_sum(false_negatives)
             false_negatives_normed = tf.div(false_negatives,total_nr_of_Gridcells)
             tf.summary.scalar("false_negatives",false_negatives_normed)
+        
         
             
             
@@ -506,23 +518,43 @@ def main():
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
                 train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                tp,fp,tn,fn,pt = sess.run([true_positives,         
-                                        false_positives, 
-                                        true_negatives, 
-                                        false_negatives,
-                                        tf.reduce_mean(true_probs)],feed_dict={training: False})
+                tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
+                                                                false_positives, 
+                                                                true_negatives, 
+                                                                false_negatives,
+                                                                true_probabilities,
+                                                                max_probabilities,
+                                                                mean_probabilities,
+                                                                true_confidence,
+                                                                max_confidence,
+                                                                mean_confidence],feed_dict={training: False})
                 print("\n\n\n\nTraining\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 print("mean of the true training Probability = " + str(pt))
+                print("mean of the max training Probabilitys = " + str(mp))
+                print("mean of all training Probabilitys = " + str(meanp))
+                print("mean of the true training Confidences = " + str(tc))
+                print("mean of the max training Confidences = " + str(mc))
+                print("mean of all training Confidences = " + str(meanc))
                 #testing on validationdata:
                 sess.run(validation_init_op)
                 valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                tp,fp,tn,fn,pt = sess.run([true_positives,         
-                                        false_positives, 
-                                        true_negatives, 
-                                        false_negatives,
-                                        tf.reduce_mean(true_probs)],feed_dict={training: False})
+                tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
+                                                                false_positives, 
+                                                                true_negatives, 
+                                                                false_negatives,
+                                                                true_probabilities,
+                                                                max_probabilities,
+                                                                mean_probabilities,
+                                                                true_confidence,
+                                                                max_confidence,
+                                                                mean_confidence],feed_dict={training: False})
                 print("\nValidation\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
-                print("mean of the true validation Probability = " + str(pt))                
+                print("mean of the true training Probability = " + str(pt))
+                print("mean of the max training Probabilitys = " + str(mp))
+                print("mean of all training Probabilitys = " + str(meanp))
+                print("mean of the true training Confidences = " + str(tc))
+                print("mean of the max training Confidences = " + str(mc))
+                print("mean of all training Confidences = " + str(meanc))              
                 sess.run(training_init_op)
                 
                 #save Model
