@@ -538,10 +538,11 @@ def main():
 
             for i in range(len(test_picnames)/batchSize):
                 testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
-                print(output) #output[batchelements, [x_coords, y_coords, probs]]
+                #print(output) #output[batchelements, [x_coords, y_coords, probs]]
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
                 #print("made summary")
                 for b in range(batchSize):
+                    print(str(i*batchSize+b))
                     testimage = testimages[b]*200
                     conf_max = 0
                     prob_max = 0
@@ -596,24 +597,9 @@ def main():
                     prob_w = int(prob_w * 1280)
                             
                     #vertical lines for box with the highest confidence
-                    for x in range((conf_x-conf_w),(conf_x+conf_w)):
-                        for y in range((conf_y-conf_h),(conf_y+conf_h)):
-                            if(x<0):
-                                x=0
-                            if(x>1279):
-                                x=1279
-                            if(y<0):
-                                y=0
-                            if(y>959):
-                                y=959
-                            if(x%2 == 0):                    
-                                testimage[y,x,0]=255
-                            else:
-                                testimage[y,x,0]=0
-                    #horizontal lines for box with the highest probability
 #==============================================================================
-#                     for y in range((prob_y-prob_h),(prob_y+prob_h)):
-#                         for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
+#                     for x in range((conf_x-conf_w),(conf_x+conf_w)):
+#                         for y in range((conf_y-conf_h),(conf_y+conf_h)):
 #                             if(x<0):
 #                                 x=0
 #                             if(x>1279):
@@ -625,8 +611,23 @@ def main():
 #                             if(x%2 == 0):                    
 #                                 testimage[y,x,0]=255
 #                             else:
-#                                 testimage[y,x,0]=0                    
+#                                 testimage[y,x,0]=0
 #==============================================================================
+                    #horizontal lines for box with the highest probability
+                    for y in range((prob_y-prob_h),(prob_y+prob_h)):
+                        for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
+                            if(x<0):
+                                x=0
+                            if(x>1279):
+                                x=1279
+                            if(y<0):
+                                y=0
+                            if(y>959):
+                                y=959
+                            if(x%2 == 0):                    
+                                testimage[y,x,0]=255
+                            else:
+                                testimage[y,x,0]=0                    
                     #save picture in own folder for recognized fingers 
                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+"conf%.3f"%conf_max +"prob%.3f"%prob_max+".png",tf.image.encode_png(testimage)))
                        
