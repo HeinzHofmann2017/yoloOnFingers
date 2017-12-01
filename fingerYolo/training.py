@@ -530,7 +530,7 @@ def main():
 
         else:
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../../weights/103fixed_test.ckpt-00012000")                
+            saver.restore(sess,origin_path + "../../../../weights/105withDropout.ckpt-00040000")                
             print("Restored")
             test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
             test_writer.add_graph(sess.graph)   
