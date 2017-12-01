@@ -506,19 +506,23 @@ def main():
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
                 train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                tp = sess.run(true_positives,   feed_dict={training: False})      
-                fp = sess.run(false_positives,        feed_dict={training: False}) 
-                tn = sess.run(true_negatives,        feed_dict={training: False})
-                fn = sess.run(false_negatives,        feed_dict={training: False})
-                print("\n\nTraining\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                tp,fp,tn,fn,pt = sess.run([true_positives,         
+                                        false_positives, 
+                                        true_negatives, 
+                                        false_negatives,
+                                        tf.reduce_mean(true_probs)],feed_dict={training: False})
+                print("\n\n\n\nTraining\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                print("mean of the true training Probability = " + str(pt))
                 #testing on validationdata:
                 sess.run(validation_init_op)
                 valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-                tp = sess.run(true_positives,       feed_dict={training: False})      
-                fp = sess.run(false_positives,        feed_dict={training: False}) 
-                tn = sess.run(true_negatives,        feed_dict={training: False})
-                fn = sess.run(false_negatives,        feed_dict={training: False})
-                print("\n\nValidation\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                tp,fp,tn,fn,pt = sess.run([true_positives,         
+                                        false_positives, 
+                                        true_negatives, 
+                                        false_negatives,
+                                        tf.reduce_mean(true_probs)],feed_dict={training: False})
+                print("\nValidation\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                print("mean of the true validation Probability = " + str(pt))                
                 sess.run(training_init_op)
                 
                 #save Model
