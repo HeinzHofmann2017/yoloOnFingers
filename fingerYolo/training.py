@@ -611,20 +611,22 @@ def main():
                             else:
                                 testimage[y,x,0]=0
                     #horizontal lines for box with the highest probability
-                    for y in range((prob_y-prob_h),(prob_y+prob_h)):
-                        for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
-                            if(x<0):
-                                x=0
-                            if(x>1279):
-                                x=1279
-                            if(y<0):
-                                y=0
-                            if(y>959):
-                                y=959
-                            if(x%2 == 0):                    
-                                testimage[y,x,0]=255
-                            else:
-                                testimage[y,x,0]=0                    
+#==============================================================================
+#                     for y in range((prob_y-prob_h),(prob_y+prob_h)):
+#                         for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
+#                             if(x<0):
+#                                 x=0
+#                             if(x>1279):
+#                                 x=1279
+#                             if(y<0):
+#                                 y=0
+#                             if(y>959):
+#                                 y=959
+#                             if(x%2 == 0):                    
+#                                 testimage[y,x,0]=255
+#                             else:
+#                                 testimage[y,x,0]=0                    
+#==============================================================================
                     #save picture in own folder for recognized fingers 
                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+"conf%.3f"%conf_max +"prob%.3f"%prob_max+".png",tf.image.encode_png(testimage)))
                        
