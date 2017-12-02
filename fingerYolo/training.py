@@ -389,10 +389,10 @@ def main():
         if grad is not None:
             tf.summary.histogram(var.op.name +"capped_gradients",grad)
     with tf.name_scope("Validation_Numbers") as scope:
-            true_probabilities = tf.reduce_mean(tf.multiply(p_output,p_label))
+            true_probabilities = tf.div(tf.reduce_add(tf.multiply(p_output,p_label)),tf.reduce_add(p_label))
             max_probabilities = tf.reduce_mean(tf.reduce_max(p_output,[1,2]))
             mean_probabilities = tf.reduce_mean(p_output)
-            true_confidence = tf.reduce_mean(tf.multiply(c1_output,p_label))
+            true_confidence = tf.div(tf.reduce_add(tf.multiply(c1_output,p_label)),tf.reduce_add(p_label))
             max_confidence = tf.reduce_mean(tf.reduce_max(c1_output,[1,2]))
             mean_confidence = tf.reduce_mean(c1_output)
             tf.summary.scalar("true_probabilities",true_probabilities)
@@ -406,7 +406,7 @@ def main():
         total_nr_of_Gridcells = tf.reduce_sum(tf.maximum(tf.add(p_label,2),1))
         with tf.name_scope("true_positives"):     
             true_probs = tf.multiply(p_output,p_label)
-            normed_probs_tp = tf.subtract(true_probs,0.95)
+            normed_probs_tp = tf.subtract(true_probs,0.98)
             deleted_probs_tp = tf.maximum(normed_probs_tp,np.float16(0))
             residual_probs_tp = tf.multiply(deleted_probs_tp,1000.0)
             true_positives = tf.minimum(residual_probs_tp,np.float16(1))
@@ -415,7 +415,7 @@ def main():
             tf.summary.scalar("true_positives",true_positives_normed)
         with tf.name_scope("false_positives"):   
             false_probs = tf.multiply(p_output,p_label_invers)
-            normed_probs_fp = tf.subtract(false_probs,0.95)
+            normed_probs_fp = tf.subtract(false_probs,0.98)
             deleted_probs_fp = tf.maximum(normed_probs_fp,np.float16(0))
             residual_probs_fp = tf.multiply(deleted_probs_fp,1000.0)
             false_positives = tf.minimum(residual_probs_fp,np.float16(1))
@@ -425,7 +425,7 @@ def main():
         with tf.name_scope("true_negatives"):
             p_label_invers_1000 = tf.add(tf.multiply(p_label,999),1)
             false_probs = tf.multiply(p_label_invers_1000,p_output)            
-            normed_probs_tn = tf.subtract(false_probs,0.95)
+            normed_probs_tn = tf.subtract(false_probs,0.98)
             deleted_probs_tn = tf.minimum(normed_probs_tn,np.float16(0))
             residual_probs_tn = tf.multiply(deleted_probs_tn,-1000.0)
             true_negatives = tf.minimum(residual_probs_tn,np.float16(1))
@@ -435,7 +435,7 @@ def main():
         with tf.name_scope("false_negatives"):
             p_label_1000 = tf.add(tf.multiply(p_label_invers,999),1)
             true_probs = tf.multiply(p_label_1000,p_output)            
-            normed_probs_fn = tf.subtract(true_probs,0.95)
+            normed_probs_fn = tf.subtract(true_probs,0.98)
             deleted_probs_fn = tf.minimum(normed_probs_fn,np.float16(0))
             residual_probs_fn = tf.multiply(deleted_probs_fn,-1000.0)
             false_negatives = tf.minimum(residual_probs_fn,np.float16(1))
