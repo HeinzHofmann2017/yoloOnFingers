@@ -389,10 +389,10 @@ def main():
         if grad is not None:
             tf.summary.histogram(var.op.name +"capped_gradients",grad)
     with tf.name_scope("Validation_Numbers") as scope:
-            true_probabilities = tf.div(tf.reduce_add(tf.multiply(p_output,p_label)),tf.reduce_add(p_label))
+            true_probabilities = tf.div(tf.reduce_sum(tf.multiply(p_output,p_label)),tf.reduce_sum(p_label))
             max_probabilities = tf.reduce_mean(tf.reduce_max(p_output,[1,2]))
             mean_probabilities = tf.reduce_mean(p_output)
-            true_confidence = tf.div(tf.reduce_add(tf.multiply(c1_output,p_label)),tf.reduce_add(p_label))
+            true_confidence = tf.div(tf.reduce_sum(tf.multiply(c1_output,p_label)),tf.reduce_sum(p_label))
             max_confidence = tf.reduce_mean(tf.reduce_max(c1_output,[1,2]))
             mean_confidence = tf.reduce_mean(c1_output)
             tf.summary.scalar("true_probabilities",true_probabilities)
