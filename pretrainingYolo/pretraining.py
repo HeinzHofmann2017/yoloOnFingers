@@ -253,9 +253,9 @@ def main():
         sess.run(training_init_op)
         sess.run(init_op)
         
-        train_writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/pretraining/summary_" + name + "_train")
+        train_writer=tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_train")
         train_writer.add_graph(sess.graph) 
-        valid_writer=tf.summary.FileWriter(origin_path + "../../getfingers_heinz/summarys/pretraining/summary_" + name + "_valid")
+        valid_writer=tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_valid")
         valid_writer.add_graph(sess.graph) 
         
         training_matches = 0.1#%
