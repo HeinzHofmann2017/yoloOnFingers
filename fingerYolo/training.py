@@ -528,7 +528,7 @@ def main():
                                                                 true_confidence,
                                                                 max_confidence,
                                                                 mean_confidence],feed_dict={training: False})
-                print("\n\n\n\nTraining\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                print("\n\n\n\nTraining "+name+"\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 print("mean of the true training Probability = " + str(pt))
                 print("mean of the max training Probabilitys = " + str(mp))
                 print("mean of all training Probabilitys = " + str(meanp))
@@ -548,7 +548,7 @@ def main():
                                                                 true_confidence,
                                                                 max_confidence,
                                                                 mean_confidence],feed_dict={training: False})
-                print("\nValidation\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
+                print("\nValidation "+name+"\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 print("mean of the true training Probability = " + str(pt))
                 print("mean of the max training Probabilitys = " + str(mp))
                 print("mean of all training Probabilitys = " + str(meanp))
