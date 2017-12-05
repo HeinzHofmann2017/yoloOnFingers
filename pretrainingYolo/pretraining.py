@@ -45,6 +45,7 @@ nr_of_epochs                    = parser_object.nr_of_epochs
 nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 dropout                         = parser_object.dropout_bool
 batchnorm                       = parser_object.batchnorm_bool
+random_seed                     = parser_object.randSeed
 
 
 
@@ -57,9 +58,8 @@ def dataset_preprocessor(picname,labels):
     return image,labels
     
 def main():
-    print("TensorFlow version ", tf.__version__)
-    
-
+    print("TensorFlow version ", tf.__version__)    
+    tf.set_random_seed(random_seed)
     with tf.name_scope("Data") as scope:
         print("read in all Picture-Names & Labels and shuffle them")
         ReadData        = analyse_Dataset.Dataset_Heinz()
@@ -203,8 +203,8 @@ def main():
 
         
     with tf.name_scope("optimizer") as scope:
-        #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        optimizer = tf.train.AdamOptimizer(epsilon=1e-04)
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+        #optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)##From 4Adam to 13dropoutLastFewLayers0001lRate everything learned with the Adam default-learnrate of 0.001
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
@@ -243,7 +243,8 @@ def main():
         keep_checkpoint_every_n_hours=4.0, 
         pad_step_number=True,
         save_relative_paths=True,)
-
+    if not os.path.exists(origin_path + "../../data_hhofmann/weights/"+name+"/"):
+        os.makedirs(origin_path + "../../data_hhofmann/weights/"+name+"/")
     
     merged_summary_op = tf.summary.merge_all()
 
@@ -286,8 +287,8 @@ def main():
             sess.run(training_init_op)
             
             #save Model
-            saver.save(sess=sess, save_path=origin_path + "../../getfingers_heinz/weights/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
-            print("model updatet\n")
+            saver.save(sess=sess, save_path=origin_path + "../../data_hhofmann/weights/"+name+"/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
+            print("model "+name+" updatet\n")
 
                 
     

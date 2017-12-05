@@ -77,6 +77,13 @@ class make_parser(object):
                             action='store_true',
                             help = "If Flag Test is activatet, there will be a test applied to the Validation Set and Saved anywhere...")
         parser.set_defaults(Test=False)
+        
+        parser.add_argument('--randSeed',
+                            nargs = '?',
+                            const = 1,
+                            default = 1,
+                            help = "Random Seed, which shall enable to recover the same Modell",
+                            type=int)
                                     
         args = parser.parse_args()
         self.modelname                      = args.name
@@ -90,6 +97,7 @@ class make_parser(object):
         self.dropout_bool                   = args.dropout
         self.batchnorm_bool                 = args.batchnorm
         self.test_bool                      = args.Test
+        self.rand_seed                      = args.randSeed
 
         
         
@@ -110,4 +118,5 @@ if __name__ == "__main__":
     print("Modelname        = "+ str(lokal_parser.modelname))
     print("Dropout_bool     = "+ str(lokal_parser.dropout_bool))
     print("Batchnorm_bool   = "+ str(lokal_parser.batchnorm_bool))
-    pritn("test_bool        = "+ str(lokal_parser.test_bool))
+    print("test_bool        = "+ str(lokal_parser.test_bool))
+    print("Random_Seed      = "+ str(lokal_parser.rand_seed))

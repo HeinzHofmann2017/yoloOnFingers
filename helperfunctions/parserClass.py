@@ -71,6 +71,13 @@ class make_parser(object):
                             action='store_false',
                             help = "If flag --noBatchnorm is activated, batchnorm wont be used.")
         parser.set_defaults(batchnorm=True)
+        
+        parser.add_argument('--randSeed',
+                            nargs = '?',
+                            const = 1,
+                            default = 1,
+                            help = "Random Seed, which shall enable to recover the same Modell",
+                            type=int)
                                     
         args = parser.parse_args()
         self.modelname                      = args.name
@@ -83,6 +90,7 @@ class make_parser(object):
         self.origin_Path                    = args.originPath
         self.dropout_bool                   = args.dropout
         self.batchnorm_bool                 = args.batchnorm
+        self.rand_seed                      = args.randSeed
 
         
         
@@ -103,3 +111,4 @@ if __name__ == "__main__":
     print("Modelname        = "+ str(lokal_parser.modelname))
     print("Dropout_bool     = "+ str(lokal_parser.dropout_bool))
     print("Batchnorm_bool   = "+ str(lokal_parser.batchnorm_bool))
+    print("Random_Seed      = "+ str(lokal_parser.rand_seed))

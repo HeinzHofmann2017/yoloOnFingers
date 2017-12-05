@@ -13,5 +13,5 @@ python code/pretrainingYolo/pretraining.py  --name $1 \
                                             --originPath "/mnt/data/ilsvrc2012/LabelList_Heinz/" \
                                             --nrOfEpochs 10000000 \
                                             --nrOfEpochsUntilSaveModel 1000 \
-                                            --noDropout
+                                            --randSeed $2
 #for make directly something inside the docker-container, make a backslash after 17.09 and type the command you want to have processed on a new line. 
