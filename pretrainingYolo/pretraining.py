@@ -45,7 +45,7 @@ nr_of_epochs                    = parser_object.nr_of_epochs
 nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 dropout                         = parser_object.dropout_bool
 batchnorm                       = parser_object.batchnorm_bool
-random_seed                     = parser_object.randSeed
+random_seed                     = parser_object.rand_seed
 
 
 
