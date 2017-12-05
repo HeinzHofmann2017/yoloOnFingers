@@ -589,6 +589,7 @@ def main():
                     testimage = testimages[b]*200
                     conf_max = 0
                     prob_max = 0
+                    probconf_max = 0
                     conf_x_offset = 0
                     conf_x_fine = 0
                     conf_y_offset = 0
@@ -601,6 +602,12 @@ def main():
                     prob_y_fine = 0
                     prob_h = 0
                     prob_w = 0
+                    probconf_x_offset = 0
+                    probconf_x_fine = 0
+                    probconf_y_offset = 0
+                    probconf_y_fine = 0
+                    probconf_h = 0
+                    probconf_w = 0
                     for h in range(7):
                         for w in range(7):
                             conf_pred = output[b,h,w,4]
@@ -620,7 +627,16 @@ def main():
                                 prob_y_offset   = h
                                 prob_y_fine     = output[b,h,w,1]
                                 prob_h          = output[b,h,w,2]
-                                prob_w          = output[b,h,w,3] 
+                                prob_w          = output[b,h,w,3]
+                            if((conf_pred*prob_pred)>probconf_max):
+                                probconf_max = conf_pred*prob_pred
+                                probconf_x_offset   = w
+                                probconf_x_fine     = output[b,h,w,0]
+                                probconf_y_offset   = h
+                                probconf_y_fine     = output[b,h,w,1]
+                                probconf_h          = output[b,h,w,2]
+                                probconf_w          = output[b,h,w,3]
+                                
                     conf_x_offset = float(conf_x_offset)/7
                     conf_y_offset = float(conf_y_offset)/7
                     conf_x_fine = conf_x_fine/7
@@ -638,6 +654,15 @@ def main():
                     prob_y = int((prob_y_offset + prob_y_fine)*960)
                     prob_h = int(prob_h * 960)
                     prob_w = int(prob_w * 1280)
+                    
+                    probconf_x_offset = float(probconf_x_offset)/7
+                    probconf_y_offset = float(probconf_y_offset)/7
+                    probconf_x_fine = probconf_x_fine/7
+                    probconf_y_fine = probconf_y_fine/7
+                    probconf_x = int((probconf_x_offset + probconf_x_fine)*1280)
+                    probconf_y = int((probconf_y_offset + probconf_y_fine)*960)
+                    probconf_h = int(probconf_h * 960)
+                    probconf_w = int(probconf_w *1280)
                             
                     #vertical lines for box with the highest confidence
 #==============================================================================
@@ -658,8 +683,25 @@ def main():
 #==============================================================================
                             
                     #horizontal lines for box with the highest probability
-                    for y in range((prob_y-prob_h),(prob_y+prob_h)):
-                        for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
+#==============================================================================
+#                     for y in range((prob_y-prob_h),(prob_y+prob_h)):
+#                         for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
+#                             if(x<0):
+#                                 x=0
+#                             if(x>1279):
+#                                 x=1279
+#                             if(y<0):
+#                                 y=0
+#                             if(y>959):
+#                                 y=959
+#                             if(x%2 == 0):                    
+#                                 testimage[y,x,0]=255
+#                             else:
+#                                 testimage[y,x,0]=0                    
+#==============================================================================
+                    #Lines for box with the highest probability*confidence
+                    for y in range((probconf_y-probconf_h),(probconf_y+probconf_h)):
+                        for x in range((probconf_x-probconf_w),(probconf_x+probconf_w)):                        
                             if(x<0):
                                 x=0
                             if(x>1279):
@@ -671,7 +713,7 @@ def main():
                             if(x%2 == 0):                    
                                 testimage[y,x,0]=255
                             else:
-                                testimage[y,x,0]=0                    
+                                testimage[y,x,0]=0     
                     #save picture in own folder for recognized fingers 
                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+"conf%.3f"%conf_max +"prob%.3f"%prob_max+".png",tf.image.encode_png(testimage)))
                        
