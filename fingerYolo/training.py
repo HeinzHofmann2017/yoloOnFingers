@@ -235,6 +235,7 @@ def main():
             preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
         fully_32 = preactivate_32#tf.nn.relu(preactivate_32)
         output_32 = tf.sigmoid(tf.reshape(tensor=fully_32, shape=[batchSize,7,7,6]))
+        output_32 = tf.cast(output_32,tf.float32)
         with tf.name_scope("summary"):                        
             hAPI.variable_summaries(variable=W32,name="W32")
             hAPI.variable_summaries(variable=b32,name="b32")
@@ -372,8 +373,8 @@ def main():
     with tf.name_scope("optimizer") as scope:
         # Gradient descen
         #TODO: Gradient Decent durch ADAM ersetzen
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        #optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)#From 64lRate0_1_ to 114_01lRate098Ptest everything learned with the Adam default-learnrate of 0.001
+        #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)#From 64lRate0_1_ to 114_01lRate098Ptest everything learned with the Adam default-learnrate of 0.001
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
@@ -446,46 +447,7 @@ def main():
             tf.summary.scalar("false_negatives",false_negatives_normed)
         
         
-            
-            
-#==============================================================================
-#         test_vector = tf.ones([batchSize],dtype=tf.float16)
-#         probability_isnt_correct = tf.greater(tf.sqrt(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,2]),probs))),0.5)
-#         finger_is_there = tf.greater(probs,0.5)
-#         with tf.name_scope("Test_Is_Finger_visible"):#-------------------------------------------------------------------------------------------------
-#             bool_vector_visible = tf.logical_not(probability_isnt_correct)
-#             result_in_percent_visible = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_visible)),100),batchSize)
-#             visible_test_h = tf.summary.scalar("IsFingerThere_Test",result_in_percent_visible)
-#         with tf.name_scope("Test_InsideCircleOf0.5Picturesize"):#--------------------------------------------------------------------------------------
-#             #                       =sqrt((x-x)^2+(y-y)^2)>0.25
-#             distance_is_less_0_5 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
-#                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.25)
-#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-#             bool_vector_0_5 = tf.logical_and(finger_is_there,distance_is_less_0_5)
-#             result_in_percent_05 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_5)),100),tf.add(tf.reduce_sum(probs),1e-4))
-#             in0_5_test_h = tf.summary.scalar("inCircle_0_5_Test",result_in_percent_05)
-#         with tf.name_scope("Test_InsideCircleOf0.3Picturesize"):#--------------------------------------------------------------------------------------
-#             #                       =sqrt((x-x)^2+(y-y)^2)>0.15
-#             distance_is_less_0_3 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
-#                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.15)
-#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-#             bool_vector_0_3 = tf.logical_and(finger_is_there,distance_is_less_0_3)
-#             result_in_percent_03 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_3)),100),tf.add(tf.reduce_sum(probs),1e-4))
-#             in0_3_test_h = tf.summary.scalar("inCircle_0_3_Test",result_in_percent_03)
-#         with tf.name_scope("Test_InsideCircleOf0.1Picturesize"):#--------------------------------------------------------------------------------------
-#             #                       =sqrt((x-x)^2+(y-y)^2)>0.05
-#             distance_is_less_0_1 = tf.less(tf.sqrt(tf.add(tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,0]),x_coords)),   
-#                                                                 tf.square(tf.subtract(tf.squeeze(output_32[:,:,:,1]),y_coords)))) ,0.05)
-#             #           = not(probabilityIsntCorrect OR [probabilityIsHigherThan0.5 AND distanceIsGreaterThan0.1])
-#             bool_vector_0_1 = tf.logical_and(finger_is_there,distance_is_less_0_1)
-#             result_in_percent_01 = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_vector_0_1)),100),tf.add(tf.reduce_sum(probs),1e-4))
-#             in0_1_test_h = tf.summary.scalar("inCircle_0_1_Test",result_in_percent_01)
-#         with tf.name_scope("NormalizedNrOfPredictedFingers"):
-#             bool_fingerIsDetected = tf.greater(tf.squeeze(output_32[:,:,:,2]),0.5)
-#             normalizedNumberOfDetectedFingers = tf.div(tf.multiply(tf.reduce_sum(tf.boolean_mask(test_vector,bool_fingerIsDetected)),100),batchSize)
-#             tf.summary.scalar("NormalizedNrOfPredictedFingers",normalizedNumberOfDetectedFingers)
-#==============================================================================
-            
+        
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
     saver = tf.train.Saver(
