@@ -66,7 +66,7 @@ def main():
         
         train_data      = ReadData.get_train_data(origin_path = origin_path)
         train_picnames  = [row[0] for row in train_data]
-        train_labels    = np.float16([row[1] for row in train_data])#puts a 4 Dimensional Vector to train_labels
+        train_labels    = np.float32([row[1] for row in train_data])#puts a 4 Dimensional Vector to train_labels
         train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
         train_data      = train_data.repeat()
         train_data      = train_data.shuffle(buffer_size=buffer_size)
@@ -78,7 +78,7 @@ def main():
         print("read in all Valid Picture-Names & Labels and shuffle them")
         valid_data      = ReadData.get_valid_data(origin_path=origin_path)
         valid_picnames  = [row[0] for row in valid_data]
-        valid_labels    = np.float16([row[1] for row in valid_data])
+        valid_labels    = np.float32([row[1] for row in valid_data])
         valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
         valid_data      = valid_data.repeat()
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)
@@ -90,7 +90,7 @@ def main():
         print("read in all Test Picture-Names & Labels and shuffle them")  
         test_data       = ReadData.get_valid_data(origin_path=origin_path)
         test_picnames   = [row[0] for row in test_data]
-        test_labels    = np.float16([row[1] for row in test_data])
+        test_labels    = np.float32([row[1] for row in test_data])
         test_data      = Dataset.from_tensor_slices((test_picnames,test_labels))
         test_data      = test_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
