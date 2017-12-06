@@ -91,7 +91,7 @@ def variable_summaries(variable, name=" "):
     variable = tf.cast(variable, tf.float32)
     #check for nan's
     variable = tf.reshape(variable, [-1])
-    nr_of_infinite_elements = tf.reduce_sum(tf.logical_not(tf.is_finite(variable)))
+    nr_of_infinite_elements = tf.reduce_sum(tf.boolean_mask(tf.logical_not(tf.is_finite(variable)),tf.ones(tf.shape(variable))))
     tf.summary.scalar(name+"nrOfInfElem", nr_of_infinite_elements)
     variable = tf.boolean_mask(tf.is_finite(variable), variable)
     
