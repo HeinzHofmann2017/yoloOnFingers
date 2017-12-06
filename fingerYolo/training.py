@@ -312,9 +312,9 @@ def main():
             overlap1_bottom= tf.minimum(label_bottom,output1_bottom)
             
             overlap1_width = tf.subtract(overlap1_right,overlap1_left)
-            overlap1_width = tf.maximum(np.float16(0),overlap1_width)
+            overlap1_width = tf.maximum(np.float32(0),overlap1_width)
             overlap1_height = tf.subtract(overlap1_bottom,overlap1_top)
-            overlap1_height = tf.maximum(np.float16(0),overlap1_height)
+            overlap1_height = tf.maximum(np.float32(0),overlap1_height)
             area_of_overlap1 = tf.multiply(overlap1_width, overlap1_height)
             
             output1_area = tf.multiply(h1_output,w1_output)
@@ -334,7 +334,7 @@ def main():
                 c1_obj = tf.multiply(c1_squared, p_label)
                 c1_obj_costs = tf.reduce_sum(c1_obj)
             with tf.name_scope("noobj_present"):
-                p_label_invers = tf.subtract(np.float16(1),p_label)# y=1-x   x=0|y=1  & x=1|y=0
+                p_label_invers = tf.subtract(np.float32(1),p_label)# y=1-x   x=0|y=1  & x=1|y=0
                 c1_noobj = tf.multiply(c1_squared, p_label_invers)
                 c1_noobj_costs = tf.reduce_sum(c1_noobj)
                 c1_noobj_costs = tf.multiply(c1_noobj_costs,0.5)#like in the yolo paper...
@@ -410,18 +410,18 @@ def main():
         with tf.name_scope("true_positives"):     
             true_probs = tf.multiply(p_output,p_label)
             normed_probs_tp = tf.subtract(true_probs,0.98)
-            deleted_probs_tp = tf.maximum(normed_probs_tp,np.float16(0))
+            deleted_probs_tp = tf.maximum(normed_probs_tp,np.float32(0))
             residual_probs_tp = tf.multiply(deleted_probs_tp,1000.0)
-            true_positives = tf.minimum(residual_probs_tp,np.float16(1))
+            true_positives = tf.minimum(residual_probs_tp,np.float32(1))
             true_positives = tf.reduce_sum(true_positives)
             true_positives_normed = tf.div(true_positives,total_nr_of_Gridcells)
             tf.summary.scalar("true_positives",true_positives_normed)
         with tf.name_scope("false_positives"):   
             false_probs = tf.multiply(p_output,p_label_invers)
             normed_probs_fp = tf.subtract(false_probs,0.98)
-            deleted_probs_fp = tf.maximum(normed_probs_fp,np.float16(0))
+            deleted_probs_fp = tf.maximum(normed_probs_fp,np.float32(0))
             residual_probs_fp = tf.multiply(deleted_probs_fp,1000.0)
-            false_positives = tf.minimum(residual_probs_fp,np.float16(1))
+            false_positives = tf.minimum(residual_probs_fp,np.float32(1))
             false_positives = tf.reduce_sum(false_positives)            
             false_positives_normed = tf.div(false_positives,total_nr_of_Gridcells)
             tf.summary.scalar("false_positives",false_positives_normed)
@@ -429,9 +429,9 @@ def main():
             p_label_invers_1000 = tf.add(tf.multiply(p_label,999),1)
             false_probs = tf.multiply(p_label_invers_1000,p_output)            
             normed_probs_tn = tf.subtract(false_probs,0.98)
-            deleted_probs_tn = tf.minimum(normed_probs_tn,np.float16(0))
+            deleted_probs_tn = tf.minimum(normed_probs_tn,np.float32(0))
             residual_probs_tn = tf.multiply(deleted_probs_tn,-1000.0)
-            true_negatives = tf.minimum(residual_probs_tn,np.float16(1))
+            true_negatives = tf.minimum(residual_probs_tn,np.float32(1))
             true_negatives = tf.reduce_sum(true_negatives)
             true_negatives_normed = tf.div(true_negatives,total_nr_of_Gridcells)
             tf.summary.scalar("true_negatives",true_negatives_normed)
@@ -439,9 +439,9 @@ def main():
             p_label_1000 = tf.add(tf.multiply(p_label_invers,999),1)
             true_probs = tf.multiply(p_label_1000,p_output)            
             normed_probs_fn = tf.subtract(true_probs,0.98)
-            deleted_probs_fn = tf.minimum(normed_probs_fn,np.float16(0))
+            deleted_probs_fn = tf.minimum(normed_probs_fn,np.float32(0))
             residual_probs_fn = tf.multiply(deleted_probs_fn,-1000.0)
-            false_negatives = tf.minimum(residual_probs_fn,np.float16(1))
+            false_negatives = tf.minimum(residual_probs_fn,np.float32(1))
             false_negatives = tf.reduce_sum(false_negatives)
             false_negatives_normed = tf.div(false_negatives,total_nr_of_Gridcells)
             tf.summary.scalar("false_negatives",false_negatives_normed)
