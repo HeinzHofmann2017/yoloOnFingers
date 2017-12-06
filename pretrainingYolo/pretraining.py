@@ -198,13 +198,14 @@ def main():
 
         
     with tf.name_scope("cost_function") as scope:
+        fully_26 = tf.cast(fully_26, tf.float32)
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=fully_26))
         cost_h = tf.summary.scalar("Costs",cost)
 
         
     with tf.name_scope("optimizer") as scope:
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        #optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)##From 4Adam to 13dropoutLastFewLayers0001lRate everything learned with the Adam default-learnrate of 0.001
+        #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)##From 4Adam to 13dropoutLastFewLayers0001lRate everything learned with the Adam default-learnrate of 0.001
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.

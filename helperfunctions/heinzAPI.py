@@ -76,9 +76,9 @@ def convLayer(tensor,layerNr,batchSize, filterwidth, inputdepth, outputdepth, st
 #==============================================================================
 
         with tf.name_scope("summary"):
-            variable_summaries(variable=W,name="W")
+            variable_summaries(variable=W,name="W"+str(layerNr))
             #variable_summaries(variable=b,name="b")
-            variable_summaries(variable=preactivate, name="preactivate")
+            variable_summaries(variable=preactivate, name="preactivate"+str(layerNr))
         return tensor
         
 def variable_summaries(variable, name=" "):
@@ -88,6 +88,14 @@ def variable_summaries(variable, name=" "):
     Reference:
     Jonas Schmid hand_detector.py
     '''
+    variable = tf.cast(variable, tf.float32)
+    #check for nan's
+    variable = tf.reshape(variable, [-1])
+    nr_of_infinite_elements = tf.reduce_sum(tf.logical_not(tf.isfinit(variable)))
+    tf.summary.scalar(name+"nrOfInfElem", nr_of_infinite_elements)
+    variable = tf.boolean_mask(tf.isfinit(variable), variable)
+    
+
     mean = tf.reduce_mean(variable)
     tf.summary.scalar('mean_'+name, mean)
     with tf.name_scope('stddev'):
@@ -95,7 +103,7 @@ def variable_summaries(variable, name=" "):
     tf.summary.scalar('stddev_'+name, stddev)
     tf.summary.scalar('max_'+name, tf.reduce_max(variable))
     tf.summary.scalar('min_'+name, tf.reduce_min(variable))
-    #tf.summary.histogram('histogram_'+name, variable)
+    tf.summary.histogram('histogram_'+name, variable)
 
 def normalize_pictures(tensor):
     mean,var = tf.nn.moments(x=tensor, axes=[1,2],keep_dims=True)
@@ -175,7 +183,7 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
 #==============================================================================
 
         with tf.name_scope("summary"):
-            variable_summaries(variable=W,name="W")
+            variable_summaries(variable=W,name="W"+str(layerNr))
             #variable_summaries(variable=b,name="b")
-            variable_summaries(variable=preactivate, name="preactivate")
+            variable_summaries(variable=preactivate, name="preactivate"+str(layerNr))
         return tensor
