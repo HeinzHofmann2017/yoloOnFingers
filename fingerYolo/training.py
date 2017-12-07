@@ -461,7 +461,7 @@ def main():
     
     merged_summary_op = tf.summary.merge_all()
 
-    with tf.Session() as sess:
+    with tf.Session(config=tf.ConfigProto(gpu_options={'allow_growth':True})) as sess:
         sess.run(testing_init_op)
         sess.run(validation_init_op)
         sess.run(training_init_op)
