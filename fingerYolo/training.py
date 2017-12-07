@@ -105,6 +105,7 @@ def main():
         training_init_op    = iterator.make_initializer(train_data)
         validation_init_op  = iterator.make_initializer(valid_data)
         testing_init_op     = iterator.make_initializer(test_data)
+        images_unnormalized = tf.image.resize_images(images_unnormalized,[448,448],method=ResizeMethod.BILINEAR)#TODO:eventually reverse image resizing
         
         #To test, how the croped picters look like, when they are used to learn...
         tf.summary.image('images_after_crop',tensor = images_unnormalized , max_outputs=20)
@@ -179,12 +180,15 @@ def main():
     output_27 = hAPI.convLayer(tensor=output_26,layerNr=27,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x1024
     output_28 = hAPI.convLayer(tensor=output_27,layerNr=28,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
-    #Zero Padding        
-    with tf.name_scope("Layer29_ZeroPadding") as scope:
-        output_29=tf.pad(output_28, np.array([[0,0],[3,3],[1,0],[0,0]]))
-    #Maxpool 3x3 -s-3
-    with tf.name_scope("Layer30_maxpool") as scope:
-        output_30 = tf.nn.max_pool(output_29,ksize=[1,3,3,1],strides=[1,3,3,1], padding="SAME")
+#TODO:eventually reverse image resizing
+#==============================================================================
+#     #Zero Padding        
+#     with tf.name_scope("Layer29_ZeroPadding") as scope:
+#         output_29=tf.pad(output_28, np.array([[0,0],[3,3],[1,0],[0,0]]))
+#     #Maxpool 3x3 -s-3
+#     with tf.name_scope("Layer30_maxpool") as scope:
+#         output_30 = tf.nn.max_pool(output_29,ksize=[1,3,3,1],strides=[1,3,3,1], padding="SAME")
+#==============================================================================
     #Fully-Connected Layer ==> make vector
     with tf.name_scope("Layer31_full") as scope:
         input_31 = tf.reshape(tensor=output_30,shape=[batchSize,7*7*1024])
@@ -461,7 +465,7 @@ def main():
     
     merged_summary_op = tf.summary.merge_all()
 
-    with tf.Session(config=tf.ConfigProto(gpu_options={'allow_growth':True})) as sess:
+    with tf.Session() as sess:
         sess.run(testing_init_op)
         sess.run(validation_init_op)
         sess.run(training_init_op)
