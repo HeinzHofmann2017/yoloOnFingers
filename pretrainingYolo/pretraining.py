@@ -53,7 +53,7 @@ def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
     #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12_grayscale/"+picname)
     image = tf.image.decode_jpeg(content,channels=1)
-    image = tf.image.convert_image_dtype(image,tf.float16)
+    image = tf.image.convert_image_dtype(image,tf.float32)
     image = tf.random_crop(image,[224,224,1])
     return image,labels
     
@@ -178,8 +178,8 @@ def main():
                 input_26 = tf.cond(training,
                                       lambda:tf.nn.dropout(x=input_26, keep_prob=0.8,noise_shape=[batchSize,4*4*1024]),
                                       lambda:input_26)
-        W26 = tf.Variable(tf.truncated_normal(shape=[4*4*1024,1000],stddev=0.01,dtype=tf.float16),name="W26") #Todo: Set the 1 back to 4
-        b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float16),name="b26")
+        W26 = tf.Variable(tf.truncated_normal(shape=[4*4*1024,1000],stddev=0.01,dtype=tf.float32),name="W26") #Todo: Set the 1 back to 4
+        b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float32),name="b26")
         W26_h = tf.summary.histogram("weights26",W26)
         b26_h = tf.summary.histogram("biases26",b26)
         prerelu26 = tf.matmul(input_26,W26)+b26
@@ -187,9 +187,9 @@ def main():
             input_depth_26 = prerelu26.get_shape().as_list()[-1]#takes the last element which is in this case 64
             #make new weights and new bias
             with tf.name_scope("beta"):
-                beta26 = tf.Variable(tf.constant(0.0,shape=[input_depth_26],dtype=tf.float16), name="beta",trainable=True)
+                beta26 = tf.Variable(tf.constant(0.0,shape=[input_depth_26],dtype=tf.float32), name="beta",trainable=True)
             with tf.name_scope("gamma"):
-                gamma26 = tf.Variable(tf.constant(1.0,shape=[input_depth_26],dtype=tf.float16),name="gamma",trainable=True)
+                gamma26 = tf.Variable(tf.constant(1.0,shape=[input_depth_26],dtype=tf.float32),name="gamma",trainable=True)
             batch_mean26, batch_variance26 = tf.nn.moments(x=prerelu26,axes=[0,1])
             prerelu26 = tf.nn.batch_normalization(x=prerelu26,mean=batch_mean26,variance=batch_variance26,offset=beta26,scale=gamma26,variance_epsilon=1e-4,name=None)
         prerelu26_h = tf.summary.histogram("prerelu26",prerelu26)

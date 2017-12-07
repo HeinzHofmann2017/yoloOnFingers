@@ -7,12 +7,11 @@ nvidia-docker run --rm -t -i \
 nvcr.io/nvidia/tensorflow:17.09 \
 python code/fingerYolo/training.py          --name $1 \
                                             --learningrate 0.001 \
-                                            --batchSize 7 \
+                                            --batchSize 24 \
                                             --numThreads 16 \
                                             --bufferSize 1000 \
                                             --originPath "/mnt/data/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/" \
                                             --nrOfEpochs 10000000 \
                                             --nrOfEpochsUntilSaveModel 1000 \
-                                            --randSeed $2 \
-                                            --Test
+                                            --randSeed $2
 #for make directly something inside the docker-container, make a backslash after 17.09 and type the command you want to have processed on a new line. 

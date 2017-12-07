@@ -6,8 +6,8 @@ nvidia-docker run --rm -t -i \
 -u $(id -u):$(id -g) \
 nvcr.io/nvidia/tensorflow:17.09 \
 python code/fingerYolo/training.py          --name $1 \
-                                            --learningrate 0.01 \
-                                            --batchSize 7 \
+                                            --learningrate 0.001 \
+                                            --batchSize 24 \
                                             --numThreads 16 \
                                             --bufferSize 1000 \
                                             --originPath "/mnt/data/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/" \
