@@ -192,7 +192,7 @@ def main():
 #==============================================================================
     #Fully-Connected Layer ==> make vector
     with tf.name_scope("Layer31_full") as scope:
-        input_31 = tf.reshape(tensor=output_30,shape=[batchSize,7*7*1024])
+        input_31 = tf.reshape(tensor=output_28,shape=[batchSize,7*7*1024])
         if dropout == True:
             with tf.name_scope("dropout"):        
                 #dropout only over all the feature-maps and batches.
