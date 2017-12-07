@@ -53,7 +53,7 @@ random_seed                     = parser_object.rand_seed
 def dataset_preprocessor(picname,label):
     content = tf.read_file(origin_path + picname)
     image = tf.image.decode_png(content,channels=1)
-    image = tf.image.convert_image_dtype(image,tf.float16)
+    image = tf.image.convert_image_dtype(image,tf.float32)
     #ToDo: random Crop here (is a kind of complicated because of the x and y labels.)
     return image,label
     
@@ -106,7 +106,7 @@ def main():
         validation_init_op  = iterator.make_initializer(valid_data)
         testing_init_op     = iterator.make_initializer(test_data)
         images_unnormalized = tf.image.resize_images(images_unnormalized,[448,448])#TODO:eventually reverse image resizing
-        images_unnormalized = tf.cast(images_unnormalized,tf.float16)
+        images_unnormalized = tf.cast(images_unnormalized,tf.float32)
         
         #To test, how the croped picters look like, when they are used to learn...
         tf.summary.image('images_after_crop',tensor = images_unnormalized , max_outputs=20)
@@ -199,16 +199,16 @@ def main():
                 input_31 = tf.cond(training,
                                       lambda:tf.nn.dropout(x=input_31, keep_prob=0.8,noise_shape=[batchSize,7*7*1024]),
                                       lambda:input_31)
-        W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float16),name="W31")
-        b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float16),name="b31")
+        W31 = tf.Variable(tf.truncated_normal(shape=[7*7*1024,4096],stddev=0.01,dtype=tf.float32),name="W31")
+        b31 = tf.Variable(tf.truncated_normal(shape=[4096],stddev=0.01,dtype=tf.float32),name="b31")
         preactivate_31 = tf.add(tf.matmul(input_31,W31),b31)
         with tf.name_scope("batch_norm"):
             input_depth_31 = preactivate_31.get_shape().as_list()[-1]#takes the last element which is in this case 64
             #make new weights and new bias
             with tf.name_scope("beta"):
-                beta31 = tf.Variable(tf.constant(0.0,shape=[input_depth_31],dtype=tf.float16), name="beta",trainable=True)
+                beta31 = tf.Variable(tf.constant(0.0,shape=[input_depth_31],dtype=tf.float32), name="beta",trainable=True)
             with tf.name_scope("gamma"):
-                gamma31 = tf.Variable(tf.constant(1.0,shape=[input_depth_31],dtype=tf.float16),name="gamma",trainable=True)
+                gamma31 = tf.Variable(tf.constant(1.0,shape=[input_depth_31],dtype=tf.float32),name="gamma",trainable=True)
             batch_mean31, batch_variance31 = tf.nn.moments(x=preactivate_31,axes=[0,1])
             
             preactivate_31 = tf.nn.batch_normalization(x=preactivate_31,mean=batch_mean31,variance=batch_variance31,offset=beta31,scale=gamma31,variance_epsilon=1e-4,name=None) 
@@ -226,16 +226,16 @@ def main():
                 output_31 = tf.cond(training,
                                       lambda:tf.nn.dropout(x=output_31, keep_prob=0.8,noise_shape=[batchSize,4096]),
                                       lambda:output_31)
-        W32 = tf.Variable(tf.truncated_normal(shape=[4096,7*7*6],stddev=0.01,dtype=tf.float16),name="W32")
-        b32 = tf.Variable(tf.truncated_normal(shape=[7*7*6],stddev=0.01,dtype=tf.float16),name="b32")
+        W32 = tf.Variable(tf.truncated_normal(shape=[4096,7*7*6],stddev=0.01,dtype=tf.float32),name="W32")
+        b32 = tf.Variable(tf.truncated_normal(shape=[7*7*6],stddev=0.01,dtype=tf.float32),name="b32")
         preactivate_32 = tf.add(tf.matmul(output_31,W32),b32)
         with tf.name_scope("batch_norm"):
             input_depth_32 = preactivate_32.get_shape().as_list()[-1]#takes the last element which is in this case 64
             #make new weights and new bias
             with tf.name_scope("beta"):
-                beta32 = tf.Variable(tf.constant(0.0,shape=[input_depth_32],dtype=tf.float16), name="beta",trainable=True)
+                beta32 = tf.Variable(tf.constant(0.0,shape=[input_depth_32],dtype=tf.float32), name="beta",trainable=True)
             with tf.name_scope("gamma"):
-                gamma32 = tf.Variable(tf.constant(1.0,shape=[input_depth_32],dtype=tf.float16),name="gamma",trainable=True)
+                gamma32 = tf.Variable(tf.constant(1.0,shape=[input_depth_32],dtype=tf.float32),name="gamma",trainable=True)
             batch_mean32, batch_variance32 = tf.nn.moments(x=preactivate_32,axes=[0,1])
             preactivate_32 = tf.nn.batch_normalization(x=preactivate_32,mean=batch_mean32,variance=batch_variance32,offset=beta32,scale=gamma32,variance_epsilon=1e-4,name=None)   
         fully_32 = preactivate_32#tf.nn.relu(preactivate_32)

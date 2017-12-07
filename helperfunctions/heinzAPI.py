@@ -27,9 +27,9 @@ def batchnorm(input_tensor):
         input_depth = input_tensor.get_shape().as_list()[-1]#takes the last element which is in this case 64
     #make new mean and new Variance
         with tf.name_scope("beta"):
-            beta = tf.Variable(tf.constant(0.0,shape=[input_depth],dtype=tf.float16), name="beta",trainable=True)
+            beta = tf.Variable(tf.constant(0.0,shape=[input_depth],dtype=tf.float32), name="beta",trainable=True)
         with tf.name_scope("gamma"):
-            gamma = tf.Variable(tf.constant(1.0,shape=[input_depth],dtype=tf.float16),name="gamma",trainable=True)
+            gamma = tf.Variable(tf.constant(1.0,shape=[input_depth],dtype=tf.float32),name="gamma",trainable=True)
         batch_mean, batch_variance = tf.nn.moments(x=input_tensor,axes=[0,1,2])
         return tf.nn.batch_normalization(x=input_tensor,
                                              mean=batch_mean,
@@ -56,9 +56,9 @@ def convLayer(tensor,layerNr,batchSize, filterwidth, inputdepth, outputdepth, st
                         
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
-            W = tf.Variable(tf.truncated_normal(shape=[filterwidth,filterwidth,inputdepth,outputdepth], stddev=weightdev, dtype=tf.float16))
+            W = tf.Variable(tf.truncated_normal(shape=[filterwidth,filterwidth,inputdepth,outputdepth], stddev=weightdev, dtype=tf.float32))
         #with tf.name_scope("b"):
-            #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
+            #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float32))
         preactivate = tf.nn.conv2d(input=tensor,filter=W,strides=[1,strides,strides,1],padding='SAME')
         #preactivate = tf.add(preactivate, b)
         if batchnorm_ == True:
@@ -118,10 +118,10 @@ def batchnormPretrained(input_tensor,layerNr,origin_path):
     #make new mean and new Variance
         with tf.name_scope("beta"):
             pythonbeta = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_beta_beta.pkl", "rb" ) )
-            beta = tf.Variable(pythonbeta, name="beta",trainable=True,dtype=tf.float16)
+            beta = tf.Variable(pythonbeta, name="beta",trainable=True,dtype=tf.float32)
         with tf.name_scope("gamma"):
             pythongamma = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_gamma_gamma.pkl", "rb" ) )
-            gamma = tf.Variable(pythongamma,name="gamma",trainable=True,dtype=tf.float16)
+            gamma = tf.Variable(pythongamma,name="gamma",trainable=True,dtype=tf.float32)
         batch_mean, batch_variance = tf.nn.moments(x=input_tensor,axes=[0,1,2])
         return tf.nn.batch_normalization(x=input_tensor,
                                              mean=batch_mean,
@@ -163,9 +163,9 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
 # #             pythonW[:,:,:]=1e15
 # #==============================================================================
 #==============================================================================
-            W = tf.Variable(pythonW,dtype=tf.float16)
+            W = tf.Variable(pythonW,dtype=tf.float32)
         #with tf.name_scope("b"):
-            #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float16))
+            #b = tf.Variable(tf.truncated_normal(shape=[outputdepth],stddev=0.01,dtype=tf.float32))
         preactivate = tf.nn.conv2d(input=tensor,filter=W,strides=[1,strides,strides,1],padding='SAME')
         #preactivate = tf.add(preactivate, b)
         if batchnorm_ == True:
