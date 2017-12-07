@@ -106,6 +106,7 @@ def main():
         validation_init_op  = iterator.make_initializer(valid_data)
         testing_init_op     = iterator.make_initializer(test_data)
         images_unnormalized = tf.image.resize_images(images_unnormalized,[448,448])#TODO:eventually reverse image resizing
+        images_unnormalized = tf.cast(images_unnormalized,tf.float16)
         
         #To test, how the croped picters look like, when they are used to learn...
         tf.summary.image('images_after_crop',tensor = images_unnormalized , max_outputs=20)
