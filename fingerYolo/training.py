@@ -454,8 +454,8 @@ def main():
         with tf.name_scope("IOU"):
             y_label_index = tf.argmax(tf.reduce_max(p_label,axis=[2]),axis=1)
             x_label_index  = tf.argmax(tf.reduce_max(p_label,axis=[1]),axis=1)
-            y_label_global = tf.add((y_label_index/7) , (tf.cast(y_label,tf.float32)/7))
-            x_label_global = tf.add((x_label_index/7) , (tf.cast(x_label,tf.float32)/7))
+            y_label_global = tf.add((tf.cast(y_label_index,tf.float32)/7) , (y_label/7))
+            x_label_global = tf.add((tf.cast(x_label_index,tf.float32)/7) , (x_label/7))
             
             #Do something here
             
