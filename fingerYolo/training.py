@@ -113,6 +113,7 @@ def main():
             
     #is true,if the model is training right now, and is False, if the model is testing.
     training = tf.placeholder(tf.bool, name='training')
+    learnrate = tf.placeholder(tf.float32, name='learnrate')
         
     with tf.name_scope("normalize_pictures") as scope:                            
         images = hAPI.normalize_pictures(tensor=images_unnormalized)
@@ -379,7 +380,7 @@ def main():
         # Gradient descen
         #TODO: Gradient Decent durch ADAM ersetzen
         #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)#From 64lRate0_1_ to 114_01lRate098Ptest everything learned with the Adam default-learnrate of 0.001
+        optimizer = tf.train.AdamOptimizer(learning_rate=learnrate,epsilon=1e-04)#From 64lRate0_1_ to 114_01lRate098Ptest everything learned with the Adam default-learnrate of 0.001
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
@@ -456,7 +457,7 @@ def main():
             y_label_global = tf.add((y_index/7) , (y_label/7))
             x_label_global = tf.add((x_index/7) , (x_label/7))
             
-            Do something here
+            #Do something here
             
          
         
@@ -479,21 +480,23 @@ def main():
         sess.run(validation_init_op)
         sess.run(training_init_op)
         sess.run(init_op)
-        for i in range(5):
-            label, hoehenvector, hoehenindex, breitenvector, breitenindex = sess.run([p_label,height_vector,height_index,width_vector,width_index])
-  
-            print("p_label")
-            print(label)
-            print("height-vector")
-            print(hoehenvector)
-            print("height-index")
-            print(hoehenindex)
-            print("width_vector")
-            print(breitenvector)
-            print("width-index")
-            print(breitenindex)
-        while True :
-            x=2
+#==============================================================================
+#         for i in range(5):
+#             label, hoehenvector, hoehenindex, breitenvector, breitenindex = sess.run([p_label,height_vector,height_index,width_vector,width_index])
+#   
+#             print("p_label")
+#             print(label)
+#             print("height-vector")
+#             print(hoehenvector)
+#             print("height-index")
+#             print(hoehenindex)
+#             print("width_vector")
+#             print(breitenvector)
+#             print("width-index")
+#             print(breitenindex)
+#         while True :
+#             x=2
+#==============================================================================
                 
         if(test==False):
             train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_train")
@@ -506,8 +509,15 @@ def main():
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True})
+                if nr_of_epochs < 80000:
+                    for j in range(nr_of_epochs_until_save_model):
+                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate)})
+                elif nr_of_epochs < 120000:
+                    for j in range(nr_of_epochs_until_save_model):
+                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/10)})  
+                else:
+                    for j in range(nr_of_epochs_until_save_model):
+                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})                     
     
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
