@@ -248,13 +248,16 @@ def main():
         os.makedirs(origin_path + "../../data_hhofmann/weights/"+name+"/")
     
     merged_summary_op = tf.summary.merge_all()
-
+    
     with tf.Session() as sess:
         
         sess.run(validation_init_op)
         sess.run(training_init_op)
         sess.run(init_op)
         
+        
+        train_train_writer = tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_traintrain")
+        train_train_writer.add_graph(sess.graph)        
         train_writer=tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_train")
         train_writer.add_graph(sess.graph) 
         valid_writer=tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_valid")
@@ -268,6 +271,12 @@ def main():
             for j in range(nr_of_epochs_until_save_model):
                 _ = sess.run([train_step],feed_dict={training: True})
 
+
+            #testing while training on traindata
+            numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
+            _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True})
+            train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now))                       
+                        
             #testing on traindata
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
             train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))

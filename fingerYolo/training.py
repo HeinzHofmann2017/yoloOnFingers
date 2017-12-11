@@ -450,7 +450,15 @@ def main():
             false_negatives = tf.reduce_sum(false_negatives)
             false_negatives_normed = tf.div(false_negatives,total_nr_of_Gridcells)
             tf.summary.scalar("false_negatives",false_negatives_normed)
-        
+        with tf.name_scope("IOU"):
+            y_label_index = tf.argmax(tf.reduce_max(p_label,axis=[2]),axis=1)
+            x_label_index  = tf.argmax(tf.reduce_max(p_label,axis=[1]),axis=1)
+            y_label_global = tf.add((y_index/7) , (y_label/7))
+            x_label_global = tf.add((x_index/7) , (x_label/7))
+            
+            Do something here
+            
+         
         
         
 
@@ -471,8 +479,21 @@ def main():
         sess.run(validation_init_op)
         sess.run(training_init_op)
         sess.run(init_op)
-        
-        
+        for i in range(5):
+            label, hoehenvector, hoehenindex, breitenvector, breitenindex = sess.run([p_label,height_vector,height_index,width_vector,width_index])
+  
+            print("p_label")
+            print(label)
+            print("height-vector")
+            print(hoehenvector)
+            print("height-index")
+            print(hoehenindex)
+            print("width_vector")
+            print(breitenvector)
+            print("width-index")
+            print(breitenindex)
+        while True :
+            x=2
                 
         if(test==False):
             train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_train")
