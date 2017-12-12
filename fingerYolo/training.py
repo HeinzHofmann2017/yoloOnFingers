@@ -509,16 +509,19 @@ def main():
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
-                if nr_of_epochs < 80000:
+                if i < 80000:
                     for j in range(nr_of_epochs_until_save_model):
                         _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate)})
-                elif nr_of_epochs < 120000:
+                elif i < 120000:
                     for j in range(nr_of_epochs_until_save_model):
                         _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/10)})  
+                elif i < 160000:
+                    for j in range(nr_of_epochs_until_save_model):
+                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})  
                 else:
                     for j in range(nr_of_epochs_until_save_model):
-                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})                     
-    
+                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/1000)})  
+                        
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
                 #testing on traindata
                 train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
