@@ -469,7 +469,9 @@ def main():
             y_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[2]),axis=1)
             x_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[1]),axis=1)
             
-            y_prob = tf.add((y_prob_index/7), tf.squeeze(y1_output[:,y_prob_index,x_prob_index]/7))
+            y_prob_grob = y_prob_index/7            
+            y_prob_fine = tf.squeeze(y1_output[:,y_prob_index,x_prob_index]/7)
+            y_prob = tf.add(y_prob_grob, y_prob_fine)
             x_prob = tf.add((x_prob_index/7), tf.squeeze(x1_output[:,y_prob_index,x_prob_index]/7))
             h_prob = tf.squeeze(h1_output[:,y_prob_index,x_prob_index])
             w_prob = tf.squeeze(w1_output[:,y_prob_index,x_prob_index])
