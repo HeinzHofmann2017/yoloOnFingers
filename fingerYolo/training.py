@@ -552,6 +552,8 @@ def main():
 #==============================================================================
                 
         if(test==False):
+            train_train_writer = tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_traintrain")
+            train_train_writer.add_graph(sess.graph)             
             train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_train")
             train_writer.add_graph(sess.graph) 
             valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
@@ -574,8 +576,12 @@ def main():
                 else:
                     for j in range(nr_of_epochs_until_save_model):
                         _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/1000)})  
-                        
-                numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1            
+                
+                #testing in traindata while training
+                numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1 
+                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : (learning_rate/1000)})                
+                train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now))                
+                
                 #testing on traindata
                 train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
                 tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
