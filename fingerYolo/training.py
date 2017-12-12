@@ -469,22 +469,39 @@ def main():
             y_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[2]),axis=1)
             x_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[1]),axis=1)
             
-            y_prob_grob = y_prob_index/7            
-            y_prob_fine = tf.squeeze(y1_output[:,y_prob_index,x_prob_index]/7)
-            y_prob = tf.add(y_prob_grob, y_prob_fine)
-            x_prob = tf.add((x_prob_index/7), tf.squeeze(x1_output[:,y_prob_index,x_prob_index]/7))
-            h_prob = tf.squeeze(h1_output[:,y_prob_index,x_prob_index])
-            w_prob = tf.squeeze(w1_output[:,y_prob_index,x_prob_index])
-
-            y_conf = tf.add((y_conf_index/7),tf.squeeze(y1_output[:,y_conf_index,x_conf_index]/7)) 
-            x_conf = tf.add((x_conf_index/7), tf.squeeze(x1_output[:,y_conf_index,x_conf_index]/7))
-            h_conf = tf.squeeze(h1_output[:,y_conf_index,x_conf_index])
-            w_conf = tf.squeeze(w1_output[:,y_conf_index,x_conf_index])
             
-            y_probconf = tf.add((y_probconf_index/7),tf.squeeze(y1_output[:,y_probconf_index,x_probconf_index]/7)) 
-            x_probconf = tf.add((x_probconf_index/7), tf.squeeze(x1_output[:,y_probconf_index,x_probconf_index]/7))
-            h_probconf = tf.squeeze(h1_output[:,y_probconf_index,x_probconf_index])
-            w_probconf = tf.squeeze(w1_output[:,y_probconf_index,x_probconf_index])
+            #make tensor to extract the values for x,y,w & h at the point with highest prob/conf
+            enumerator = tf.constant(range(batchSize))
+            prob_indices_tensor = tf.stack([enumerator,y_prob_index,x_prob_index],1)            
+            conf_indices_tensor = tf.stack([enumerator,y_conf_index,x_conf_index],1)
+            probconf_indices_tensor = tf.stack([enumerator,y_probconf_index,x_probconf_index],1)
+            
+            y_prob_coarse = tf.cast(y_prob_index,tf.float32)/7            
+            y_prob_fine = tf.squeeze(tf.gather_nd(y1_output,prob_indices_tensor))/7
+            y_prob = tf.add(y_prob_grob, y_prob_fine)
+            x_prob_coarse = tf.cast(x_prob_index,tf.float32)/7
+            x_prob_fine = tf.squeeze(tf.gather_nd(x1_output,prob_indices_tensor))/7
+            x_prob = tf.add(x_prob_coarse, x_prob_fine)
+            h_prob =  tf.squeeze(tf.gather_nd(h1_output,prob_indices_tensor))
+            w_prob =  tf.squeeze(tf.gather_nd(w1_output,prob_indices_tensor))
+
+            y_conf_coarse = tf.cast(y_conf_index,tf.float32)/7            
+            y_conf_fine = tf.squeeze(tf.gather_nd(y1_output,conf_indices_tensor))/7
+            y_conf = tf.add(y_conf_grob, y_conf_fine)
+            x_conf_coarse = tf.cast(x_conf_index,tf.float32)/7
+            x_conf_fine = tf.squeeze(tf.gather_nd(x1_output,conf_indices_tensor))/7
+            x_conf = tf.add(x_conf_coarse, x_conf_fine)
+            h_conf =  tf.squeeze(tf.gather_nd(h1_output,conf_indices_tensor))
+            w_conf =  tf.squeeze(tf.gather_nd(w1_output,conf_indices_tensor))
+
+            y_probconf_coarse = tf.cast(y_probconf_index,tf.float32)/7            
+            y_probconf_fine = tf.squeeze(tf.gather_nd(y1_output,probconf_indices_tensor))/7
+            y_probconf = tf.add(y_probconf_grob, y_probconf_fine)
+            x_probconf_coarse = tf.cast(x_probconf_index,tf.float32)/7
+            x_probconf_fine = tf.squeeze(tf.gather_nd(x1_output,probconf_indices_tensor))/7
+            x_probconf = tf.add(x_probconf_coarse, x_probconf_fine)
+            h_probconf =  tf.squeeze(tf.gather_nd(h1_output,probconf_indices_tensor))
+            w_probconf =  tf.squeeze(tf.gather_nd(w1_output,probconf_indices_tensor))            
 
             iou_max_prob = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_prob,x_prob,h_prob,w_prob)           
             iou_max_conf = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_conf,x_conf,h_conf,w_conf)
