@@ -471,7 +471,7 @@ def main():
             
             
             #make tensor to extract the values for x,y,w & h at the point with highest prob/conf
-            enumerator = tf.constant(range(batchSize))
+            enumerator = tf.constant(range(batchSize),tf.int64)
             prob_indices_tensor = tf.stack([enumerator,y_prob_index,x_prob_index],1)            
             conf_indices_tensor = tf.stack([enumerator,y_conf_index,x_conf_index],1)
             probconf_indices_tensor = tf.stack([enumerator,y_probconf_index,x_probconf_index],1)
