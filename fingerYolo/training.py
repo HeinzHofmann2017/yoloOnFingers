@@ -478,7 +478,7 @@ def main():
             
             y_prob_coarse = tf.cast(y_prob_index,tf.float32)/7            
             y_prob_fine = tf.squeeze(tf.gather_nd(y1_output,prob_indices_tensor))/7
-            y_prob = tf.add(y_prob_grob, y_prob_fine)
+            y_prob = tf.add(y_prob_coarse, y_prob_fine)
             x_prob_coarse = tf.cast(x_prob_index,tf.float32)/7
             x_prob_fine = tf.squeeze(tf.gather_nd(x1_output,prob_indices_tensor))/7
             x_prob = tf.add(x_prob_coarse, x_prob_fine)
@@ -487,7 +487,7 @@ def main():
 
             y_conf_coarse = tf.cast(y_conf_index,tf.float32)/7            
             y_conf_fine = tf.squeeze(tf.gather_nd(y1_output,conf_indices_tensor))/7
-            y_conf = tf.add(y_conf_grob, y_conf_fine)
+            y_conf = tf.add(y_conf_coarse, y_conf_fine)
             x_conf_coarse = tf.cast(x_conf_index,tf.float32)/7
             x_conf_fine = tf.squeeze(tf.gather_nd(x1_output,conf_indices_tensor))/7
             x_conf = tf.add(x_conf_coarse, x_conf_fine)
@@ -496,7 +496,7 @@ def main():
 
             y_probconf_coarse = tf.cast(y_probconf_index,tf.float32)/7            
             y_probconf_fine = tf.squeeze(tf.gather_nd(y1_output,probconf_indices_tensor))/7
-            y_probconf = tf.add(y_probconf_grob, y_probconf_fine)
+            y_probconf = tf.add(y_probconf_coarse, y_probconf_fine)
             x_probconf_coarse = tf.cast(x_probconf_index,tf.float32)/7
             x_probconf_fine = tf.squeeze(tf.gather_nd(x1_output,probconf_indices_tensor))/7
             x_probconf = tf.add(x_probconf_coarse, x_probconf_fine)
