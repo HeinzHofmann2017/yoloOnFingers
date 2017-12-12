@@ -187,3 +187,38 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
             #variable_summaries(variable=b,name="b")
             variable_summaries(variable=preactivate, name="preactivate"+str(layerNr))
         return tensor
+        
+        
+def iou(x_label,y_label,h_label,w_label,y,x,h,w):
+    
+    label_left = tf.subtract(x_label,(w_label/2))
+    label_right = tf.add(x_label,(w_label/2))
+    label_top = tf.subtract(y_label,(h_label/2))
+    label_bottom = tf.add(y_label,(h_label/2))
+    
+    left = tf.subtract(x,(w/2))
+    right = tf.add(x,(w/2))
+    top = tf.subtract(y,(h/2))
+    bottom = tf.add(y,(h/2))
+    
+    overlap_left = tf.maximum(label_left,left)
+    overlap_right = tf.minimum(label_right,right)
+    overlap_top = tf.maximum(label_top,top)
+    overlap_bottom = tf.minimum(label_bottom,bottom)
+    
+    overlap_width = tf.subtract(overlap_right,overlap_left)
+    overlap_width = tf.maximum(overlap_width,np.float32(0))
+    overlap_height = tf.subtract(overlap_bottom,overlap_top)
+    overlap_height = tf.maximum(overlap_height,np.float32(0))
+    
+    area_of_overlap = tf.multiply(overlap_width,overlap_height)
+    area = tf.multiply(h,w)
+    label_area = tf.multiply(label_h,label_w)
+    area_of_union = tf.subtract(tf.add(label_area,area), area_of_overlap)
+    
+    IoU = tf.div(area_of_overlap,area_of_union)
+    
+    return IoU
+    
+    
+    

@@ -452,12 +452,65 @@ def main():
             false_negatives_normed = tf.div(false_negatives,total_nr_of_Gridcells)
             tf.summary.scalar("false_negatives",false_negatives_normed)
         with tf.name_scope("IOU"):
+            nr_of_fingers_in_batch = tf.reduce_sum(p_label)
+            
             y_label_index = tf.argmax(tf.reduce_max(p_label,axis=[2]),axis=1)
             x_label_index  = tf.argmax(tf.reduce_max(p_label,axis=[1]),axis=1)
             y_label_global = tf.add((tf.cast(y_label_index,tf.float32)/7) , (y_label/7))
             x_label_global = tf.add((tf.cast(x_label_index,tf.float32)/7) , (x_label/7))
+            h_label_global = h_label
+            w_label_global = w_label
             
-            #Do something here
+            y_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[2]),axis=[1])
+            x_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[1]),axis=[1])
+            y_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[2]),axis=[1])
+            x_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[1]),axis=[1])
+            probconf_output = tf.multiply(p_output,c1_output)            
+            y_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[2]),axis=[1])
+            x_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[1]),axis=[1])
+            
+            y_prob = tf.add((y_prob_index/7), tf.squeeze(y1_output[:,y_prob_index,x_prob_index]/7))
+            x_prob = tf.add((x_prob_index/7), tf.squeeze(x1_output[:,y_prob_index,x_prob_index]/7))
+            h_prob = tf.squeeze(h1_output[:,y_prob_index,x_prob_index])
+            w_prob = tf.squeeze(w1_output[:,y_prob_index,x_prob_index])
+
+            y_conf = tf.add((y_conf_index/7),tf.squeeze(y1_output[:,y_conf_index,x_conf_index]/7)) 
+            x_conf = tf.add((x_conf_index/7), tf.squeeze(x1_output[:,y_conf_index,x_conf_index]/7))
+            h_conf = tf.squeeze(h1_output[:,y_conf_index,x_conf_index])
+            w_conf = tf.squeeze(w1_output[:,y_conf_index,x_conf_index])
+            
+            y_probconf = tf.add((y_probconf_index/7),tf.squeeze(y1_output[:,y_probconf_index,x_probconf_index]/7)) 
+            x_probconf = tf.add((x_probconf_index/7), tf.squeeze(x1_output[:,y_probconf_index,x_probconf_index]/7))
+            h_probconf = tf.squeeze(h1_output[:,y_probconf_index,x_probconf_index])
+            w_probconf = tf.squeeze(w1_output[:,y_probconf_index,x_probconf_index])
+
+            iou_max_prob = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_prob,x_prob,h_prob,w_prob)           
+            iou_max_conf = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_conf,x_conf,h_conf,w_conf)
+            iou_max_prob_conf = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_probconf,x_probconf,h_probconf,w_probconf)
+            
+            iou_max_prob_mean = tf.reduce_sum(iou_max_prob)/nr_of_fingers_in_batch
+            iou_max_conf_mean = tf.reduce_sum(iou_max_conf)/nr_of_fingers_in_batch
+            iou_max_probconf_mean = tf.reduce_sum(iou_max_prob_conf)/nr_of_fingers_in_batch
+            
+            tf.summary.scalar("iou_max_prob",iou_max_prob_mean)
+            tf.summary.scalar("iou_max_conf",iou_max_conf_mean)
+            tf.summary.scalar("iou_max_probconf",iou_max_probconf_mean)
+#==============================================================================
+#         x1_output = tf.squeeze(output_32[:,:,:,0])
+#         x_label   = tf.squeeze(labels[:,:,:,0])
+# 
+#         y1_output = tf.squeeze(output_32[:,:,:,1])
+#         y_label   = tf.squeeze(labels[:,:,:,1])
+# 
+#         h1_output = tf.squeeze(output_32[:,:,:,2])
+#         
+#         w1_output = tf.squeeze(output_32[:,:,:,3])
+# 
+#         c1_output = tf.squeeze(output_32[:,:,:,4])
+#         
+#         p_output  = tf.squeeze(output_32[:,:,:,5])
+#==============================================================================
+
             
          
         
