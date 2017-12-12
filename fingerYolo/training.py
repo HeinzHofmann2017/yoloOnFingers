@@ -461,13 +461,13 @@ def main():
             h_label_global = h_label
             w_label_global = w_label
             
-            y_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[2]),axis=[1])
-            x_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[1]),axis=[1])
-            y_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[2]),axis=[1])
-            x_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[1]),axis=[1])
+            y_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[2]),axis=1)
+            x_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[1]),axis=1)
+            y_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[2]),axis=1)
+            x_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[1]),axis=1)
             probconf_output = tf.multiply(p_output,c1_output)            
-            y_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[2]),axis=[1])
-            x_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[1]),axis=[1])
+            y_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[2]),axis=1)
+            x_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[1]),axis=1)
             
             y_prob = tf.add((y_prob_index/7), tf.squeeze(y1_output[:,y_prob_index,x_prob_index]/7))
             x_prob = tf.add((x_prob_index/7), tf.squeeze(x1_output[:,y_prob_index,x_prob_index]/7))
