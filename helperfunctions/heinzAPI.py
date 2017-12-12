@@ -213,7 +213,7 @@ def iou(x_label,y_label,h_label,w_label,y,x,h,w):
     
     area_of_overlap = tf.multiply(overlap_width,overlap_height)
     area = tf.multiply(h,w)
-    label_area = tf.multiply(label_h,label_w)
+    label_area = tf.multiply(h_label,w_label)
     area_of_union = tf.subtract(tf.add(label_area,area), area_of_overlap)
     
     IoU = tf.div(area_of_overlap,area_of_union)
