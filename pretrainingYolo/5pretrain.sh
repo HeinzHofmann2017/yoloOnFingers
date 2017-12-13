@@ -9,7 +9,7 @@ python code/pretrainingYolo/pretraining.py  --name $1 \
                                             --learningrate 0.001 \
                                             --batchSize 3 \
                                             --numThreads 1 \
-                                            --bufferSize 2 \
+                                            --bufferSize 3 \
                                             --originPath "/mnt/data/ilsvrc2012/LabelList_Heinz/" \
                                             --nrOfEpochs 10000000 \
                                             --nrOfEpochsUntilSaveModel 1 
