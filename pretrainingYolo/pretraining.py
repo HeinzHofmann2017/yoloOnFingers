@@ -60,7 +60,7 @@ def dataset_preprocessor(picname,labels):
     
 def main():
     print("TensorFlow version ", tf.__version__)    
-    tf.set_random_seed(random_seed)
+    #tf.set_random_seed(random_seed)
     with tf.name_scope("Data") as scope:
         print("read in all Picture-Names & Labels and shuffle them")
         ReadData        = analyse_Dataset.Dataset_Heinz()
@@ -293,17 +293,15 @@ def main():
                 training_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
             
-#==============================================================================
-#             #testing on validationdata:
-#             sess.run(validation_init_op)
-#             valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-#             matches = sess.run(matches_in_percent,feed_dict={training: False})
-#             matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
-#             if(matches > validation_matches):
-#                 validation_matches=matches
-#                 mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
-#             sess.run(training_init_op)
-#==============================================================================
+            #testing on validationdata:
+            sess.run(validation_init_op)
+            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
+            matches = sess.run(matches_in_percent,feed_dict={training: False})
+            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+            if(matches > validation_matches):
+                validation_matches=matches
+                mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
+            sess.run(training_init_op)
             
             #save Model
             saver.save(sess=sess, save_path=origin_path + "../../data_hhofmann/weights/"+name+"/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
