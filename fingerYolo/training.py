@@ -456,8 +456,8 @@ def main():
             
             y_label_index = tf.argmax(tf.reduce_max(p_label,axis=[2]),axis=1)
             x_label_index  = tf.argmax(tf.reduce_max(p_label,axis=[1]),axis=1)
-            y_label_global = tf.add((tf.cast(y_label_index,tf.float32)/7) , (y_label/7))
-            x_label_global = tf.add((tf.cast(x_label_index,tf.float32)/7) , (x_label/7))
+            y_label_global = tf.add((tf.cast(y_label_index,tf.float32)/7) , (tf.reduce_max((y_label/7),axis=[1,2])))
+            x_label_global = tf.add((tf.cast(x_label_index,tf.float32)/7) , (tf.reduce_max((x_label/7),axis=[1,2])))
             h_label_global = h_label
             w_label_global = w_label
             
