@@ -8,7 +8,7 @@ nvcr.io/nvidia/tensorflow:17.09 \
 python code/pretrainingYolo/pretraining.py  --name $1 \
                                             --learningrate 0.001 \
                                             --batchSize 10 \
-                                            --numThreads 16 \
+                                            --numThreads 5 \
                                             --bufferSize 5 \
                                             --originPath "/mnt/data/ilsvrc2012/LabelList_Heinz/" \
                                             --nrOfEpochs 10000000 \
