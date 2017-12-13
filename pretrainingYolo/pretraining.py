@@ -293,15 +293,17 @@ def main():
                 training_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
             
-            #testing on validationdata:
-            sess.run(validation_init_op)
-            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
-            if(matches > validation_matches):
-                validation_matches=matches
-                mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
-            sess.run(training_init_op)
+#==============================================================================
+#             #testing on validationdata:
+#             sess.run(validation_init_op)
+#             valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
+#             matches = sess.run(matches_in_percent,feed_dict={training: False})
+#             matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+#             if(matches > validation_matches):
+#                 validation_matches=matches
+#                 mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
+#             sess.run(training_init_op)
+#==============================================================================
             
             #save Model
             saver.save(sess=sess, save_path=origin_path + "../../data_hhofmann/weights/"+name+"/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
