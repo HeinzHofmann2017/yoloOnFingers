@@ -9,7 +9,7 @@ python code/fingerYolo/training.py          --name $1 \
                                             --learningrate 0.001 \
                                             --batchSize 24 \
                                             --numThreads 16 \
-                                            --bufferSize 1000 \
+                                            --bufferSize 100000 \
                                             --originPath "/mnt/data/data_hhofmann/Data/indexfinger_right/3000_readyTOlearn/trainData/" \
                                             --nrOfEpochs 10000000 \
                                             --nrOfEpochsUntilSaveModel 1000
