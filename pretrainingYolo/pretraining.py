@@ -20,6 +20,7 @@ import tensorflow as tf
 from tensorflow.python.ops import array_ops
 from tensorflow.contrib.data import Dataset, Iterator
 from tensorflow.python.platform import gfile
+import time
 
 this_folder =  os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnILSVRCdata/')
@@ -269,14 +270,22 @@ def main():
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
             for j in range(nr_of_epochs_until_save_model):
+                t0 = time.time()
                 _ = sess.run([train_step],feed_dict={training: True})
+                print("Time only to learn"+str(time.time()-t0))
 
 
             #testing while training on traindata
+            
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
+            t0 = time.time()
             _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True})
-            train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now))                       
-                        
+            print("Time for learning and make summaryes"+str(time.time() - t0))
+            train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now)) 
+            t0 = time.time()
+            sumsum = sess.run([merged_summary_op],feed_dict={training: True})                      
+            print("Time for make summaryes"+str(time.time() - t0))                
+                
             #testing on traindata
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
             train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
