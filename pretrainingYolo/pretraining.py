@@ -258,7 +258,9 @@ def main():
         
         
         train_train_writer = tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_traintrain")
-        train_train_writer.add_graph(sess.graph)        
+        train_train_writer.add_graph(sess.graph)  
+        train_train2_writer = tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_traintrain2")
+        train_train2_writer.add_graph(sess.graph) 
         train_writer=tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_train")
         train_writer.add_graph(sess.graph) 
         valid_writer=tf.summary.FileWriter(origin_path + "../../data_hhofmann/summarys/pretraining/summary_" + name + "_valid")
@@ -270,21 +272,17 @@ def main():
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
             for j in range(nr_of_epochs_until_save_model):
-                t0 = time.time()
                 _ = sess.run([train_step],feed_dict={training: True})
-                print("Time only to learn"+str(time.time()-t0))
+
 
 
             #testing while training on traindata
             
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
-            t0 = time.time()
-            _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True})
-            print("Time for learning and make summaryes"+str(time.time() - t0))
+            sumsum,_,sumsum2 = sess.run([merged_summary_op,train_step,merged_summary_op],feed_dict={training: True})
             train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now)) 
-            t0 = time.time()
-            sumsum = sess.run([merged_summary_op],feed_dict={training: True})                      
-            print("Time for make summaryes"+str(time.time() - t0))                
+            train_train2_writer.add_summary(sumsum,(numbers_of_iterations_until_now))
+               
                 
             #testing on traindata
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
