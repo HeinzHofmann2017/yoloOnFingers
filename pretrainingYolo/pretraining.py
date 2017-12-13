@@ -65,7 +65,7 @@ def main():
         train_picnames  = ReadData.get_train_picnames(origin_path=origin_path)
         train_labels    = ReadData.get_train_labels(origin_path=origin_path)#labels between 0 & 999
         train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
-        #train_data      = train_data.repeat()
+        train_data      = train_data.repeat()
         train_data      = train_data.shuffle(buffer_size=buffer_size)
         train_data      = train_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
@@ -75,7 +75,7 @@ def main():
         valid_picnames  = ReadData.get_valid_picnames(origin_path=origin_path)
         valid_labels    = ReadData.get_valid_labels(origin_path=origin_path)
         valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
-        #valid_data      = valid_data.repeat()
+        valid_data      = valid_data.repeat()
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)
         valid_data      = valid_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
