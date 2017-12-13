@@ -47,7 +47,7 @@ nr_of_epochs_until_save_model   = parser_object.nr_of_epochs_until_save_model
 dropout                         = parser_object.dropout_bool
 batchnorm                       = parser_object.batchnorm_bool
 test                            = parser_object.test_bool
-random_seed                     = parser_object.rand_seed
+
 
 
 def dataset_preprocessor(picname,label):
@@ -59,7 +59,6 @@ def dataset_preprocessor(picname,label):
     
 def main():
     print("TensorFlow version ", tf.__version__)
-    tf.set_random_seed(random_seed)
     with tf.name_scope("Data") as scope:
         print("read in all Train Picture-Names & Labels and shuffle them")
         ReadData        = analyse_Fingerset.Dataset_Heinz()
