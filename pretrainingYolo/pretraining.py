@@ -68,7 +68,7 @@ def main():
         train_data      = train_data.repeat()
         train_data      = train_data.shuffle(buffer_size=buffer_size)#buffersize must be minimum size of the whole dataset
         train_data      = train_data.map(map_func=dataset_preprocessor,
-                                         num_parallel_calls=num_threads)
+                                         num_threads=num_threads)
         train_data      = train_data.batch(batchSize)
         
         valid_picnames  = ReadData.get_valid_picnames(origin_path=origin_path)
@@ -77,7 +77,7 @@ def main():
         valid_data      = valid_data.repeat()
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)#buffersize must be minimum size of the whole dataset
         valid_data      = valid_data.map(map_func=dataset_preprocessor,
-                                         num_parallel_calls=num_threads)
+                                         num_threads=num_threads)
         valid_data      = valid_data.batch(batchSize)
     with tf.name_scope("Data-Iterator") as scope:        
         iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
