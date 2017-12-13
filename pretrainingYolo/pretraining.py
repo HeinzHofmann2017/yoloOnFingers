@@ -69,7 +69,7 @@ def main():
         train_data      = train_data.shuffle(buffer_size=buffer_size)
         train_data      = train_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
-                                         output_buffer_size=10)
+                                         output_buffer_size=1)
         train_data      = train_data.batch(batchSize)
         
         valid_picnames  = ReadData.get_valid_picnames(origin_path=origin_path)
@@ -79,7 +79,7 @@ def main():
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)
         valid_data      = valid_data.map(map_func=dataset_preprocessor,
                                          num_threads=num_threads,
-                                         output_buffer_size=10)
+                                         output_buffer_size=1)
         valid_data      = valid_data.batch(batchSize)
     with tf.name_scope("Data-Iterator") as scope:        
         iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
@@ -89,7 +89,7 @@ def main():
         validation_init_op  = iterator.make_initializer(valid_data)
         
         #To test, how the croped picters look like, when they are used to learn...
-        tf.summary.image('images_after_crop',tensor = images , max_outputs=20)
+        tf.summary.image('images_after_crop',tensor = images , max_outputs=12)
             
     with tf.name_scope("make_labels") as scope:
         labels = tf.one_hot(indices     =   labels,
