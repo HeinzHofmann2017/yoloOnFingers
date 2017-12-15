@@ -12,7 +12,7 @@ function [ center, radius ] = deleteFalseCircles(centers, radii )
         nPoints = size(centers,1);
         %Delete impossible radii
         for i=nPoints:-1:1            
-            if radii(i)<3 || radii(i)>20 %Points smaller than 3 are maybe LED's & Points larger than 20 are maybe light-artifacts
+            if radii(i)<3 || radii(i)>20 %Points smaller than 3 are maybe LED's & Points larger than 20 are maybe light-artifacts TODO: maybe raise the number of 20, because the radius of a finger is higher, as soon as tabea has changed this point...
                 centers(i,:)=[];
                 radii(i,:)=[];
             end

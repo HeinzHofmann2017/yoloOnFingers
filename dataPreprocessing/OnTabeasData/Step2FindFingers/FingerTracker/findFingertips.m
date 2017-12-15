@@ -16,7 +16,7 @@ addpath(genpath('../matlabHelperFunctions'));
 
 %% Parameters
 
-inputPath = '/media/heinz/Elements/Daten/indexfinger_right';
+inputPath = '/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/';
 calcBackgroundIm = false;               % if false, default-BG is loaded
 circleFindMethod = 'SKEL';              % method to use for finding circles
                                         %   'CHT':  Circular Hough Transform 
@@ -100,9 +100,11 @@ for cam = 1:nCams
         
         % subtract background and normalize intentityvalues
         D = I - BG;
-        %Delete picture if it is too bright(value 5500000 is found with evaluation of about 200 pictures)
+        %Delete picture if it is too bright(value 5500000 is found with
+        %evaluation of about 200 pictures)wrote by Heinz
         if sum(sum(D)) > -5510000;
-            %Do nothing with too bright Pictures!!!!!!
+            %Do nothing with too bright Pictures!!!!!! wrote by Heinz
+            fprintf('didnt take into account: Camera_%d pic%d.png \n',cam-1,i-1)
         else
 
             D = (D+imRes)/(2*imRes);
@@ -253,7 +255,7 @@ for cam = 1:nCams
 
             % save difference-images
             I = I/max(I(:));
-            I = insertShape(I,'FilledCircle',[centers radii],'Color',[181/255,0,0],'Opacity',0.5);
+            I = insertShape(I,'FilledCircle',[centers,radii],'Color',[181/255,0,0],'Opacity',0.5);
             imwrite(I,sprintf('%spic%d.png',outputPathRGB,i-1));
 
             % save binary image
