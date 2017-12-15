@@ -98,6 +98,7 @@ def main():
                             dtype       =   tf.float32)
     #is true,if the model is training right now, and is False, if the model is testing.
     training = tf.placeholder(tf.bool, name='training')
+    learnrate = tf.placeholder(tf.float32, name='learnrate')
     with tf.name_scope("normalize_pictures") as scope:                            
         images = hAPI.normalize_pictures(tensor=images)
 #==============================================================================
@@ -201,8 +202,8 @@ def main():
 
         
     with tf.name_scope("optimizer") as scope:
-        #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,epsilon=1e-04)##From 4Adam to 13dropoutLastFewLayers0001lRate everything learned with the Adam default-learnrate of 0.001
+        #optimizer = tf.train.GradientDescentOptimizer(learnrate)
+        optimizer = tf.train.AdamOptimizer(learning_rate=learnrate,epsilon=1e-04)##From 4Adam to 13dropoutLastFewLayers0001lRate everything learned with the Adam default-learnrate of 0.001
         
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
@@ -267,8 +268,15 @@ def main():
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
-            for j in range(nr_of_epochs_until_save_model):
-                _ = sess.run([train_step],feed_dict={training: True})
+            if i < 250000:
+                for j in range(nr_of_epochs_until_save_model):
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate)})
+            elif i < 350000:
+                for j in range(nr_of_epochs_until_save_model):
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/10)})
+            else:
+                for j in range(nr_of_epochs_until_save_model):
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})
 
 
 
