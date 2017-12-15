@@ -584,7 +584,7 @@ def main():
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
                 if i < 150000:
                     for j in range(nr_of_epochs_until_save_model):
-                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (np.float32(learning_rate)})
+                        _ = sess.run([train_step],feed_dict={training: True, learnrate : np.float32(learning_rate)})
                 elif i < 250000:
                     for j in range(nr_of_epochs_until_save_model):
                         _ = sess.run([train_step],feed_dict={training: True, learnrate : (np.float32(learning_rate)/10)})  
