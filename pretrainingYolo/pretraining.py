@@ -271,20 +271,20 @@ def main():
             #training:
             if i < 250000:
                 for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : np.float32(learning_rate)})
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : learning_rate})
             elif i < 350000:
                 for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (np.float32(learning_rate)/10)})
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/10)})
             else:
                 for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (np.float32(learning_rate)/100)})
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})
 
 
 
             #testing while training on traindata
             
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
-            sumsum,_,sumsum2 = sess.run([merged_summary_op,train_step,merged_summary_op],feed_dict={training: True})
+            sumsum,_,sumsum2 = sess.run([merged_summary_op,train_step,merged_summary_op],feed_dict={training: True,learnrate:(learning_rate/100)})
             train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now)) 
             train_train2_writer.add_summary(sumsum,(numbers_of_iterations_until_now))
                
