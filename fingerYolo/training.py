@@ -256,10 +256,10 @@ def main():
         y_label   = tf.squeeze(labels[:,:,:,1])
 
         h1_output = tf.squeeze(output_32[:,:,:,2])
-        h_label  = tf.squeeze(labels[:,:,:,2])
+        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),3)#multiply Labels with 3, because they are too small
         
         w1_output = tf.squeeze(output_32[:,:,:,3])
-        w_label   = tf.squeeze(labels[:,:,:,3])
+        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),3)#multiply Labels with 3, because they are too small
 
         c1_output = tf.squeeze(output_32[:,:,:,4])
         
@@ -513,21 +513,7 @@ def main():
             tf.summary.scalar("iou_max_prob",iou_max_prob_mean)
             tf.summary.scalar("iou_max_conf",iou_max_conf_mean)
             tf.summary.scalar("iou_max_probconf",iou_max_probconf_mean)
-#==============================================================================
-#         x1_output = tf.squeeze(output_32[:,:,:,0])
-#         x_label   = tf.squeeze(labels[:,:,:,0])
-# 
-#         y1_output = tf.squeeze(output_32[:,:,:,1])
-#         y_label   = tf.squeeze(labels[:,:,:,1])
-# 
-#         h1_output = tf.squeeze(output_32[:,:,:,2])
-#         
-#         w1_output = tf.squeeze(output_32[:,:,:,3])
-# 
-#         c1_output = tf.squeeze(output_32[:,:,:,4])
-#         
-#         p_output  = tf.squeeze(output_32[:,:,:,5])
-#==============================================================================
+
 
             
          
