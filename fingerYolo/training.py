@@ -256,10 +256,10 @@ def main():
         y_label   = tf.squeeze(labels[:,:,:,1])
 
         h1_output = tf.squeeze(output_32[:,:,:,2])
-        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),3)#multiply Labels with 3, because they are too small
+        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),8)#multiply Labels with 8, because they are too small
         
         w1_output = tf.squeeze(output_32[:,:,:,3])
-        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),3)#multiply Labels with 3, because they are too small
+        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),8)#multiply Labels with 8, because they are too small
 
         c1_output = tf.squeeze(output_32[:,:,:,4])
         
