@@ -272,11 +272,11 @@ def main():
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
             if i < 250000:
-                lr = float(learning_rate)
+                lr = learning_rate
             elif i < 350000:
-                lr = float(learning_rate/10)
+                lr = learning_rate/10
             else:
-                lr = float(learning_rate/100)
+                lr = learning_rate/100
             print("actual learningrate = "+str(lr))
             for j in range(nr_of_epochs_until_save_model):
                 _ = sess.run([train_step],feed_dict={training: True, learnrate:lr})
@@ -292,18 +292,18 @@ def main():
                 
             #testing on traindata
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
-            train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+            train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False,learnrate:lr}),(numbers_of_iterations_until_now))
+            matches = sess.run(matches_in_percent,feed_dict={training: False,learnrate:lr})
+            matches = sess.run(top5_matches_in_percent,feed_dict={training: False,learnrate:lr})
             if(matches > training_matches):
                 training_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
             
             #testing on validationdata:
             sess.run(validation_init_op)
-            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False})
+            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False,learnrate:lr}),(numbers_of_iterations_until_now))
+            matches = sess.run(matches_in_percent,feed_dict={training: False,learnrate:lr})
+            matches = sess.run(top5_matches_in_percent,feed_dict={training: False,learnrate:lr})
             if(matches > validation_matches):
                 validation_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
