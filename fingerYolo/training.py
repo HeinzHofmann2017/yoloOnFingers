@@ -29,6 +29,7 @@ sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
+import cv2
 
 #import matplotlib.pyplot as plt
 
@@ -256,10 +257,10 @@ def main():
         y_label   = tf.squeeze(labels[:,:,:,1])
 
         h1_output = tf.squeeze(output_32[:,:,:,2])
-        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),8)#multiply Labels with 8, because they are too small
+        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),4)#multiply Labels with 4, because they are too small
         
         w1_output = tf.squeeze(output_32[:,:,:,3])
-        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),8)#multiply Labels with 8, because they are too small
+        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),4)#multiply Labels with 4, because they are too small
 
         c1_output = tf.squeeze(output_32[:,:,:,4])
         
@@ -637,149 +638,74 @@ def main():
         else:
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../../weights/105withDropout.ckpt-00040000")                
+            saver.restore(sess,origin_path + "../../../../weights/122_HeightAndWithX4/122_HeightAndWithX4.ckpt-00384000")                
             print("Restored")
             test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
             test_writer.add_graph(sess.graph)   
             
 
             for i in range(len(test_picnames)/batchSize):
-                testimages,output = sess.run([images_unnormalized,tf.squeeze(output_32)],        feed_dict={training: False})
+                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou = sess.run([images_unnormalized,
+                                                                                                                                                                          y_prob,
+                                                                                                                                                                          x_prob,
+                                                                                                                                                                          h_prob,
+                                                                                                                                                                          w_prob,
+                                                                                                                                                                          y_conf,
+                                                                                                                                                                          x_conf,
+                                                                                                                                                                          h_conf,
+                                                                                                                                                                          w_conf,
+                                                                                                                                                                          y_probconf,
+                                                                                                                                                                          x_probconf,
+                                                                                                                                                                          h_probconf,
+                                                                                                                                                                          w_probconf,
+                                                                                                                                                                          y_label_global,
+                                                                                                                                                                          x_label_global,
+                                                                                                                                                                          h_label_global,
+                                                                                                                                                                          w_label_global,
+                                                                                                                                                                          iou_max_conf],        feed_dict={training: False})
+
                 #print(output) #output[batchelements, [x_coords, y_coords, probs]]
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
                 #print("made summary")
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
                     testimage = testimages[b]*200
-                    conf_max = 0
-                    prob_max = 0
-                    probconf_max = 0
-                    conf_x_offset = 0
-                    conf_x_fine = 0
-                    conf_y_offset = 0
-                    conf_y_fine = 0
-                    conf_h = 0
-                    conf_w = 0
-                    prob_x_offset = 0
-                    prob_x_fine = 0
-                    prob_y_offset = 0
-                    prob_y_fine = 0
-                    prob_h = 0
-                    prob_w = 0
-                    probconf_x_offset = 0
-                    probconf_x_fine = 0
-                    probconf_y_offset = 0
-                    probconf_y_fine = 0
-                    probconf_h = 0
-                    probconf_w = 0
-                    for h in range(7):
-                        for w in range(7):
-                            conf_pred = output[b,h,w,4]
-                            prob_pred = output[b,h,w,5]
-                            if(conf_pred>conf_max):
-                                conf_max = conf_pred
-                                conf_x_offset   = w
-                                conf_x_fine     = output[b,h,w,0]
-                                conf_y_offset   = h
-                                conf_y_fine     = output[b,h,w,1]
-                                conf_h          = output[b,h,w,2]
-                                conf_w          = output[b,h,w,3]                       
-                            if(prob_pred>prob_max):
-                                prob_max = prob_pred
-                                prob_x_offset   = w
-                                prob_x_fine     = output[b,h,w,0]
-                                prob_y_offset   = h
-                                prob_y_fine     = output[b,h,w,1]
-                                prob_h          = output[b,h,w,2]
-                                prob_w          = output[b,h,w,3]
-                            if((conf_pred*prob_pred)>probconf_max):
-                                probconf_max = conf_pred*prob_pred
-                                probconf_x_offset   = w
-                                probconf_x_fine     = output[b,h,w,0]
-                                probconf_y_offset   = h
-                                probconf_y_fine     = output[b,h,w,1]
-                                probconf_h          = output[b,h,w,2]
-                                probconf_w          = output[b,h,w,3]
-                                
-                    conf_x_offset = float(conf_x_offset)/7
-                    conf_y_offset = float(conf_y_offset)/7
-                    conf_x_fine = conf_x_fine/7
-                    conf_y_fine = conf_y_fine/7
-                    conf_x = int((conf_x_offset + conf_x_fine)*1280)
-                    conf_y = int((conf_y_offset + conf_y_fine)*960)
-                    conf_h = int(conf_h * 960)
-                    conf_w = int(conf_w *1280)
+                    prob_y      = probs_y[b] * 448
+                    prob_x      = probs_x[b] * 448
+                    prob_h      = probs_h[b] * 448
+                    prob_w      = probs_w[b] * 448
+                    conf_y      = confs_y[b] * 448
+                    conf_x      = confs_x[b] * 448
+                    conf_h      = confs_h[b] * 448
+                    conf_w      = confs_w[b] * 448
+                    conf_iou    = confs_iou[b]
+                    probconf_y  = probconfs_y[b] * 448
+                    probconf_x  = probconfs_x[b] * 448
+                    probconf_h  = probconfs_h[b] * 448
+                    probconf_w  = probconfs_w[b] * 448
+                    label_y     = labels_y[b] * 448
+                    label_x     = labels_x[b] * 448
+                    label_h     = labels_h[b] * 448
+                    label_w     = labels_w[b] * 448
                     
-                    prob_x_offset = float(prob_x_offset)/7
-                    prob_y_offset = float(prob_y_offset)/7
-                    prob_x_fine = float(prob_x_fine)/7
-                    prob_y_fine = float(prob_y_fine)/7
-                    prob_x = int((prob_x_offset + prob_x_fine)*1280)
-                    prob_y = int((prob_y_offset + prob_y_fine)*960)
-                    prob_h = int(prob_h * 960)
-                    prob_w = int(prob_w * 1280)
-                    
-                    probconf_x_offset = float(probconf_x_offset)/7
-                    probconf_y_offset = float(probconf_y_offset)/7
-                    probconf_x_fine = probconf_x_fine/7
-                    probconf_y_fine = probconf_y_fine/7
-                    probconf_x = int((probconf_x_offset + probconf_x_fine)*1280)
-                    probconf_y = int((probconf_y_offset + probconf_y_fine)*960)
-                    probconf_h = int(probconf_h * 960)
-                    probconf_w = int(probconf_w *1280)
-                            
-                    #vertical lines for box with the highest confidence
-#==============================================================================
-#                     for x in range((conf_x-conf_w),(conf_x+conf_w)):
-#                         for y in range((conf_y-conf_h),(conf_y+conf_h)):
-#                             if(x<0):
-#                                 x=0
-#                             if(x>1279):
-#                                 x=1279
-#                             if(y<0):
-#                                 y=0
-#                             if(y>959):
-#                                 y=959
-#                             if(x%2 == 0):                    
-#                                 testimage[y,x,0]=255
-#                             else:
-#                                 testimage[y,x,0]=0
-#==============================================================================
-                            
-                    #horizontal lines for box with the highest probability
-#==============================================================================
-#                     for y in range((prob_y-prob_h),(prob_y+prob_h)):
-#                         for x in range((prob_x-prob_w),(prob_x+prob_w)):                        
-#                             if(x<0):
-#                                 x=0
-#                             if(x>1279):
-#                                 x=1279
-#                             if(y<0):
-#                                 y=0
-#                             if(y>959):
-#                                 y=959
-#                             if(x%2 == 0):                    
-#                                 testimage[y,x,0]=255
-#                             else:
-#                                 testimage[y,x,0]=0                    
-#==============================================================================
-                    #Lines for box with the highest probability*confidence
-                    for y in range((probconf_y-probconf_h),(probconf_y+probconf_h)):
-                        for x in range((probconf_x-probconf_w),(probconf_x+probconf_w)):                        
-                            if(x<0):
-                                x=0
-                            if(x>1279):
-                                x=1279
-                            if(y<0):
-                                y=0
-                            if(y>959):
-                                y=959
-                            if(x%2 == 0):                    
-                                testimage[y,x,0]=255
-                            else:
-                                testimage[y,x,0]=0     
                     #save picture in own folder for recognized fingers 
-                    sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+"conf%.3f"%conf_max +"prob%.3f"%prob_max+".png",tf.image.encode_png(testimage)))
+                    sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
+                    
+                    #get picture back with cv2
+                    img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
+                    cv2.rectangle(img,(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),(int(prob_x+(prob_w/2)),int(prob_y+(prob_h/2))),(255,0,0),1)
+                    cv2.putText(img,'Probability',(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),1)
+                    cv2.rectangle(img,(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),(int(conf_x+(conf_w/2)),int(conf_y+(conf_h/2))),(0,255,0),1)
+                    cv2.putText(img,'Confidence',(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
+                    cv2.putText(img,'iou='+str(conf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
+                    print(conf_iou)
+#==============================================================================
+#                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
+#                     cv2.putText(img,'Probability*Confidence',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+#==============================================================================
+                    cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
+                    cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
+                    cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
                        
 
             
