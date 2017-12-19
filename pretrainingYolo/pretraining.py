@@ -200,7 +200,8 @@ def main():
         fully_26 = tf.cast(fully_26, tf.float32)
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=fully_26))
         cost_h = tf.summary.scalar("Costs",cost)
-
+        
+        
         
     with tf.name_scope("optimizer") as scope:
         #optimizer = tf.train.GradientDescentOptimizer(learnrate)
@@ -210,6 +211,7 @@ def main():
         # need to the 'gradient' part, for example cap them, etc.
         grads_and_vars = optimizer.compute_gradients(cost)
         capped_gvs = [(tf.clip_by_value(grad, -5., 5.), var) for grad, var in grads_and_vars]
+        tf.summary.scalar("Learnrate",learnrate)
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(capped_gvs)
@@ -270,15 +272,14 @@ def main():
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
             if i < 250000:
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : learning_rate})
+                lr = learning_rate
             elif i < 350000:
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/10)})
+                lr = learning_rate/10
             else:
-                for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})
-
+                lr = learning_rate/100
+            print("actual learningrate = "+str(lr))
+            for j in range(nr_of_epochs_until_save_model):
+                _ = sess.run([train_step],feed_dict={training: True, learnrate : lr})
 
 
             #testing while training on traindata
