@@ -257,10 +257,10 @@ def main():
         y_label   = tf.squeeze(labels[:,:,:,1])
 
         h1_output = tf.squeeze(output_32[:,:,:,2])
-        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),3)#multiply Labels with 3, because they are too small
+        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),4)#multiply Labels with 3, because they are too small
         
         w1_output = tf.squeeze(output_32[:,:,:,3])
-        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),3)#multiply Labels with 3, because they are too small
+        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),4)#multiply Labels with 3, because they are too small
 
         c1_output = tf.squeeze(output_32[:,:,:,4])
         
@@ -503,9 +503,9 @@ def main():
             h_probconf =  tf.squeeze(tf.gather_nd(h1_output,probconf_indices_tensor))
             w_probconf =  tf.squeeze(tf.gather_nd(w1_output,probconf_indices_tensor))            
 
-            iou_max_prob = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_prob,x_prob,h_prob,w_prob)           
-            iou_max_conf = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_conf,x_conf,h_conf,w_conf)
-            iou_max_prob_conf = hAPI.iou(y_label_global,x_label_global,h_label_global,w_label_global,y_probconf,x_probconf,h_probconf,w_probconf)
+            iou_max_prob = hAPI.iou(x_label_global,y_label_global,h_label_global,w_label_global,y_prob,x_prob,h_prob,w_prob)           
+            iou_max_conf = hAPI.iou(x_label_global,y_label_global,h_label_global,w_label_global,y_conf,x_conf,h_conf,w_conf)
+            iou_max_prob_conf = hAPI.iou(x_label_global,y_label_global,h_label_global,w_label_global,y_probconf,x_probconf,h_probconf,w_probconf)
             
             iou_max_prob_mean = tf.reduce_sum(iou_max_prob)/nr_of_fingers_in_batch
             iou_max_conf_mean = tf.reduce_sum(iou_max_conf)/nr_of_fingers_in_batch
