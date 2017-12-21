@@ -271,9 +271,9 @@ def main():
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
-            if (i*nr_of_epochs) < 250000:
+            if (i*nr_of_epochs_until_save_model) < 250000:
                 lr = learning_rate
-            elif (i*nr_of_epochs) < 500000:
+            elif (i*nr_of_epochs_until_save_model) < 500000:
                 lr = learning_rate/10
             else:
                 lr = learning_rate/100

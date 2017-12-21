@@ -569,11 +569,11 @@ def main():
             #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
-                if (i*nr_of_epochs) < 150000:
+                if (i*nr_of_epochs_until_save_model) < 150000:
                     lr = learning_rate
-                elif (i*nr_of_epochs) < 250000:
+                elif (i*nr_of_epochs_until_save_model) < 250000:
                     lr = learning_rate/10 
-                elif (i*nr_of_epochs) < 350000:
+                elif (i*nr_of_epochs_until_save_model) < 350000:
                     lr = learning_rate/100  
                 else:
                     lr = learning_rate/1000
