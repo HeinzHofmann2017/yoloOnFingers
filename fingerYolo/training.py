@@ -381,7 +381,7 @@ def main():
         #TODO: Gradient Decent durch ADAM ersetzen
         #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
         optimizer = tf.train.AdamOptimizer(learning_rate=learnrate,epsilon=1e-04)#From 64lRate0_1_ to 114_01lRate098Ptest everything learned with the Adam default-learnrate of 0.001
-        
+        tf.summary.scalar("Learnrate",learnrate)
         # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
         # need to the 'gradient' part, for example cap them, etc.
         grads_and_vars = optimizer.compute_gradients(costs)
@@ -570,21 +570,20 @@ def main():
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
                 if (i*nr_of_epochs) < 150000:
-                    for j in range(nr_of_epochs_until_save_model):
-                        _ = sess.run([train_step],feed_dict={training: True, learnrate : learning_rate})
+                    lr = learning_rate
                 elif (i*nr_of_epochs) < 250000:
-                    for j in range(nr_of_epochs_until_save_model):
-                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/10)})  
+                    lr = learning_rate/10 
                 elif (i*nr_of_epochs) < 350000:
-                    for j in range(nr_of_epochs_until_save_model):
-                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/100)})  
+                    lr = learning_rate/100  
                 else:
-                    for j in range(nr_of_epochs_until_save_model):
-                        _ = sess.run([train_step],feed_dict={training: True, learnrate : (learning_rate/1000)})  
+                    lr = learning_rate/1000
+                print("actual learnrat = " + str(lr))
+                for j in range(nr_of_epochs_until_save_model):
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : lr})                        
                 
                 #testing in traindata while training
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1 
-                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : (learning_rate/1000)})                
+                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : (lr)})                
                 train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now))                
                 
                 #testing on traindata
