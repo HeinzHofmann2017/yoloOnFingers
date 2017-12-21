@@ -514,12 +514,30 @@ def main():
             tf.summary.scalar("iou_max_prob",iou_max_prob_mean)
             tf.summary.scalar("iou_max_conf",iou_max_conf_mean)
             tf.summary.scalar("iou_max_probconf",iou_max_probconf_mean)
-
-
             
-         
-        
-        
+        with tf.name_scope("distance"):
+            x_prob_diff = tf.subtract(x_label_global, x_prob)
+            y_prob_diff = tf.subtract(y_label_global, y_prob)
+            x_conf_diff = tf.subtract(x_label_global, x_conf)
+            y_conf_diff = tf.subtract(y_label_global, y_conf)
+            x_probconf_diff = tf.subtract(x_label_global, x_probconf)
+            y_probconf_diff = tf.subtract(y_label_global, y_probconf)            
+            
+            distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
+            distance_conf = tf.sqrt(tf.add(tf.square(x_conf_diff),tf.square(y_conf_diff)))
+            distance_probconf = tf.sqer(tf.add(tf.square(x_probconf_diff),tf.square(x_probconf_diff)))
+
+            mean_distance_prob, var_distance_prob = tf.nn.moments(distance_prob,axes=[0])
+            mean_distance_conf, var_distance_conf = tf.nn.moments(distance_conf,axes=[0])
+            mean_distance_probconf, var_distance_probconf = tf.nn.moments(distance_probconf, axes=[0])
+            
+            tf.summary.scalar("mean_distance_prob",mean_distance_prob)
+            tf.summary.scalar("var_distance_prob",var_distance_prob)
+            tf.summary.scalar("mean_distance_conf",mean_distance_conf)
+            tf.summary.scalar("var_distance_conf",var_distance_conf)
+            tf.summary.scalar("mean_distance_probconf",mean_distance_probconf)
+            tf.summary.scalar("var_distance_probconf",var_distance_probconf)
+                        
 
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
     saver = tf.train.Saver(
@@ -644,7 +662,7 @@ def main():
             
 
             for i in range(len(test_picnames)/batchSize):
-                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou = sess.run([images_unnormalized,
+                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance = sess.run([images_unnormalized,
                                                                                                                                                                           y_prob,
                                                                                                                                                                           x_prob,
                                                                                                                                                                           h_prob,
@@ -661,7 +679,8 @@ def main():
                                                                                                                                                                           x_label_global,
                                                                                                                                                                           h_label_global,
                                                                                                                                                                           w_label_global,
-                                                                                                                                                                          iou_max_conf],        feed_dict={training: False})
+                                                                                                                                                                          iou_max_conf,
+                                                                                                                                                                          distance_conf],        feed_dict={training: False})
 
                 #print(output) #output[batchelements, [x_coords, y_coords, probs]]
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
@@ -678,6 +697,7 @@ def main():
                     conf_h      = confs_h[b] * 448
                     conf_w      = confs_w[b] * 448
                     conf_iou    = confs_iou[b]
+                    conf_distance= confs_distance[b]
                     probconf_y  = probconfs_y[b] * 448
                     probconf_x  = probconfs_x[b] * 448
                     probconf_h  = probconfs_h[b] * 448
@@ -697,7 +717,9 @@ def main():
                     cv2.rectangle(img,(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),(int(conf_x+(conf_w/2)),int(conf_y+(conf_h/2))),(0,255,0),1)
                     cv2.putText(img,'Confidence',(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
                     cv2.putText(img,'iou='+str(conf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
+                    cv2.putText(img,'dist='+str(conf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
                     print(conf_iou)
+                    print(conf_distance)
 #==============================================================================
 #                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
 #                     cv2.putText(img,'Probability*Confidence',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
