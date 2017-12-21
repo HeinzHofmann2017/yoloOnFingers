@@ -583,11 +583,11 @@ def main():
                 
                 #testing in traindata while training
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1 
-                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : (lr)})                
+                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : lr})                
                 train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now))                
                 
                 #testing on traindata
-                train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
+                train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : lr}),(numbers_of_iterations_until_now))
                 tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
                                                                 false_positives, 
                                                                 true_negatives, 
@@ -597,7 +597,7 @@ def main():
                                                                 mean_probabilities,
                                                                 true_confidence,
                                                                 max_confidence,
-                                                                mean_confidence],feed_dict={training: False})
+                                                                mean_confidence],feed_dict={training: False, learnrate : lr})
                 print("\n\n\n\nTraining "+name+"\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 print("mean of the true training Probability = " + str(pt))
                 print("mean of the max training Probabilitys = " + str(mp))
@@ -607,7 +607,7 @@ def main():
                 print("mean of all training Confidences = " + str(meanc))
                 #testing on validationdata:
                 sess.run(validation_init_op)
-                valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(numbers_of_iterations_until_now))
+                valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : lr}),(numbers_of_iterations_until_now))
                 tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
                                                                 false_positives, 
                                                                 true_negatives, 
@@ -617,7 +617,7 @@ def main():
                                                                 mean_probabilities,
                                                                 true_confidence,
                                                                 max_confidence,
-                                                                mean_confidence],feed_dict={training: False})
+                                                                mean_confidence],feed_dict={training: False, learnrate : lr})
                 print("\nValidation "+name+"\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
                 print("mean of the true training Probability = " + str(pt))
                 print("mean of the max training Probabilitys = " + str(mp))
