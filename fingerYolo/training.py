@@ -525,7 +525,7 @@ def main():
             
             distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
             distance_conf = tf.sqrt(tf.add(tf.square(x_conf_diff),tf.square(y_conf_diff)))
-            distance_probconf = tf.sqer(tf.add(tf.square(x_probconf_diff),tf.square(x_probconf_diff)))
+            distance_probconf = tf.sqrt(tf.add(tf.square(x_probconf_diff),tf.square(x_probconf_diff)))
 
             mean_distance_prob, var_distance_prob = tf.nn.moments(distance_prob,axes=[0])
             mean_distance_conf, var_distance_conf = tf.nn.moments(distance_conf,axes=[0])
