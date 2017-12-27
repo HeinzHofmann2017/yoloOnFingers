@@ -541,9 +541,9 @@ def main():
             #Solution: Make new vectors, which doesn't include Pictures, where no finger exist.
             zeros_vector = tf.zeros(batchSize)
             boolean_vector = tf.not_equal(zeros_vector,p_labels)            
-            distance_probs=tf.boolean_mask(distance_prob,boolean_vector)
-            distance_confs=tf.boolean_mask(distance_conf,boolean_vector)
-            distance_probconfs = tf.boolean_mask(distance_probconf,boolean_vector)
+            distance_probs=tf.boolean_mask(distance_prob,[boolean_vector])
+            distance_confs=tf.boolean_mask(distance_conf,[boolean_vector])
+            distance_probconfs = tf.boolean_mask(distance_probconf,[boolean_vector])
             
             mean_distance_prob, var_distance_prob = tf.nn.moments(distance_probs,axes=[0])
             mean_distance_conf, var_distance_conf = tf.nn.moments(distance_confs,axes=[0])
