@@ -29,7 +29,7 @@ sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
-import cv2
+#import cv2
 
 #import matplotlib.pyplot as plt
 
