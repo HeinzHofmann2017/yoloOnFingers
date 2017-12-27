@@ -29,7 +29,7 @@ sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
-#import cv2
+import cv2
 
 #import matplotlib.pyplot as plt
 
@@ -536,11 +536,18 @@ def main():
             
             distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
             distance_conf = tf.sqrt(tf.add(tf.square(x_conf_diff),tf.square(y_conf_diff)))
-            distance_probconf = tf.sqrt(tf.add(tf.square(x_probconf_diff),tf.square(x_probconf_diff)))
-
-            mean_distance_prob, var_distance_prob = tf.nn.moments(distance_prob,axes=[0])
-            mean_distance_conf, var_distance_conf = tf.nn.moments(distance_conf,axes=[0])
-            mean_distance_probconf, var_distance_probconf = tf.nn.moments(distance_probconf, axes=[0])
+            distance_probconf = tf.sqrt(tf.add(tf.square(x_probconf_diff),tf.square(y_probconf_diff)))
+            #Problem: when only testing distance on pictures with fingers, the pictures without fingers have distance 0, what makes a bias to the mean-distance.
+            #Solution: Make new vectors, which doesn't include Pictures, where no finger exist.
+            zeros_vector = tf.zeros(batchSize)
+            boolean_vector = tf.not_equal(zeros_vector,p_labels)            
+            distance_probs=tf.boolean_mask(distance_prob,boolean_vector)
+            distance_confs=tf.boolean_mask(distance_conf,boolean_vector)
+            distance_probconfs = tf.boolean_mask(distance_probconf,boolean_vector)
+            
+            mean_distance_prob, var_distance_prob = tf.nn.moments(distance_probs,axes=[0])
+            mean_distance_conf, var_distance_conf = tf.nn.moments(distance_confs,axes=[0])
+            mean_distance_probconf, var_distance_probconf = tf.nn.moments(distance_probconfs, axes=[0])
             
             tf.summary.scalar("mean_distance_prob",mean_distance_prob)
             tf.summary.scalar("var_distance_prob",var_distance_prob)
@@ -634,6 +641,12 @@ def main():
                 print("mean of the true training Confidences = " + str(tc))
                 print("mean of the max training Confidences = " + str(mc))
                 print("mean of all training Confidences = " + str(meanc))
+                
+                p_labeles,conf_dist_full,conf_dist_bool,conf_dist_reduct = sess.run([p_labels,distance_conf,boolean_vector,distance_confs],feed_dict={training:False, learnrate:lr})
+                print("p_labels                     = " + str(p_labeles))
+                print("full conf distance vector    = " + str(conf_dist_full))
+                print("bool conf distance vector    = " + str(conf_dist_bool))
+                print("reduced conf distance vector = " + str(conf_dist_reduct))
                 #testing on validationdata:
                 sess.run(validation_init_op)
                 valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : lr}),(numbers_of_iterations_until_now))
@@ -666,7 +679,7 @@ def main():
         else:
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../../weights/122_HeightAndWithX4/122_HeightAndWithX4.ckpt-00384000")                
+            saver.restore(sess,origin_path + "../../../../weights/127_calcDistance/127_calcDistance.ckpt-00766000")                
             print("Restored")
             test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
             test_writer.add_graph(sess.graph)   
