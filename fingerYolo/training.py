@@ -642,12 +642,6 @@ def main():
                 print("mean of the true training Confidences = " + str(tc))
                 print("mean of the max training Confidences = " + str(mc))
                 print("mean of all training Confidences = " + str(meanc))
-                
-                p_labeles,conf_dist_full,conf_dist_bool,conf_dist_reduct = sess.run([p_labels,distance_conf,boolean_vector,distance_confs],feed_dict={training:False, learnrate:lr})
-                print("p_labels                     = " + str(p_labeles))
-                print("full conf distance vector    = " + str(conf_dist_full))
-                print("bool conf distance vector    = " + str(conf_dist_bool))
-                print("reduced conf distance vector = " + str(conf_dist_reduct))
                 #testing on validationdata:
                 sess.run(validation_init_op)
                 valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : lr}),(numbers_of_iterations_until_now))
