@@ -541,8 +541,7 @@ def main():
             #Solution: Make new vectors, which doesn't include Pictures, where no finger exist.
             zeros_vector = tf.zeros(24)#TODO:change it back to batchSize, if possible
             boolean_vector = tf.squeeze(tf.not_equal(zeros_vector,p_labels))
-            boolean_vector.set_shape([None])
-            distance_prob.set_shape([None])
+            boolean_vector.set_shape([None])#to prevent problems with tf.boolean_mask()
             distance_probs=tf.boolean_mask(distance_prob,boolean_vector)
             distance_confs=tf.boolean_mask(distance_conf,boolean_vector)
             distance_probconfs = tf.boolean_mask(distance_probconf,boolean_vector)
