@@ -516,12 +516,23 @@ def main():
             tf.summary.scalar("iou_max_probconf",iou_max_probconf_mean)
             
         with tf.name_scope("distance"):
-            x_prob_diff = tf.subtract(x_label_global, x_prob)
-            y_prob_diff = tf.subtract(y_label_global, y_prob)
-            x_conf_diff = tf.subtract(x_label_global, x_conf)
-            y_conf_diff = tf.subtract(y_label_global, y_conf)
-            x_probconf_diff = tf.subtract(x_label_global, x_probconf)
-            y_probconf_diff = tf.subtract(y_label_global, y_probconf)            
+            #only test the pictures with fingers on distance, those, which don't have a finger, mustn't be tested!!!
+            p_labels = tf.reduce_sum(p_label,axis=[1,2])
+            x_probs = tf.multiply(x_prob,p_labels)
+            y_probs = tf.multiply(y_prob,p_labels)
+            x_confs = tf.multiply(x_conf,p_labels)
+            y_confs = tf.multiply(y_conf,p_labels)
+            x_probconfs = tf.multiply(x_probconf,p_labels)
+            y_probconfs = tf.multiply(y_probconf,p_labels)
+            x_labels_global = tf.multiply(x_label_global,p_labels)
+            y_labels_global = tf.multiply(y_label_global,p_labels)
+            
+            x_prob_diff = tf.subtract(x_labels_global, x_probs)
+            y_prob_diff = tf.subtract(y_labels_global, y_probs)
+            x_conf_diff = tf.subtract(x_labels_global, x_confs)
+            y_conf_diff = tf.subtract(y_labels_global, y_confs)
+            x_probconf_diff = tf.subtract(x_labels_global, x_probconfs)
+            y_probconf_diff = tf.subtract(y_labels_global, y_probconfs)            
             
             distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
             distance_conf = tf.sqrt(tf.add(tf.square(x_conf_diff),tf.square(y_conf_diff)))
