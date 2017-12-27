@@ -29,7 +29,7 @@ sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
-#import cv2
+import cv2
 
 #import matplotlib.pyplot as plt
 
@@ -681,7 +681,7 @@ def main():
             
 
             for i in range(len(test_picnames)/batchSize):
-                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance = sess.run([images_unnormalized,
+                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance,probconfs_iou,probconfs_distance = sess.run([images_unnormalized,
                                                                                                                                                                           y_prob,
                                                                                                                                                                           x_prob,
                                                                                                                                                                           h_prob,
@@ -699,7 +699,9 @@ def main():
                                                                                                                                                                           h_label_global,
                                                                                                                                                                           w_label_global,
                                                                                                                                                                           iou_max_conf,
-                                                                                                                                                                          distance_conf],        feed_dict={training: False})
+                                                                                                                                                                          distance_conf,
+                                                                                                                                                                          iou_max_probconf,
+                                                                                                                                                                          distance_probconf],        feed_dict={training: False})
 
                 #print(output) #output[batchelements, [x_coords, y_coords, probs]]
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
@@ -721,6 +723,8 @@ def main():
                     probconf_x  = probconfs_x[b] * 448
                     probconf_h  = probconfs_h[b] * 448
                     probconf_w  = probconfs_w[b] * 448
+                    probconf_iou= probconfs_iou[b]
+                    probconf_distance=probconfs_distance[b]
                     label_y     = labels_y[b] * 448
                     label_x     = labels_x[b] * 448
                     label_h     = labels_h[b] * 448
@@ -731,18 +735,20 @@ def main():
                     
                     #get picture back with cv2
                     img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
-                    cv2.rectangle(img,(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),(int(prob_x+(prob_w/2)),int(prob_y+(prob_h/2))),(255,0,0),1)
-                    cv2.putText(img,'Probability',(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),1)
-                    cv2.rectangle(img,(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),(int(conf_x+(conf_w/2)),int(conf_y+(conf_h/2))),(0,255,0),1)
-                    cv2.putText(img,'Confidence',(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
-                    cv2.putText(img,'iou='+str(conf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
-                    cv2.putText(img,'dist='+str(conf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
-                    print(conf_iou)
-                    print(conf_distance)
 #==============================================================================
-#                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
-#                     cv2.putText(img,'Probability*Confidence',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+#                     cv2.rectangle(img,(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),(int(prob_x+(prob_w/2)),int(prob_y+(prob_h/2))),(255,0,0),1)
+#                     cv2.putText(img,'Probability',(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),1)
+#                     cv2.rectangle(img,(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),(int(conf_x+(conf_w/2)),int(conf_y+(conf_h/2))),(0,255,0),1)
+#                     cv2.putText(img,'Confidence',(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
 #==============================================================================
+
+                    cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
+                    cv2.putText(img,'ProbConf',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    print(probconf_iou)
+                    print(probconf_distance)
+                    
                     cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
                     cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
