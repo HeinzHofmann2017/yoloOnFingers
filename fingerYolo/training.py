@@ -679,9 +679,15 @@ def main():
             test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
             test_writer.add_graph(sess.graph)   
             
-
+            sum_distance = 0
+            sum_iou = 0
+            nr_of_fingers = 0
+            nr_of_coarse_recognized_fingers = 0
+            nr_of_recognized_fingers = 0
+            nr_of_fine_recognized_fingers = 0
+            nr_of_extremefine_recognized_fingers = 0
             for i in range(len(test_picnames)/batchSize):
-                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance,probconfs_iou,probconfs_distance = sess.run([images_unnormalized,
+                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance,probconfs_iou,probconfs_distance,labels_p = sess.run([images_unnormalized,
                                                                                                                                                                           y_prob,
                                                                                                                                                                           x_prob,
                                                                                                                                                                           h_prob,
@@ -700,12 +706,14 @@ def main():
                                                                                                                                                                           w_label_global,
                                                                                                                                                                           iou_max_conf,
                                                                                                                                                                           distance_conf,
-                                                                                                                                                                          iou_max_probconf,
-                                                                                                                                                                          distance_probconf],        feed_dict={training: False})
+                                                                                                                                                                          iou_max_prob_conf,
+                                                                                                                                                                          distance_probconf,
+                                                                                                                                                                          p_labels],        feed_dict={training: False})
 
                 #print(output) #output[batchelements, [x_coords, y_coords, probs]]
                 #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
                 #print("made summary")
+
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
                     testimage = testimages[b]*200
@@ -729,7 +737,37 @@ def main():
                     label_x     = labels_x[b] * 448
                     label_h     = labels_h[b] * 448
                     label_w     = labels_w[b] * 448
-                    
+                    print("iou                                                      = "+str(probconf_iou))
+                    print("distance                                                 = " + str(probconf_distance))
+                    if(labels_p[b]!=0):
+                        sum_iou += probconf_iou
+                        sum_distance += probconf_distance
+                        nr_of_fingers += 1
+                        mean_iou = sum_iou/nr_of_fingers
+                        mean_distance = sum_distance/nr_of_fingers
+                        print("mean_iou                                                 = " + str(mean_iou))
+                        print("mean_distance                                            = " + str(mean_distance))
+                        
+                        if probconf_distance < 0.04:
+                            nr_of_coarse_recognized_fingers += 1
+                        if probconf_distance < 0.02:
+                            nr_of_recognized_fingers += 1
+                        if probconf_distance < 0.01:
+                            nr_of_fine_recognized_fingers += 1
+                        if probconf_distance < 0.001:
+                            nr_of_extremefine_recognized_fingers += 1
+                            
+                        coarse_recognized_fingers_in_percent = (float(nr_of_coarse_recognized_fingers)/float(nr_of_fingers))*100
+                        print("Percentage of coarse recognized fingers (<0.04)          = " + str(coarse_recognized_fingers_in_percent) + "%")
+                        recognized_fingers_in_percent = (float(nr_of_recognized_fingers)/float(nr_of_fingers))*100
+                        print("Percentage of recognized fingers (<0.02)                 = " + str(recognized_fingers_in_percent) + "%")
+                        fine_recognized_fingers_in_percent = (float(nr_of_fine_recognized_fingers)/float(nr_of_fingers))*100
+                        print("Percentage of fine recognized fingers (<0.01)            = " + str(fine_recognized_fingers_in_percent) + "%")
+                        extremefine_recognized_fingers_in_percent = (float(nr_of_extremefine_recognized_fingers)/float(nr_of_fingers))*100
+                        print("Percentage of extreme fine recognized fingers (>0.001)   = " + str(extremefine_recognized_fingers_in_percent)+"%")
+                        
+                        #TODO: Histogram for the distance and the iou!!!(with concatenating an vector and make later a tensorboard-histogram out of it, maybe a numpy-histogram or similar would work too)
+                        
                     #save picture in own folder for recognized fingers 
                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
                     
@@ -746,14 +784,12 @@ def main():
                     cv2.putText(img,'ProbConf',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
                     cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
                     cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-                    print(probconf_iou)
-                    print(probconf_distance)
+
                     
                     cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
                     cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
                        
-
             
             
             #testimage[y,x,0]
