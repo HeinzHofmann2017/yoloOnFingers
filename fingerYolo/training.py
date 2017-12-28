@@ -29,9 +29,9 @@ sys.path.insert(0,this_folder+"/../helperfunctions/")
 import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
-import cv2
 
-#import matplotlib.pyplot as plt
+import cv2
+import matplotlib.pyplot as plt
 
 #get default-Hyperparameters, btw. Parameters from shell-script:
 parser_object = pC.make_parser()
@@ -686,6 +686,8 @@ def main():
             nr_of_recognized_fingers = 0
             nr_of_fine_recognized_fingers = 0
             nr_of_extremefine_recognized_fingers = 0
+            iou_array = []
+            distance_array = []
             for i in range(len(test_picnames)/batchSize):
                 testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance,probconfs_iou,probconfs_distance,labels_p = sess.run([images_unnormalized,
                                                                                                                                                                           y_prob,
@@ -740,9 +742,16 @@ def main():
                     print("iou                                                      = "+str(probconf_iou))
                     print("distance                                                 = " + str(probconf_distance))
                     if(labels_p[b]!=0):
+                            
+                        #make array with all valid iou's and distances, to make later histograms, variances, etc.
+                        iou_array = np.concatenate((iou_array,[probconf_iou]))
+                        distance_array = np.concatenate((distance_array,[probconf_distance]))
+                        #print(iou_array)
+                        
                         sum_iou += probconf_iou
                         sum_distance += probconf_distance
                         nr_of_fingers += 1
+                                    
                         mean_iou = sum_iou/nr_of_fingers
                         mean_distance = sum_distance/nr_of_fingers
                         print("mean_iou                                                 = " + str(mean_iou))
@@ -756,7 +765,7 @@ def main():
                             nr_of_fine_recognized_fingers += 1
                         if probconf_distance < 0.001:
                             nr_of_extremefine_recognized_fingers += 1
-                            
+                        
                         coarse_recognized_fingers_in_percent = (float(nr_of_coarse_recognized_fingers)/float(nr_of_fingers))*100
                         print("Percentage of coarse recognized fingers (<0.04)          = " + str(coarse_recognized_fingers_in_percent) + "%")
                         recognized_fingers_in_percent = (float(nr_of_recognized_fingers)/float(nr_of_fingers))*100
@@ -766,7 +775,6 @@ def main():
                         extremefine_recognized_fingers_in_percent = (float(nr_of_extremefine_recognized_fingers)/float(nr_of_fingers))*100
                         print("Percentage of extreme fine recognized fingers (>0.001)   = " + str(extremefine_recognized_fingers_in_percent)+"%")
                         
-                        #TODO: Histogram for the distance and the iou!!!(with concatenating an vector and make later a tensorboard-histogram out of it, maybe a numpy-histogram or similar would work too)
                         
                     #save picture in own folder for recognized fingers 
                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
@@ -781,7 +789,7 @@ def main():
 #==============================================================================
 
                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
-                    cv2.putText(img,'ProbConf',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    cv2.putText(img,'Prediction',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
                     cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
                     cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
 
@@ -789,12 +797,42 @@ def main():
                     cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
                     cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
-                       
-            
-            
-            #testimage[y,x,0]
-            #print(testimage)
-    # plt.show()
+                
+                #TODO: Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
+                plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+                plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("IOU (mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
+                plt.ylabel("Probability in % [1/100]")
+                plt.plot([0.4,0.4],[0,60], 'orange')
+                plt.text(0.3, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(0.45,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
+                plt.close()
+                
+                plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("Distance (mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2) | max. measured distance = 0.9")
+                plt.ylabel("Probability in % [1/100]")
+                plt.plot([0.02,0.02],[0,60], 'orange')
+                plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
+                plt.close()  
+                
+                distance_array_without_outliers = []
+                for dist in distance_array:
+                    if dist < 0.25:
+                        distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
+                plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
+                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
+                plt.xlabel("Distance (mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
+                plt.ylabel("Probability in Promille [1/1000]")
+                plt.plot([0.02,0.02],[0,100], 'orange')
+                plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
+                plt.close()                 
+
     print("finished")
 
     
