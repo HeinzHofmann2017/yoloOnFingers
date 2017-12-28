@@ -541,7 +541,7 @@ def main():
             distance_probconf = tf.sqrt(tf.add(tf.square(x_probconf_diff),tf.square(y_probconf_diff)))
             #Problem: when only testing distance on pictures with fingers, the pictures without fingers have distance 0, what makes a bias to the mean-distance.
             #Solution: Make new vectors, which doesn't include Pictures, where no finger exist.
-            zeros_vector = tf.zeros(24)#TODO:change it back to batchSize, if possible
+            zeros_vector = tf.zeros(batchSize)#TODO:change it back to batchSize, if possible
             boolean_vector = tf.squeeze(tf.not_equal(zeros_vector,p_labels))
             boolean_vector.set_shape([None])#to prevent problems with tf.boolean_mask()
             distance_probs=tf.boolean_mask(distance_prob,boolean_vector)
