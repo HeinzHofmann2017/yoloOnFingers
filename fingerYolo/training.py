@@ -675,9 +675,7 @@ def main():
             sess.run(testing_init_op)
             print("Try to restore")
             saver.restore(sess,origin_path + "../../../../weights/127_calcDistance/127_calcDistance.ckpt-00766000")                
-            print("Restored")
-            test_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_test")
-            test_writer.add_graph(sess.graph)   
+            print("Restored")  
             
             sum_distance = 0
             sum_iou = 0
@@ -689,46 +687,23 @@ def main():
             iou_array = []
             distance_array = []
             for i in range(len(test_picnames)/batchSize):
-                testimages,probs_y,probs_x,probs_h,probs_w,confs_y,confs_x,confs_h,confs_w,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,confs_iou,confs_distance,probconfs_iou,probconfs_distance,labels_p = sess.run([images_unnormalized,
-                                                                                                                                                                          y_prob,
-                                                                                                                                                                          x_prob,
-                                                                                                                                                                          h_prob,
-                                                                                                                                                                          w_prob,
-                                                                                                                                                                          y_conf,
-                                                                                                                                                                          x_conf,
-                                                                                                                                                                          h_conf,
-                                                                                                                                                                          w_conf,
-                                                                                                                                                                          y_probconf,
-                                                                                                                                                                          x_probconf,
-                                                                                                                                                                          h_probconf,
-                                                                                                                                                                          w_probconf,
-                                                                                                                                                                          y_label_global,
-                                                                                                                                                                          x_label_global,
-                                                                                                                                                                          h_label_global,
-                                                                                                                                                                          w_label_global,
-                                                                                                                                                                          iou_max_conf,
-                                                                                                                                                                          distance_conf,
-                                                                                                                                                                          iou_max_prob_conf,
-                                                                                                                                                                          distance_probconf,
-                                                                                                                                                                          p_labels],        feed_dict={training: False})
-
-                #print(output) #output[batchelements, [x_coords, y_coords, probs]]
-                #test_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False}),(0))
-                #print("made summary")
+                testimages,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,probconfs_iou,probconfs_distance,labels_p = sess.run([images_unnormalized,
+                                                                                                                                                                      y_probconf,
+                                                                                                                                                                      x_probconf,
+                                                                                                                                                                      h_probconf,
+                                                                                                                                                                      w_probconf,
+                                                                                                                                                                      y_label_global,
+                                                                                                                                                                      x_label_global,
+                                                                                                                                                                      h_label_global,
+                                                                                                                                                                      w_label_global,
+                                                                                                                                                                      iou_max_prob_conf,
+                                                                                                                                                                      distance_probconf,
+                                                                                                                                                                      p_labels],        
+                                                                                                                                                                      feed_dict={training: False})
 
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
                     testimage = testimages[b]*200
-                    prob_y      = probs_y[b] * 448
-                    prob_x      = probs_x[b] * 448
-                    prob_h      = probs_h[b] * 448
-                    prob_w      = probs_w[b] * 448
-                    conf_y      = confs_y[b] * 448
-                    conf_x      = confs_x[b] * 448
-                    conf_h      = confs_h[b] * 448
-                    conf_w      = confs_w[b] * 448
-                    conf_iou    = confs_iou[b]
-                    conf_distance= confs_distance[b]
                     probconf_y  = probconfs_y[b] * 448
                     probconf_x  = probconfs_x[b] * 448
                     probconf_h  = probconfs_h[b] * 448
@@ -746,7 +721,6 @@ def main():
                         #make array with all valid iou's and distances, to make later histograms, variances, etc.
                         iou_array = np.concatenate((iou_array,[probconf_iou]))
                         distance_array = np.concatenate((distance_array,[probconf_distance]))
-                        #print(iou_array)
                         
                         sum_iou += probconf_iou
                         sum_distance += probconf_distance
@@ -781,57 +755,49 @@ def main():
                     
                     #get picture back with cv2
                     img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
-#==============================================================================
-#                     cv2.rectangle(img,(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),(int(prob_x+(prob_w/2)),int(prob_y+(prob_h/2))),(255,0,0),1)
-#                     cv2.putText(img,'Probability',(int(prob_x-(prob_w/2)),int(prob_y-(prob_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),1)
-#                     cv2.rectangle(img,(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),(int(conf_x+(conf_w/2)),int(conf_y+(conf_h/2))),(0,255,0),1)
-#                     cv2.putText(img,'Confidence',(int(conf_x-(conf_w/2)),int(conf_y-(conf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),1)
-#==============================================================================
 
                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
                     cv2.putText(img,'Prediction',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
                     cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
                     cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-
-                    
                     cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
                     cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
                 
-                #TODO: Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
-                plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-                plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("IOU (mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
-                plt.ylabel("Probability in % [1/100]")
-                plt.plot([0.4,0.4],[0,60], 'orange')
-                plt.text(0.3, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(0.45,55, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
-                plt.close()
-                
-                plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("Distance (mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2) | max. measured distance = 0.9")
-                plt.ylabel("Probability in % [1/100]")
-                plt.plot([0.02,0.02],[0,60], 'orange')
-                plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
-                plt.close()  
-                
-                distance_array_without_outliers = []
-                for dist in distance_array:
-                    if dist < 0.25:
-                        distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
-                plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
-                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
-                plt.xlabel("Distance (mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
-                plt.ylabel("Probability in Promille [1/1000]")
-                plt.plot([0.02,0.02],[0,100], 'orange')
-                plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
-                plt.close()                 
+            #Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
+            plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+            plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("IOU (mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
+            plt.ylabel("Probability in % [1/100]")
+            plt.plot([0.4,0.4],[0,60], 'orange')
+            plt.text(0.3, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(0.45,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
+            plt.close()
+            
+            plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("Distance (mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2) | max. measured distance = 0.9")
+            plt.ylabel("Probability in % [1/100]")
+            plt.plot([0.02,0.02],[0,60], 'orange')
+            plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
+            plt.close()  
+            
+            distance_array_without_outliers = []
+            for dist in distance_array:
+                if dist < 0.25:
+                    distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
+            plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
+            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
+            plt.xlabel("Distance (mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
+            plt.ylabel("Probability in Promille [1/1000]")
+            plt.plot([0.02,0.02],[0,100], 'orange')
+            plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
+            plt.close()                 
 
     print("finished")
 
