@@ -1,3 +1,11 @@
 \select@language {ngerman}
-\contentsline {figure}{\numberline {1}{\ignorespaces Dies ist eine Grafik als png}}{4}
-\contentsline {figure}{\numberline {2}{\ignorespaces Dies ist eine Grafik als pdf}}{5}
+\contentsline {figure}{\numberline {1}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{5}
+\contentsline {figure}{\numberline {2}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{6}
+\contentsline {figure}{\numberline {3}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{6}
+\contentsline {figure}{\numberline {4}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{7}
+\contentsline {figure}{\numberline {5}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{7}
+\contentsline {figure}{\numberline {6}{\ignorespaces Prediction knapp besser als IOU=0.4}}{9}
+\contentsline {figure}{\numberline {7}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{9}
+\contentsline {figure}{\numberline {8}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{10}
+\contentsline {figure}{\numberline {9}{\ignorespaces Dies ist eine Grafik als png}}{11}
+\contentsline {figure}{\numberline {10}{\ignorespaces Dies ist eine Grafik als pdf}}{11}

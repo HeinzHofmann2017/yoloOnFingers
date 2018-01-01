@@ -30,10 +30,8 @@ import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
 
-#==============================================================================
-# import cv2
-# import matplotlib.pyplot as plt
-#==============================================================================
+import cv2
+import matplotlib.pyplot as plt
 
 #get default-Hyperparameters, btw. Parameters from shell-script:
 parser_object = pC.make_parser()
@@ -771,7 +769,7 @@ def main():
             plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
             plt.xlabel("IOU (mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
             plt.ylabel("Probability in % [1/100]")
-            plt.plot([0.4,0.4],[0,60], 'orange')
+            plt.plot([0.4,0.4],[0,30], 'orange')
             plt.text(0.3, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
             plt.text(0.45,55, "good", bbox=dict(facecolor='green', alpha=0.5))
             plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
