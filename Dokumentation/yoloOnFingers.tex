@@ -45,7 +45,7 @@
 
 \end{verbatim}
 \begin{center}
-\textbf{\Huge{Yolo auf Fingern}}
+\textbf{\Huge{Yolo auf Finger}}
 \end{center}
 \begin{verbatim}
 
@@ -96,9 +96,17 @@
 %Kapitelüberschrift
 \section{Abstract}
 \subsection{Aufgabenstellung}
-Die Aufgabenstellung in dieser Projektarbeit ist...
-%TODO hier weiterschreiben
+Das Ziel dieser Projektarbeit ist es, herauszufinden, ob Yolo geeignet ist, die Fingerspitzen einer Hand in einem Bild zu klassifizieren und genau zu detektieren. 
+Die Vorgaben, was die Genauigkeit betreffen liegen bei 0.1mm.
+Yolo ist eine Möglichkeit, um mittels Deep-Learning Objekte in einem Bild zu klassifizieren und gleichzeitig deren genaue Position zu detektieren. 
+Daher auch der Ausdruck Yolo (You only look once).
+Yolo wurde als Mittel gewählt, weil es in diesem Bereich dem aktuellen Stand der Technik entspricht. 
+Gerade die Geschwindigkeit dieses Netzwerks wird als extrem hoch angepriesen (bis zu 45fps).
+Diese Geschwindigkeit ist für die letztendliche Anwendung von hoher Wichtigkeit, weil es sich letzten Endes um eine Echtzeitanwendung handeln soll. 
+
 \subsection{Vorgehen}
+Mithilfe der Apparatur und Software von Tabea Mendez sollen zuerst Daten generiert werden, auf welchen Yolo später lernen können soll. 
+Gleichzeitig oder anschliessend soll die %TODO Hier weiterschreiben......
 \subsection{Fazit}
 
 
@@ -193,7 +201,6 @@ Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei ein
 Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind verfälschen zu lassen, wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. Spannend: Der Mittelwert ist sofort um einen Drittel kleiner als zuvor. 
 
 \subsubsection{Intersection Over Union IOU}
-%Wahrscheinlichkeits-Dichte-Funktion der IOU
 %Beispielbilder IOU
 \begin{figure}
 	\centering
@@ -220,14 +227,15 @@ Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels ents
 	\caption{Prediction knapp schlechter als IOU=0.4}
 	\label{img:iou_knapp_schlecht}
 \end{figure}
-
-
+%Wahrscheinlichkeits-Dichte-Funktion der IOU
 \begin{figure}
 	\centering
 	\includegraphics[width=.7\textwidth]{BilderResultate/IOUprobDensity.pdf}
 	\caption{Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}
 	\label{img:iou_dichte}
 \end{figure}
+
+
 Die IOU beschreibt die Überlappung der vorhergesagten Boundingbox und der Boundingbox des Labels. 
 Daher sagt die IOU einerseits etwas über die korrekte Grösse der Boundingbox, sowie deren korrekte Lage aus. 
 Um wieder etwas über gut und schlecht aussagen zu können, wurde wieder ein Threshold definiert (0.4).
@@ -237,9 +245,7 @@ Um ein Gefühl für diesen Threshold zu kriegen lohnt es sich die Abbildungen \r
 So fiel die Entscheidung den Threshold konservativ zu wählen, sodass nur Werte als gut erachtet werden könne, welche auch gut sind. 
 
 Auch für die IOU gibt es zur Übersicht eine Wahrscheinlichkeitsdichte die in Abbildung \ref{img:iou_dichte} betrachtet werden kann.
-Aus dieser Grafik kann gelesen werden, dass rund 18\% der Vorhersagen klar falsch sind, weil die IOU nur null ist, wenn sich die beiden Boundingboxen nicht berühren. Entsprechend kann gesagt werden, dass rund 82\% der vorhersagen zumindest sehr grob richtig sind. 
-Dies ist aber auch nicht verwunderlich, da unser liebes Netzwerk wohl vor allem den Hintergrund gelernt hat.
-%TODO Hier weiterschreiben, und das lernen des Hintergrundes weiter erklären. 
+Aus dieser Grafik kann gelesen werden, dass rund 18\% der Vorhersagen klar falsch sind, weil die IOU nur null ist, wenn sich die beiden Boundingboxen nicht berühren. Entsprechend kann gesagt werden, dass rund 82\% der vorhersagen zumindest sehr grob richtig sind, weil sich bei diesen 82\% die Boundingboxen von Label und Prediction zumindest ein ganz kleines bisschen überlappen.  
 
 \newpage
 \section{Beispielkapitel}

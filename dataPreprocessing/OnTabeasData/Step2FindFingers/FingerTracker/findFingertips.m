@@ -16,7 +16,7 @@ addpath(genpath('../matlabHelperFunctions'));
 
 %% Parameters
 
-inputPath = '/home/hhofmann/Schreibtisch/Data/4500/';
+inputPath = '/home/hhofmann/Schreibtisch/Data/9000/';
 calcBackgroundIm = false;               % if false, default-BG is loaded
 circleFindMethod = 'SKEL';              % method to use for finding circles
                                         %   'CHT':  Circular Hough Transform 

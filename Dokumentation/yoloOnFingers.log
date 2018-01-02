@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  29 DEC 2017 18:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  2 JAN 2018 16:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -508,7 +508,7 @@ OU=0.4) [][]
 \openout4 = `yoloOnFingers.lof'.
 
  [2] [3]
-Overfull \hbox (6.50987pt too wide) in paragraph at lines 117--122
+Overfull \hbox (6.50987pt too wide) in paragraph at lines 127--132
 \OT1/cmr/m/n/12 ge-nau be-schrei-ben zu k[]onnen wur-den die zwei Wer-te Di-sta
 nz und IOU gew[]ahlt.
  []
@@ -518,7 +518,7 @@ File: BilderResultate/DistanzenBerechnung.pdf Graphic file (type pdf)
 
 <use BilderResultate/DistanzenBerechnung.pdf>
 Package pdftex.def Info: BilderResultate/DistanzenBerechnung.pdf used on input 
-line 128.
+line 138.
 (pdftex.def)             Requested size: 272.99881pt x 260.15126pt.
 
 <BilderResultate/2distKnappGut.png, id=18, 449.68pt x 449.68pt>
@@ -526,7 +526,7 @@ File: BilderResultate/2distKnappGut.png Graphic file (type png)
 
 <use BilderResultate/2distKnappGut.png>
 Package pdftex.def Info: BilderResultate/2distKnappGut.png used on input line 1
-37.
+47.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/5distKnappGut.png, id=19, 449.68pt x 449.68pt>
@@ -534,7 +534,7 @@ File: BilderResultate/5distKnappGut.png Graphic file (type png)
 
 <use BilderResultate/5distKnappGut.png>
 Package pdftex.def Info: BilderResultate/5distKnappGut.png used on input line 1
-41.
+51.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/3distKnappSchlecht.png, id=20, 449.68pt x 449.68pt>
@@ -542,7 +542,7 @@ File: BilderResultate/3distKnappSchlecht.png Graphic file (type png)
 
 <use BilderResultate/3distKnappSchlecht.png>
 Package pdftex.def Info: BilderResultate/3distKnappSchlecht.png used on input l
-ine 150.
+ine 160.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/4distKnappSchlecht.png, id=21, 449.68pt x 449.68pt>
@@ -550,7 +550,7 @@ File: BilderResultate/4distKnappSchlecht.png Graphic file (type png)
 
 <use BilderResultate/4distKnappSchlecht.png>
 Package pdftex.def Info: BilderResultate/4distKnappSchlecht.png used on input l
-ine 154.
+ine 164.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/distProbDensity.pdf, id=22, 578.16pt x 433.62pt>
@@ -558,7 +558,7 @@ File: BilderResultate/distProbDensity.pdf Graphic file (type pdf)
 
 <use BilderResultate/distProbDensity.pdf>
 Package pdftex.def Info: BilderResultate/distProbDensity.pdf used on input line
- 163.
+ 173.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
 <BilderResultate/distProbDensity_improved.pdf, id=23, 578.16pt x 433.62pt>
@@ -566,7 +566,7 @@ File: BilderResultate/distProbDensity_improved.pdf Graphic file (type pdf)
 
 <use BilderResultate/distProbDensity_improved.pdf>
 Package pdftex.def Info: BilderResultate/distProbDensity_improved.pdf used on i
-nput line 170.
+nput line 180.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
  [4] [5 <./BilderResultate/DistanzenBerechnung.pdf>] [6 <./BilderResultate/2dis
 tKnappGut.png (PNG copy)> <./BilderResultate/5distKnappGut.png (PNG copy)> <./B
@@ -581,16 +581,16 @@ pdfTeX warning: pdflatex (file ./BilderResultate/distProbDensity_improved.pdf):
 File: BilderResultate/7iouKnappGut.png Graphic file (type png)
 
 <use BilderResultate/7iouKnappGut.png>
-Package pdftex.def Info: BilderResultate/7iouKnappGut.png used on input line 20
-1.
+Package pdftex.def Info: BilderResultate/7iouKnappGut.png used on input line 21
+0.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/8iouKnappGut.png, id=147, 449.68pt x 449.68pt>
 File: BilderResultate/8iouKnappGut.png Graphic file (type png)
 
 <use BilderResultate/8iouKnappGut.png>
-Package pdftex.def Info: BilderResultate/8iouKnappGut.png used on input line 20
-5.
+Package pdftex.def Info: BilderResultate/8iouKnappGut.png used on input line 21
+4.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/6iouKnappSchlecht.png, id=148, 449.68pt x 449.68pt>
@@ -598,7 +598,7 @@ File: BilderResultate/6iouKnappSchlecht.png Graphic file (type png)
 
 <use BilderResultate/6iouKnappSchlecht.png>
 Package pdftex.def Info: BilderResultate/6iouKnappSchlecht.png used on input li
-ne 214.
+ne 223.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/9iouKnappSchlecht.png, id=149, 449.68pt x 449.68pt>
@@ -606,7 +606,7 @@ File: BilderResultate/9iouKnappSchlecht.png Graphic file (type png)
 
 <use BilderResultate/9iouKnappSchlecht.png>
 Package pdftex.def Info: BilderResultate/9iouKnappSchlecht.png used on input li
-ne 218.
+ne 227.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
 <BilderResultate/IOUprobDensity.pdf, id=150, 578.16pt x 433.62pt>
@@ -614,10 +614,10 @@ File: BilderResultate/IOUprobDensity.pdf Graphic file (type pdf)
 
 <use BilderResultate/IOUprobDensity.pdf>
 Package pdftex.def Info: BilderResultate/IOUprobDensity.pdf used on input line 
-227.
+235.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-Underfull \hbox (badness 5533) in paragraph at lines 228--228
+Underfull \hbox (badness 5533) in paragraph at lines 236--236
 []\OT1/cmr/m/n/12 Abbildung 8: Wahrscheinlichkeits-Dichte-Funktion der IOU (Gre
 n-ze:
  []
@@ -626,26 +626,26 @@ n-ze:
 nappGut.png (PNG copy)> <./BilderResultate/6iouKnappSchlecht.png (PNG copy)> <.
 /BilderResultate/9iouKnappSchlecht.png (PNG copy)>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 248.
+(Font)              <7> on input line 256.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 248.
+(Font)              <5> on input line 256.
 
 
-LaTeX Warning: Reference `sec:Einleitung' on page 10 undefined on input line 25
-3.
+LaTeX Warning: Reference `sec:Einleitung' on page 10 undefined on input line 26
+1.
 
 <BilderEinleitung/bild.pdf, id=157, 1541.76pt x 963.6pt>
 File: BilderEinleitung/bild.pdf Graphic file (type pdf)
 
 <use BilderEinleitung/bild.pdf>
-Package pdftex.def Info: BilderEinleitung/bild.pdf used on input line 265.
+Package pdftex.def Info: BilderEinleitung/bild.pdf used on input line 273.
 (pdftex.def)             Requested size: 385.43906pt x 240.89941pt.
 
 <BilderEinleitung/bild.png, id=158, 1927.2pt x 1204.5pt>
 File: BilderEinleitung/bild.png Graphic file (type png)
 
 <use BilderEinleitung/bild.png>
-Package pdftex.def Info: BilderEinleitung/bild.png used on input line 275.
+Package pdftex.def Info: BilderEinleitung/bild.png used on input line 283.
 (pdftex.def)             Requested size: 385.43318pt x 240.89574pt.
  [10 <./BilderResultate/IOUprobDensity.pdf>]
 [11 <./BilderEinleitung/bild.pdf> <./BilderEinleitung/bild.png>] [12]
@@ -661,7 +661,7 @@ Here is how much of TeX's memory you used:
  6072 multiletter control sequences out of 15000+600000
  9029 words of font info for 32 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,8n,35p,406b,302s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,35p,411b,302s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
@@ -670,7 +670,7 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf
 onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsl12.pfb>
-Output written on yoloOnFingers.pdf (12 pages, 2236567 bytes).
+Output written on yoloOnFingers.pdf (12 pages, 2237538 bytes).
 PDF statistics:
  252 PDF objects out of 1000 (max. 8388607)
  77 compressed objects within 1 object stream
