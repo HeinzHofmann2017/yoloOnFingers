@@ -123,65 +123,65 @@ def main():
 #                                                       
 #==============================================================================
     #Conv. Layer 7x7x64-s-2                                                  
-    output_1 = hAPI.convLayerPretrained(tensor=images,layerNr=1,batchSize=batchSize, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_1 = hAPI.convLayerPretrained(tensor=images,layerNr=1,batchSize=batchSize, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("2_Maxpool_Layer") as scope:
         output_2 = tf.nn.max_pool(output_1,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME', name="maxpool_2")
     #Conv Layer 3x3x192
-    output_3 = hAPI.convLayerPretrained(tensor=output_2,layerNr=3,batchSize=batchSize, filterwidth=3, inputdepth=64, outputdepth=192, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_3 = hAPI.convLayerPretrained(tensor=output_2,layerNr=3,batchSize=batchSize, filterwidth=3, inputdepth=64, outputdepth=192, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("4_Maxpool_Layer") as scope:
         output_4 = tf.nn.max_pool(output_3,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME', name="maxpool_4")
     #Conv Layer 1x1x128
-    output_5 = hAPI.convLayerPretrained(tensor=output_4,layerNr=5,batchSize=batchSize, filterwidth=1, inputdepth=192, outputdepth=128, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_5 = hAPI.convLayerPretrained(tensor=output_4,layerNr=5,batchSize=batchSize, filterwidth=1, inputdepth=192, outputdepth=128, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x256 
-    output_6 = hAPI.convLayerPretrained(tensor=output_5,layerNr=6,batchSize=batchSize, filterwidth=3, inputdepth=128, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_6 = hAPI.convLayerPretrained(tensor=output_5,layerNr=6,batchSize=batchSize, filterwidth=3, inputdepth=128, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 1x1x256
-    output_7 = hAPI.convLayerPretrained(tensor=output_6,layerNr=7,batchSize=batchSize, filterwidth=1, inputdepth=256, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_7 = hAPI.convLayerPretrained(tensor=output_6,layerNr=7,batchSize=batchSize, filterwidth=1, inputdepth=256, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x512
-    output_8 = hAPI.convLayerPretrained(tensor=output_7,layerNr=8,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_8 = hAPI.convLayerPretrained(tensor=output_7,layerNr=8,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("9_Maxpool_Layer") as scope:
         output_9 = tf.nn.max_pool(output_8,ksize=[1,2,2,1],strides=[1,2,2,1], padding="SAME", name="maxpool_9")
     #Conv Layer 1x1x256
-    output_10 = hAPI.convLayerPretrained(tensor=output_9,layerNr=10,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_10 = hAPI.convLayerPretrained(tensor=output_9,layerNr=10,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x512
-    output_11 = hAPI.convLayerPretrained(tensor=output_10,layerNr=11,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_11 = hAPI.convLayerPretrained(tensor=output_10,layerNr=11,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 1x1x256
-    output_12 = hAPI.convLayerPretrained(tensor=output_11,layerNr=12,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_12 = hAPI.convLayerPretrained(tensor=output_11,layerNr=12,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x512
-    output_13 = hAPI.convLayerPretrained(tensor=output_12,layerNr=13,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_13 = hAPI.convLayerPretrained(tensor=output_12,layerNr=13,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 1x1x256
-    output_14 = hAPI.convLayerPretrained(tensor=output_13,layerNr=14,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_14 = hAPI.convLayerPretrained(tensor=output_13,layerNr=14,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x512
-    output_15 = hAPI.convLayerPretrained(tensor=output_14,layerNr=15,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_15 = hAPI.convLayerPretrained(tensor=output_14,layerNr=15,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 1x1x256
-    output_16 = hAPI.convLayerPretrained(tensor=output_15,layerNr=16,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_16 = hAPI.convLayerPretrained(tensor=output_15,layerNr=16,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=256, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x512
-    output_17 = hAPI.convLayerPretrained(tensor=output_16,layerNr=17,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_17 = hAPI.convLayerPretrained(tensor=output_16,layerNr=17,batchSize=batchSize, filterwidth=3, inputdepth=256, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 1x1x512
-    output_18 = hAPI.convLayerPretrained(tensor=output_17,layerNr=18,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_18 = hAPI.convLayerPretrained(tensor=output_17,layerNr=18,batchSize=batchSize, filterwidth=1, inputdepth=512, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x1024
-    output_19 = hAPI.convLayerPretrained(tensor=output_18,layerNr=19,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_19 = hAPI.convLayerPretrained(tensor=output_18,layerNr=19,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Maxpool Layer 2x2 -s-2
     with tf.name_scope("20_Maxpool_Layer") as scope:
         output_20 = tf.nn.max_pool(output_19,ksize=[1,2,2,1],strides=[1,2,2,1], padding="SAME", name="maxpool_20")
     #Conv Layer 1x1x512
-    output_21 = hAPI.convLayerPretrained(tensor=output_20,layerNr=21,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_21 = hAPI.convLayerPretrained(tensor=output_20,layerNr=21,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x1024
-    output_22 = hAPI.convLayerPretrained(tensor=output_21,layerNr=22,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_22 = hAPI.convLayerPretrained(tensor=output_21,layerNr=22,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 1x1x512
-    output_23 = hAPI.convLayerPretrained(tensor=output_22,layerNr=23,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_23 = hAPI.convLayerPretrained(tensor=output_22,layerNr=23,batchSize=batchSize, filterwidth=1, inputdepth=1024, outputdepth=512, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x1024
-    output_24 = hAPI.convLayerPretrained(tensor=output_23,layerNr=24,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training,origin_path=origin_path)
+    output_24 = hAPI.convLayerPretrained(tensor=output_23,layerNr=24,batchSize=batchSize, filterwidth=3, inputdepth=512, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
     #Conv Layer 3x3x1024
-    output_25 = hAPI.convLayer(tensor=output_24,layerNr=25,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_25 = hAPI.convLayer(tensor=output_24,layerNr=25,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x1024-s-2
-    output_26 = hAPI.convLayer(tensor=output_25,layerNr=26,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=2, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_26 = hAPI.convLayer(tensor=output_25,layerNr=26,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=2, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x1024
-    output_27 = hAPI.convLayer(tensor=output_26,layerNr=27,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_27 = hAPI.convLayer(tensor=output_26,layerNr=27,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x1024
-    output_28 = hAPI.convLayer(tensor=output_27,layerNr=28,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=dropout,training=training)
+    output_28 = hAPI.convLayer(tensor=output_27,layerNr=28,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
 #TODO:eventually reverse image resizing
 #==============================================================================
 #     #Zero Padding        
