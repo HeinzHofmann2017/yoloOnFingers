@@ -16,7 +16,7 @@ addpath(genpath('../matlabHelperFunctions'));
 
 %% Parameters
 
-inputPath = '/media/hhofmann/dgx/data_hhofmann/Data/Gipshand/test_Gibshand/';
+inputPath = '/home/hhofmann/Schreibtisch/Data/4500/';
 calcBackgroundIm = false;               % if false, default-BG is loaded
 circleFindMethod = 'SKEL';              % method to use for finding circles
                                         %   'CHT':  Circular Hough Transform 
@@ -102,7 +102,7 @@ for cam = 1:nCams
         D = I - BG;
         %Delete picture if it is too bright(value 5500000 is found with
         %evaluation of about 200 pictures)wrote by Heinz
-        if 1==2;%sum(sum(D)) > -5510000;
+        if sum(sum(D)) > -5510000;
             %Do nothing with too bright Pictures!!!!!! wrote by Heinz
             fprintf('didnt take into account: Camera_%d pic%d.png \n',cam-1,i-1)
         else
