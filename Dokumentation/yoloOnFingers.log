@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  2 JAN 2018 16:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  3 JAN 2018 13:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -403,18 +403,18 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 (./yoloOnFingers.aux)
 \openout1 = `yoloOnFingers.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -477,21 +477,20 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+(./Kapitel/Titelblatt/Titelblatt.tex
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 69.
+(Font)              <12> on input line 48.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 69.
+(Font)              <8> on input line 48.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 69.
-
-[1
+(Font)              <6> on input line 48.
+) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./yoloOnFingers.toc)
 \tf@toc=\write3
 \openout3 = `yoloOnFingers.toc'.
 
-
-(./yoloOnFingers.lof
+ (./yoloOnFingers.lof
 Overfull \hbox (12.02924pt too wide) in paragraph at lines 6--6
  [][] []\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichtefunktion der Di-stanz. Aus-re
 is-ser nicht 
@@ -507,173 +506,147 @@ OU=0.4) [][]
 \tf@lof=\write4
 \openout4 = `yoloOnFingers.lof'.
 
- [2] [3]
-Overfull \hbox (6.50987pt too wide) in paragraph at lines 127--132
+ (./Kapitel/Abstract/Abstract.tex [2] [3]) (./Kapitel/Resultate/Resultate.tex
+[4]
+Overfull \hbox (6.50987pt too wide) in paragraph at lines 13--18
 \OT1/cmr/m/n/12 ge-nau be-schrei-ben zu k[]onnen wur-den die zwei Wer-te Di-sta
 nz und IOU gew[]ahlt.
  []
 
-<BilderResultate/DistanzenBerechnung.pdf, id=17, 597.23125pt x 569.12625pt>
-File: BilderResultate/DistanzenBerechnung.pdf Graphic file (type pdf)
 
-<use BilderResultate/DistanzenBerechnung.pdf>
-Package pdftex.def Info: BilderResultate/DistanzenBerechnung.pdf used on input 
-line 138.
+<Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf, id=20, 597.23125pt x 569.126
+25pt>
+File: Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf Graphic file (type pdf)
+ <use Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf used 
+on input line 24.
 (pdftex.def)             Requested size: 272.99881pt x 260.15126pt.
 
-<BilderResultate/2distKnappGut.png, id=18, 449.68pt x 449.68pt>
-File: BilderResultate/2distKnappGut.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/2distKnappGut.png, id=21, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/2distKnappGut.png Graphic file (type png)
 
-<use BilderResultate/2distKnappGut.png>
-Package pdftex.def Info: BilderResultate/2distKnappGut.png used on input line 1
-47.
+<use Kapitel/Resultate/Bilder/2distKnappGut.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/2distKnappGut.png used on inp
+ut line 33.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/5distKnappGut.png, id=19, 449.68pt x 449.68pt>
-File: BilderResultate/5distKnappGut.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/5distKnappGut.png, id=22, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/5distKnappGut.png Graphic file (type png)
 
-<use BilderResultate/5distKnappGut.png>
-Package pdftex.def Info: BilderResultate/5distKnappGut.png used on input line 1
-51.
+<use Kapitel/Resultate/Bilder/5distKnappGut.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/5distKnappGut.png used on inp
+ut line 37.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/3distKnappSchlecht.png, id=20, 449.68pt x 449.68pt>
-File: BilderResultate/3distKnappSchlecht.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/3distKnappSchlecht.png, id=23, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/3distKnappSchlecht.png Graphic file (type png)
 
-<use BilderResultate/3distKnappSchlecht.png>
-Package pdftex.def Info: BilderResultate/3distKnappSchlecht.png used on input l
-ine 160.
+<use Kapitel/Resultate/Bilder/3distKnappSchlecht.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/3distKnappSchlecht.png used o
+n input line 46.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/4distKnappSchlecht.png, id=21, 449.68pt x 449.68pt>
-File: BilderResultate/4distKnappSchlecht.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/4distKnappSchlecht.png, id=24, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/4distKnappSchlecht.png Graphic file (type png)
 
-<use BilderResultate/4distKnappSchlecht.png>
-Package pdftex.def Info: BilderResultate/4distKnappSchlecht.png used on input l
-ine 164.
+<use Kapitel/Resultate/Bilder/4distKnappSchlecht.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/4distKnappSchlecht.png used o
+n input line 50.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/distProbDensity.pdf, id=22, 578.16pt x 433.62pt>
-File: BilderResultate/distProbDensity.pdf Graphic file (type pdf)
+<Kapitel/Resultate/Bilder/distProbDensity.pdf, id=25, 578.16pt x 433.62pt>
+File: Kapitel/Resultate/Bilder/distProbDensity.pdf Graphic file (type pdf)
 
-<use BilderResultate/distProbDensity.pdf>
-Package pdftex.def Info: BilderResultate/distProbDensity.pdf used on input line
- 173.
+<use Kapitel/Resultate/Bilder/distProbDensity.pdf>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/distProbDensity.pdf used on i
+nput line 59.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-<BilderResultate/distProbDensity_improved.pdf, id=23, 578.16pt x 433.62pt>
-File: BilderResultate/distProbDensity_improved.pdf Graphic file (type pdf)
-
-<use BilderResultate/distProbDensity_improved.pdf>
-Package pdftex.def Info: BilderResultate/distProbDensity_improved.pdf used on i
-nput line 180.
+<Kapitel/Resultate/Bilder/distProbDensity_improved.pdf, id=26, 578.16pt x 433.6
+2pt>
+File: Kapitel/Resultate/Bilder/distProbDensity_improved.pdf Graphic file (type 
+pdf)
+ <use Kapitel/Resultate/Bilder/distProbDensity_improved.pdf>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/distProbDensity_improved.pdf 
+used on input line 66.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
- [4] [5 <./BilderResultate/DistanzenBerechnung.pdf>] [6 <./BilderResultate/2dis
-tKnappGut.png (PNG copy)> <./BilderResultate/5distKnappGut.png (PNG copy)> <./B
-ilderResultate/3distKnappSchlecht.png (PNG copy)> <./BilderResultate/4distKnapp
-Schlecht.png (PNG copy)>]
-[7 <./BilderResultate/distProbDensity.pdf> <./BilderResultate/distProbDensity_i
-mproved.pdf
+ [5] [6 <./Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf>] [7 <./Kapitel/Res
+ultate/Bilder/2distKnappGut.png (PNG copy)> <./Kapitel/Resultate/Bilder/5distKn
+appGut.png (PNG copy)> <./Kapitel/Resultate/Bilder/3distKnappSchlecht.png (PNG 
+copy)> <./Kapitel/Resultate/Bilder/4distKnappSchlecht.png (PNG copy)>] [8 <./Ka
+pitel/Resultate/Bilder/distProbDensity.pdf> <./Kapitel/Resultate/Bilder/distPro
+bDensity_improved.pdf
 
-pdfTeX warning: pdflatex (file ./BilderResultate/distProbDensity_improved.pdf):
- PDF inclusion: multiple pdfs with page group included in a single page
->] <BilderResultate/7iouKnappGut.png, id=146, 449.68pt x 449.68pt>
-File: BilderResultate/7iouKnappGut.png Graphic file (type png)
+pdfTeX warning: pdflatex (file ./Kapitel/Resultate/Bilder/distProbDensity_impro
+ved.pdf): PDF inclusion: multiple pdfs with page group included in a single pag
+e
+>] <Kapitel/Resultate/Bilder/7iouKnappGut.png, id=149, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/7iouKnappGut.png Graphic file (type png)
 
-<use BilderResultate/7iouKnappGut.png>
-Package pdftex.def Info: BilderResultate/7iouKnappGut.png used on input line 21
-0.
+<use Kapitel/Resultate/Bilder/7iouKnappGut.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/7iouKnappGut.png used on inpu
+t line 96.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/8iouKnappGut.png, id=147, 449.68pt x 449.68pt>
-File: BilderResultate/8iouKnappGut.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/8iouKnappGut.png, id=150, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/8iouKnappGut.png Graphic file (type png)
 
-<use BilderResultate/8iouKnappGut.png>
-Package pdftex.def Info: BilderResultate/8iouKnappGut.png used on input line 21
-4.
+<use Kapitel/Resultate/Bilder/8iouKnappGut.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/8iouKnappGut.png used on inpu
+t line 100.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/6iouKnappSchlecht.png, id=148, 449.68pt x 449.68pt>
-File: BilderResultate/6iouKnappSchlecht.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/6iouKnappSchlecht.png, id=151, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/6iouKnappSchlecht.png Graphic file (type png)
 
-<use BilderResultate/6iouKnappSchlecht.png>
-Package pdftex.def Info: BilderResultate/6iouKnappSchlecht.png used on input li
-ne 223.
+<use Kapitel/Resultate/Bilder/6iouKnappSchlecht.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/6iouKnappSchlecht.png used on
+ input line 109.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/9iouKnappSchlecht.png, id=149, 449.68pt x 449.68pt>
-File: BilderResultate/9iouKnappSchlecht.png Graphic file (type png)
+<Kapitel/Resultate/Bilder/9iouKnappSchlecht.png, id=152, 449.68pt x 449.68pt>
+File: Kapitel/Resultate/Bilder/9iouKnappSchlecht.png Graphic file (type png)
 
-<use BilderResultate/9iouKnappSchlecht.png>
-Package pdftex.def Info: BilderResultate/9iouKnappSchlecht.png used on input li
-ne 227.
+<use Kapitel/Resultate/Bilder/9iouKnappSchlecht.png>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/9iouKnappSchlecht.png used on
+ input line 113.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<BilderResultate/IOUprobDensity.pdf, id=150, 578.16pt x 433.62pt>
-File: BilderResultate/IOUprobDensity.pdf Graphic file (type pdf)
+<Kapitel/Resultate/Bilder/IOUprobDensity.pdf, id=153, 578.16pt x 433.62pt>
+File: Kapitel/Resultate/Bilder/IOUprobDensity.pdf Graphic file (type pdf)
 
-<use BilderResultate/IOUprobDensity.pdf>
-Package pdftex.def Info: BilderResultate/IOUprobDensity.pdf used on input line 
-235.
+<use Kapitel/Resultate/Bilder/IOUprobDensity.pdf>
+Package pdftex.def Info: Kapitel/Resultate/Bilder/IOUprobDensity.pdf used on in
+put line 121.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-Underfull \hbox (badness 5533) in paragraph at lines 236--236
+Underfull \hbox (badness 5533) in paragraph at lines 122--122
 []\OT1/cmr/m/n/12 Abbildung 8: Wahrscheinlichkeits-Dichte-Funktion der IOU (Gre
 n-ze:
  []
 
-[8] [9 <./BilderResultate/7iouKnappGut.png (PNG copy)> <./BilderResultate/8iouK
-nappGut.png (PNG copy)> <./BilderResultate/6iouKnappSchlecht.png (PNG copy)> <.
-/BilderResultate/9iouKnappSchlecht.png (PNG copy)>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 256.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 256.
-
-
-LaTeX Warning: Reference `sec:Einleitung' on page 10 undefined on input line 26
-1.
-
-<BilderEinleitung/bild.pdf, id=157, 1541.76pt x 963.6pt>
-File: BilderEinleitung/bild.pdf Graphic file (type pdf)
-
-<use BilderEinleitung/bild.pdf>
-Package pdftex.def Info: BilderEinleitung/bild.pdf used on input line 273.
-(pdftex.def)             Requested size: 385.43906pt x 240.89941pt.
-
-<BilderEinleitung/bild.png, id=158, 1927.2pt x 1204.5pt>
-File: BilderEinleitung/bild.png Graphic file (type png)
-
-<use BilderEinleitung/bild.png>
-Package pdftex.def Info: BilderEinleitung/bild.png used on input line 283.
-(pdftex.def)             Requested size: 385.43318pt x 240.89574pt.
- [10 <./BilderResultate/IOUprobDensity.pdf>]
-[11 <./BilderEinleitung/bild.pdf> <./BilderEinleitung/bild.png>] [12]
-(./yoloOnFingers.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+) [9] [10 <./Kapitel/Resultate/Bilder/7iouKnappGut.png (PNG copy)> <./Kapitel/R
+esultate/Bilder/8iouKnappGut.png (PNG copy)> <./Kapitel/Resultate/Bilder/6iouKn
+appSchlecht.png (PNG copy)> <./Kapitel/Resultate/Bilder/9iouKnappSchlecht.png (
+PNG copy)>] [11 <./Kapitel/Resultate/Bilder/IOUprobDensity.pdf>]
+(./yoloOnFingers.aux) ) 
 Here is how much of TeX's memory you used:
- 2814 strings out of 494860
- 37895 string characters out of 6177601
- 104588 words of memory out of 5000000
- 6072 multiletter control sequences out of 15000+600000
+ 2812 strings out of 494860
+ 38258 string characters out of 6177601
+ 104529 words of memory out of 5000000
+ 6060 multiletter control sequences out of 15000+600000
  9029 words of font info for 32 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,8n,35p,411b,302s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsl12.pfb>
-Output written on yoloOnFingers.pdf (12 pages, 2237538 bytes).
+ 38i,8n,35p,451b,302s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb>
+Output written on yoloOnFingers.pdf (11 pages, 2023399 bytes).
 PDF statistics:
- 252 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 231 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

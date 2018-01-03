@@ -11,7 +11,7 @@
 clear all;
 close all;
 clc;
-matTOcsvf("/home/hhofmann/Schreibtisch/Data/4500/",4)
+matTOcsvf("/home/hhofmann/Schreibtisch/Data/9000/",4)
 function matTOcsvf(origin_path, num_of_cams)
 
 
