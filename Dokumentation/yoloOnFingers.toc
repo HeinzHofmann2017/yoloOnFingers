@@ -8,3 +8,4 @@
 \contentsline {subsection}{\numberline {2.2}Analyse}{5}
 \contentsline {subsubsection}{\numberline {2.2.1}Distanz}{5}
 \contentsline {subsubsection}{\numberline {2.2.2}Intersection Over Union IOU}{9}
+\contentsline {section}{\numberline {3}Daten-Pipeline}{11}

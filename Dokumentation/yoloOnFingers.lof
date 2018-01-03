@@ -7,3 +7,4 @@
 \contentsline {figure}{\numberline {6}{\ignorespaces Prediction knapp besser als IOU=0.4}}{10}
 \contentsline {figure}{\numberline {7}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{10}
 \contentsline {figure}{\numberline {8}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{11}
+\contentsline {figure}{\numberline {9}{\ignorespaces Label-Tensor}}{12}
