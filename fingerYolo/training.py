@@ -680,8 +680,8 @@ def main():
 
 
         else:
-            if not os.path.exists(origin_path +"picsRecognized/):
-                os.makedirs(origin_path +"picsRecognized/)             
+            if not os.path.exists(origin_path +"picsRecognized/"):
+                os.makedirs(origin_path +"picsRecognized/")             
             
             sess.run(testing_init_op)
             print("Try to restore")
