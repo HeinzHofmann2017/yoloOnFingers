@@ -117,10 +117,10 @@ def batchnormPretrained(input_tensor,layerNr,origin_path):
         input_depth = input_tensor.get_shape().as_list()[-1]#takes the last element which is in this case 64
     #make new mean and new Variance
         with tf.name_scope("beta"):
-            pythonbeta = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_beta_beta.pkl", "rb" ) )
+            pythonbeta = pickle.load( open( origin_path + "../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_beta_beta.pkl", "rb" ) )
             beta = tf.Variable(pythonbeta, name="beta",trainable=True,dtype=tf.float32)
         with tf.name_scope("gamma"):
-            pythongamma = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_gamma_gamma.pkl", "rb" ) )
+            pythongamma = pickle.load( open( origin_path + "../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_batch_norm_gamma_gamma.pkl", "rb" ) )
             gamma = tf.Variable(pythongamma,name="gamma",trainable=True,dtype=tf.float32)
         batch_mean, batch_variance = tf.nn.moments(x=input_tensor,axes=[0,1,2])
         return tf.nn.batch_normalization(x=input_tensor,
@@ -148,7 +148,7 @@ def convLayerPretrained(tensor,layerNr,batchSize, filterwidth, inputdepth, outpu
                         
             #weightdev = (2 / (filterwidth*(inputdepth+outputdepth))) + 1e-4#get shure, that stdev don't will be zero
             weightdev = 0.01
-            pythonW = pickle.load( open( origin_path + "../../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
+            pythonW = pickle.load( open( origin_path + "../../../weights/pythonWeights/"+str(layerNr)+"_conv_Layer_W_Variable.pkl", "rb" ) )
 #==============================================================================
 #             
 #             if layerNr <8:
