@@ -30,8 +30,10 @@ import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
 
-import cv2
-import matplotlib.pyplot as plt
+#==============================================================================
+# import cv2
+# import matplotlib.pyplot as plt
+#==============================================================================
 
 #get default-Hyperparameters, btw. Parameters from shell-script:
 parser_object = pC.make_parser()
