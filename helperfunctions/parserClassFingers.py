@@ -58,6 +58,8 @@ class make_parser(object):
                             nargs = '?',
                             #const = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
                             #default = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
+                            #const = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
+                            #default = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
                             #const = "/media/hhofmann/dgx/data_hhofmann/Data/DataGipshand/test_Gibshand_dunkler/trainData/",
                             #default = "/media/hhofmann/dgx/data_hhofmann/Data/DataGipshand/test_Gibshand_dunkler/trainData/",
                             const = "/media/hhofmann/dgx/data_hhofmann/Data/mit Tabea gesammelt/test/trainData/",

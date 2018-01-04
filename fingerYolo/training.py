@@ -53,8 +53,14 @@ test                            = parser_object.test_bool
 
 
 
-def dataset_preprocessor(picname,label):
-    content = tf.read_file(origin_path + picname)
+def traindata_preprocessor(picname,label):
+    content = tf.read_file(origin_path + "trainDataset/" + picname)
+    image = tf.image.decode_png(content,channels=1)
+    image = tf.image.convert_image_dtype(image,tf.float32)
+    #ToDo: random Crop here (is a kind of complicated because of the x and y labels.)
+    return image,label
+def validdata_preprocessor(picname,label):
+    content = tf.read_file(origin_path +"validDataset/"+ picname)
     image = tf.image.decode_png(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float32)
     #ToDo: random Crop here (is a kind of complicated because of the x and y labels.)
@@ -72,7 +78,7 @@ def main():
         train_data      = Dataset.from_tensor_slices((train_picnames,train_labels))
         train_data      = train_data.repeat()
         train_data      = train_data.shuffle(buffer_size=buffer_size)
-        train_data      = train_data.map(map_func=dataset_preprocessor,
+        train_data      = train_data.map(map_func=traindata_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         train_data      = train_data.batch(batchSize)
@@ -84,7 +90,7 @@ def main():
         valid_data      = Dataset.from_tensor_slices((valid_picnames,valid_labels))
         valid_data      = valid_data.repeat()
         valid_data      = valid_data.shuffle(buffer_size=buffer_size)
-        valid_data      = valid_data.map(map_func=dataset_preprocessor,
+        valid_data      = valid_data.map(map_func=validdata_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         valid_data      = valid_data.batch(batchSize)
@@ -94,7 +100,7 @@ def main():
         test_picnames   = [row[0] for row in test_data]
         test_labels    = np.float32([row[1] for row in test_data])
         test_data      = Dataset.from_tensor_slices((test_picnames,test_labels))
-        test_data      = test_data.map(map_func=dataset_preprocessor,
+        test_data      = test_data.map(map_func=validdata_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
         test_data       = test_data.batch(batchSize)
@@ -259,10 +265,10 @@ def main():
         y_label   = tf.squeeze(labels[:,:,:,1])
 
         h1_output = tf.squeeze(output_32[:,:,:,2])
-        h_label  = tf.multiply(tf.squeeze(labels[:,:,:,2]),3)#multiply Labels with 3, because they are too small
+        h_label  = tf.squeeze(labels[:,:,:,2])
         
         w1_output = tf.squeeze(output_32[:,:,:,3])
-        w_label   = tf.multiply(tf.squeeze(labels[:,:,:,3]),3)#multiply Labels with 3, because they are too small
+        w_label   = tf.squeeze(labels[:,:,:,3])
 
         c1_output = tf.squeeze(output_32[:,:,:,4])
         
@@ -566,8 +572,8 @@ def main():
         keep_checkpoint_every_n_hours=4.0, 
         pad_step_number=True,
         save_relative_paths=True,)
-    if not os.path.exists(origin_path + "../../../../weights/"+name+"/"):
-        os.makedirs(origin_path + "../../../../weights/"+name+"/")
+    if not os.path.exists(origin_path + "../../../weights/"+name+"/"):
+        os.makedirs(origin_path + "../../../weights/"+name+"/")
 
     
     merged_summary_op = tf.summary.merge_all()
@@ -596,16 +602,16 @@ def main():
 #==============================================================================
                 
         if(test==False):
-            train_train_writer = tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_traintrain")
+            train_train_writer = tf.summary.FileWriter(origin_path + "../../../summarys/training/summary_" + name + "_traintrain")
             train_train_writer.add_graph(sess.graph)             
-            train_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_train")
+            train_writer=tf.summary.FileWriter(origin_path + "../../../summarys/training/summary_" + name + "_train")
             train_writer.add_graph(sess.graph) 
-            valid_writer=tf.summary.FileWriter(origin_path + "../../../../summarys/training/summary_" + name + "_valid")
+            valid_writer=tf.summary.FileWriter(origin_path + "../../../summarys/training/summary_" + name + "_valid")
             valid_writer.add_graph(sess.graph) 
             
 
 
-            #saver.restore(sess=sess, save_path=origin_path + "../../../../weights/7BnormBeforeRelu2.ckpt-00103000")
+            #saver.restore(sess=sess, save_path=origin_path + "../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
                 if (i*nr_of_epochs_until_save_model) < 150000:
@@ -667,16 +673,19 @@ def main():
                 sess.run(training_init_op)
                 
                 #save Model
-                saver.save(sess=sess, save_path=origin_path + "../../../../weights/"+name+"/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
+                saver.save(sess=sess, save_path=origin_path + "../../../weights/"+name+"/"+name+".ckpt", global_step=(numbers_of_iterations_until_now))
                 print("model updatet\n")
 
                 #training:
 
 
         else:
+            if not os.path.exists(origin_path +"picsRecognized/):
+                os.makedirs(origin_path +"picsRecognized/)             
+            
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../../weights/127_calcDistance/127_calcDistance.ckpt-00766000")                
+            saver.restore(sess,origin_path + "../../../weights/127_calcDistance/127_calcDistance.ckpt-00766000")                
             print("Restored")  
             
             sum_distance = 0
@@ -751,7 +760,7 @@ def main():
                         extremefine_recognized_fingers_in_percent = (float(nr_of_extremefine_recognized_fingers)/float(nr_of_fingers))*100
                         print("Percentage of extreme fine recognized fingers (>0.001)   = " + str(extremefine_recognized_fingers_in_percent)+"%")
                         
-                        
+   
                     #save picture in own folder for recognized fingers 
                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
                     
