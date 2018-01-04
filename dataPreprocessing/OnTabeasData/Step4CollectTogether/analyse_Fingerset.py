@@ -31,10 +31,10 @@ class Dataset_Heinz(object):
         self.valid_picnames = []
         self.valid_labels = []
         
-        
 #==============================================================================
+#         
 #         #This path btw. this folder "trainData" has to be in the same folder in which the Four Camera_Folders are
-#     def make_lists(self,origin_path="/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/4500/",nrOfCams=4):
+#     def make_lists(self,origin_path="/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/",nrOfCams=4):
 #         self.all_picture_names = 12
 # 
 #         #has to be commented out, because there is no cv2 in the docker for learning
@@ -135,15 +135,15 @@ class Dataset_Heinz(object):
 #             
 #             print("store lists with pickle")
 #             pickle.dump(self.data, open(save_path + "data.pkl", "wb"))
+# 
 #==============================================================================
-
         
         
         
         
               
           
-    def get_train_data(self, origin_path = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/4500/"):
+    def get_train_data(self, origin_path = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/"):
         '''
         Returns 2-Dimensional Array
         1.Dim:  all training-Pictures with its names
@@ -156,7 +156,7 @@ class Dataset_Heinz(object):
         '''
         return pickle.load(open(origin_path + "trainDataset/data.pkl","rb"))
         
-    def get_valid_data(self, origin_path = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/4500/"):
+    def get_valid_data(self, origin_path = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/"):
         '''
         Returns 2-Dimensional Array
         1.Dim:  all validation-Pictures with its names
