@@ -29,10 +29,10 @@ class Dataset_Heinz(object):
         self.valid_picnames = []
         self.valid_labels = []
         
+        
 #==============================================================================
-#         
 #         #This path btw. this folder "trainData" has to be in the same folder in which the Four Camera_Folders are
-#     def make_lists(self,origin_path="/home/hhofmann/Schreibtisch/Data/9000/trainData/",nrOfCams=4):
+#     def make_lists(self,origin_path="/media/hhofmann/dgx/data_hhofmann/Data/mit Tabea gesammelt/test/trainData/",nrOfCams=4):
 #         self.all_picture_names = 12
 # 
 #         #has to be commented out, because there is no cv2 in the docker for learning
@@ -137,8 +137,8 @@ class Dataset_Heinz(object):
 #             elif(dataSet == "Valid"):
 #                 pickle.dump(self.data, open(origin_path + "validdata.pkl", "wb"))
 # 
+#         
 #==============================================================================
-        
         
         
         

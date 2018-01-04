@@ -16,8 +16,8 @@ addpath(genpath('../matlabHelperFunctions'));
 
 %% Parameters
 
-inputPath = '/home/hhofmann/Schreibtisch/Data/9000/';
-calcBackgroundIm = false;               % if false, default-BG is loaded
+inputPath = '/media/hhofmann/dgx/data_hhofmann/Data/mit Tabea gesammelt/test/';
+calcBackgroundIm = true;               % if false, default-BG is loaded
 circleFindMethod = 'SKEL';              % method to use for finding circles
                                         %   'CHT':  Circular Hough Transform 
                                         %   'SKEL': get skeleton by erosion
@@ -102,7 +102,8 @@ for cam = 1:nCams
         D = I - BG;
         %Delete picture if it is too bright(value 5500000 is found with
         %evaluation of about 200 pictures)wrote by Heinz
-        if sum(sum(D)) > -5510000;
+        %Todo: make the real if statement working again
+        if 1==2;%sum(sum(D)) > -5510000;
             %Do nothing with too bright Pictures!!!!!! wrote by Heinz
             fprintf('didnt take into account: Camera_%d pic%d.png \n',cam-1,i-1)
         else
@@ -255,7 +256,8 @@ for cam = 1:nCams
 
             % save difference-images
             I = I/max(I(:));
-            I = insertShape(I,'FilledCircle',[centers,radii],'Color',[181/255,0,0],'Opacity',0.5);
+            %TODO: decomment this line
+            %I = insertShape(I,'FilledCircle',[centers,radii],'Color',[181/255,0,0],'Opacity',0.5);
             imwrite(I,sprintf('%spic%d.png',outputPathRGB,i-1));
 
             % save binary image
