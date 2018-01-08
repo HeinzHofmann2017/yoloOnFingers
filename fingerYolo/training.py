@@ -30,10 +30,8 @@ import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
 
-#==============================================================================
-# import cv2
-# import matplotlib.pyplot as plt
-#==============================================================================
+import cv2
+import matplotlib.pyplot as plt
 
 #get default-Hyperparameters, btw. Parameters from shell-script:
 parser_object = pC.make_parser()
@@ -685,7 +683,7 @@ def main():
             
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../weights/127_calcDistance/127_calcDistance.ckpt-00766000")                
+            saver.restore(sess,origin_path + "../../../weights/137_4500Set_newPipe/137_4500Set_newPipe.ckpt-00200000")                
             print("Restored")  
             
             sum_distance = 0
@@ -714,17 +712,21 @@ def main():
 
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
-                    testimage = testimages[b]*200
-                    probconf_y  = probconfs_y[b] * 448
-                    probconf_x  = probconfs_x[b] * 448
-                    probconf_h  = probconfs_h[b] * 448
-                    probconf_w  = probconfs_w[b] * 448
+#==============================================================================
+#                     testimage = testimages[b]*200
+#                     probconf_y  = probconfs_y[b] * 448
+#                     probconf_x  = probconfs_x[b] * 448
+#                     probconf_h  = probconfs_h[b] * 448
+#                     probconf_w  = probconfs_w[b] * 448
+#==============================================================================
                     probconf_iou= probconfs_iou[b]
                     probconf_distance=probconfs_distance[b]
-                    label_y     = labels_y[b] * 448
-                    label_x     = labels_x[b] * 448
-                    label_h     = labels_h[b] * 448
-                    label_w     = labels_w[b] * 448
+#==============================================================================
+#                     label_y     = labels_y[b] * 448
+#                     label_x     = labels_x[b] * 448
+#                     label_h     = labels_h[b] * 448
+#                     label_w     = labels_w[b] * 448
+#==============================================================================
                     print("iou                                                      = "+str(probconf_iou))
                     print("distance                                                 = " + str(probconf_distance))
                     if(labels_p[b]!=0):
@@ -761,19 +763,21 @@ def main():
                         print("Percentage of extreme fine recognized fingers (>0.001)   = " + str(extremefine_recognized_fingers_in_percent)+"%")
                         
    
-                    #save picture in own folder for recognized fingers 
-                    sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
-                    
-                    #get picture back with cv2
-                    img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
-
-                    cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
-                    cv2.putText(img,'Prediction',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-                    cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-                    cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-                    cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
-                    cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
-                    cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
+#==============================================================================
+#                     #save picture in own folder for recognized fingers 
+#                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
+#                     
+#                     #get picture back with cv2
+#                     img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
+# 
+#                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
+#                     cv2.putText(img,'Prediction',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+#                     cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+#                     cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+#                     cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
+#                     cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
+#                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
+#==============================================================================
                 
             #Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
             plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
