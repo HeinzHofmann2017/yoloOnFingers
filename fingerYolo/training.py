@@ -537,7 +537,7 @@ def main():
             y_prob_diff = tf.subtract(y_labels_global, y_probs)
             x_conf_diff = tf.subtract(x_labels_global, x_confs)
             y_conf_diff = tf.subtract(y_labels_global, y_confs)
-            x_probconf_diff = tf.subtract(x_labels_global, x_probconfs)
+            x_probconf_diff = tf.subtract(tf.subtract(x_labels_global, x_probconfs),0.001)
             y_probconf_diff = tf.subtract(y_labels_global, y_probconfs)            
             
             distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
@@ -683,11 +683,10 @@ def main():
             
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../weights/139_9000Set_newPipe/139_9000Set_newPipe.ckpt-00510000")                
+            saver.restore(sess,origin_path + "../../../weights/139_9000Set_newPipe/139_9000Set_newPipe.ckpt-00645000")                
             print("Restored")  
             
-            sum_distance = 0
-            sum_iou = 0
+
             nr_of_fingers = 0
             nr_of_coarse_recognized_fingers = 0
             nr_of_recognized_fingers = 0
@@ -716,21 +715,25 @@ def main():
 
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
-                    testimage = testimages[b]*200
-                    probconf_y  = probconfs_y[b] * 448
-                    probconf_x  = probconfs_x[b] * 448
-                    probconf_h  = probconfs_h[b] * 448
-                    probconf_w  = probconfs_w[b] * 448
+#==============================================================================
+#                     testimage = testimages[b]*200
+#                     probconf_y  = probconfs_y[b] * 448
+#                     probconf_x  = probconfs_x[b] * 448
+#                     probconf_h  = probconfs_h[b] * 448
+#                     probconf_w  = probconfs_w[b] * 448
+#==============================================================================
                     probconf_iou= probconfs_iou[b]
                     probconf_distance=probconfs_distance[b]
                     probconf_x_diff = probconfs_x_diff[b]
                     probconf_y_diff = probconfs_y_diff[b]
-                    label_y     = labels_y[b] * 448
-                    label_x     = labels_x[b] * 448
-                    label_h     = labels_h[b] * 448
-                    label_w     = labels_w[b] * 448
-                    print("iou                                                      = "+str(probconf_iou))
-                    print("distance                                                 = " + str(probconf_distance))
+#==============================================================================
+#                     label_y     = labels_y[b] * 448
+#                     label_x     = labels_x[b] * 448
+#                     label_h     = labels_h[b] * 448
+#                     label_w     = labels_w[b] * 448
+#                     print("iou                                                      = "+str(probconf_iou))
+#                     print("distance                                                 = " + str(probconf_distance))
+#==============================================================================
                     if(labels_p[b]!=0):
                             
                         #make array with all valid iou's and distances, to make later histograms, variances, etc.
@@ -738,14 +741,13 @@ def main():
                         distance_array = np.concatenate((distance_array,[probconf_distance]))
                         distance_x_array = np.concatenate((distance_x_array,[probconf_x_diff]))
                         distance_y_array = np.concatenate((distance_y_array,[probconf_y_diff]))
-                        sum_iou += probconf_iou
-                        sum_distance += probconf_distance
+
                         nr_of_fingers += 1
-                                    
-                        mean_iou = sum_iou/nr_of_fingers
-                        mean_distance = sum_distance/nr_of_fingers
-                        print("mean_iou                                                 = " + str(mean_iou))
-                        print("mean_distance                                            = " + str(mean_distance))
+
+#==============================================================================
+#                         print("mean_iou                                                 = " + str(np.mean(iou_array)))
+#                         print("mean_distance                                            = " + str(np.mean(distance_array)))
+#==============================================================================
                         
                         if probconf_distance < 0.04:
                             nr_of_coarse_recognized_fingers += 1
@@ -764,6 +766,7 @@ def main():
                         print("Percentage of fine recognized fingers (<0.01)            = " + str(fine_recognized_fingers_in_percent) + "%")
                         extremefine_recognized_fingers_in_percent = (float(nr_of_extremefine_recognized_fingers)/float(nr_of_fingers))*100
                         print("Percentage of extreme fine recognized fingers (>0.001)   = " + str(extremefine_recognized_fingers_in_percent)+"%")
+                        
                         
    
 #==============================================================================
@@ -787,7 +790,7 @@ def main():
             plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
             plt.xlabel("IOU (mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
             plt.ylabel("Probability in % [1/100]")
-            plt.plot([0.4,0.4],[0,30], 'orange')
+            plt.plot([0.4,0.4],[0,10], 'orange')
             plt.text(0.3, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
             plt.text(0.45,55, "good", bbox=dict(facecolor='green', alpha=0.5))
             plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
@@ -817,17 +820,19 @@ def main():
             plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
             plt.close() 
 
-            plt.hist(distance_x_array,bins=np.arange(-0.25,0.25,0.001),normed=1)
+            plt.hist(distance_x_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
             plt.title("X-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
             plt.xlabel("x-Distance (mean="+str(round(np.mean(distance_x_array),3))+", stdev="+str(round(np.std(distance_x_array),3))+")")
             plt.ylabel("Probability/Distance")
+            plt.plot([0.0,0.0],[0,100], 'orange')
             plt.savefig(origin_path+"picsRecognized/xDistance.pdf")
             plt.close()    
 
-            plt.hist(distance_y_array,bins=np.arange(-0.25,0.25,0.001),normed=1)
+            plt.hist(distance_y_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
             plt.title("Y-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
             plt.xlabel("y-Distance (mean="+str(round(np.mean(distance_y_array),3))+", stdev="+str(round(np.std(distance_y_array),3))+")")
             plt.ylabel("Probability/Distance")
+            plt.plot([0.0,0.0],[0,100], 'orange')
             plt.savefig(origin_path+"picsRecognized/yDistance.pdf")
             plt.close()              
 
