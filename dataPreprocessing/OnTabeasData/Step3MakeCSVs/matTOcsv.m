@@ -15,11 +15,11 @@ matTOcsvf("/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/",4)
 function matTOcsvf(origin_path, num_of_cams)
 
 
-    for picNr = 1:num_of_cams
-        path = strcat(origin_path, "Camera_", num2str(picNr-1), "/UV_Bin/fingers.mat")
+    for camNr = 1:num_of_cams
+        path = strcat(origin_path, "Camera_", num2str(camNr-1), "/UV_Bin/fingers.mat")
         load(path, '-mat')
 
-        path = strcat(origin_path, "Camera_",num2str(picNr-1),"/UV_Bin/validData.csv")
+        path = strcat(origin_path, "Camera_",num2str(camNr-1),"/UV_Bin/validData.csv")
         B = []
         csvwrite(path,B);
         fid = fopen(path,"w")
@@ -60,7 +60,7 @@ function matTOcsvf(origin_path, num_of_cams)
         end
         
         
-        path = strcat(origin_path, "Camera_",num2str(picNr-1),"/UV_Bin/trainData.csv")
+        path = strcat(origin_path, "Camera_",num2str(camNr-1),"/UV_Bin/trainData.csv")
         B = []
         csvwrite(path,B);
         fid = fopen(path,"w")

@@ -683,7 +683,7 @@ def main():
             
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../weights/137_4500Set_newPipe/137_4500Set_newPipe.ckpt-00200000")                
+            saver.restore(sess,origin_path + "../../../weights/139_9000Set_newPipe/139_9000Set_newPipe.ckpt-00510000")                
             print("Restored")  
             
             sum_distance = 0
@@ -695,38 +695,40 @@ def main():
             nr_of_extremefine_recognized_fingers = 0
             iou_array = []
             distance_array = []
+            distance_x_array = []
+            distance_y_array = []
             for i in range(len(test_picnames)/batchSize):
-                testimages,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,probconfs_iou,probconfs_distance,labels_p = sess.run([images_unnormalized,
-                                                                                                                                                                      y_probconf,
-                                                                                                                                                                      x_probconf,
-                                                                                                                                                                      h_probconf,
-                                                                                                                                                                      w_probconf,
-                                                                                                                                                                      y_label_global,
-                                                                                                                                                                      x_label_global,
-                                                                                                                                                                      h_label_global,
-                                                                                                                                                                      w_label_global,
-                                                                                                                                                                      iou_max_prob_conf,
-                                                                                                                                                                      distance_probconf,
-                                                                                                                                                                      p_labels],        
-                                                                                                                                                                      feed_dict={training: False})
+                testimages,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,probconfs_iou,probconfs_distance,labels_p,probconfs_x_diff, probconfs_y_diff = sess.run([images_unnormalized,
+                                                                                                                                                                                                          y_probconf,
+                                                                                                                                                                                                          x_probconf,
+                                                                                                                                                                                                          h_probconf,
+                                                                                                                                                                                                          w_probconf,
+                                                                                                                                                                                                          y_label_global,
+                                                                                                                                                                                                          x_label_global,
+                                                                                                                                                                                                          h_label_global,
+                                                                                                                                                                                                          w_label_global,
+                                                                                                                                                                                                          iou_max_prob_conf,
+                                                                                                                                                                                                          distance_probconf,
+                                                                                                                                                                                                          p_labels,
+                                                                                                                                                                                                          x_probconf_diff,
+                                                                                                                                                                                                          y_probconf_diff],        
+                                                                                                                                                                                                          feed_dict={training: False})
 
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
-#==============================================================================
-#                     testimage = testimages[b]*200
-#                     probconf_y  = probconfs_y[b] * 448
-#                     probconf_x  = probconfs_x[b] * 448
-#                     probconf_h  = probconfs_h[b] * 448
-#                     probconf_w  = probconfs_w[b] * 448
-#==============================================================================
+                    testimage = testimages[b]*200
+                    probconf_y  = probconfs_y[b] * 448
+                    probconf_x  = probconfs_x[b] * 448
+                    probconf_h  = probconfs_h[b] * 448
+                    probconf_w  = probconfs_w[b] * 448
                     probconf_iou= probconfs_iou[b]
                     probconf_distance=probconfs_distance[b]
-#==============================================================================
-#                     label_y     = labels_y[b] * 448
-#                     label_x     = labels_x[b] * 448
-#                     label_h     = labels_h[b] * 448
-#                     label_w     = labels_w[b] * 448
-#==============================================================================
+                    probconf_x_diff = probconfs_x_diff[b]
+                    probconf_y_diff = probconfs_y_diff[b]
+                    label_y     = labels_y[b] * 448
+                    label_x     = labels_x[b] * 448
+                    label_h     = labels_h[b] * 448
+                    label_w     = labels_w[b] * 448
                     print("iou                                                      = "+str(probconf_iou))
                     print("distance                                                 = " + str(probconf_distance))
                     if(labels_p[b]!=0):
@@ -734,7 +736,8 @@ def main():
                         #make array with all valid iou's and distances, to make later histograms, variances, etc.
                         iou_array = np.concatenate((iou_array,[probconf_iou]))
                         distance_array = np.concatenate((distance_array,[probconf_distance]))
-                        
+                        distance_x_array = np.concatenate((distance_x_array,[probconf_x_diff]))
+                        distance_y_array = np.concatenate((distance_y_array,[probconf_y_diff]))
                         sum_iou += probconf_iou
                         sum_distance += probconf_distance
                         nr_of_fingers += 1
@@ -792,7 +795,7 @@ def main():
             
             plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
             plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-            plt.xlabel("Distance (mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2) | max. measured distance = 0.9")
+            plt.xlabel("Distance (mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
             plt.ylabel("Probability in % [1/100]")
             plt.plot([0.02,0.02],[0,60], 'orange')
             plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
@@ -812,7 +815,21 @@ def main():
             plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
             plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
             plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
-            plt.close()                 
+            plt.close() 
+
+            plt.hist(distance_x_array,bins=np.arange(-0.25,0.25,0.001),normed=1)
+            plt.title("X-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("x-Distance (mean="+str(round(np.mean(distance_x_array),3))+", stdev="+str(round(np.std(distance_x_array),3))+")")
+            plt.ylabel("Probability/Distance")
+            plt.savefig(origin_path+"picsRecognized/xDistance.pdf")
+            plt.close()    
+
+            plt.hist(distance_y_array,bins=np.arange(-0.25,0.25,0.001),normed=1)
+            plt.title("Y-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("y-Distance (mean="+str(round(np.mean(distance_y_array),3))+", stdev="+str(round(np.std(distance_y_array),3))+")")
+            plt.ylabel("Probability/Distance")
+            plt.savefig(origin_path+"picsRecognized/yDistance.pdf")
+            plt.close()              
 
     print("finished")
 
