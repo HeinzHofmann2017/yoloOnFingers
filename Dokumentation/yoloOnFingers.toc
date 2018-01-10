@@ -14,3 +14,4 @@
 \contentsline {subsection}{\numberline {3.3}CSV generieren}{13}
 \contentsline {subsection}{\numberline {3.4}Python-Objekt generieren}{13}
 \contentsline {subsection}{\numberline {3.5}Daten in Neuronales Netzwerk einlesen}{13}
+\contentsline {section}{Literatur}{14}

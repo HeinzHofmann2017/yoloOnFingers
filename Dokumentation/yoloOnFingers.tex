@@ -8,6 +8,11 @@
 %\usepackage[T1]{fontenc}
 %Deutsche Silbentrennung
 \usepackage[ngerman]{babel}
+%Für Zitate:
+\usepackage{cite}
+\usepackage{url}
+% Festlegung Art der Zitierung
+\bibliographystyle{plain}
 
 % Grafikpaket laden
 \usepackage{graphicx}
@@ -20,6 +25,9 @@
 
 
 \begin{document}
+
+
+
 
 \input{Kapitel/Titelblatt/Titelblatt.tex}
 
@@ -34,5 +42,11 @@
 \input{Kapitel/Resultate/Resultate.tex}
 
 \input{Kapitel/DatenPipeline/DatenPipeline.tex}
+
+\newpage
+%sicherstellen, dass Literaturverzeichnis auch im Inhaltsverzeichnis aufgeführt wird.
+\addcontentsline{toc}{section}{Literatur}
+%Literaturverzeichnis anzeigen:
+\bibliography{Kapitel/Literaturverzeichnis/literatur}
 
 \end{document}
