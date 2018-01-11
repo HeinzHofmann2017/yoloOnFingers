@@ -11,9 +11,9 @@ Gerade die Geschwindigkeit dieses Netzwerks wurde als extrem hoch angepriesen (b
 Diese Geschwindigkeit ist für die letztendliche Anwendung von hoher Wichtigkeit, weil es sich schlussendlich um eine Echtzeitanwendung handeln soll. 
 
 \subsection{Vorgehen}
-Mithilfe der Apparatur und Software von Tabea Mendez wurden zuerst Daten generiert. 
+Mithilfe der Apparatur und Software von Tabea Méndez wurden zuerst Daten generiert. 
 Um diesen Aufwand klein zu halten, wurden nur Daten vom rechten Zeigefinger generiert. 
-Gleichzeitig wurde in Tensorflow die Architektur von Yolo nachgebaut. 
+Gleichzeitig wurde in Tensorflow die Architektur von Yolo nach gebaut. 
 Dies wäre nur begrenzt nötig gewesen, da fertige Architekturen in Keras oder Darknet online zur Verfügung stehen würden. 
 Um aber einen Lerneffekt im erstellen von Neuronalen Netzwerken zu erzielen, wurde trotzdem alles von Grund auf selber aufgebaut. 
 Rund um die Kernarchitektur von Yolo wurde das Datenhandling, die Kostenfunktionen aber auch sämtliche Validierungen und Tests zweimal erstellt.  
@@ -24,7 +24,7 @@ Sobald dies alles aufgebaut und lauffähig war, wurde noch so viel wie möglich 
 
 Das Pretraining und auch das Training hatten seine Tücken, weil das originale Yolo-Netzwerk extrem gross ist, und entsprechend nahezu den ganzen RAM-Speicher einer GPU benötigte, wodurch nur noch begrenzt Platz für Daten übrigblieb. 
 Diese Probleme konnten einigermassen umgangen werden, hatten jedoch zur Folge, dass die Bilder von 1280x960 auf 448x448 verkleinert werden mussten, um das Netzwerk zum laufen zu bringen. 
-Dies hatte zur Folge, dass ein Pixel bereits bis zu 1,5mm entsprechen konnte. (Dies sollte Yolo theoretisch nicht daran hindern genauere Aussagen über die Position des Fingerspitzes zu machen.) 
+Dies hatte zur Folge, dass ein Pixel bereits bis zu 1,5mm entsprechen konnte. (Dies sollte Yolo theoretisch nicht daran hindern genauere Aussagen über die Position des Fingerspitzen zu machen.) 
 Trotzdem wurde mit rund 84\% der Predictions nur eine Genauigkeit von 15mm erreicht, was in etwa 10 Pixeln entsprach. 
 Mit diesem Ergebnis wurde zwar das Ziel der Aufgabenstellung (0.1mm) um Faktor 150 verpasst, allerdings in 84\% der Fälle Predictions gemacht, welche aus subjektiver menschlicher Sicht "gut" sind. 
 Dies ist ein einigermaßen erstaunliches Resultat, wenn man bedenkt, dass man zum Trainieren nur rund 18'000 Bilder verwendet hatte. 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  10 JAN 2018 17:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  11 JAN 2018 14:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -409,35 +409,331 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
-(./yoloOnFingers.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
+Package: todonotes 2015/07/09 .dtx Todonotes source and documentation.
+Package: todonotes 2012/07/25
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks17
+\XKV@tempa@toks=\toks18
+)
+\XKV@depth=\count89
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks19
+\pgfutil@tempdima=\dimen106
+\pgfutil@tempdimb=\dimen107
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.t
+ex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box26
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+Package: pgfrcs 2015/08/07 v3.0.1a (rcs-revision 1.31)
+))
+Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks20
+\pgfkeys@temptoks=\toks21
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
+ex
+\pgfkeys@tmptoks=\toks22
+))
+\pgf@x=\dimen108
+\pgf@y=\dimen109
+\pgf@xa=\dimen110
+\pgf@ya=\dimen111
+\pgf@xb=\dimen112
+\pgf@yb=\dimen113
+\pgf@xc=\dimen114
+\pgf@yc=\dimen115
+\w@pgf@writea=\write3
+\r@pgf@reada=\read1
+\c@pgf@counta=\count90
+\c@pgf@countb=\count91
+\c@pgf@countc=\count92
+\c@pgf@countd=\count93
+\t@pgf@toka=\toks23
+\t@pgf@tokb=\toks24
+\t@pgf@tokc=\toks25
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2014/10/11  (rcs-revision 1.35)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.de
+f
+File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
+tex
+File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
+\pgfsyssoftpath@smallbuffer@items=\count94
+\pgfsyssoftpath@bigbuffer@items=\count95
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
+tex
+File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen116
+\pgfmath@count=\count96
+\pgfmath@box=\box27
+\pgfmath@toks=\toks26
+\pgfmath@stack@operand=\toks27
+\pgfmath@stack@operation=\toks28
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonomet
+ric.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.cod
+e.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
+thmetics.code.tex)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count97
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
+x
+File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
+\pgf@picminx=\dimen117
+\pgf@picmaxx=\dimen118
+\pgf@picminy=\dimen119
+\pgf@picmaxy=\dimen120
+\pgf@pathminx=\dimen121
+\pgf@pathmaxx=\dimen122
+\pgf@pathminy=\dimen123
+\pgf@pathmaxy=\dimen124
+\pgf@xx=\dimen125
+\pgf@xy=\dimen126
+\pgf@yx=\dimen127
+\pgf@yy=\dimen128
+\pgf@zx=\dimen129
+\pgf@zy=\dimen130
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
+code.tex
+File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
+\pgf@path@lastx=\dimen131
+\pgf@path@lasty=\dimen132
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
+.tex
+File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
+\pgf@shorten@end@additional=\dimen133
+\pgf@shorten@start@additional=\dimen134
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
+x
+File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
+\pgfpic=\box28
+\pgf@hbox=\box29
+\pgf@layerbox@main=\box30
+\pgf@picture@serial@count=\count98
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
+ode.tex
+File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
+\pgflinewidth=\dimen135
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
+s.code.tex
+File: pgfcoretransformations.code.tex 2015/08/07  (rcs-revision 1.20)
+\pgf@pt@x=\dimen136
+\pgf@pt@y=\dimen137
+\pgf@pt@temp=\dimen138
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.t
+ex
+File: pgfcoreobjects.code.tex 2006/10/11  (rcs-revision 1.2)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing
+.code.tex
+File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
+x
+File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
+\pgfarrowsep=\dimen139
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
+\pgf@max=\dimen140
+\pgf@sys@shading@range@num=\count99
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.
+tex
+File: pgfcoreexternal.code.tex 2014/07/09  (rcs-revision 1.21)
+\pgfexternal@startupbox=\box31
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.te
+x
+File: pgfcorelayers.code.tex 2013/07/18  (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.c
+ode.tex
+File: pgfcoretransparency.code.tex 2013/09/30  (rcs-revision 1.5)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.
+tex
+File: pgfcorepatterns.code.tex 2013/11/07  (rcs-revision 1.5)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2014/03/21  (rcs-revision 1.35)
+\pgfnodeparttextbox=\box32
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty
+Package: pgfcomp-version-0-65 2007/07/03 v3.0.1a (rcs-revision 1.7)
+\pgf@nodesepstart=\dimen141
+\pgf@nodesepend=\dimen142
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty
+Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
+)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+\pgffor@iter=\dimen143
+\pgffor@skip=\dimen144
+\pgffor@stack=\toks29
+\pgffor@toks=\toks30
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
+.code.tex
+File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
+\pgf@plot@mark@count=\count100
+\pgfplotmarksize=\dimen145
+)
+\tikz@lastx=\dimen146
+\tikz@lasty=\dimen147
+\tikz@lastxsaved=\dimen148
+\tikz@lastysaved=\dimen149
+\tikzleveldistance=\dimen150
+\tikzsiblingdistance=\dimen151
+\tikz@figbox=\box33
+\tikz@figbox@bg=\box34
+\tikz@tempbox=\box35
+\tikz@tempbox@bg=\box36
+\tikztreelevel=\count101
+\tikznumberofchildren=\count102
+\tikznumberofcurrentchild=\count103
+\tikz@fig@count=\count104
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
+\pgfmatrixcurrentrow=\count105
+\pgfmatrixcurrentcolumn=\count106
+\pgf@matrix@numberofcolumns=\count107
+)
+\tikz@expandcount=\count108
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count109
+\calc@Bcount=\count110
+\calc@Adimen=\dimen152
+\calc@Bdimen=\dimen153
+\calc@Askip=\skip43
+\calc@Bskip=\skip44
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count111
+\calc@Cskip=\skip45
+)
+\c@@todonotes@numberoftodonotes=\count112
+) (./yoloOnFingers.aux)
 \openout1 = `yoloOnFingers.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count89
-\scratchdimen=\dimen106
-\scratchbox=\box26
-\nofMPsegments=\count90
-\nofMParguments=\count91
-\everyMPshowfont=\toks17
-\MPscratchCnt=\count92
-\MPscratchDim=\dimen107
-\MPnumerator=\count93
-\makeMPintoPDFobject=\count94
-\everyMPtoPDFconversion=\toks18
+\scratchcounter=\count113
+\scratchdimen=\dimen154
+\scratchbox=\box37
+\nofMPsegments=\count114
+\nofMParguments=\count115
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count116
+\MPscratchDim=\dimen155
+\MPnumerator=\count117
+\makeMPintoPDFobject=\count118
+\everyMPtoPDFconversion=\toks32
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -486,20 +782,22 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-(./Kapitel/Titelblatt/Titelblatt.tex
+ABD: EveryShipout initializing macros (./Kapitel/Titelblatt/Titelblatt.tex
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 48.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 48.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 48.
-) [1
+)
+[1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./yoloOnFingers.toc)
-\tf@toc=\write3
-\openout3 = `yoloOnFingers.toc'.
+\tf@toc=\write4
+\openout4 = `yoloOnFingers.toc'.
 
- (./yoloOnFingers.lof
+
+(./yoloOnFingers.lof
 Overfull \hbox (12.02924pt too wide) in paragraph at lines 6--6
  [][] []\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichtefunktion der Di-stanz. Aus-re
 is-ser nicht 
@@ -512,18 +810,24 @@ OU=0.4) [][]
  []
 
 )
-\tf@lof=\write4
-\openout4 = `yoloOnFingers.lof'.
+\tf@lof=\write5
+\openout5 = `yoloOnFingers.lof'.
 
  (./Kapitel/Abstract/Abstract.tex [3]) [4] (./Kapitel/Resultate/Resultate.tex
 [5]
+Overfull \hbox (1.89178pt too wide) in paragraph at lines 13--18
+\OT1/cmr/m/n/12 Um die Ge-nau-ig-keit der Pre-dic-ti-ons un-se-res Neu-ro-na-le
+n Netz-wer-kes m[]oglichst
+ []
+
+
 Overfull \hbox (6.50987pt too wide) in paragraph at lines 13--18
 \OT1/cmr/m/n/12 ge-nau be-schrei-ben zu k[]onnen wur-den die zwei Wer-te Di-sta
 nz und IOU gew[]ahlt.
  []
 
 
-<Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf, id=23, 597.23125pt x 569.126
+<Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf, id=26, 597.23125pt x 569.126
 25pt>
 File: Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf Graphic file (type pdf)
  <use Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf>
@@ -531,7 +835,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/DistanzenBerechnung.pdf used
 on input line 24.
 (pdftex.def)             Requested size: 272.99881pt x 260.15126pt.
 
-<Kapitel/Resultate/Bilder/2distKnappGut.png, id=24, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/2distKnappGut.png, id=27, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/2distKnappGut.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/2distKnappGut.png>
@@ -539,7 +843,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/2distKnappGut.png used on inp
 ut line 33.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/5distKnappGut.png, id=25, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/5distKnappGut.png, id=28, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/5distKnappGut.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/5distKnappGut.png>
@@ -547,7 +851,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/5distKnappGut.png used on inp
 ut line 37.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/3distKnappSchlecht.png, id=26, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/3distKnappSchlecht.png, id=29, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/3distKnappSchlecht.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/3distKnappSchlecht.png>
@@ -555,7 +859,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/3distKnappSchlecht.png used o
 n input line 46.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/4distKnappSchlecht.png, id=27, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/4distKnappSchlecht.png, id=30, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/4distKnappSchlecht.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/4distKnappSchlecht.png>
@@ -563,7 +867,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/4distKnappSchlecht.png used o
 n input line 50.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/distProbDensity.pdf, id=28, 578.16pt x 433.62pt>
+<Kapitel/Resultate/Bilder/distProbDensity.pdf, id=31, 578.16pt x 433.62pt>
 File: Kapitel/Resultate/Bilder/distProbDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/Resultate/Bilder/distProbDensity.pdf>
@@ -571,7 +875,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/distProbDensity.pdf used on i
 nput line 59.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-<Kapitel/Resultate/Bilder/distProbDensity_improved.pdf, id=29, 578.16pt x 433.6
+<Kapitel/Resultate/Bilder/distProbDensity_improved.pdf, id=32, 578.16pt x 433.6
 2pt>
 File: Kapitel/Resultate/Bilder/distProbDensity_improved.pdf Graphic file (type 
 pdf)
@@ -589,7 +893,7 @@ bDensity_improved.pdf
 pdfTeX warning: pdflatex (file ./Kapitel/Resultate/Bilder/distProbDensity_impro
 ved.pdf): PDF inclusion: multiple pdfs with page group included in a single pag
 e
->] <Kapitel/Resultate/Bilder/7iouKnappGut.png, id=150, 449.68pt x 449.68pt>
+>] <Kapitel/Resultate/Bilder/7iouKnappGut.png, id=153, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/7iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/7iouKnappGut.png>
@@ -597,7 +901,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/7iouKnappGut.png used on inpu
 t line 96.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/8iouKnappGut.png, id=151, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/8iouKnappGut.png, id=154, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/8iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/8iouKnappGut.png>
@@ -605,7 +909,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/8iouKnappGut.png used on inpu
 t line 100.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/6iouKnappSchlecht.png, id=152, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/6iouKnappSchlecht.png, id=155, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/6iouKnappSchlecht.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/6iouKnappSchlecht.png>
@@ -613,7 +917,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/6iouKnappSchlecht.png used on
  input line 109.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/9iouKnappSchlecht.png, id=153, 449.68pt x 449.68pt>
+<Kapitel/Resultate/Bilder/9iouKnappSchlecht.png, id=156, 449.68pt x 449.68pt>
 File: Kapitel/Resultate/Bilder/9iouKnappSchlecht.png Graphic file (type png)
 
 <use Kapitel/Resultate/Bilder/9iouKnappSchlecht.png>
@@ -621,7 +925,7 @@ Package pdftex.def Info: Kapitel/Resultate/Bilder/9iouKnappSchlecht.png used on
  input line 113.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/Resultate/Bilder/IOUprobDensity.pdf, id=154, 578.16pt x 433.62pt>
+<Kapitel/Resultate/Bilder/IOUprobDensity.pdf, id=157, 578.16pt x 433.62pt>
 File: Kapitel/Resultate/Bilder/IOUprobDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/Resultate/Bilder/IOUprobDensity.pdf>
@@ -638,35 +942,56 @@ n-ze:
 er/7iouKnappGut.png (PNG copy)> <./Kapitel/Resultate/Bilder/8iouKnappGut.png (P
 NG copy)> <./Kapitel/Resultate/Bilder/6iouKnappSchlecht.png (PNG copy)> <./Kapi
 tel/Resultate/Bilder/9iouKnappSchlecht.png (PNG copy)>]
-<Kapitel/DatenPipeline/Bilder/LabelTensor.pdf, id=161, 341.275pt x 341.275pt>
+<Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=164, 1284.8
+pt x 963.6pt>
+File: Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png Graphic fi
+le (type png)
+
+<use Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png>
+Package pdftex.def Info: Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pi
+c775.png used on input line 17.
+(pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
+
+<Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=166, 1284.8
+pt x 963.6pt>
+File: Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png Graphic fi
+le (type png)
+
+<use Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png>
+Package pdftex.def Info: Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pi
+c777.png used on input line 21.
+(pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
+ [12 <./Kapitel/Resultate/Bilder/IOUprobDensity.pdf>] [13 <./Kapitel/DatenPipel
+ine/Bilder/schlechteBoundingboxen/pic775.png (PNG copy)> <./Kapitel/DatenPipeli
+ne/Bilder/schlechteBoundingboxen/pic777.png (PNG copy)>]
+<Kapitel/DatenPipeline/Bilder/LabelTensor.pdf, id=225, 341.275pt x 341.275pt>
 File: Kapitel/DatenPipeline/Bilder/LabelTensor.pdf Graphic file (type pdf)
 
 <use Kapitel/DatenPipeline/Bilder/LabelTensor.pdf>
 Package pdftex.def Info: Kapitel/DatenPipeline/Bilder/LabelTensor.pdf used on i
-nput line 19.
+nput line 67.
 (pdftex.def)             Requested size: 312.00119pt x 312.0188pt.
- [12 <./Kapitel/Resultate/Bilder/IOUprobDensity.pdf>]) [13 <./Kapitel/DatenPipe
-line/Bilder/LabelTensor.pdf>] (./yoloOnFingers.bbl) [14] (./yoloOnFingers.aux) 
-) 
+) [14] [15 <./Kapitel/DatenPipeline/Bilder/LabelTensor.pdf>] (./yoloOnFingers.b
+bl) [16] (./yoloOnFingers.aux) ) 
 Here is how much of TeX's memory you used:
- 2989 strings out of 494860
- 40709 string characters out of 6177601
- 106582 words of memory out of 5000000
- 6220 multiletter control sequences out of 15000+600000
+ 12939 strings out of 494860
+ 257118 string characters out of 6177601
+ 293637 words of memory out of 5000000
+ 15941 multiletter control sequences out of 15000+600000
  9376 words of font info for 33 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,8n,35p,451b,302s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmtt12.pfb>
-Output written on yoloOnFingers.pdf (14 pages, 2192630 bytes).
+ 62i,9n,56p,450b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on yoloOnFingers.pdf (16 pages, 3213202 bytes).
 PDF statistics:
- 255 PDF objects out of 1000 (max. 8388607)
- 82 compressed objects within 1 object stream
+ 270 PDF objects out of 1000 (max. 8388607)
+ 91 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 66 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 100 words of extra memory for PDF output out of 10000 (max. 10000000)
 

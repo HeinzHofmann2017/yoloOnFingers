@@ -102,8 +102,7 @@ for cam = 1:nCams
         D = I - BG;
         %Delete picture if it is too bright(value 5500000 is found with
         %evaluation of about 200 pictures)wrote by Heinz
-        %Todo: make the real if statement working again
-        if 1==2;%sum(sum(D)) > -5510000;
+        if sum(sum(D)) > -5510000;
             %Do nothing with too bright Pictures!!!!!! wrote by Heinz
             fprintf('didnt take into account: Camera_%d pic%d.png \n',cam-1,i-1)
         else
