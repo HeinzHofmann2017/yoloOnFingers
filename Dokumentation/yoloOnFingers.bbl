@@ -1,14 +1,13 @@
 \begin{thebibliography}{1}
 
-\bibitem{deeplearning}
-Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
-\newblock {\em {D}eep {L}earning}.
-\newblock MIT Press, 2016.
-\newblock \url{http://www.deeplearningbook.org}.
-
 \bibitem{TabeasFingertracking}
-Tabea M\'{e}ndez.
+Tabea Méndez.
 \newblock {F}ingerspitzen-{T}racking im {3D}-{R}aum.
 \newblock Master's thesis, HSR, June 2017.
+
+\bibitem{yolo}
+Joseph Redmon, Santosh~Kumar Divvala, Ross~B. Girshick, and Ali Farhadi.
+\newblock You only look once: Unified, real-time object detection.
+\newblock {\em CoRR}, abs/1506.02640, 2015.
 
 \end{thebibliography}

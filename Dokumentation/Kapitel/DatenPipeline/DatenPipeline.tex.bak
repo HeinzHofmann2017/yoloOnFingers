@@ -49,8 +49,37 @@ Das Fingerspitzentracking wurde mit Matlab gemacht und die entsprechenden Labels
 Das Deeplearning hingegen wurde mit Tensorflow und entsprechend mit Python angegangen. 
 Leider war es nicht möglich mit Python direkt .mat-Files zu öffnen. 
 Aus diesem Grund wurde ein kleines Matlab-Skript erstellt, welches die Labels als CSV abspeichert. 
-In diesem CSV gehört jedem Bild ein
+Im Zuge dieses Skripts wurden ausserdem die Daten in Test und in Trainingsdaten aufgeteilt und je einem seperaten CSV abgespeichert.
+In diesem CSV gehört jedem Bild eine Zeile. 
+Pro Zeile bzw. Bild werden folgende Punkte beschrieben:
+\begin{enumerate}
+\item Eindeutiger Bildname, mit welchem das Bild aus dem Directory geladen werden kann. 
+\item X-Koordinaten im Range [0:1280]
+\item Y-Koordinaten im Range [0:960]
+\item Durchmesser des Resultats der Hough-Transformation
+\item Wahrscheinlichkeit, dass ein rechter Zeigefinger in diesem Bild ist. 
+(Entweder 1 oder 0, je nach dem, ob ein Finger erkannt wurde.)
+\end{enumerate}
+
+
 \subsection{Python-Objekt generieren}
+Um die Daten einfach im Trainingsprozess aufrufen zu können, wurde eigens eine kleine Python-Klasse geschrieben.
+Die Daten müssen allerdings noch vor deren Verwendung im Training durch eine Funktion dieser Klasse vorverarbeitet werden.
+Die Gründe für die Vorverarbeitung sind: 
+\begin{enumerate}
+\item Die Bilder wurden bisher Kameraweise bearbeitet.
+Dies bedeutet, die Bilder heissen bei verschiedenen Kameras genau gleich.
+Mit der Vorverarbeitung werden alle Bilder an einem gemeinsamen Ort gespeichert.
+Ausserdem erhält jedes Bild einen neuen Namen / eine neue Nummerierung, was sie eineindeutig bezeichnen lässt.
+\item Um im Training einfach mit den Label-Daten umgehen zu können und um Rechenaufwand während dem Training zu sparen wurden in der Vorverarbeitung die Labels zu demjenigen Tensor zusammengefügt, welcher in Abbildung \ref{img:label_tensor} zu sehen ist.
+\item Die Distanzen X und Y sowie die Höhe und Breite der Boundingbox mussten noch normalisiert werden, damit beim Training einfacher gerechnet werden kann.
+\end{enumerate}
+\subsubsection{Label-Tensor}
+  	
+\begin{enumerate}
+	\item x = Die Distanz des Zentrums der Fingerspitze zum linken Rand der Gitterzelle. Diese Distanz ist normiert auf den Bereich [0:1]. Ist der Zeigefinger nicht in dieser Gitterzelle, ist die Variable x = 0.
+	\item asdfasd
+	\end{enumerate}
 %Label-Tensor
 \begin{figure}	
 	\centering
@@ -58,5 +87,7 @@ In diesem CSV gehört jedem Bild ein
 	\caption{Label-Tensor}
 	\label{img:label_tensor}
 \end{figure} 
+
+
 \subsection{Daten in Neuronales Netzwerk einlesen}
 

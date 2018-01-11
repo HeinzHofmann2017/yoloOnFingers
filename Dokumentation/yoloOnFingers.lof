@@ -1,11 +1,11 @@
 \select@language {ngerman}
-\contentsline {figure}{\numberline {1}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{7}
-\contentsline {figure}{\numberline {2}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{8}
-\contentsline {figure}{\numberline {3}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{8}
-\contentsline {figure}{\numberline {4}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{9}
-\contentsline {figure}{\numberline {5}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{9}
-\contentsline {figure}{\numberline {6}{\ignorespaces Prediction knapp besser als IOU=0.4}}{11}
-\contentsline {figure}{\numberline {7}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{11}
-\contentsline {figure}{\numberline {8}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{12}
-\contentsline {figure}{\numberline {9}{\ignorespaces Resultate Hough-Transformation}}{13}
-\contentsline {figure}{\numberline {10}{\ignorespaces Label-Tensor}}{15}
+\contentsline {figure}{\numberline {1}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{8}
+\contentsline {figure}{\numberline {2}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{9}
+\contentsline {figure}{\numberline {3}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{9}
+\contentsline {figure}{\numberline {4}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{10}
+\contentsline {figure}{\numberline {5}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{10}
+\contentsline {figure}{\numberline {6}{\ignorespaces Prediction knapp besser als IOU=0.4}}{12}
+\contentsline {figure}{\numberline {7}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{12}
+\contentsline {figure}{\numberline {8}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{13}
+\contentsline {figure}{\numberline {9}{\ignorespaces Resultate Hough-Transformation}}{14}
+\contentsline {figure}{\numberline {10}{\ignorespaces Label-Tensor}}{17}
