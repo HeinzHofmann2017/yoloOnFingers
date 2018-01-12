@@ -9,7 +9,8 @@ Pro Durchgang konnten maximal 6000 Situationen aufgenommen werden, bevor der Arb
 
 Eine Verbesserung könnte hier erreicht werden, wenn man das Programm in 2 verschiedene Threads aufteilen würde.
 Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das abspeichern derselben zuständig.
-So könnte \grqq{}zeitlich unbegrenzt\grqq{} Daten aufgenommen werden. Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Daten aufgenommen würden.
+So könnte \grqq{}zeitlich unbegrenzt\grqq{} Daten aufgenommen werden. 
+Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Daten aufgenommen würden.
 \subsection{Fingerdetektion}
 \begin{figure}
 	\centering
@@ -70,24 +71,92 @@ Die Gründe für die Vorverarbeitung sind:
 \item Die Bilder wurden bisher Kameraweise bearbeitet.
 Dies bedeutet, die Bilder heissen bei verschiedenen Kameras genau gleich.
 Mit der Vorverarbeitung werden alle Bilder an einem gemeinsamen Ort gespeichert.
-Ausserdem erhält jedes Bild einen neuen Namen / eine neue Nummerierung, was sie eineindeutig bezeichnen lässt.
+Ausserdem erhält jedes Bild einen neuen Namen / eine neue Nummerierung, wodurch es möglich wird sie eineindeutig zuzuordnen. 
 \item Um im Training einfach mit den Label-Daten umgehen zu können und um Rechenaufwand während dem Training zu sparen wurden in der Vorverarbeitung die Labels zu demjenigen Tensor zusammengefügt, welcher in Abbildung \ref{img:label_tensor} zu sehen ist.
 \item Die Distanzen X und Y sowie die Höhe und Breite der Boundingbox mussten noch normalisiert werden, damit beim Training einfacher gerechnet werden kann.
 \end{enumerate}
 \subsubsection{Label-Tensor}
-  	
-\begin{enumerate}
-	\item x = Die Distanz des Zentrums der Fingerspitze zum linken Rand der Gitterzelle. Diese Distanz ist normiert auf den Bereich [0:1]. Ist der Zeigefinger nicht in dieser Gitterzelle, ist die Variable x = 0.
-	\item asdfasd
-	\end{enumerate}
+Die Labels pro Bild sind in einem Tensor angeordnet. 
+(Siehe Abbildung \ref{img:label_tensor})
+Diese Anordnung wurde stark am Output-Tensor wie er im Yolo-Paper \cite{yolo} erscheint angelehnt.
+Dabei wird das Bild in ein 7x7 Raster aufgeteilt.
+Für jedes Element dieses Gitternetzes werden folgende Punkte gespeichert:
+\begin{labeling}{Label-Tensor}
+\item[x] Die Distanz des Zentrums der Fingerspitze zum linken Rand der Gitterzelle.
+
+Ist kein Finger in dieser Gitterzelle, ist diese Variable gleich Null.
+Diese Variable ist folgendermassen normiert: 
+Ist das Zentrum der Fingerspitze ganz links in der entsprechenden Gitterzelle, ist die Variable gleich null.
+Ist das Zentrum der Fingerspitze ganz rechts in der entsprechenden Gitterzelle, ist die Variable gleich eins.
+\item[y] Die Distanz des Zentrums der Fingerspitze zum oberen Rand der Gitterzelle.
+
+Ist kein Finger in dieser Gitterzelle, ist diese Variable gleich Null. 
+Diese Variable ist folgendermassen normiert:
+Ist das Zentrum der Fingerspitze ganz oben in der entsprechenden Gitterzelle, ist die Variable gleich null.
+Ist das Zentrum der Fingerspitze ganz unten in der entsprechenden Gitterzelle, ist die Variable gleich eins.
+\item[h] Die Höhe der entsprechenden Bounding Box.
+
+Ist kein Finger in dieser Gitterzelle, ist diese Höhe gleich null.
+Diese Variable ist folgendermassen normiert:
+Ist die Box insgesamt so hoch wie das Bild, ist diese Variable gleich eins. 
+Ist die Box \grqq{}unendlich\grqq{} klein, so ist diese Variable gleich null.
+\item[w] Die Breite der entsprechenden Bounding Box.
+
+Ist kein Finger in dieser Gitterzelle, ist diese Höhe gleich null.
+Diese Variable ist folgendermassen normiert:
+Ist die Box insgesamt so breit wie das Bild, ist diese Variable gleich eins.
+Ist die Box \grqq{}unendlich\grqq{} schmal, so ist diese Variable gleich null.
+\item[p] Die Wahrscheinlichkeit, dass die Spitze eines rechten Zeigefingers in dieser Gitterzelle ist. 
+
+Ist eine rechte Zeigefingerspitze in dieser Gitterzelle, so ist diese Variable gleich eins.
+Ist keine rechte Zeigefingerspitze in dieser Gitterzelle, so ist diese Variable gleich null.
+
+In diesem vereinfachten Fall gibt es nur ein p.
+(Weil nur der rechte Zeigefingerspitz gelabelt wurde.)
+Wären aber auf dem Bild alle Finger einzeln gelabelt, müsste der Labeltensor für jeden zusätzlich labelbaren Finger eine weitere Schicht p haben. 
+Würden also alle 10 Finger eines Menschen gelabelt, müsste der Labeltensor entsprechend 10 verschiedene p-Schichten haben.
+(Die Anzahl x, y, h \& w - Schichten bleibt gleich) 
+\end{labeling}
+
 %Label-Tensor
 \begin{figure}	
 	\centering
-	\includegraphics[width=.8\textwidth]{Kapitel/DatenPipeline/Bilder/LabelTensor.pdf}
+	\includegraphics[width=.7\textwidth]{Kapitel/DatenPipeline/Bilder/LabelTensor.pdf}
 	\caption{Label-Tensor}
 	\label{img:label_tensor}
 \end{figure} 
 
+\subsubsection{Liste von Label-Tensoren}
+Diese Label-Tensoren enthalten alle wichtigen Labels von je einem Bild. 
+Allerdings lassen Sie sich mit den darin enthaltenen Informationen nicht eindeutig einem Bild zuordnen. 
+Um dies zu ermöglichen wurde eine Liste (Abbildung \ref{img:label_list}) erstellt, welche zwei Spalten und beliebig viele Zeilen enthält.
+In der ersten Spalte wird der Name der zum Label gehörenden Bilddatei gespeichert, während in der zweiten Spalte der Label-Tensor selber gespeichert wird. 
+Diese Liste wiederum wird mit pickle als python Objekt abgespeichert.
+Der Speicherort dieser Liste ist derselbe wie derjenige, an welchem alle Bilder des entsprechenden Testsets oder Trainingsets abgespeichert wurden.
 
+%Label-List
+\begin{figure}	
+	\centering
+	\includegraphics[width=.4\textwidth]{Kapitel/DatenPipeline/Bilder/LabelList.pdf}
+	\caption{Liste von Label-Tensoren}
+	\label{img:label_list}
+\end{figure} 
 \subsection{Daten in Neuronales Netzwerk einlesen}
+Das einlesen der Daten in das Programm, in welchem das Neuronale Netzwerk trainiert wird ist dank dem vorbereiteten Tensor und dessen Klasse, welche die Tensoren einfach laden lässt kein Problem. 
+Die Daten schön für Tensorflow bereitzustellen ist etwas umständlich.
+Dies aber nur bis man es mal zum laufen gebracht hat. 
+Danach stellt dies kein Problem mehr dar. 
+Bis die Bilder wirklich ins Netzwerk gefüttert werden passieren noch folgenden Punkte. 
+\begin{enumerate}
+\item Listen mit Bildnamen und Labels laden und als Tensorflow Datenset anlegen.
+\item Einen \grqq{}Shuffler\grqq{} einfügen, der jedes Mal wenn das Neuronale Netzwerk einen neuen Minibatch verlangt die entsprechenden Daten Zufällig auswählt.
+\item Eine Funktion, welche die Bildnamen durch die echten Bilder ersetzt. 
+Der Vorteil einer solchen Funktion ist, dass die Bilder wirklich erst geladen werden, wenn die Daten auch benötigt werden. 
+So werden im Punkt 2 nicht die schwergewichtigen Bilder sondern nur deren Namen aus der Liste durchgemischelt. 
+\item Eine letzte Funktion, welche das organisieren des Minibatches übernimmt. Sodass die grösse des Minibatches flexibel bestimmt werden kann.
+\item Die Bilder wurden von der Grösse 1280*960 auf 448*448 umgewandelt. Um diesen Punkt auf die GPU auszulagern wurde dafür eine eigenständige Tensorflow-Funktion verwendet. 
+\item Die Bilder wurden normalisiert. Dafür wurde eine eigene Funktion geschrieben, welche wiederum aus mehreren Tensorflow-Funktionen bestand, damit auch dieser Task von der GPU erledigt wird.
+\end{enumerate}
+Die Punkte 1-3 waren mithilfe der Tensorflowklasse \grqq{}tf.contrib.data.Dataset\grqq{} relativ einfach zu bewältigen.
 
+\todo[inline]{weitermachen....}

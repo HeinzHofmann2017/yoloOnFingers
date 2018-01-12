@@ -55,13 +55,13 @@ def traindata_preprocessor(picname,label):
     content = tf.read_file(origin_path + "trainDataset/" + picname)
     image = tf.image.decode_png(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float32)
-    #ToDo: random Crop here (is a kind of complicated because of the x and y labels.)
+    #here could be done a random crop, but atention to the labels!!
     return image,label
 def validdata_preprocessor(picname,label):
     content = tf.read_file(origin_path +"validDataset/"+ picname)
     image = tf.image.decode_png(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float32)
-    #ToDo: random Crop here (is a kind of complicated because of the x and y labels.)
+    #here could be done a random crop, but atention to the labels!!
     return image,label
     
 def main():

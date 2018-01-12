@@ -23,16 +23,22 @@
 %Todos einfach bezeichnen
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
  
+%Macht es möglich eine Aufzählung mit eigenen Labels zu machen
+\usepackage{blindtext}
+\usepackage{scrextend}
+\addtokomafont{labelinglabel}{\sffamily}
+
 \pagestyle{headings}
 
 
 
 \begin{document}
+
+
+
+
+\input{Kapitel/00Titelblatt/Titelblatt.tex}
 \todo[inline]{Dies ist ein Beispiel für ein Todo, und sollte vor Abgabe gelöscht werden ;)}
-
-
-
-\input{Kapitel/Titelblatt/Titelblatt.tex}
 
 \newpage
 %Inhaltsverzeichnis
@@ -40,16 +46,26 @@
 % das Abbildungsverzeichnis
 \listoffigures
 
-\input{Kapitel/Abstract/Abstract.tex}
+\input{Kapitel/10Abstract/Abstract.tex}
 
-\input{Kapitel/Resultate/Resultate.tex}
+\input{Kapitel/20Pretraining/Pretraining.tex}
 
-\input{Kapitel/DatenPipeline/DatenPipeline.tex}
+\input{Kapitel/30DatenPipeline/DatenPipeline.tex}
+
+\input{Kapitel/40Netzwerk/Netzwerk.tex}
+
+\input{Kapitel/50Kostenfunktion/Kostenfunktion.tex}
+
+\input{Kapitel/60Tests/Tests.tex}
+
+\input{Kapitel/70Resultate/Resultate.tex}
+
+\input{Kapitel/80Fazit/Fazit.tex}
 
 \newpage
 %sicherstellen, dass Literaturverzeichnis auch im Inhaltsverzeichnis aufgeführt wird.
 \addcontentsline{toc}{section}{Literatur}
 %Literaturverzeichnis anzeigen:
-\bibliography{Kapitel/Literaturverzeichnis/literatur}
+\bibliography{Kapitel/90Literaturverzeichnis/literatur}
 
 \end{document}
