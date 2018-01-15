@@ -1,0 +1,45 @@
+\newpage
+%Kapitelüberschrift
+\section{Architektur} 
+
+\begin{table}
+\centering
+\begin{tabularx}{1.1\textwidth}{|l|l|l|l|l|X|}
+\hline
+\textbf{Layer} & \textbf{Filtertyp}  & \textbf{Anzahl} & \textbf{Grösse} & \textbf{Strides} & \textbf{Output} \\
+\hline 	0	& 					&		&		&		& 448x448x1\\
+\hline 	1	& Convolutional		& 64		& 7x7	& 2x2	& 224x224x64	\\
+\hline 	2	& Maxpool      		& 		& 2x2	& 2x2	& 112x112x64	\\
+\hline 	3   & Convolutional		& 192	& 3x3	& 1x1	& 112x112x192\\
+\hline 	4	& Maxpool			& 		& 2x2	& 2x2	& 56x56x192	\\
+\hline 	5	& Convolutional		& 128	& 1x1	& 1x1	& 56x56x128	\\
+\hline 	6	& Convolutional		& 256	& 3x3	& 1x1	& 56x56x256	\\
+\hline 	7	& Convolutional		& 256	& 1x1	& 1x1	& 56x56x256	\\
+\hline 	8	& Convolutional		& 512	& 3x3	& 1x1	& 56x56x512	\\
+\hline 	9	& Maxpool			&		& 2x2	& 2x2	& 28x28x512	\\
+\hline 	10	& Convolutional		& 256	& 1x1	& 1x1	& 28x28x256	\\
+\hline 	11	& Convolutional		& 512	& 3x3	& 1x1	& 28x28x512	\\
+\hline 	12	& Convolutional		& 256	& 1x1	& 1x1	& 28x28x256	\\
+\hline 	13	& Convolutional		& 512	& 3x3	& 1x1	& 28x28x512	\\
+\hline 	14	& Convolutional		& 256	& 1x1	& 1x1	& 28x28x256	\\
+\hline 	15	& Convolutional		& 512	& 3x3	& 1x1	& 28x28x512	\\
+\hline  	16	& Convolutional		& 256	& 1x1	& 1x1	& 28x28x256	\\
+\hline  	17	& Convolutional		& 512	& 3x3	& 1x1	& 28x28x512	\\
+\hline 	18	& Convolutional		& 512	& 1x1	& 1x1	& 28x28x512	\\
+\hline  	19	& Convolutional		& 1024	& 3x3	& 1x1	& 28x28x1024	\\
+\hline  	20	& Maxpool			&		& 2x2	& 2x2	& 14x14x1024	\\
+\hline  	21	& Convolutional		& 512	& 1x1	& 1x1	& 14x14x512	\\
+\hline  	22	& Convolutional		& 1024	& 3x3	& 1x1	& 14x14x1024	\\
+\hline  	23	& Convolutional		& 512	& 1x1	& 1x1	& 14x14x512	\\
+\hline  	24	& Convolutional		& 1024	& 3x3	& 1x1	& 14x14x1024	\\
+\hline  	25	& Convolutional		& 1024	& 3x3	& 1x1	& 14x14x1024	\\
+\hline  	26	& Convolutional		& 1024	& 3x3	& 2x2	& 7x7x1024	\\
+\hline  	27	& Convolutional		& 1024	& 3x3	& 1x1	& 7x7x1024	\\
+\hline  	28	& Convolutional		& 1024	& 3x3	& 1x1	& 7x7x1024	\\
+\hline 	31	& Fully-Connected	&		&(7x7x1024)x4096	&	& 4096  \\
+\hline  	32	& Fully-Connected	&		& 4096x(7x7x6)	&	& 7x7x6 \\
+\hline 	
+\end{tabularx}
+\caption{Yolo-Architektur}
+\label{tbl:yolo_architektur}
+\end{table}

@@ -4,6 +4,10 @@
 \contentsline {subsection}{\numberline {1.2}Vorgehen}{4}
 \contentsline {subsection}{\numberline {1.3}Fazit}{4}
 \contentsline {section}{\numberline {2}Pretraining}{6}
+\contentsline {subsection}{\numberline {2.1}Daten}{6}
+\contentsline {subsection}{\numberline {2.2}Netzwerk}{6}
+\contentsline {subsection}{\numberline {2.3}Kostenfunktion}{6}
+\contentsline {subsection}{\numberline {2.4}Gewichte}{6}
 \contentsline {section}{\numberline {3}Daten-Pipeline}{7}
 \contentsline {subsection}{\numberline {3.1}Bilder aufnehmen}{7}
 \contentsline {subsection}{\numberline {3.2}Fingerdetektion}{8}
@@ -12,13 +16,13 @@
 \contentsline {subsubsection}{\numberline {3.4.1}Label-Tensor}{10}
 \contentsline {subsubsection}{\numberline {3.4.2}Liste von Label-Tensoren}{11}
 \contentsline {subsection}{\numberline {3.5}Daten in Neuronales Netzwerk einlesen}{12}
-\contentsline {section}{\numberline {4}Netzwerk}{14}
-\contentsline {section}{\numberline {5}Kostenfunktion}{15}
-\contentsline {section}{\numberline {6}Tests}{16}
-\contentsline {section}{\numberline {7}Resultate}{17}
-\contentsline {subsection}{\numberline {7.1}Testvoraussetzungen}{17}
-\contentsline {subsection}{\numberline {7.2}Analyse}{17}
-\contentsline {subsubsection}{\numberline {7.2.1}Distanz}{17}
-\contentsline {subsubsection}{\numberline {7.2.2}Intersection Over Union IOU}{21}
-\contentsline {section}{\numberline {8}Fazit}{23}
-\contentsline {section}{Literatur}{24}
+\contentsline {section}{\numberline {4}Architektur}{14}
+\contentsline {section}{\numberline {5}Kostenfunktion}{16}
+\contentsline {section}{\numberline {6}Tests}{17}
+\contentsline {section}{\numberline {7}Resultate}{18}
+\contentsline {subsection}{\numberline {7.1}Testvoraussetzungen}{18}
+\contentsline {subsection}{\numberline {7.2}Analyse}{18}
+\contentsline {subsubsection}{\numberline {7.2.1}Distanz}{18}
+\contentsline {subsubsection}{\numberline {7.2.2}Intersection Over Union IOU}{22}
+\contentsline {section}{\numberline {8}Fazit}{24}
+\contentsline {section}{Literatur}{25}

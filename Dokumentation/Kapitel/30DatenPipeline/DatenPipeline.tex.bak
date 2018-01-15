@@ -15,11 +15,11 @@ Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Dat
 \begin{figure}
 	\centering
 	\begin{minipage}[b]{0.48\textwidth}	
-		\includegraphics[trim = 270mm 90mm 90mm 170mm, clip, width=\textwidth]{Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png}
+		\includegraphics[trim = 270mm 90mm 90mm 170mm, clip, width=\textwidth]{Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png}
 	\end{minipage}
 	\hfill
 	\begin{minipage}[b]{0.48\textwidth}		
-		\includegraphics[trim = 270mm 90mm 90mm 170mm, clip,width=\textwidth]{Kapitel/DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png}
+		\includegraphics[trim = 270mm 90mm 90mm 170mm, clip,width=\textwidth]{Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png}
 	\end{minipage}
 	\caption{Resultate Hough-Transformation}
 	\label{img:HoughTransformation}
@@ -121,7 +121,7 @@ Würden also alle 10 Finger eines Menschen gelabelt, müsste der Labeltensor ent
 %Label-Tensor
 \begin{figure}	
 	\centering
-	\includegraphics[width=.7\textwidth]{Kapitel/DatenPipeline/Bilder/LabelTensor.pdf}
+	\includegraphics[width=.7\textwidth]{Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf}
 	\caption{Label-Tensor}
 	\label{img:label_tensor}
 \end{figure} 
@@ -137,7 +137,7 @@ Der Speicherort dieser Liste ist derselbe wie derjenige, an welchem alle Bilder 
 %Label-List
 \begin{figure}	
 	\centering
-	\includegraphics[width=.4\textwidth]{Kapitel/DatenPipeline/Bilder/LabelList.pdf}
+	\includegraphics[width=.4\textwidth]{Kapitel/30DatenPipeline/Bilder/LabelList.pdf}
 	\caption{Liste von Label-Tensoren}
 	\label{img:label_list}
 \end{figure} 

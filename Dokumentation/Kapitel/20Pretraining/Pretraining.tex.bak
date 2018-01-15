@@ -8,7 +8,7 @@ Dabei handelte es sich um das ImageNet 1000-Klassen Wettbewerbsdatenset.
 Dieses Datenset bestand aus rund 1.3 Millionen Bildern, welche alle ein Objekt aus genau 1000 möglichen Objekten enthielten.
 Das Label wird über einen eineindeutigen Code im Namen identifiziert.
 \subsection{Netzwerk}
-Das Netzwerk welches im Pretraining verwendet wurde war nahezu identisch mit dem Netzwerk, welches später auch im Training verwendet wurde.
+Die Architektur, welche im Pretraining verwendet wurde war nahezu identisch mit derjenigen, welche später auch im Training (Abbildung  verwendet wurde.
 Einzig die letzten paar Layer waren anders. 
 \subsection{Kostenfunktion}
 \subsection{Gewichte}
