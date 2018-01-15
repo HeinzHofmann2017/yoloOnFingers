@@ -7,7 +7,7 @@
 \begin{tabularx}{1.1\textwidth}{|l|l|l|l|l|X|}
 \hline
 \textbf{Layer} & \textbf{Filtertyp}  & \textbf{Anzahl} & \textbf{Grösse} & \textbf{Strides} & \textbf{Output} \\
-\hline 	0	& 					&		&		&		& 448x448x1\\
+\hline 	0	& Input				&		&		&		& 448x448x1\\
 \hline 	1	& Convolutional		& 64		& 7x7	& 2x2	& 224x224x64	\\
 \hline 	2	& Maxpool      		& 		& 2x2	& 2x2	& 112x112x64	\\
 \hline 	3   & Convolutional		& 192	& 3x3	& 1x1	& 112x112x192\\

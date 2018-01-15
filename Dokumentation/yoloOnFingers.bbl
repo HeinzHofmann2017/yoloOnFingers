@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{deeplearning}
+Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+\newblock {\em {D}eep {L}earning}.
+\newblock MIT Press, 2016.
+\newblock \url{http://www.deeplearningbook.org}.
+
 \bibitem{TabeasFingertracking}
 Tabea Méndez.
 \newblock {F}ingerspitzen-{T}racking im {3D}-{R}aum.
