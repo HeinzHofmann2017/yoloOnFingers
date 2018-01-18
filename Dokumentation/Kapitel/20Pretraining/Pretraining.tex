@@ -110,16 +110,15 @@ Dieser Ansatz wurde aber nicht weiter verfolgt, weil es einerseits mit den Pytho
 \subsection{Fazit}
 Sobald man Tensorflow grundsätzlich verstanden hat, ist das bauen einer Klassifizierungs-Architektur eigentlich sehr einfach. 
 Man muss dafür nicht einmal unbedingt die Theorie hinter dem Deeplearning verstanden haben, sondern muss einfach wissen, welche Bausteine \grqq{}man\grqq{} nimmt und wie diese angeordnet werden müssen.
-Weil für das Training in einer ersten Phase entschieden wurde, dass für Gewichte und Neuronen Float16 verwendet werden soll, musste dies entsprechend auch im Pretraining so gemacht werden. 
-Aus diesem Grund gab es auch im Pretraining einige Probleme mit nicht direkt erklärbaren Effekten.
-Es gab Vermutungen, dass es sich bei diesen Problemen um Overflow-Probleme gehandelt hatte (Abbildung \ref{img:overvlow_pretraining}).
-Seit alles auf Float32(Standard in Tensorflow) umgestellt wurde, gab es keinerlei solche Probleme mehr.
-Entsprechend ist die Empfehlung in Tensorflow so gut es geht nicht vom Standard abzuweichen und die Architektur entsprechend halt den Gegebenheiten anzupassen.
-\todo[inline]{Hier noch ein korrektes Bild vom Tensorboard machen und einfügen. Anstelle des Bildes hier unterhalb!!}
+Weil für das Training in einer ersten Phase entschieden wurde, dass für Gewichte und Neuronen Float16 verwendet werden soll \todo[inline]{Hier eine Referenz zu dieser Entscheidung im Architektur-Teil des Trainings einbauen!!}, musste dies entsprechend auch im Pretraining so gemacht werden. 
+Aus diesem Grund gab es auch im Pretraining einige Probleme mit nicht direkt erklärbaren Effekten (Abbildung \ref{img:overflow_pretraining}).
+Es gab Vermutungen, dass es sich bei diesen Problemen um Overflow-Probleme gehandelt hatte.
+Seit alles auf Float32(Standard in Tensorflow) umgestellt wurde, gab es entsprechend keinerlei solche Probleme mehr.
+Dementsprechend ist die Empfehlung in Tensorflow was die Datentypen angeht, möglichst nicht vom Standard abzuweichen, auch wenn dies Einfluss auf die Architektur und andere wichtige Punkte nehmen kann.
 \begin{figure}
 	\centering
-	\includegraphics[width=.7\textwidth]{Kapitel/20Pretraining/Bilder/Test_top5.pdf}
-	\caption{Test-Top5 nach 6 Tagen Lernzeit}
-	\label{img:overvlow_pretraining}
+	\includegraphics[width=.7\textwidth]{Kapitel/20Pretraining/Bilder/Overflow.pdf}
+	\caption{Effekte in Training(Weinrot) und Validierung(Hellblau) mit Float16.}
+	\label{img:overflow_pretraining}
 \end{figure}  
  

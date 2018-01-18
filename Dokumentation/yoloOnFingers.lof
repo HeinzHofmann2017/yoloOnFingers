@@ -1,15 +1,15 @@
 \select@language {ngerman}
-\contentsline {figure}{\numberline {1}{\ignorespaces Kosten und Top5-Test von vergleichbaren Tasks im Pretraining \IeC {\"u}ber einen beschr\IeC {\"a}nkten Zeitraum. SGD=dunkelblau. ADAM=hellblau.}}{8}
-\contentsline {figure}{\numberline {2}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit}}{8}
-\contentsline {figure}{\numberline {3}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit}}{10}
-\contentsline {figure}{\numberline {4}{\ignorespaces Resultate Hough-Transformation}}{11}
-\contentsline {figure}{\numberline {5}{\ignorespaces Label-Tensor}}{15}
-\contentsline {figure}{\numberline {6}{\ignorespaces Liste von Label-Tensoren}}{16}
-\contentsline {figure}{\numberline {7}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{23}
-\contentsline {figure}{\numberline {8}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{24}
-\contentsline {figure}{\numberline {9}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{24}
-\contentsline {figure}{\numberline {10}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{25}
-\contentsline {figure}{\numberline {11}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{25}
-\contentsline {figure}{\numberline {12}{\ignorespaces Prediction knapp besser als IOU=0.4}}{27}
-\contentsline {figure}{\numberline {13}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{27}
-\contentsline {figure}{\numberline {14}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{28}
+\contentsline {figure}{\numberline {1}{\ignorespaces Resultate Hough-Transformation}}{7}
+\contentsline {figure}{\numberline {2}{\ignorespaces Label-Tensor}}{11}
+\contentsline {figure}{\numberline {3}{\ignorespaces Liste von Label-Tensoren}}{12}
+\contentsline {figure}{\numberline {4}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{19}
+\contentsline {figure}{\numberline {5}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{20}
+\contentsline {figure}{\numberline {6}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{20}
+\contentsline {figure}{\numberline {7}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{21}
+\contentsline {figure}{\numberline {8}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{21}
+\contentsline {figure}{\numberline {9}{\ignorespaces Prediction knapp besser als IOU=0.4}}{23}
+\contentsline {figure}{\numberline {10}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{23}
+\contentsline {figure}{\numberline {11}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{24}
+\contentsline {figure}{\numberline {12}{\ignorespaces Kosten und Top5-Test von vergleichbaren Tasks im Pretraining \IeC {\"u}ber einen beschr\IeC {\"a}nkten Zeitraum. SGD=dunkelblau. ADAM=hellblau.}}{25}
+\contentsline {figure}{\numberline {13}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit}}{27}
+\contentsline {figure}{\numberline {14}{\ignorespaces Effekte in Training(Weinrot) und Validierung(Hellblau) mit Float16.}}{29}
