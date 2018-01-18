@@ -16,4 +16,13 @@ Joseph Redmon, Santosh~Kumar Divvala, Ross~B. Girshick, and Ali Farhadi.
 \newblock You only look once: Unified, real-time object detection.
 \newblock {\em CoRR}, abs/1506.02640, 2015.
 
+\bibitem{yolo2}
+Joseph Redmon and Ali Farhadi.
+\newblock {YOLO9000:} better, faster, stronger.
+\newblock {\em CoRR}, abs/1612.08242, 2016.
+
+\bibitem{PrivateCommunication}
+Guido Schuster, Tabea M\'{e}ndez, Hannes Badertscher, and Jonas Schmid.
+\newblock personal communication.
+
 \end{thebibliography}

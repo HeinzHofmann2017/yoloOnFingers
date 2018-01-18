@@ -42,8 +42,8 @@
 
 
 \input{Kapitel/00Titelblatt/Titelblatt.tex}
-\todo[inline]{Dies ist ein Beispiel für ein Todo, und sollte vor Abgabe gelöscht werden ;)}
-\todo[inline]{Hier weiterarbeiten}
+\todo[inline,size=\Large]{Dies ist ein Beispiel für ein Todo, und sollte vor Abgabe gelöscht werden ;)}
+
 \newpage
 %Inhaltsverzeichnis
 \tableofcontents

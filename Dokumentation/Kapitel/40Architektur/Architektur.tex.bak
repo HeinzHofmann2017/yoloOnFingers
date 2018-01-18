@@ -2,6 +2,73 @@
 %Kapitelüberschrift
 \section{Architektur} 
 
+\subsection{Auswahl der Architektur}
+Die Architektur wurde stark dem Yolo-Paper \cite{yolo} angelehnt. 
+Dies obwohl zu diesem Zeitpunkt auch schon das Yolo v2-Paper \cite{yolo2} erschienen war.
+Es gab damals schon viele gute Gründe dafür von Beginn weg das Netzwerk und Kostenfunktionen nach dem Yolo v2-Paper aufzubauen.
+So ist Yolo v2 nach dessen Paper zu urteilen schneller und genauer. 
+Der Grund warum dies nicht gemacht wurde war, dass Yolo v1 nicht ganz so komplex aufgebaut war, und auch noch nicht darauf abzielte möglichst viele verschiedene Klassen zu erkennen. 
+(Das Ziel dieser Arbeit ist schliesslich eine begrenzte Anzahl von Klassen zu detektieren.)
+Man ging mit der Einstellung an die Arbeit, dass wenn erst das \grqq{}einfache\grqq{} Yolo v1  erfolgreich implementiert wurde, dieses entsprechend immer noch zur 2. Version erweitert werden könnte.
+
+\todo[inline,size=\Large]{evtl. den folgenden Abschnitt entfernen.}
+
+Dazu kam es allerdings nicht, weil verschiedene Faktoren die erfolgreiche Fertigstellung von v1 verzögerten. 
+(Genauere Informationen dazu werden später im Kapitel \todo[inline,size=\Large]{min. hier eine Referenz auf die Erklärung warum die Verzögerungen auftraten machen.} erläutert.) 
+Ausserdem war das Grundlegende Ziel immer einen Eindruck dafür zu bekommen, was mit State-Of-The-Art Lösungen aktuell in diesem Bereich überhaupt möglich wäre.
+Entsprechend hatte man sich auch primär auf dieses Ziel fokussiert.
+
+\subsection{Architekturaufbau}
+Der grundlegende Aufbau der Architektur, wie er letztendlich aussah kann man in der Tabelle \ref{tbl:yolo_architektur} betrachten. 
+Dies sah allerdings noch nicht immer so aus.
+Obwohl die Convolution-Filter schon immer so ausgesehen hatten, sah der ursprüngliche Bildinput und entsprechend die Outputs der verschiedenen Layers mal anders aus.
+Nach ausführlicher Diskussion \cite{PrivateCommunication} wurde zu Beginn des Architekturdesigns entschieden, dass man nicht mit 448x448 Bildern arbeitet, wie dies im Yolo-Paper \cite{yolo} gemacht wurde.
+Der Grund dafür war, dass für das Training wie auch später für den Praxiseinsatz immer 1280x960 grosse Bilder zur Verfügung standen und man entsprechend nicht Informationen \grqq{}wegwerfen\grqq{} sondern so lange wie möglich im Netz behalten wollte.
+So war der Input (Layer 0 in Tabelle \ref{tbl:yolo_architektur}) damals 1280x960x1, entsprechend dann auch der Output von Layer 1 nicht mehr 224x224x64 sondern 640x480x64 usw.
+Da dies am Schluss nicht aufgeht mit dem Netzwerk, hatte es damals noch zwei zusätzliche Layer (29 \& 30), welche jetzt nicht mehr vorhanden sind.
+Layer 29 war dabei für ein Zeropadding und Layer 30 für ein Maxpooling mit Strides 3x3 zuständig.
+
+Diese damalige Architektur war zu gross, um sie auch nur mit Batchsize=1 und Float32 zum laufen zu kriegen. 
+Entsprechend wurden alle Gewichte und Knoten mit Float16 initialisiert. 
+Seit dieser Initialisierung war eine Batchsize=7 möglich.
+
+Mit dieser Architektur wurde eine Zeit lang trainiert, bis sich immer häufiger spezielle Effekte im Training, wie auch im Pretraining häuften.
+Es konnte auch nach langer Analyse nicht abschliessend geklärt werden, was die Ursache für diese Effekte (Siehe Bild \todo[inline,size=\Large]{Hier noch Referenz auf Bilder  mit speziellen Effekten einfügen.}) war.
+\todo[inline,size=\Large]{Hier Bilder der speziellen Effekte im Pretraining und im Training einfügen}
+Die Vermutung lag jedoch darin, dass es sich um Overflow-Probleme im Zusammenhang mit den verwendeten Float16 handeln könnte.
+Entsprechend wurde die Architektur umgebaut, sodass die Input-Bilder künstlich verkleinert wurden, um dafür Float32 verwenden zu können.
+In diesem Schritt war es naheliegend, dass man sich gleich den originalen Werten, wie sie von Yolo \cite{yolo} verwendet wurden annäherte.
+Entsprechend wurden die Input-Bilder auf 448x448 verkleinert.
+Dies hatte wiederum zur Folge, dass seit diesem Zeitpunkt sogar eine Batchsize=24 verwendet werden konnte.
+Ausserdem, und dies war noch viel wichtiger, traten die genannten speziellen Effekte weder im Pretraining noch im Training je wieder auf. 
+
+Aus dieser Erfahrung kann man ableiten, dass bei Convolutional-Neural-Networks die Grösse der Input-Bilder mehr ins Gewicht fallen als die Anzahl Gewichte. 
+Dies scheint nachträglich auch logisch, denn die Bilder werden während dem \grqq{}flow\grqq{} durch das Netzwerk mehrmals zwischengespeichert.
+In der Tabelle \ref{tbl:anzahl_gewichte_knoten} ist die Berechnung, der Anzahl Gewichte und der Anzahl Knoten unter der Annahme, dass jedes Bild zwischen den Layern einmal als Knoten abgespeichert wird.
+Dabei wurde nicht berücksichtigt, dass es pro Layer mehrere Einheiten von Nodes geben kann, wie z.B. vor und nach der Aktivierungsfunktion. 
+Auch ohne diese zusätzlichen Layer kann man aber deutlich erkennen, dass wenn man die Batchsize solange erhöht, bis das GPU-RAM (im Rahmen dieser Arbeit 16GB) voll ist, man klar mehr Speicher für Knoten benötigt, als für Gewichte.
+
+Daraus konnte folgendes gelernt werden: Wenn in Convolutional Neural Networks Speicherknappheit ein Problem ist, sollte entweder das Netzwerk verkürzt (weniger Layer = weniger Knoten) oder die Input-Bilder verkleinert (= ebenfalls weniger Knoten) werden.
+Nicht aber sollte man auf Bastellösungen ausweichen, dass man sich was Datentypen angeht ausserhalb des Standardbereichs aufhält. 
+Ausser natürlich, man weiss was man tut und kennt entsprechend den Source-Code von Tensorflow in- und auswendig.
+
+\begin{table}
+\centering
+\begin{tabularx}{\textwidth}{|X|l|l|l|}
+\hline  Beschreibung & Anzahl & in Bytes(Float16) & in Bytes(Float32)\\
+\hline  Gewichte											& 206 M 	& 413 MB 	& 827 MB		\\
+\hline  Knoten:Input=1280x960 							&  98 M 	& 186 MB 	&			\\
+\hline  Knoten:Input=1280x960 Batchsize=7, GPU-RAM voll	& 689 M 	& 1.38 GB 	& 			\\
+\hline  Knoten:Input=448x448 							&  16 M 	& 			& 64M 		\\
+\hline  Knoten:Input=448x448, Batchsize=24, GPU-RAM voll	& 384 M 	& 			& 1.54GB 	\\
+\hline
+\end{tabularx}
+\caption{Anzahl Gewichte und Knoten}
+\label{tbl:anzahl_gewichte_knoten}
+\end{table} 
+
+\subsection{}
+
 \begin{table}
 \centering
 \begin{tabularx}{1.1\textwidth}{|l|l|l|l|l|X|}

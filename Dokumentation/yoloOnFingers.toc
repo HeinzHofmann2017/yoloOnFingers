@@ -12,19 +12,22 @@
 \contentsline {subsubsection}{\numberline {2.4.2}Liste von Label-Tensoren}{11}
 \contentsline {subsection}{\numberline {2.5}Daten in Neuronales Netzwerk einlesen}{12}
 \contentsline {section}{\numberline {3}Architektur}{14}
-\contentsline {section}{\numberline {4}Kostenfunktion}{16}
-\contentsline {section}{\numberline {5}Tests}{17}
-\contentsline {section}{\numberline {6}Resultate}{18}
-\contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{18}
-\contentsline {subsection}{\numberline {6.2}Analyse}{18}
-\contentsline {subsubsection}{\numberline {6.2.1}Distanz}{18}
-\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{22}
-\contentsline {section}{\numberline {7}Pretraining}{24}
-\contentsline {subsection}{\numberline {7.1}Daten}{24}
-\contentsline {subsection}{\numberline {7.2}Architektur}{24}
-\contentsline {subsection}{\numberline {7.3}Kostenfunktion und Optimierer}{25}
-\contentsline {subsection}{\numberline {7.4}Tests \& Resultate}{25}
-\contentsline {subsection}{\numberline {7.5}Gewichte}{28}
-\contentsline {subsection}{\numberline {7.6}Fazit}{28}
-\contentsline {section}{\numberline {8}Fazit}{29}
-\contentsline {section}{Literatur}{30}
+\contentsline {subsection}{\numberline {3.1}Auswahl der Architektur}{14}
+\contentsline {subsection}{\numberline {3.2}Architekturaufbau}{14}
+\contentsline {subsection}{\numberline {3.3}}{16}
+\contentsline {section}{\numberline {4}Kostenfunktion}{18}
+\contentsline {section}{\numberline {5}Tests}{19}
+\contentsline {section}{\numberline {6}Resultate}{20}
+\contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{20}
+\contentsline {subsection}{\numberline {6.2}Analyse}{20}
+\contentsline {subsubsection}{\numberline {6.2.1}Distanz}{20}
+\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{24}
+\contentsline {section}{\numberline {7}Pretraining}{26}
+\contentsline {subsection}{\numberline {7.1}Daten}{26}
+\contentsline {subsection}{\numberline {7.2}Architektur}{26}
+\contentsline {subsection}{\numberline {7.3}Kostenfunktion und Optimierer}{27}
+\contentsline {subsection}{\numberline {7.4}Tests \& Resultate}{27}
+\contentsline {subsection}{\numberline {7.5}Gewichte}{30}
+\contentsline {subsection}{\numberline {7.6}Fazit}{30}
+\contentsline {section}{\numberline {8}Fazit}{31}
+\contentsline {section}{Literatur}{32}
