@@ -48,10 +48,6 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 
 
 \subsection{Design Kostenfunktion}
-Die Auswahl bzw. das Design der Kostenfunktion ist wahrscheinlich der wichtigste Schritt im Design eines Neuronalen Netzwerks. 
-In dieser Arbeit bestand das grosse Glück, dass die Kostenfunktion grösstenteils vom Yolo v1-Paper \cite{yolo} vorgegeben wurde (Was auch mit ein Grund für die Wahl von Yolo v1 war).
-Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in 
-
 \begin{eqfloat}
 \begin{equation}
 \begin{split}
@@ -89,6 +85,27 @@ Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in
 \label{tbl:beschr_kostenfuntion}
 \end{table} 
 
+Die Auswahl bzw. das Design der Kostenfunktion ist wahrscheinlich der wichtigste Schritt im Design eines Neuronalen Netzwerks. 
+In dieser Arbeit bestand das grosse Glück, dass die Kostenfunktion grösstenteils vom Yolo v1-Paper \cite{yolo} vorgegeben wurde (Was auch mit ein Grund für die Wahl von Yolo v1 war).
+Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in Gleichung \ref{eq:Kostenfunktion} betrachten. 
+Diese Kostenfunktion ist etwas einfacher als die Kostenfunktion, wie Sie im Yolo v1 Paper zu sehen ist. 
+Dies hat zwei Gründe. 
+Zum einen wurde pro Gitterzelle nur eine Boundingbox vorhergesagt. 
+So fällt für Zeile 1-4 der Kostenfunktion das zweite Summenzeichen, sowie deren iteration über die Variable j weg. 
+Zum anderen wurde nur eine Klasse(rechter Zeigefinger) gelabelt und vorhergesagt.
+So fällt auf der Zeile 5 das Summenzeichen und deren entsprechende Iteration über alle Klassen weg.
+
+Spannend war, dass es im aktuellen Fall für das Netzwerk nicht möglich war einen nach unten korrigierenden Einfluss auf die Variable $p_i$ zu nehmen.
+So gingen die Vorhersagen für die $p_i$'s je länger man lernte desto stärker gegen 1.  
+Der Grund dafür lag darin, dass $\mathds{1}_{i}^{obj}$ immer = 0 war, wenn \textbf{kein} rechter Zeigefingerspitz in dieser Gitterzelle enthalten ist.
+So wird das Netzwerk nie korrigiert, wenn es die Wahrscheinlichkeit höher einschätzt, als sie tatsächlich ist. 
+Dies stellte allerdings kein Problem dar. 
+Denn die letztendliche Identifikation des Fingers, welche mit dem resultierenden Wert aus $c_i * p_i$ ermittelt wurde, war wegen der Nähe von $p_i$ zu 1 sozusagen gleichzusetzen mit $c_i$.
+Da auch mit mehreren Klassen $c_i$ eine Dominante Rolle spielen würde, wenn es darum geht, ob ein Objekt erkannt wurde oder nicht, würde höchstwahrscheinlich die Performance nicht besser, wenn man Yolo mit mehr als einer Klasse trainieren würde.
+
+
+
+
 
 
  
@@ -100,5 +117,9 @@ Folgende Punkte konnten aus dieser Arbeit gelernt werden, bzw. sollten im Falle 
 \item Man darf die Wahl der Kostenfunktion nicht unterschätzen. 
 Wie man im Kapitel \ref{chapter:erster_wurf} sehen kann, darf man nicht annehmen, dass die Kostenfunktion frei und ohne gross nachzudenken gewählt werden kann. 
 Vielmehr muss die Wahl der Kostenfunktion stark mit dem Netzwerk und dem Problem interagieren. 
-\item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt (Dies weil die Komplexität von zwei Boundingboxen in Tensorflow nahezu jegliches Mass überstiegen hätte.). Wahrscheinlich könnte die Performance noch verbessert werden, wenn anstelle von einer min. zwei Boundingboxen pro Gitterzelle vorhergesagt würden.
+\item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt (Dies weil die Komplexität von zwei Boundingboxen in Tensorflow nahezu jegliches Mass überstiegen hätte.). Wahrscheinlich könnte die Performance noch verbessert werden, wenn anstelle von einer min. zwei Boundingboxen pro Gitterzelle vorhergesagt würden. Dies aufgrund der Theorie \cite{PrivateCommunication}, dass mit mehreren Boundingboxen verschiedene Features eines Bildes verwendet werden können, um einen Finger vorherzusagen.
+\item Zum Vergleich: Im Paper Yolo v2 wurde anstelle von 7x7 Gitterzellen 13x13 Gitterzellen verwendet, was in einer höheren Präzision resultieren würde. 
+Eine höhere Präzision wäre für das Endziel dieser Arbeit nur zu begrüssen. 
+Wenn dies allerdings mit Yolo v1 umgesetzt würde, hätte man das Problem, dass wegen dem Grösseren Speicheraufwand, welcher für die zusätzlichen Elemente \grqq{}verbraucht\grqq{} würde die Minibatchsize verkleinert werden müsste. 
+So wird angenommen, dass mit einer kompletten Umstellung auf Yolo v2 ein besseres Resultat erzielt würde, als wenn man Yolo v1 einfach erweitern würde. 
 \end{enumerate}

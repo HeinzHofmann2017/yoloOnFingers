@@ -19,7 +19,7 @@
 \contentsline {subsection}{\numberline {4.1}Erster Wurf}{20}
 \contentsline {subsection}{\numberline {4.2}Netzwerkoutput}{20}
 \contentsline {subsection}{\numberline {4.3}Design Kostenfunktion}{22}
-\contentsline {subsection}{\numberline {4.4}Fazit}{24}
+\contentsline {subsection}{\numberline {4.4}Fazit}{25}
 \contentsline {section}{\numberline {5}Tests}{26}
 \contentsline {section}{\numberline {6}Resultate}{27}
 \contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{27}
