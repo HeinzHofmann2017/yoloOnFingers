@@ -76,6 +76,7 @@ Ausserdem erhält jedes Bild einen neuen Namen / eine neue Nummerierung, wodurch
 \item Die Distanzen X und Y sowie die Höhe und Breite der Boundingbox mussten noch normalisiert werden, damit beim Training einfacher gerechnet werden kann.
 \end{enumerate}
 \subsubsection{Label-Tensor}
+\label{chapter:label_tensor}
 Die Labels pro Bild sind in einem Tensor angeordnet. 
 (Siehe Abbildung \ref{img:label_tensor})
 Diese Anordnung wurde stark am Output-Tensor wie er im Yolo-Paper \cite{yolo} erscheint angelehnt.
@@ -111,7 +112,7 @@ Ist die Box \grqq{}unendlich\grqq{} schmal, so ist diese Variable gleich null.
 Ist eine rechte Zeigefingerspitze in dieser Gitterzelle, so ist diese Variable gleich eins.
 Ist keine rechte Zeigefingerspitze in dieser Gitterzelle, so ist diese Variable gleich null.
 
-In diesem vereinfachten Fall gibt es nur ein p.
+In diesem vereinfachten Fall gibt es nur eine p-Schicht.
 (Weil nur der rechte Zeigefingerspitz gelabelt wurde.)
 Wären aber auf dem Bild alle Finger einzeln gelabelt, müsste der Labeltensor für jeden zusätzlich labelbaren Finger eine weitere Schicht p haben. 
 Würden also alle 10 Finger eines Menschen gelabelt, müsste der Labeltensor entsprechend 10 verschiedene p-Schichten haben.

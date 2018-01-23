@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  18 JAN 2018 18:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  23 JAN 2018 15:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -409,6 +409,81 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/03 v2.15a AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen106
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen107
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count89
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count90
+\leftroot@=\count91
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count92
+\DOTSCASE@=\count93
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen108
+LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
+\macc@depth=\count94
+\c@MaxMatrixCols=\count95
+\dotsspace@=\muskip11
+\c@parentequation=\count96
+\dspbrk@lvl=\count97
+\tag@help=\toks18
+\row@=\count98
+\column@=\count99
+\maxfields@=\count100
+\andhelp@=\toks19
+\eqnshift@=\dimen109
+\alignsep@=\dimen110
+\tagshift@=\dimen111
+\tagwidth@=\dimen112
+\totwidth@=\dimen113
+\lineht@=\dimen114
+\@envbody=\toks20
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2735.
+LaTeX Info: Redefining \] on input line 2736.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
+\symrsfs=\mathgroup6
+)
+(/usr/share/texlive/texmf-dist/tex/latex/doublestroke/dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
 (/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
 Package: todonotes 2015/07/09 .dtx Todonotes source and documentation.
 Package: todonotes 2012/07/25
@@ -421,23 +496,23 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 
 (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks17
-\XKV@tempa@toks=\toks18
+\XKV@toks=\toks22
+\XKV@tempa@toks=\toks23
 )
-\XKV@depth=\count89
+\XKV@depth=\count101
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks19
-\pgfutil@tempdima=\dimen106
-\pgfutil@tempdimb=\dimen107
+\pgfutil@everybye=\toks24
+\pgfutil@tempdima=\dimen115
+\pgfutil@tempdimb=\dimen116
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.t
 ex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box26
+\pgfutil@abb=\box28
 (/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
 ))
@@ -452,30 +527,30 @@ Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
 Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks20
-\pgfkeys@temptoks=\toks21
+\pgfkeys@pathtoks=\toks25
+\pgfkeys@temptoks=\toks26
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
 ex
-\pgfkeys@tmptoks=\toks22
+\pgfkeys@tmptoks=\toks27
 ))
-\pgf@x=\dimen108
-\pgf@y=\dimen109
-\pgf@xa=\dimen110
-\pgf@ya=\dimen111
-\pgf@xb=\dimen112
-\pgf@yb=\dimen113
-\pgf@xc=\dimen114
-\pgf@yc=\dimen115
+\pgf@x=\dimen117
+\pgf@y=\dimen118
+\pgf@xa=\dimen119
+\pgf@ya=\dimen120
+\pgf@xb=\dimen121
+\pgf@yb=\dimen122
+\pgf@xc=\dimen123
+\pgf@yc=\dimen124
 \w@pgf@writea=\write3
 \r@pgf@reada=\read1
-\c@pgf@counta=\count90
-\c@pgf@countb=\count91
-\c@pgf@countc=\count92
-\c@pgf@countd=\count93
-\t@pgf@toka=\toks23
-\t@pgf@tokb=\toks24
-\t@pgf@tokc=\toks25
+\c@pgf@counta=\count102
+\c@pgf@countb=\count103
+\c@pgf@countc=\count104
+\c@pgf@countd=\count105
+\t@pgf@toka=\toks28
+\t@pgf@tokb=\toks29
+\t@pgf@tokc=\toks30
  (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
 )
@@ -491,8 +566,8 @@ File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
 tex
 File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
-\pgfsyssoftpath@smallbuffer@items=\count94
-\pgfsyssoftpath@bigbuffer@items=\count95
+\pgfsyssoftpath@smallbuffer@items=\count106
+\pgfsyssoftpath@bigbuffer@items=\count107
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
 tex
@@ -505,12 +580,12 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen116
-\pgfmath@count=\count96
-\pgfmath@box=\box27
-\pgfmath@toks=\toks26
-\pgfmath@stack@operand=\toks27
-\pgfmath@stack@operation=\toks28
+\pgfmath@dimen=\dimen125
+\pgfmath@count=\count108
+\pgfmath@box=\box29
+\pgfmath@toks=\toks31
+\pgfmath@stack@operand=\toks32
+\pgfmath@stack@operation=\toks33
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
@@ -530,57 +605,57 @@ tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
 thmetics.code.tex)))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count97
+\c@pgfmathroundto@lastzeros=\count109
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
 x
 File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
-\pgf@picminx=\dimen117
-\pgf@picmaxx=\dimen118
-\pgf@picminy=\dimen119
-\pgf@picmaxy=\dimen120
-\pgf@pathminx=\dimen121
-\pgf@pathmaxx=\dimen122
-\pgf@pathminy=\dimen123
-\pgf@pathmaxy=\dimen124
-\pgf@xx=\dimen125
-\pgf@xy=\dimen126
-\pgf@yx=\dimen127
-\pgf@yy=\dimen128
-\pgf@zx=\dimen129
-\pgf@zy=\dimen130
+\pgf@picminx=\dimen126
+\pgf@picmaxx=\dimen127
+\pgf@picminy=\dimen128
+\pgf@picmaxy=\dimen129
+\pgf@pathminx=\dimen130
+\pgf@pathmaxx=\dimen131
+\pgf@pathminy=\dimen132
+\pgf@pathmaxy=\dimen133
+\pgf@xx=\dimen134
+\pgf@xy=\dimen135
+\pgf@yx=\dimen136
+\pgf@yy=\dimen137
+\pgf@zx=\dimen138
+\pgf@zy=\dimen139
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
 code.tex
 File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
-\pgf@path@lastx=\dimen131
-\pgf@path@lasty=\dimen132
+\pgf@path@lastx=\dimen140
+\pgf@path@lasty=\dimen141
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
 .tex
 File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
-\pgf@shorten@end@additional=\dimen133
-\pgf@shorten@start@additional=\dimen134
+\pgf@shorten@end@additional=\dimen142
+\pgf@shorten@start@additional=\dimen143
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
 x
 File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
-\pgfpic=\box28
-\pgf@hbox=\box29
-\pgf@layerbox@main=\box30
-\pgf@picture@serial@count=\count98
+\pgfpic=\box30
+\pgf@hbox=\box31
+\pgf@layerbox@main=\box32
+\pgf@picture@serial@count=\count110
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
 ode.tex
 File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
-\pgflinewidth=\dimen135
+\pgflinewidth=\dimen144
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
 s.code.tex
 File: pgfcoretransformations.code.tex 2015/08/07  (rcs-revision 1.20)
-\pgf@pt@x=\dimen136
-\pgf@pt@y=\dimen137
-\pgf@pt@temp=\dimen138
+\pgf@pt@x=\dimen145
+\pgf@pt@y=\dimen146
+\pgf@pt@temp=\dimen147
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
@@ -596,12 +671,12 @@ File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
 x
 File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
-\pgfarrowsep=\dimen139
+\pgfarrowsep=\dimen148
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
-\pgf@max=\dimen140
-\pgf@sys@shading@range@num=\count99
+\pgf@max=\dimen149
+\pgf@sys@shading@range@num=\count111
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
@@ -609,7 +684,7 @@ File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.
 tex
 File: pgfcoreexternal.code.tex 2014/07/09  (rcs-revision 1.21)
-\pgfexternal@startupbox=\box31
+\pgfexternal@startupbox=\box33
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.te
 x
@@ -625,15 +700,15 @@ File: pgfcorepatterns.code.tex 2013/11/07  (rcs-revision 1.5)
 )))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2014/03/21  (rcs-revision 1.35)
-\pgfnodeparttextbox=\box32
+\pgfnodeparttextbox=\box34
 ) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
 .sty
 Package: pgfcomp-version-0-65 2007/07/03 v3.0.1a (rcs-revision 1.7)
-\pgf@nodesepstart=\dimen141
-\pgf@nodesepend=\dimen142
+\pgf@nodesepstart=\dimen150
+\pgf@nodesepend=\dimen151
 )
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
 .sty
@@ -647,10 +722,10 @@ Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
 Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
-\pgffor@iter=\dimen143
-\pgffor@skip=\dimen144
-\pgffor@stack=\toks29
-\pgffor@toks=\toks30
+\pgffor@iter=\dimen152
+\pgffor@skip=\dimen153
+\pgffor@stack=\toks34
+\pgffor@toks=\toks35
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
@@ -658,31 +733,31 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
 .code.tex
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count100
-\pgfplotmarksize=\dimen145
+\pgf@plot@mark@count=\count112
+\pgfplotmarksize=\dimen154
 )
-\tikz@lastx=\dimen146
-\tikz@lasty=\dimen147
-\tikz@lastxsaved=\dimen148
-\tikz@lastysaved=\dimen149
-\tikzleveldistance=\dimen150
-\tikzsiblingdistance=\dimen151
-\tikz@figbox=\box33
-\tikz@figbox@bg=\box34
-\tikz@tempbox=\box35
-\tikz@tempbox@bg=\box36
-\tikztreelevel=\count101
-\tikznumberofchildren=\count102
-\tikznumberofcurrentchild=\count103
-\tikz@fig@count=\count104
+\tikz@lastx=\dimen155
+\tikz@lasty=\dimen156
+\tikz@lastxsaved=\dimen157
+\tikz@lastysaved=\dimen158
+\tikzleveldistance=\dimen159
+\tikzsiblingdistance=\dimen160
+\tikz@figbox=\box35
+\tikz@figbox@bg=\box36
+\tikz@tempbox=\box37
+\tikz@tempbox@bg=\box38
+\tikztreelevel=\count113
+\tikznumberofchildren=\count114
+\tikznumberofcurrentchild=\count115
+\tikz@fig@count=\count116
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count105
-\pgfmatrixcurrentcolumn=\count106
-\pgf@matrix@numberofcolumns=\count107
+\pgfmatrixcurrentrow=\count117
+\pgfmatrixcurrentcolumn=\count118
+\pgf@matrix@numberofcolumns=\count119
 )
-\tikz@expandcount=\count108
+\tikz@expandcount=\count120
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarytopaths.code.tex
@@ -694,18 +769,18 @@ File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count109
-\calc@Bcount=\count110
-\calc@Adimen=\dimen152
-\calc@Bdimen=\dimen153
-\calc@Askip=\skip43
-\calc@Bskip=\skip44
+\calc@Acount=\count121
+\calc@Bcount=\count122
+\calc@Adimen=\dimen161
+\calc@Bdimen=\dimen162
+\calc@Askip=\skip46
+\calc@Bskip=\skip47
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count111
-\calc@Cskip=\skip45
+\calc@Ccount=\count123
+\calc@Cskip=\skip48
 )
-\c@@todonotes@numberoftodonotes=\count112
+\c@@todonotes@numberoftodonotes=\count124
 )
 (/usr/share/texlive/texmf-dist/tex/latex/blindtext/blindtext.sty
 Package: blindtext 2012/01/06 V2.0 blindtext-Package
@@ -713,24 +788,24 @@ Package: blindtext 2012/01/06 V2.0 blindtext-Package
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-\c@blindtext=\count113
-\c@Blindtext=\count114
-\c@blind@countparstart=\count115
-\blind@countxx=\count116
-\blindtext@numBlindtext=\count117
-\blind@countyy=\count118
-\c@blindlist=\count119
-\c@blindlistlevel=\count120
-\c@blindlist@level=\count121
-\blind@listitem=\count122
-\c@blind@listcount=\count123
-\c@blind@levelcount=\count124
-\blind@mathformula=\count125
-\blind@Mathformula=\count126
-\c@blind@randomcount=\count127
-\c@blind@randommax=\count128
-\c@blind@pangramcount=\count129
-\c@blind@pangrammax=\count130
+\c@blindtext=\count125
+\c@Blindtext=\count126
+\c@blind@countparstart=\count127
+\blind@countxx=\count128
+\blindtext@numBlindtext=\count129
+\blind@countyy=\count130
+\c@blindlist=\count131
+\c@blindlistlevel=\count132
+\c@blindlist@level=\count133
+\blind@listitem=\count134
+\c@blind@listcount=\count135
+\c@blind@levelcount=\count136
+\blind@mathformula=\count137
+\blind@Mathformula=\count138
+\c@blind@randomcount=\count139
+\c@blind@randommax=\count140
+\c@blind@pangramcount=\count141
+\c@blind@pangrammax=\count142
 )
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrextend.sty
 Package: scrextend 2015/10/03 v3.19a KOMA-Script package (extend other classes 
@@ -757,52 +832,66 @@ Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen154
-\extrarowheight=\dimen155
-\NC@list=\toks31
-\extratabsurround=\skip46
-\backup@length=\skip47
+\col@sep=\dimen163
+\extrarowheight=\dimen164
+\NC@list=\toks36
+\extratabsurround=\skip49
+\backup@length=\skip50
 )
-\TX@col@width=\dimen156
-\TX@old@table=\dimen157
-\TX@old@col=\dimen158
-\TX@target=\dimen159
-\TX@delta=\dimen160
-\TX@cols=\count131
-\TX@ftn=\toks32
+\TX@col@width=\dimen165
+\TX@old@table=\dimen166
+\TX@old@col=\dimen167
+\TX@target=\dimen168
+\TX@delta=\dimen169
+\TX@cols=\count143
+\TX@ftn=\toks37
 )
 (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
-\bigstrutjot=\dimen161
+\bigstrutjot=\dimen170
 )
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count144
+\float@exts=\toks38
+\float@box=\box39
+\@float@everytoks=\toks39
+\@floatcapt=\box40
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/aliascnt.sty
+Package: aliascnt 2009/09/08 v1.3 Alias counters (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/carlisle/remreset.sty))
+\@float@every@eqfloat=\toks40
+
 (./yoloOnFingers.aux)
 \openout1 = `yoloOnFingers.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count132
-\scratchdimen=\dimen162
-\scratchbox=\box37
-\nofMPsegments=\count133
-\nofMParguments=\count134
-\everyMPshowfont=\toks33
-\MPscratchCnt=\count135
-\MPscratchDim=\dimen163
-\MPnumerator=\count136
-\makeMPintoPDFobject=\count137
-\everyMPtoPDFconversion=\toks34
+\scratchcounter=\count145
+\scratchdimen=\dimen171
+\scratchbox=\box41
+\nofMPsegments=\count146
+\nofMParguments=\count147
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count148
+\MPscratchDim=\dimen172
+\MPnumerator=\count149
+\makeMPintoPDFobject=\count150
+\everyMPtoPDFconversion=\toks42
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -852,45 +941,65 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros (./Kapitel/00Titelblatt/Titelblatt.tex
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 48.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 48.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 48.
+LaTeX Font Info:    Try loading font information for U+msa on input line 48.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-[1
+LaTeX Font Info:    Try loading font information for U+msb on input line 48.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 48.
+
+(/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
+File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
+)) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./yoloOnFingers.toc [
 3])
 \tf@toc=\write4
 \openout4 = `yoloOnFingers.toc'.
 
- (./yoloOnFingers.lof
-Overfull \hbox (12.02924pt too wide) in paragraph at lines 9--9
+
+(./yoloOnFingers.lof
+Overfull \hbox (74.82658pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/m/n/12 Achse=Kosten. Weinrot=Pretraining-Trainingsdaten, Hellblau=Pre
+training- 
+ []
+
+
+Overfull \hbox (31.19695pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/m/n/12 Validierungsdaten, Gr[]un=Training-Trainingsdaten, Grau=Traini
+ng- 
+ []
+
+
+Overfull \hbox (12.03703pt too wide) in paragraph at lines 12--12
  [][] []\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichtefunktion der Di-stanz. Aus-re
 is-ser nicht 
  []
 
-
-Overfull \hbox (4.32803pt too wide) in paragraph at lines 12--12
+[4]
+Overfull \hbox (4.33194pt too wide) in paragraph at lines 15--15
  [][] []\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichte-Funktion der IOU (Gren-ze: I
 OU=0.4) [][]  
  []
 
 
-Overfull \hbox (61.71623pt too wide) in paragraph at lines 13--13
- \OT1/cmr/m/n/12 ning []uber einen be-schr[]ankten Zeit-raum. SGD=dunkelblau. A
-DAM=hellblau. [][]  
+Overfull \hbox (2.5348pt too wide) in paragraph at lines 17--17
+ [][] []\OT1/cmr/m/n/12 Test-Top5 nach 6 Ta-gen Lernzeit(x-Achse=Zeit, y-Achse=
+Top- 
  []
 
 )
 \tf@lof=\write5
 \openout5 = `yoloOnFingers.lof'.
 
- (./Kapitel/10Abstract/Abstract.tex [4]) [5]
-(./Kapitel/30DatenPipeline/DatenPipeline.tex [6]
-<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=29, 1284.
+ (./Kapitel/10Abstract/Abstract.tex [5]) [6]
+(./Kapitel/30DatenPipeline/DatenPipeline.tex [7]
+<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=33, 1284.
 8pt x 963.6pt>
 File: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png Graphic 
 file (type png)
@@ -900,7 +1009,7 @@ Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/
 pic775.png used on input line 18.
 (pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
 
-<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=31, 1284.
+<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=35, 1284.
 8pt x 963.6pt>
 File: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png Graphic 
 file (type png)
@@ -909,70 +1018,143 @@ file (type png)
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/
 pic777.png used on input line 22.
 (pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
- [7 <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png (PNG co
+ [8 <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png (PNG co
 py)> <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png (PNG c
 opy)>]
-[8] [9] [10]
-<Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf, id=49, 341.275pt x 341.275pt>
+[9] [10] [11]
+<Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf, id=52, 341.275pt x 341.275pt>
 File: Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf Graphic file (type pdf)
 
 <use Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf used on
- input line 124.
+ input line 125.
 (pdftex.def)             Requested size: 272.99881pt x 273.01515pt.
- [11 <./Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>]
-<Kapitel/30DatenPipeline/Bilder/LabelList.pdf, id=62, 1138.2525pt x 1707.37875p
+ [12 <./Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>]
+<Kapitel/30DatenPipeline/Bilder/LabelList.pdf, id=65, 1138.2525pt x 1707.37875p
 t>
 File: Kapitel/30DatenPipeline/Bilder/LabelList.pdf Graphic file (type pdf)
  <use Kapitel/30DatenPipeline/Bilder/LabelList.pdf>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/LabelList.pdf used on i
-nput line 140.
+nput line 141.
 (pdftex.def)             Requested size: 155.99762pt x 233.97722pt.
- [12 <./Kapitel/30DatenPipeline/Bilder/LabelList.pdf>]
-Overfull \hbox (11.05418pt too wide) in paragraph at lines 156--157
+ [13 <./Kapitel/30DatenPipeline/Bilder/LabelList.pdf>]
+Overfull \hbox (11.0555pt too wide) in paragraph at lines 157--158
 []\OT1/cmr/m/n/12 Eine letz-te Funk-ti-on, wel-che das or-ga-ni-sie-ren des Mi-
 ni-bat-ches []ubernimmt.
  []
 
-) (./Kapitel/40Architektur/Architektur.tex [13] [14] [15]
-Overfull \hbox (11.21945pt too wide) in paragraph at lines 51--54
-\OT1/cmr/m/n/12 works Spei-cher-knapp-heit ein Pro-blem ist, soll-te ent-we-der
- das Netz-werk verk[]urzt
+) (./Kapitel/40Architektur/Architektur.tex [14]
+Overfull \hbox (39.00238pt too wide) in paragraph at lines 59--60
+ [][] 
+ []
+
+[15] [16]
+<Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf, id=88, 507.496pt x 286
+.671pt>
+File: Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf Graphic file (type
+ pdf)
+ <use Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf>
+Package pdftex.def Info: Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf
+ used on input line 78.
+(pdftex.def)             Requested size: 187.19833pt x 105.7429pt.
+
+<Kapitel/40Architektur/Bilder/OverflowInTraining.pdf, id=89, 488.224pt x 276.23
+201pt>
+File: Kapitel/40Architektur/Bilder/OverflowInTraining.pdf Graphic file (type pd
+f)
+ <use Kapitel/40Architektur/Bilder/OverflowInTraining.pdf>
+Package pdftex.def Info: Kapitel/40Architektur/Bilder/OverflowInTraining.pdf us
+ed on input line 82.
+(pdftex.def)             Requested size: 187.19833pt x 105.91339pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--84
+[]\OT1/cmr/m/n/12 Abbildung 4: Ef-fek-te (Ex-tre-mer An-stieg der Kos-ten in-ne
+rt ei-
  []
 
 
-Overfull \hbox (3.7937pt too wide) in paragraph at lines 65--65
+Underfull \hbox (badness 10000) in paragraph at lines 84--84
+\OT1/cmr/m/n/12 ner Epo-che) im Pre-trai-ning(links) und im Trai-ning(rechts). 
+x-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--84
+\OT1/cmr/m/n/12 Achse=Zeit, y-Achse=Kosten. Weinrot=Pretraining-Trainingsdaten,
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--84
+\OT1/cmr/m/n/12 Hellblau=Pretraining-Validierungsdaten, Gr[]un=Training-Trainin
+gsdaten,
+ []
+
+
+Overfull \hbox (17.9707pt too wide) in paragraph at lines 94--102
+\OT1/cmr/m/n/12 Ent-spre-chend wur-de die Ar-chi-tek-tur um-ge-baut, so-dass di
+e Input-Bilder k[]unstlich
+ []
+
+
+Overfull \hbox (0.26201pt too wide) in paragraph at lines 94--102
+\OT1/cmr/m/n/12 ver-klei-nert wur-den, um daf[]ur Float32 ver-wen-den zu k[]onn
+en. In die-sem Schritt
+ []
+
+
+Overfull \hbox (3.7937pt too wide) in paragraph at lines 113--113
 []|\OT1/cmr/m/n/12 Knoten:Input=1280x960| 
  []
 
 
-Overfull \hbox (3.7937pt too wide) in paragraph at lines 65--65
+Overfull \hbox (3.7937pt too wide) in paragraph at lines 113--113
 []|\OT1/cmr/m/n/12 Knoten:Input=1280x960
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--65
-\OT1/cmr/m/n/12 Batch-si-ze=7, GPU-
- []
-
-
-Overfull \hbox (1.18262pt too wide) in paragraph at lines 65--65
+Overfull \hbox (1.18262pt too wide) in paragraph at lines 113--113
 []|\OT1/cmr/m/n/12 Knoten:Input=448x448,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--65
-\OT1/cmr/m/n/12 Batch-si-ze=24, GPU-
+Underfull \hbox (badness 10000) in paragraph at lines 113--113
+\OT1/cmr/m/n/12 Mi-ni-batch-si-ze=24,
  []
 
+[17 <./Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf> <./Kapitel/40Arc
+hitektur/Bilder/OverflowInTraining.pdf
 
-Overfull \hbox (39.00238pt too wide) in paragraph at lines 109--110
- [][] 
- []
+pdfTeX warning: pdflatex (file ./Kapitel/40Architektur/Bilder/OverflowInTrainin
+g.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+>] [18]) (./Kapitel/50Kostenfunktion/Kostenfunktion.tex [19]
+<Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf, id=107, 341.275pt x 341.
+275pt>
+File: Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf Graphic file (type p
+df)
+ <use Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf>
+Package pdftex.def Info: Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf u
+sed on input line 26.
+(pdftex.def)             Requested size: 272.99881pt x 273.01515pt.
+ [20] [21 <./Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf>]
+<Kapitel/50Kostenfunktion/Bilder/IOU.pdf, id=123, 525.965pt x 469.755pt>
+File: Kapitel/50Kostenfunktion/Bilder/IOU.pdf Graphic file (type pdf)
 
-) (./Kapitel/50Kostenfunktion/Kostenfunktion.tex [16] [17])
-(./Kapitel/60Tests/Tests.tex [18]) (./Kapitel/70Resultate/Resultate.tex
-[19]
+<use Kapitel/50Kostenfunktion/Bilder/IOU.pdf>
+Package pdftex.def Info: Kapitel/50Kostenfunktion/Bilder/IOU.pdf used on input 
+line 44.
+(pdftex.def)             Requested size: 272.99881pt x 243.8296pt.
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 59.
+
+(/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
+)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[22 <./Kapitel/50Kostenfunktion/Bilder/IOU.pdf>] [23] [24])
+(./Kapitel/60Tests/Tests.tex [25]) (./Kapitel/70Resultate/Resultate.tex
+[26]
 Overfull \hbox (1.89178pt too wide) in paragraph at lines 13--18
 \OT1/cmr/m/n/12 Um die Ge-nau-ig-keit der Pre-dic-ti-ons un-se-res Neu-ro-na-le
 n Netz-wer-kes m[]oglichst
@@ -985,8 +1167,8 @@ nz und IOU gew[]ahlt.
  []
 
 
-<Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf, id=98, 597.23125pt x 569.1
-2625pt>
+<Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf, id=160, 597.23125pt x 569.
+12625pt>
 File: Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf Graphic file (type pdf
 )
  <use Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>
@@ -994,7 +1176,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf use
 d on input line 24.
 (pdftex.def)             Requested size: 272.99881pt x 260.15126pt.
 
-<Kapitel/70Resultate/Bilder/2distKnappGut.png, id=99, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/2distKnappGut.png, id=161, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/2distKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/2distKnappGut.png>
@@ -1002,7 +1184,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/2distKnappGut.png used on i
 nput line 33.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/5distKnappGut.png, id=100, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/5distKnappGut.png, id=162, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/5distKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/5distKnappGut.png>
@@ -1010,7 +1192,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/5distKnappGut.png used on i
 nput line 37.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/3distKnappSchlecht.png, id=101, 449.68pt x 449.68pt
+<Kapitel/70Resultate/Bilder/3distKnappSchlecht.png, id=163, 449.68pt x 449.68pt
 >
 File: Kapitel/70Resultate/Bilder/3distKnappSchlecht.png Graphic file (type png)
 
@@ -1019,7 +1201,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/3distKnappSchlecht.png used
  on input line 46.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/4distKnappSchlecht.png, id=102, 449.68pt x 449.68pt
+<Kapitel/70Resultate/Bilder/4distKnappSchlecht.png, id=164, 449.68pt x 449.68pt
 >
 File: Kapitel/70Resultate/Bilder/4distKnappSchlecht.png Graphic file (type png)
 
@@ -1028,7 +1210,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/4distKnappSchlecht.png used
  on input line 50.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/distProbDensity.pdf, id=103, 578.16pt x 433.62pt>
+<Kapitel/70Resultate/Bilder/distProbDensity.pdf, id=165, 578.16pt x 433.62pt>
 File: Kapitel/70Resultate/Bilder/distProbDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/70Resultate/Bilder/distProbDensity.pdf>
@@ -1036,7 +1218,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/distProbDensity.pdf used on
  input line 59.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-<Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf, id=104, 578.16pt x 43
+<Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf, id=166, 578.16pt x 43
 3.62pt>
 File: Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf Graphic file (typ
 e pdf)
@@ -1044,18 +1226,18 @@ e pdf)
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/distProbDensity_improved.pd
 f used on input line 66.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
- [20]
-[21 <./Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>] [22 <./Kapitel/70Re
+ [27]
+[28 <./Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>] [29 <./Kapitel/70Re
 sultate/Bilder/2distKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/5dis
 tKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/3distKnappSchlecht.png 
 (PNG copy)> <./Kapitel/70Resultate/Bilder/4distKnappSchlecht.png (PNG copy)>]
-[23 <./Kapitel/70Resultate/Bilder/distProbDensity.pdf> <./Kapitel/70Resultate/B
+[30 <./Kapitel/70Resultate/Bilder/distProbDensity.pdf> <./Kapitel/70Resultate/B
 ilder/distProbDensity_improved.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/70Resultate/Bilder/distProbDensity_imp
 roved.pdf): PDF inclusion: multiple pdfs with page group included in a single p
 age
->] <Kapitel/70Resultate/Bilder/7iouKnappGut.png, id=224, 449.68pt x 449.68pt>
+>] <Kapitel/70Resultate/Bilder/7iouKnappGut.png, id=287, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/7iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/7iouKnappGut.png>
@@ -1063,7 +1245,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/7iouKnappGut.png used on in
 put line 96.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/8iouKnappGut.png, id=225, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/8iouKnappGut.png, id=288, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/8iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/8iouKnappGut.png>
@@ -1071,21 +1253,21 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/8iouKnappGut.png used on in
 put line 100.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png, id=226, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png, id=289, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png Graphic file (type png)
 <use Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png used 
 on input line 109.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png, id=227, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png, id=290, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png Graphic file (type png)
 <use Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png used 
 on input line 113.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/IOUprobDensity.pdf, id=228, 578.16pt x 433.62pt>
+<Kapitel/70Resultate/Bilder/IOUprobDensity.pdf, id=291, 578.16pt x 433.62pt>
 File: Kapitel/70Resultate/Bilder/IOUprobDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>
@@ -1094,83 +1276,113 @@ input line 121.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
 Underfull \hbox (badness 3302) in paragraph at lines 122--122
-[]\OT1/cmr/m/n/12 Abbildung 11: Wahrscheinlichkeits-Dichte-Funktion der IOU (Gr
+[]\OT1/cmr/m/n/12 Abbildung 14: Wahrscheinlichkeits-Dichte-Funktion der IOU (Gr
 en-ze:
  []
 
-) (./Kapitel/20Pretraining/Pretraining.tex [24] [25 <./Kapitel/70Resultate/Bild
+) (./Kapitel/20Pretraining/Pretraining.tex [31] [32 <./Kapitel/70Resultate/Bild
 er/7iouKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/8iouKnappGut.png 
 (PNG copy)> <./Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png (PNG copy)> <./
 Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png (PNG copy)>]
-Overfull \hbox (39.00238pt too wide) in paragraph at lines 51--52
+Overfull \hbox (39.00238pt too wide) in paragraph at lines 52--53
  [][] 
  []
 
-[26 <./Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>]
-<Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf, id=287, 347.69899pt x 216.81pt
+[33 <./Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>]
+<Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf, id=350, 347.69899pt x 216.81pt
 >
 File: Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf Graphic file (type pdf)
  <use Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf>
 Package pdftex.def Info: Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf used on
- input line 68.
+ input line 69.
 (pdftex.def)             Requested size: 187.19833pt x 116.73158pt.
 
-<Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf, id=288, 350.91101pt x 213.598p
+<Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf, id=351, 350.91101pt x 213.598p
 t>
 File: Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf Graphic file (type pdf)
  <use Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf>
 Package pdftex.def Info: Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf used on
- input line 72.
+ input line 73.
 (pdftex.def)             Requested size: 187.19833pt x 113.94624pt.
 
-<Kapitel/20Pretraining/Bilder/Test_top5.pdf, id=289, 355.72899pt x 204.765pt>
+Underfull \hbox (badness 3108) in paragraph at lines 79--79
+[]\OT1/cmr/m/n/12 Abbildung 15: Kos-ten und Top5-Test von ver-gleich-ba-ren Tas
+ks im
+ []
+
+
+Underfull \hbox (badness 3138) in paragraph at lines 79--79
+\OT1/cmr/m/n/12 Pre-trai-ning []uber einen be-schr[]ankten Zeit-raum. links: [x
+-Achse=Zeit,
+ []
+
+
+Underfull \hbox (badness 2134) in paragraph at lines 79--79
+\OT1/cmr/m/n/12 y-Achse=Kosten] rechts: [x-Achse=Zeit, y-Achse=Top-5 Tref-fer i
+n %]
+ []
+
+<Kapitel/20Pretraining/Bilder/Test_top5.pdf, id=352, 355.72899pt x 204.765pt>
 File: Kapitel/20Pretraining/Bilder/Test_top5.pdf Graphic file (type pdf)
 
 <use Kapitel/20Pretraining/Bilder/Test_top5.pdf>
 Package pdftex.def Info: Kapitel/20Pretraining/Bilder/Test_top5.pdf used on inp
-ut line 83.
+ut line 86.
 (pdftex.def)             Requested size: 272.99881pt x 157.14774pt.
- [27 <./Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf> <./Kapitel/20Pretrainin
-g/Bilder/SGDvsADAMtop5.pdf
+
+Underfull \hbox (badness 5403) in paragraph at lines 87--87
+[]\OT1/cmr/m/n/12 Abbildung 16: Test-Top5 nach 6 Ta-gen Lernzeit(x-Achse=Zeit, 
+y-
+ []
+
+[34 <./Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf> <./Kapitel/20Pretraining
+/Bilder/SGDvsADAMtop5.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf
 ): PDF inclusion: multiple pdfs with page group included in a single page
->] [28] [29 <./Kapitel/20Pretraining/Bilder/Test_top5.pdf>]
-<Kapitel/20Pretraining/Bilder/Overflow.pdf, id=311, 507.496pt x 286.671pt>
+>] [35] [36 <./Kapitel/20Pretraining/Bilder/Test_top5.pdf>]
+<Kapitel/20Pretraining/Bilder/Overflow.pdf, id=373, 507.496pt x 286.671pt>
 File: Kapitel/20Pretraining/Bilder/Overflow.pdf Graphic file (type pdf)
 
 <use Kapitel/20Pretraining/Bilder/Overflow.pdf>
 Package pdftex.def Info: Kapitel/20Pretraining/Bilder/Overflow.pdf used on inpu
-t line 120.
+t line 124.
 (pdftex.def)             Requested size: 272.99881pt x 154.21388pt.
-) (./Kapitel/80Fazit/Fazit.tex
-[30]) [31 <./Kapitel/20Pretraining/Bilder/Overflow.pdf>] (./yoloOnFingers.bbl)
-[32] (./yoloOnFingers.aux)
+ [37])
+(./Kapitel/80Fazit/Fazit.tex [38 <./Kapitel/20Pretraining/Bilder/Overflow.pdf>]
+) [39] (./yoloOnFingers.bbl) [40] (./yoloOnFingers.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 13984 strings out of 494860
- 276985 string characters out of 6177601
- 358751 words of memory out of 5000000
- 16930 multiletter control sequences out of 15000+600000
- 9683 words of font info for 34 fonts, out of 8000000 for 9000
+ 15090 strings out of 494860
+ 291286 string characters out of 6177601
+ 372311 words of memory out of 5000000
+ 17962 multiletter control sequences out of 15000+600000
+ 14568 words of font info for 60 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 62i,11n,80p,452b,611s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,19n,80p,648b,611s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmtt12.pfb>
-Output written on yoloOnFingers.pdf (32 pages, 3497637 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl1
+2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/doublestroke/dsrom12.pfb>
+Output written on yoloOnFingers.pdf (40 pages, 3771951 bytes).
 PDF statistics:
- 359 PDF objects out of 1000 (max. 8388607)
- 149 compressed objects within 2 object streams
+ 450 PDF objects out of 1000 (max. 8388607)
+ 210 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 125 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 145 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -48,6 +48,10 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 
 
 \subsection{Design Kostenfunktion}
+Die Auswahl bzw. das Design der Kostenfunktion ist wahrscheinlich der wichtigste Schritt im Design eines Neuronalen Netzwerks. 
+In dieser Arbeit bestand das grosse Glück, dass die Kostenfunktion grösstenteils vom Yolo v1-Paper \cite{yolo} vorgegeben wurde (Was auch mit ein Grund für die Wahl von Yolo v1 war).
+Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in 
+
 \begin{eqfloat}
 \begin{equation}
 \begin{split}
@@ -84,20 +88,6 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 \caption{Beschreibung der Kostenfunktionselemente}
 \label{tbl:beschr_kostenfuntion}
 \end{table} 
-
-Die Auswahl bzw. das Design der Kostenfunktion ist wahrscheinlich der wichtigste Schritt im Design eines Neuronalen Netzwerks. 
-In dieser Arbeit bestand das grosse Glück, dass die Kostenfunktion grösstenteils vom Yolo v1-Paper \cite{yolo} vorgegeben wurde (Was auch mit ein Grund für die Wahl von Yolo v1 war).
-Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in Gleichung \ref{eq:Kostenfunktion} betrachten. 
-Diese Kostenfunktion ist etwas einfacher als die Kostenfunktion, wie Sie im Yolo v1 Paper zu sehen ist. 
-Dies hat zwei Gründe. 
-Zum einen wurde pro Gitterzelle nur eine Boundingbox vorhergesagt. 
-So fällt für Zeile 1-4 der Kostenfunktion das zweite Summenzeichen, sowie deren iteration über die Variable j weg. 
-Zum anderen wurde nur eine Klasse(rechter Zeigefinger) gelabelt und vorhergesagt.
-So fällt auf der Zeile 5 das Summenzeichen und deren entsprechende Iteration über alle Klassen weg.
-
-
-
-
 
 
 
