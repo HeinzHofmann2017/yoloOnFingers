@@ -1,7 +1,6 @@
 \newpage
 %Kapitelüberschrift
-\section{Architektur} 
-
+\section{Architektur}
 \subsection{Auswahl der Architektur}
 Die Architektur wurde stark dem Yolo-Paper \cite{yolo} angelehnt. 
 Dies obwohl zu diesem Zeitpunkt auch schon das Yolo v2-Paper \cite{yolo2} erschienen war.
@@ -19,6 +18,7 @@ Entsprechend hatte man sich auch primär auf dieses Ziel fokussiert.
 
 \subsection{Architekturaufbau}
 \label{chapter:Architekturaubau}
+\subsubsection{Hauptgraph}
 
 \begin{table}
 \centering
@@ -122,11 +122,47 @@ In der Tabelle \ref{tbl:anzahl_gewichte_knoten} ist die Berechnung, der Anzahl G
 Dabei wurde nicht berücksichtigt, dass es pro Layer mehrere Einheiten von Knoten geben kann, wie z.B. vor und nach der Aktivierungsfunktion. 
 Auch ohne diese zusätzlichen Layer kann man aber deutlich erkennen, dass wenn man die Minibatchsize solange erhöht, bis das GPU-RAM (im Rahmen dieser Arbeit 16GB) voll ist, man klar mehr Speicher für Knoten benötigt, als für Gewichte.
 
+\subsubsection{Minibatchnorm}
+Zu Beginn des Trainings gab es immer wieder das Problem von vanishing Gradients (Die Gradienten wurden im Verlauf der Backpropagation immer kleiner, bis sie nur noch gleich Null waren.).
+Um diesem Problem entgegenzuwirken wurde die relativ junge Allzweckwaffe der Minibatch normalisierung angewandt.
+Dabei wird in jedem Convolutional Layer direkt nach dem Convolutional filter der Ausgang über den ganzen Minibatch normiert.
+Es wurde auch ausprobiert die Minibatchnorm nach der Relu einzusetzen, anstelle davor, allerdings waren die Ergebnisse der Kostenfunktion bei der Anordnung in Abbildung \ref{img:Conv-Layer} ganz leicht besser.
+Die Verbesserung war allerdings nur sehr marginal, weshalb sie auch gerade so gut zufällig sein konnte.
+Seit dem Einsetzen der Minibatchnorm war das Netzwerk hervorragend in der Lage die Gradienten per Backpropagation bis zum Eingang des Netzwerks zurück zu tragen. 
+
+\subsubsection{Aktivierungsfunktion}
+\begin{figure}
+	\centering	
+	\includegraphics[width=0.5\textwidth]{Kapitel/40Architektur/Bilder/GraphProLayer.pdf}
+	\caption{Aufbau eines Convolutional-Layers}
+	\label{img:Conv-Layer}
+\end{figure}
+
+Wie in Abbildung \ref{img:Conv-Layer} ersichtlich wurde als Aktivierungsfunktion eine simple Relu (Rectified Linear Unit) verwendet. Dies obwohl in yolo v1 eine leaky Relu verwendet wurde.
+Der Grund für diesen Wandel war, dass seit dem verwenden der Minibatchnorm eine leaky Relu dieselbe Performance an den Tag legte wie eine normale Relu.
+
+\subsubsection{Dropout}
+Es wurde im Rahmen dieser Arbeit viel mit Dropout Experimentiert.
+So wurde Dropout in allen, nur in den letzten, nur in den fully-connected Layer oder auch in gar keinem Layer angewandt.
+Die besten Performance wurden erreicht, wenn entweder nur in den letzten paar Layern oder auch nur in den fully-connected Layern Dropout eingesetzt wurde.
+Wurde Dropout in allen Layern angewandt, war das Resultat massiv schlechter.
+
+Wichtig zu wissen: Wenn man Dropout in Convolutional Layern anwendet, sollte darauf geachtet werden, dass man nicht einzelne Knoten von Dropout \grqq{}ausknippsen\grqq{} lässt, sondern gleich ganze Featuremaps.
+Der Grund dafür liegt darin, dass man mit der ursprünglichen Philosophie von dropout eigentlich Gewichte zwischenzeitlich ausschaltet.
+Bei Fullyconnected Netzwerken ist dies problemlos möglich, indem man einfach Knoten zufällig auf Null setzt. 
+In Convolutional Neural Networks hingegen werden die Gewichte nicht ausgeschaltet, indem man einen Knoten ausschaltet.
+Dies, weil die Gewichte über die Bilder oder Feature-Maps geschoben werden und nicht einzelnen Knoten zugeteilt sind.
+
+
 \subsection{Fazit}
 Was die Architektur angeht kann man aus dieser Arbeit die folgenden beiden Punkte lernen:
 \begin{enumerate}
 \item Wenn in Convolutional Neural Networks Speicherknappheit ein Problem ist, sollte entweder die Tiefe des Netzwerks verkleinert (weniger Layer = weniger Knoten) oder der Input verkleinert (= ebenfalls weniger Knoten) werden. Nicht aber sollte man auf Bastellösungen ausweichen, sodass man sich was Datentypen angeht ausserhalb des Tensorflow-Standardbereichs aufhält. Es sei denn natürlich, man weiss ganz genau was man tut, und kennt entsprechend den Source-Code von Tensorflow in- und auswendig. Wenn dem aber so wäre, würden Sie diese Arbeit wohl kaum lesen ;) .
-\item Wenn man eine Architektur nach entsprechend einer Vorlage aufbaut, sollte man nicht schon bevor man eine erfolgreich lauffähige Version hat an Parametern wie der Input-Grösse herumoptimieren. Optimieren sollte man erst, wenn man eine Lauffähige Fehlerfreie Version hat, sodass man jederzeit wieder zu dieser Lauffähigen Version zurückkehren kann. 
+\item Wenn man eine Architektur nach entsprechend einer Vorlage aufbaut, sollte man nicht schon bevor man eine erfolgreich lauffähige Version hat an Parametern wie der Input-Grösse herumoptimieren. Optimieren sollte man erst, wenn man eine Lauffähige Fehlerfreie Version hat, sodass man jederzeit wieder zu dieser Lauffähigen Version zurückkehren kann.
+\item Es trat zu Beginn des Trainings öfters das Problem auf, dass das Programm abstürzte.
+Dabei war die Fehlermeldung jeweils, dass NAN (Not a Number) oder Infinity ins Tensorboard gespeichert werden sollte.
+Seit die Gradienten auf die Zahl 5/-5 begrenzt wurden, trat dieses Problem auch nie mehr auf.
+Daraus folgt: Gradient Clipping ist nur zu empfehlen, da es nicht schadet aber auf jeden Fall allfällige Probleme fernhalten kann. 
 \end{enumerate}
 
 

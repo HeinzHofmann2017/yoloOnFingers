@@ -57,6 +57,21 @@ Da genau dies in diesem Test geschieht, war somit dieser Punkt restlos geklärt.
 
 IOU nicht sehr aussagekräftig...(wahrscheinlich schon im Resultat beschrieben.)
 
+\subsection{Seed}
+Um während den vielen Tests endlich ganz genaue Vergleiche zu erhalten wurde im Laufe der Arbeit ein fixer Seed implementiert und an Tensorflow übergeben.
+Allerdings hatte dies zwei Tücken, welche auch der Grund waren, warum dieser fixe Seed wieder aufgehoben wurde.
+
+Die erste Tücke war, dass trotz der Übergabe eines fixen Seeds an Tensorflow die Ergebnisse trotzdem nicht reproduzierbar waren.
+Offensichtlich hat es in Tensorflow noch weitere zufällige Werte, welche man auch mit einem festen Seed initialisieren müsste.
+Diese wurden allerdings nicht gefunden.
+
+Die zweite Tücke war jedesmal, wenn man während dem Training zwischen dem Trainingsset und dem Validierungsset hin und her wechselte.
+So wurden die Bilder für das Training wieder in der genau gleichen Reihenfolge geladen wie in der letzten Epoche.
+Zuerst sah es so aus, als würde der Trainingsfehler einfach in ungeheurem Tempo gegen 0 gehen, während sich der Validierungsfehler relativ schnell von jeglich vernünftigem verabschiedete.
+Allerdings wurden einzig und allein die ersten paar Bilder auswendig gelernt.
+
+Der Vorteil an der zweiten Tücke war, dass man aus versehen sogleich überprüft hatte, ob das Netzwerk in der Lage ist overzufitten. $==>$ Ja ist es!
+
 \subsection{Fazit}
 Bei einem Neuronalen Netzwerk sollte sich früher Gedanken gemacht werden, wie man das Resultat möglichst Praxistauglich testen kann.
 Dies wurde in dieser Arbeit klar falsch gemacht.

@@ -16,30 +16,35 @@
 \BOOKMARK [1][-]{section.3}{Architektur}{}% 16
 \BOOKMARK [2][-]{subsection.3.1}{Auswahl der Architektur}{section.3}% 17
 \BOOKMARK [2][-]{subsection.3.2}{Architekturaufbau}{section.3}% 18
-\BOOKMARK [2][-]{subsection.3.3}{Fazit}{section.3}% 19
-\BOOKMARK [1][-]{section.4}{Kostenfunktion}{}% 20
-\BOOKMARK [2][-]{subsection.4.1}{Erster Wurf}{section.4}% 21
-\BOOKMARK [2][-]{subsection.4.2}{Netzwerkoutput}{section.4}% 22
-\BOOKMARK [2][-]{subsection.4.3}{Design Kostenfunktion}{section.4}% 23
-\BOOKMARK [2][-]{subsection.4.4}{Fazit}{section.4}% 24
-\BOOKMARK [1][-]{section.5}{Tests}{}% 25
-\BOOKMARK [2][-]{subsection.5.1}{erste Ans\344tze}{section.5}% 26
-\BOOKMARK [2][-]{subsection.5.2}{letztendlicher Test}{section.5}% 27
-\BOOKMARK [2][-]{subsection.5.3}{Fazit}{section.5}% 28
-\BOOKMARK [1][-]{section.6}{Resultate}{}% 29
-\BOOKMARK [2][-]{subsection.6.1}{Testvoraussetzungen}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.2}{Analyse}{section.6}% 31
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Distanz}{subsection.6.2}% 32
-\BOOKMARK [3][-]{subsubsection.6.2.2}{Intersection Over Union IOU}{subsection.6.2}% 33
-\BOOKMARK [1][-]{section.7}{Pretraining}{}% 34
-\BOOKMARK [2][-]{subsection.7.1}{Daten}{section.7}% 35
-\BOOKMARK [2][-]{subsection.7.2}{Architektur}{section.7}% 36
-\BOOKMARK [2][-]{subsection.7.3}{Kostenfunktion und Optimierer}{section.7}% 37
-\BOOKMARK [2][-]{subsection.7.4}{Tests \046 Resultate}{section.7}% 38
-\BOOKMARK [2][-]{subsection.7.5}{Gewichte}{section.7}% 39
-\BOOKMARK [2][-]{subsection.7.6}{Fazit}{section.7}% 40
-\BOOKMARK [1][-]{section.8}{Fazit}{}% 41
-\BOOKMARK [2][-]{subsection.8.1}{Gipsh\344nde}{section.8}% 42
-\BOOKMARK [2][-]{subsection.8.2}{Yolo}{section.8}% 43
-\BOOKMARK [2][-]{subsection.8.3}{Vorschl\344ge f\374r weitere Schritte}{section.8}% 44
-\BOOKMARK [1][-]{section*.10}{Literatur}{}% 45
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Hauptgraph}{subsection.3.2}% 19
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Minibatchnorm}{subsection.3.2}% 20
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Aktivierungsfunktion}{subsection.3.2}% 21
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Dropout}{subsection.3.2}% 22
+\BOOKMARK [2][-]{subsection.3.3}{Fazit}{section.3}% 23
+\BOOKMARK [1][-]{section.4}{Kostenfunktion}{}% 24
+\BOOKMARK [2][-]{subsection.4.1}{Erster Wurf}{section.4}% 25
+\BOOKMARK [2][-]{subsection.4.2}{Netzwerkoutput}{section.4}% 26
+\BOOKMARK [2][-]{subsection.4.3}{Design Kostenfunktion}{section.4}% 27
+\BOOKMARK [2][-]{subsection.4.4}{Fazit}{section.4}% 28
+\BOOKMARK [1][-]{section.5}{Tests}{}% 29
+\BOOKMARK [2][-]{subsection.5.1}{erste Ans\344tze}{section.5}% 30
+\BOOKMARK [2][-]{subsection.5.2}{letztendlicher Test}{section.5}% 31
+\BOOKMARK [2][-]{subsection.5.3}{Seed}{section.5}% 32
+\BOOKMARK [2][-]{subsection.5.4}{Fazit}{section.5}% 33
+\BOOKMARK [1][-]{section.6}{Resultate}{}% 34
+\BOOKMARK [2][-]{subsection.6.1}{Testvoraussetzungen}{section.6}% 35
+\BOOKMARK [2][-]{subsection.6.2}{Analyse}{section.6}% 36
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Distanz}{subsection.6.2}% 37
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Intersection Over Union IOU}{subsection.6.2}% 38
+\BOOKMARK [1][-]{section.7}{Pretraining}{}% 39
+\BOOKMARK [2][-]{subsection.7.1}{Daten}{section.7}% 40
+\BOOKMARK [2][-]{subsection.7.2}{Architektur}{section.7}% 41
+\BOOKMARK [2][-]{subsection.7.3}{Kostenfunktion und Optimierer}{section.7}% 42
+\BOOKMARK [2][-]{subsection.7.4}{Tests \046 Resultate}{section.7}% 43
+\BOOKMARK [2][-]{subsection.7.5}{Gewichte}{section.7}% 44
+\BOOKMARK [2][-]{subsection.7.6}{Fazit}{section.7}% 45
+\BOOKMARK [1][-]{section.8}{Fazit}{}% 46
+\BOOKMARK [2][-]{subsection.8.1}{Gipsh\344nde}{section.8}% 47
+\BOOKMARK [2][-]{subsection.8.2}{Yolo}{section.8}% 48
+\BOOKMARK [2][-]{subsection.8.3}{Vorschl\344ge f\374r weitere Schritte}{section.8}% 49
+\BOOKMARK [1][-]{Item.32}{Literatur}{}% 50

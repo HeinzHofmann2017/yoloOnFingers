@@ -30,7 +30,7 @@ Um in erster Instanz das Ziel eines 2-D-Fingertrackers auf Basis von Deep-Learni
 \begin{enumerate}
 \item Bessere Daten Sammeln. 
 
-Es gibt die Faustregel\cite{PrivateCommunication}, dass man dreimal Daten aufnimmt, bis man endlich die richtigen Daten hat, um sein Netzwerk optimal zu trainieren. 
+Es gibt die Faustregel, dass man dreimal Daten aufnimmt, bis man endlich die richtigen Daten hat, um sein Netzwerk optimal zu trainieren\cite{PrivateCommunication}. 
 Entsprechend sollte dabei unbedingt darauf geachtet werden, dass man mit berücksichtigt, welche Handstellen (Finger, Knöchel, Gelenke, etc.) man überhaupt braucht, damit man die Daten nicht nochmals aufnehmen muss. 
 Nach dieser Projektarbeit, welche Daten aus einer Hervorragenden Masterarbeit \cite{TabeasFingertracking} verwenden durfte, ist klar, dass automatisch und maschinell erstellte Daten nicht zum optimalen Ziel führen können. 
 Entsprechend sollte das Labeling von Fingern, etc. in Zukunft von Menschen gemacht werden. 
@@ -40,6 +40,6 @@ Wie Ian Goodfellow schon in seinem Buch Deeplearning \cite{deeplearning} geschri
 Entsprechend sollte bei der Generierung der Daten wie im Punkt 1 erwähnt darauf geachtet werden, dass die Daten so generiert werden, dass sie einfach per Computer vervielfältigt werden können. 
 \item Die besten Stücke aus Yolo v1 und Yolo v2 herauspicken und ein optimales Netzwerk für diesen Task erschaffen. 
 
-Für diesen Punkt sollte allerdings noch die Arbeit von Jonas Schmid \todo[inline,size=\Large]{Auf die Arbeit von Jonas verweisen.} berücksichtigt werden, weil dort höchstwahrscheinlich ebenfalls wichtige Erkenntnisse zu diesen Thema enthalten sind.
+Für diesen Punkt sollte allerdings noch die Arbeit von Jonas Schmid \cite{HandPoseEstimation} berücksichtigt werden, weil dort höchstwahrscheinlich ebenfalls wichtige Erkenntnisse zu diesen Thema enthalten sind.
 \end{enumerate}
 

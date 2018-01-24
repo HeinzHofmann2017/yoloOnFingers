@@ -63,6 +63,13 @@ Der Output, welcher ebenfalls ein Vektor mit 1000 Elementen ist, wird nun mit de
 Als Optimierer wurde zuerst ein einfacher Stochastic-Gradient-Descent verwendet, welcher später durch einen Adam-Optimierer ersetzt wurde. 
 Einerseits wurde im Buch Deep Learning \cite{deeplearning} empfohlen einen Optimierer mit adaptivem Momentum zu verwenden, andererseits hat sich beim ausprobieren auch einfach herausgestellt, dass die Performance von Adam gegenüber SGD massgeblich gesteigert hatte. (Abbildung \ref{img:SGDvsADAM})
 
+Es gab allerdings auch eine Peinlichkeit im Zusammenhang mit dem Adamoptimizer.
+So wurde in dieser Arbeit viel mit verschiedenen Lernraten experimentiert, wie z.B. eine regelmässige Reduktion der Lernrate nach jeweils einer bestimmten Anzahl Epochen.
+Diese Experimente ergaben keinerlei verwertbare Resultate.
+Der Grund dafür war, dass man den Adam-Optimizer noch nicht richtig verstanden hatte.
+Denn ein zentraler Wert des Adam-Optimizers ist, dass dieser die Lernrate selber automatisch im Laufe des Trainings anpasst.
+Entsprechend ist eine \grqq{}manuelle\grqq{} Anpassung der Lernrate völlig Sinnlos.
+
 \begin{figure}
 	\centering
 	\begin{minipage}[b]{0.48\textwidth}	
