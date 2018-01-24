@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  24 JAN 2018 10:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  24 JAN 2018 12:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -957,8 +957,7 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 48.
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./yoloOnFingers.toc [
-3])
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./yoloOnFingers.toc [2])
 \tf@toc=\write4
 \openout4 = `yoloOnFingers.toc'.
 
@@ -975,7 +974,7 @@ Overfull \hbox (31.19695pt too wide) in paragraph at lines 5--5
 ng- 
  []
 
-[4]
+[3]
 Overfull \hbox (12.03703pt too wide) in paragraph at lines 12--12
  [][] []\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichtefunktion der Di-stanz. Aus-re
 is-ser nicht 
@@ -997,9 +996,9 @@ Top-
 \tf@lof=\write5
 \openout5 = `yoloOnFingers.lof'.
 
- (./Kapitel/10Abstract/Abstract.tex [5]) [6]
-(./Kapitel/30DatenPipeline/DatenPipeline.tex [7]
-<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=33, 1284.
+ (./Kapitel/10Abstract/Abstract.tex [4]) [5]
+(./Kapitel/30DatenPipeline/DatenPipeline.tex [6]
+<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=29, 1284.
 8pt x 963.6pt>
 File: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png Graphic 
 file (type png)
@@ -1009,7 +1008,7 @@ Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/
 pic775.png used on input line 19.
 (pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
 
-<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=35, 1284.
+<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=31, 1284.
 8pt x 963.6pt>
 File: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png Graphic 
 file (type png)
@@ -1018,38 +1017,38 @@ file (type png)
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/
 pic777.png used on input line 23.
 (pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
- [8 <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png (PNG co
+ [7 <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png (PNG co
 py)> <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png (PNG c
 opy)>]
-[9] [10] [11]
-<Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf, id=52, 341.275pt x 341.275pt>
+[8] [9] [10]
+<Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf, id=49, 341.275pt x 341.275pt>
 File: Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf Graphic file (type pdf)
 
 <use Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf used on
  input line 126.
 (pdftex.def)             Requested size: 272.99881pt x 273.01515pt.
- [12 <./Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>]
-<Kapitel/30DatenPipeline/Bilder/LabelList.pdf, id=65, 1138.2525pt x 1707.37875p
+ [11 <./Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>]
+<Kapitel/30DatenPipeline/Bilder/LabelList.pdf, id=62, 1138.2525pt x 1707.37875p
 t>
 File: Kapitel/30DatenPipeline/Bilder/LabelList.pdf Graphic file (type pdf)
  <use Kapitel/30DatenPipeline/Bilder/LabelList.pdf>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/LabelList.pdf used on i
 nput line 142.
 (pdftex.def)             Requested size: 155.99762pt x 233.97722pt.
- [13 <./Kapitel/30DatenPipeline/Bilder/LabelList.pdf>]
+ [12 <./Kapitel/30DatenPipeline/Bilder/LabelList.pdf>]
 Overfull \hbox (11.0555pt too wide) in paragraph at lines 158--159
 []\OT1/cmr/m/n/12 Eine letz-te Funk-ti-on, wel-che das or-ga-ni-sie-ren des Mi-
 ni-bat-ches []ubernimmt.
  []
 
-) (./Kapitel/40Architektur/Architektur.tex [14]
+) (./Kapitel/40Architektur/Architektur.tex [13]
 Overfull \hbox (39.00238pt too wide) in paragraph at lines 60--61
  [][] 
  []
 
-[15] [16]
-<Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf, id=88, 507.496pt x 286
+[14] [15]
+<Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf, id=85, 507.496pt x 286
 .671pt>
 File: Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf Graphic file (type
  pdf)
@@ -1058,7 +1057,7 @@ Package pdftex.def Info: Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf
  used on input line 79.
 (pdftex.def)             Requested size: 187.19833pt x 105.7429pt.
 
-<Kapitel/40Architektur/Bilder/OverflowInTraining.pdf, id=89, 488.224pt x 276.23
+<Kapitel/40Architektur/Bilder/OverflowInTraining.pdf, id=86, 488.224pt x 276.23
 201pt>
 File: Kapitel/40Architektur/Bilder/OverflowInTraining.pdf Graphic file (type pd
 f)
@@ -1122,13 +1121,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--114
 \OT1/cmr/m/n/12 Mi-ni-batch-si-ze=24,
  []
 
-[17 <./Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf> <./Kapitel/40Arc
+[16 <./Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf> <./Kapitel/40Arc
 hitektur/Bilder/OverflowInTraining.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/40Architektur/Bilder/OverflowInTrainin
 g.pdf): PDF inclusion: multiple pdfs with page group included in a single page
->] [18]) (./Kapitel/50Kostenfunktion/Kostenfunktion.tex [19]
-<Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf, id=107, 341.275pt x 341.
+>] [17]) (./Kapitel/50Kostenfunktion/Kostenfunktion.tex [18]
+<Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf, id=103, 341.275pt x 341.
 275pt>
 File: Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf Graphic file (type p
 df)
@@ -1136,8 +1135,8 @@ df)
 Package pdftex.def Info: Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf u
 sed on input line 26.
 (pdftex.def)             Requested size: 272.99881pt x 273.01515pt.
- [20] [21 <./Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf>]
-<Kapitel/50Kostenfunktion/Bilder/IOU.pdf, id=123, 525.965pt x 469.755pt>
+ [19] [20 <./Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf>]
+<Kapitel/50Kostenfunktion/Bilder/IOU.pdf, id=120, 525.965pt x 469.755pt>
 File: Kapitel/50Kostenfunktion/Bilder/IOU.pdf Graphic file (type pdf)
 
 <use Kapitel/50Kostenfunktion/Bilder/IOU.pdf>
@@ -1152,8 +1151,8 @@ File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[22 <./Kapitel/50Kostenfunktion/Bilder/IOU.pdf>] [23] [24])
-(./Kapitel/60Tests/Tests.tex [25]
+[21 <./Kapitel/50Kostenfunktion/Bilder/IOU.pdf>] [22] [23])
+(./Kapitel/60Tests/Tests.tex [24]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 12.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
@@ -1161,8 +1160,8 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
- [26] [27])
-(./Kapitel/70Resultate/Resultate.tex [28]
+ [25] [26])
+(./Kapitel/70Resultate/Resultate.tex [27]
 Overfull \hbox (1.89178pt too wide) in paragraph at lines 12--17
 \OT1/cmr/m/n/12 Um die Ge-nau-ig-keit der Pre-dic-ti-ons un-se-res Neu-ro-na-le
 n Netz-wer-kes m[]oglichst
@@ -1175,7 +1174,7 @@ nz und IOU gew[]ahlt
  []
 
 
-<Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf, id=166, 597.23125pt x 569.
+<Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf, id=163, 597.23125pt x 569.
 12625pt>
 File: Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf Graphic file (type pdf
 )
@@ -1184,7 +1183,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf use
 d on input line 23.
 (pdftex.def)             Requested size: 272.99881pt x 260.15126pt.
 
-<Kapitel/70Resultate/Bilder/2distKnappGut.png, id=167, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/2distKnappGut.png, id=164, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/2distKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/2distKnappGut.png>
@@ -1192,7 +1191,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/2distKnappGut.png used on i
 nput line 32.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/5distKnappGut.png, id=168, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/5distKnappGut.png, id=165, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/5distKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/5distKnappGut.png>
@@ -1200,7 +1199,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/5distKnappGut.png used on i
 nput line 36.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/3distKnappSchlecht.png, id=169, 449.68pt x 449.68pt
+<Kapitel/70Resultate/Bilder/3distKnappSchlecht.png, id=166, 449.68pt x 449.68pt
 >
 File: Kapitel/70Resultate/Bilder/3distKnappSchlecht.png Graphic file (type png)
 
@@ -1209,7 +1208,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/3distKnappSchlecht.png used
  on input line 45.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/4distKnappSchlecht.png, id=170, 449.68pt x 449.68pt
+<Kapitel/70Resultate/Bilder/4distKnappSchlecht.png, id=167, 449.68pt x 449.68pt
 >
 File: Kapitel/70Resultate/Bilder/4distKnappSchlecht.png Graphic file (type png)
 
@@ -1218,7 +1217,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/4distKnappSchlecht.png used
  on input line 49.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/distProbDensity.pdf, id=171, 578.16pt x 433.62pt>
+<Kapitel/70Resultate/Bilder/distProbDensity.pdf, id=168, 578.16pt x 433.62pt>
 File: Kapitel/70Resultate/Bilder/distProbDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/70Resultate/Bilder/distProbDensity.pdf>
@@ -1226,7 +1225,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/distProbDensity.pdf used on
  input line 58.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-<Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf, id=172, 578.16pt x 43
+<Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf, id=169, 578.16pt x 43
 3.62pt>
 File: Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf Graphic file (typ
 e pdf)
@@ -1234,18 +1233,18 @@ e pdf)
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/distProbDensity_improved.pd
 f used on input line 65.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
- [29]
-[30 <./Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>] [31 <./Kapitel/70Re
+ [28]
+[29 <./Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>] [30 <./Kapitel/70Re
 sultate/Bilder/2distKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/5dis
 tKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/3distKnappSchlecht.png 
 (PNG copy)> <./Kapitel/70Resultate/Bilder/4distKnappSchlecht.png (PNG copy)>]
-[32 <./Kapitel/70Resultate/Bilder/distProbDensity.pdf> <./Kapitel/70Resultate/B
+[31 <./Kapitel/70Resultate/Bilder/distProbDensity.pdf> <./Kapitel/70Resultate/B
 ilder/distProbDensity_improved.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/70Resultate/Bilder/distProbDensity_imp
 roved.pdf): PDF inclusion: multiple pdfs with page group included in a single p
 age
->] <Kapitel/70Resultate/Bilder/7iouKnappGut.png, id=294, 449.68pt x 449.68pt>
+>] <Kapitel/70Resultate/Bilder/7iouKnappGut.png, id=291, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/7iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/7iouKnappGut.png>
@@ -1253,7 +1252,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/7iouKnappGut.png used on in
 put line 101.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/8iouKnappGut.png, id=295, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/8iouKnappGut.png, id=292, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/8iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/8iouKnappGut.png>
@@ -1261,21 +1260,21 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/8iouKnappGut.png used on in
 put line 105.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png, id=296, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png, id=293, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png Graphic file (type png)
 <use Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png used 
 on input line 114.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png, id=297, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png, id=294, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png Graphic file (type png)
 <use Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png used 
 on input line 118.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/IOUprobDensity.pdf, id=298, 578.16pt x 433.62pt>
+<Kapitel/70Resultate/Bilder/IOUprobDensity.pdf, id=295, 578.16pt x 433.62pt>
 File: Kapitel/70Resultate/Bilder/IOUprobDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>
@@ -1288,16 +1287,17 @@ Underfull \hbox (badness 3302) in paragraph at lines 127--127
 en-ze:
  []
 
-) (./Kapitel/20Pretraining/Pretraining.tex [33] [34 <./Kapitel/70Resultate/Bild
-er/7iouKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/8iouKnappGut.png 
-(PNG copy)> <./Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png (PNG copy)> <./
-Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png (PNG copy)>]
+[32] [33 <./Kapitel/70Resultate/Bilder/7iouKnappGut.png (PNG copy)> <./Kapitel/
+70Resultate/Bilder/8iouKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/6
+iouKnappSchlecht.png (PNG copy)> <./Kapitel/70Resultate/Bilder/9iouKnappSchlech
+t.png (PNG copy)>]) (./Kapitel/20Pretraining/Pretraining.tex [34 <./Kapitel/70R
+esultate/Bilder/IOUprobDensity.pdf>]
 Overfull \hbox (39.00238pt too wide) in paragraph at lines 52--53
  [][] 
  []
 
-[35 <./Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>]
-<Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf, id=356, 347.69899pt x 216.81pt
+[35] [36]
+<Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf, id=359, 347.69899pt x 216.81pt
 >
 File: Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf Graphic file (type pdf)
  <use Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf>
@@ -1305,7 +1305,7 @@ Package pdftex.def Info: Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf used on
  input line 69.
 (pdftex.def)             Requested size: 187.19833pt x 116.73158pt.
 
-<Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf, id=357, 350.91101pt x 213.598p
+<Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf, id=360, 350.91101pt x 213.598p
 t>
 File: Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf Graphic file (type pdf)
  <use Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf>
@@ -1330,7 +1330,7 @@ Underfull \hbox (badness 2134) in paragraph at lines 79--79
 n %]
  []
 
-<Kapitel/20Pretraining/Bilder/Test_top5.pdf, id=358, 355.72899pt x 204.765pt>
+<Kapitel/20Pretraining/Bilder/Test_top5.pdf, id=361, 355.72899pt x 204.765pt>
 File: Kapitel/20Pretraining/Bilder/Test_top5.pdf Graphic file (type pdf)
 
 <use Kapitel/20Pretraining/Bilder/Test_top5.pdf>
@@ -1343,13 +1343,17 @@ Underfull \hbox (badness 5403) in paragraph at lines 87--87
 y-
  []
 
-[36 <./Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf> <./Kapitel/20Pretraining
+[37 <./Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf> <./Kapitel/20Pretraining
 /Bilder/SGDvsADAMtop5.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf
 ): PDF inclusion: multiple pdfs with page group included in a single page
->] [37] [38 <./Kapitel/20Pretraining/Bilder/Test_top5.pdf>]
-<Kapitel/20Pretraining/Bilder/Overflow.pdf, id=380, 507.496pt x 286.671pt>
+> <./Kapitel/20Pretraining/Bilder/Test_top5.pdf
+
+pdfTeX warning: pdflatex (file ./Kapitel/20Pretraining/Bilder/Test_top5.pdf): P
+DF inclusion: multiple pdfs with page group included in a single page
+>] [38]
+<Kapitel/20Pretraining/Bilder/Overflow.pdf, id=379, 507.496pt x 286.671pt>
 File: Kapitel/20Pretraining/Bilder/Overflow.pdf Graphic file (type pdf)
 
 <use Kapitel/20Pretraining/Bilder/Overflow.pdf>
@@ -1357,8 +1361,13 @@ Package pdftex.def Info: Kapitel/20Pretraining/Bilder/Overflow.pdf used on inpu
 t line 124.
 (pdftex.def)             Requested size: 272.99881pt x 154.21388pt.
 ) (./Kapitel/80Fazit/Fazit.tex
-[39]) [40 <./Kapitel/20Pretraining/Bilder/Overflow.pdf>] (./yoloOnFingers.bbl)
-[41] (./yoloOnFingers.aux)
+[39 <./Kapitel/20Pretraining/Bilder/Overflow.pdf>]
+Overfull \hbox (0.25732pt too wide) in paragraph at lines 20--25
+[]\OT1/cmr/m/n/12 Um auf die ei-gent-li-che Fra-ge zur[]uck zu kom-men. Ist Yo-
+lo, bzw. Deep-Learning
+ []
+
+[40]) [41] (./yoloOnFingers.bbl) [42] (./yoloOnFingers.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
@@ -1387,10 +1396,10 @@ share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/doublestroke/dsrom12.pfb>
-Output written on yoloOnFingers.pdf (41 pages, 3780655 bytes).
+Output written on yoloOnFingers.pdf (42 pages, 3785654 bytes).
 PDF statistics:
- 453 PDF objects out of 1000 (max. 8388607)
- 212 compressed objects within 3 object streams
+ 455 PDF objects out of 1000 (max. 8388607)
+ 213 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  145 words of extra memory for PDF output out of 10000 (max. 10000000)
 

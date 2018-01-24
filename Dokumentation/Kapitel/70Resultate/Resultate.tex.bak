@@ -88,7 +88,7 @@ Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei ein
 Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind verfälschen zu lassen, wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. Spannend: Der Mittelwert ist sofort um einen Drittel kleiner als zuvor. 
 
 Wie man ausserdem aus Kapitel \ref{chapter:fingerdetektion} entnehmen kann, gab es schon in der Erzeugung der Labels eine gewisse Unschärfe.
-So hat der y-Wert im Vergleich vom einen Bild zum anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
+So hat auf Abbildung \ref{img:HoughTransformation}  der y-Wert im Vergleich vom einen Bild zum anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
 Klar, um dieses Problem aufzeigen zu können wurde ein Bild mit einem klaren Unterschied verwendet, was bedeutet dass die meisten Labels Fehler haben die kleiner als diese Grenze sind.
 Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Lücken aufweisen.
 \todo[inline,size=\Large]{Hier evtl. bemerken, dass Jonas genauere Labels hingekriegt hat mit der Methode des 3-D-Raums}
@@ -139,5 +139,14 @@ So fiel die Entscheidung den Threshold konservativ zu wählen, sodass nur Werte 
 
 Auch für die IOU gibt es zur Übersicht eine Wahrscheinlichkeitsdichte die in Abbildung \ref{img:iou_dichte} betrachtet werden kann.
 Aus dieser Grafik kann gelesen werden, dass rund 6\% der Vorhersagen klar falsch sind, weil die IOU nur null ist, wenn sich die beiden Boundingboxen nicht berühren. Entsprechend kann gesagt werden, dass rund 94\% der vorhersagen zumindest sehr grob richtig sind, weil sich bei diesen 94\% die Boundingboxen von Label und Prediction zumindest ein ganz kleines bisschen überlappen. 
+
+Genau wie bei der Distanz gibt es auch bei der IOU, bzw. bei den Boundingboxen eine gewisse Unschärfe in den Labels (siehe Kapitel \ref{chapter:fingerdetektion}.
+So haben die beiden Bilder in Abbildung \ref{img:HoughTransformation} wenn man Sie zueinander normiert gegenüber einander eine IOU von knapp $0.4$.
+Wie bei den Labelfehlern in der Distanz dürften die Fehler auch bei den Boundingboxen klar kleiner als im hier berechneten Beispiel sein.
+Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Lücken aufweisen.
+
+Dass die Fehler in Distanz und IOU nahezu genau auf die gesetzten Grenzen zur Bewertung der Resultate fielen, war reiner Zufall.
+So sind die Grenzen gemacht worden, bevor IOU und Distanz der Labels dieser zwei Bilder zueinander berechnet wurden.
+
 
 

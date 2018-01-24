@@ -1,40 +1,43 @@
 \select@language {ngerman}
-\contentsline {section}{\numberline {1}Abstract}{6}
-\contentsline {subsection}{\numberline {1.1}Aufgabenstellung}{6}
-\contentsline {subsection}{\numberline {1.2}Vorgehen}{6}
-\contentsline {subsection}{\numberline {1.3}Fazit}{6}
-\contentsline {section}{\numberline {2}Daten-Pipeline}{8}
-\contentsline {subsection}{\numberline {2.1}Bilder aufnehmen}{8}
-\contentsline {subsection}{\numberline {2.2}Fingerdetektion}{9}
-\contentsline {subsection}{\numberline {2.3}CSV generieren}{9}
-\contentsline {subsection}{\numberline {2.4}Python-Objekt generieren}{10}
-\contentsline {subsubsection}{\numberline {2.4.1}Label-Tensor}{11}
-\contentsline {subsubsection}{\numberline {2.4.2}Liste von Label-Tensoren}{12}
-\contentsline {subsection}{\numberline {2.5}Daten in Neuronales Netzwerk einlesen}{13}
-\contentsline {section}{\numberline {3}Architektur}{15}
-\contentsline {subsection}{\numberline {3.1}Auswahl der Architektur}{15}
-\contentsline {subsection}{\numberline {3.2}Architekturaufbau}{15}
-\contentsline {subsection}{\numberline {3.3}Fazit}{18}
-\contentsline {section}{\numberline {4}Kostenfunktion}{20}
-\contentsline {subsection}{\numberline {4.1}Erster Wurf}{20}
-\contentsline {subsection}{\numberline {4.2}Netzwerkoutput}{20}
-\contentsline {subsection}{\numberline {4.3}Design Kostenfunktion}{22}
-\contentsline {subsection}{\numberline {4.4}Fazit}{24}
-\contentsline {section}{\numberline {5}Tests}{26}
-\contentsline {subsection}{\numberline {5.1}erste Ans\IeC {\"a}tze}{26}
-\contentsline {subsection}{\numberline {5.2}letztendlicher Test}{27}
-\contentsline {subsection}{\numberline {5.3}Fazit}{28}
-\contentsline {section}{\numberline {6}Resultate}{29}
-\contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{29}
-\contentsline {subsection}{\numberline {6.2}Analyse}{29}
-\contentsline {subsubsection}{\numberline {6.2.1}Distanz}{29}
-\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{33}
+\contentsline {section}{\numberline {1}Abstract}{5}
+\contentsline {subsection}{\numberline {1.1}Aufgabenstellung}{5}
+\contentsline {subsection}{\numberline {1.2}Vorgehen}{5}
+\contentsline {subsection}{\numberline {1.3}Fazit}{5}
+\contentsline {section}{\numberline {2}Daten-Pipeline}{7}
+\contentsline {subsection}{\numberline {2.1}Bilder aufnehmen}{7}
+\contentsline {subsection}{\numberline {2.2}Fingerdetektion}{8}
+\contentsline {subsection}{\numberline {2.3}CSV generieren}{8}
+\contentsline {subsection}{\numberline {2.4}Python-Objekt generieren}{9}
+\contentsline {subsubsection}{\numberline {2.4.1}Label-Tensor}{10}
+\contentsline {subsubsection}{\numberline {2.4.2}Liste von Label-Tensoren}{11}
+\contentsline {subsection}{\numberline {2.5}Daten in Neuronales Netzwerk einlesen}{12}
+\contentsline {section}{\numberline {3}Architektur}{14}
+\contentsline {subsection}{\numberline {3.1}Auswahl der Architektur}{14}
+\contentsline {subsection}{\numberline {3.2}Architekturaufbau}{14}
+\contentsline {subsection}{\numberline {3.3}Fazit}{17}
+\contentsline {section}{\numberline {4}Kostenfunktion}{19}
+\contentsline {subsection}{\numberline {4.1}Erster Wurf}{19}
+\contentsline {subsection}{\numberline {4.2}Netzwerkoutput}{19}
+\contentsline {subsection}{\numberline {4.3}Design Kostenfunktion}{21}
+\contentsline {subsection}{\numberline {4.4}Fazit}{23}
+\contentsline {section}{\numberline {5}Tests}{25}
+\contentsline {subsection}{\numberline {5.1}erste Ans\IeC {\"a}tze}{25}
+\contentsline {subsection}{\numberline {5.2}letztendlicher Test}{26}
+\contentsline {subsection}{\numberline {5.3}Fazit}{27}
+\contentsline {section}{\numberline {6}Resultate}{28}
+\contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{28}
+\contentsline {subsection}{\numberline {6.2}Analyse}{28}
+\contentsline {subsubsection}{\numberline {6.2.1}Distanz}{28}
+\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{32}
 \contentsline {section}{\numberline {7}Pretraining}{35}
 \contentsline {subsection}{\numberline {7.1}Daten}{35}
 \contentsline {subsection}{\numberline {7.2}Architektur}{35}
-\contentsline {subsection}{\numberline {7.3}Kostenfunktion und Optimierer}{36}
-\contentsline {subsection}{\numberline {7.4}Tests \& Resultate}{36}
-\contentsline {subsection}{\numberline {7.5}Gewichte}{39}
+\contentsline {subsection}{\numberline {7.3}Kostenfunktion und Optimierer}{35}
+\contentsline {subsection}{\numberline {7.4}Tests \& Resultate}{37}
+\contentsline {subsection}{\numberline {7.5}Gewichte}{38}
 \contentsline {subsection}{\numberline {7.6}Fazit}{39}
 \contentsline {section}{\numberline {8}Fazit}{40}
-\contentsline {section}{Literatur}{41}
+\contentsline {subsection}{\numberline {8.1}Gipsh\IeC {\"a}nde}{40}
+\contentsline {subsection}{\numberline {8.2}Yolo}{40}
+\contentsline {subsection}{\numberline {8.3}Vorschl\IeC {\"a}ge f\IeC {\"u}r weitere Schritte}{41}
+\contentsline {section}{Literatur}{42}
