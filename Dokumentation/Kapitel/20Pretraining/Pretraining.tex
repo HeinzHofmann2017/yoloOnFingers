@@ -113,7 +113,7 @@ Dieser Ansatz wurde aber nicht weiter verfolgt, weil es einerseits mit den Pytho
 \subsection{Fazit}
 Sobald man Tensorflow grundsätzlich verstanden hat, ist das bauen einer Klassifizierungs-Architektur eigentlich sehr einfach. 
 Man muss dafür nicht einmal unbedingt die Theorie hinter dem Deeplearning verstanden haben, sondern muss einfach wissen, welche Bausteine \grqq{}man\grqq{} nimmt und wie diese angeordnet werden müssen.
-Weil für das Training in einer ersten Phase entschieden wurde, dass für Gewichte und Neuronen Float16 verwendet werden soll \todo[inline,size=\Large]{Hier eine Referenz zu dieser Entscheidung im Architektur-Teil des Trainings einbauen!!}, musste dies entsprechend auch im Pretraining so gemacht werden. 
+Weil für das Training in einer ersten Phase entschieden wurde, dass für Gewichte und Knoten Float16 verwendet werden soll (siehe Kapitel \ref{chapter:Architekturaubau}), musste dies entsprechend auch im Pretraining so gemacht werden. 
 Aus diesem Grund gab es auch im Pretraining einige Probleme mit nicht direkt erklärbaren Effekten (Abbildung \ref{img:overflow_pretraining}).
 Es gab Vermutungen, dass es sich bei diesen Problemen um Overflow-Probleme gehandelt hatte.
 Seit alles auf Float32(Standard in Tensorflow) umgestellt wurde, gab es entsprechend keinerlei solche Probleme mehr.

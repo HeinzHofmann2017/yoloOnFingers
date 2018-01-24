@@ -41,13 +41,15 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 %IOU
 \begin{figure}	
 	\centering
-	\includegraphics[width=.7\textwidth]{Kapitel/50Kostenfunktion/Bilder/IOU.pdf}
+	\includegraphics[width=.4\textwidth]{Kapitel/50Kostenfunktion/Bilder/IOU.pdf}
 	\caption{Berechnung der IOU}
 	\label{img:IOU}
 \end{figure} 
 
 
 \subsection{Design Kostenfunktion}
+\label{chapter:design_kostenfunktion}
+
 \begin{eqfloat}
 \begin{equation}
 \begin{split}
@@ -109,7 +111,7 @@ Da auch mit mehreren Klassen $c_i$ eine Dominante Rolle spielen würde, wenn es 
 
 
  
-\todo[inline,size=\Large]{Hier weiterarbeiten}
+
 
 \subsection{Fazit}
 Folgende Punkte konnten aus dieser Arbeit gelernt werden, bzw. sollten im Falle einer Vertiefung beachtet werden. 
@@ -118,6 +120,7 @@ Folgende Punkte konnten aus dieser Arbeit gelernt werden, bzw. sollten im Falle 
 Wie man im Kapitel \ref{chapter:erster_wurf} sehen kann, darf man nicht annehmen, dass die Kostenfunktion frei und ohne gross nachzudenken gewählt werden kann. 
 Vielmehr muss die Wahl der Kostenfunktion stark mit dem Netzwerk und dem Problem interagieren. 
 \item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt (Dies weil die Komplexität von zwei Boundingboxen in Tensorflow nahezu jegliches Mass überstiegen hätte.). Wahrscheinlich könnte die Performance noch verbessert werden, wenn anstelle von einer min. zwei Boundingboxen pro Gitterzelle vorhergesagt würden. Dies aufgrund der Theorie \cite{PrivateCommunication}, dass mit mehreren Boundingboxen verschiedene Features eines Bildes verwendet werden können, um einen Finger vorherzusagen.
+\todo[inline,size=\Large]{Dieses Fazit auf Redundanz prüfen}
 \item Zum Vergleich: Im Paper Yolo v2 wurde anstelle von 7x7 Gitterzellen 13x13 Gitterzellen verwendet, was in einer höheren Präzision resultieren würde. 
 Eine höhere Präzision wäre für das Endziel dieser Arbeit nur zu begrüssen. 
 Wenn dies allerdings mit Yolo v1 umgesetzt würde, hätte man das Problem, dass wegen dem Grösseren Speicheraufwand, welcher für die zusätzlichen Elemente \grqq{}verbraucht\grqq{} würde die Minibatchsize verkleinert werden müsste. 

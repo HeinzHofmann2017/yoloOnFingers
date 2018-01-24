@@ -19,19 +19,22 @@
 \contentsline {subsection}{\numberline {4.1}Erster Wurf}{20}
 \contentsline {subsection}{\numberline {4.2}Netzwerkoutput}{20}
 \contentsline {subsection}{\numberline {4.3}Design Kostenfunktion}{22}
-\contentsline {subsection}{\numberline {4.4}Fazit}{25}
+\contentsline {subsection}{\numberline {4.4}Fazit}{24}
 \contentsline {section}{\numberline {5}Tests}{26}
-\contentsline {section}{\numberline {6}Resultate}{27}
-\contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{27}
-\contentsline {subsection}{\numberline {6.2}Analyse}{27}
-\contentsline {subsubsection}{\numberline {6.2.1}Distanz}{27}
-\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{31}
-\contentsline {section}{\numberline {7}Pretraining}{33}
-\contentsline {subsection}{\numberline {7.1}Daten}{33}
-\contentsline {subsection}{\numberline {7.2}Architektur}{33}
-\contentsline {subsection}{\numberline {7.3}Kostenfunktion und Optimierer}{34}
-\contentsline {subsection}{\numberline {7.4}Tests \& Resultate}{34}
-\contentsline {subsection}{\numberline {7.5}Gewichte}{37}
-\contentsline {subsection}{\numberline {7.6}Fazit}{37}
-\contentsline {section}{\numberline {8}Fazit}{39}
-\contentsline {section}{Literatur}{40}
+\contentsline {subsection}{\numberline {5.1}erste Ans\IeC {\"a}tze}{26}
+\contentsline {subsection}{\numberline {5.2}letztendlicher Test}{27}
+\contentsline {subsection}{\numberline {5.3}Fazit}{28}
+\contentsline {section}{\numberline {6}Resultate}{29}
+\contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{29}
+\contentsline {subsection}{\numberline {6.2}Analyse}{29}
+\contentsline {subsubsection}{\numberline {6.2.1}Distanz}{29}
+\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{33}
+\contentsline {section}{\numberline {7}Pretraining}{35}
+\contentsline {subsection}{\numberline {7.1}Daten}{35}
+\contentsline {subsection}{\numberline {7.2}Architektur}{35}
+\contentsline {subsection}{\numberline {7.3}Kostenfunktion und Optimierer}{36}
+\contentsline {subsection}{\numberline {7.4}Tests \& Resultate}{36}
+\contentsline {subsection}{\numberline {7.5}Gewichte}{39}
+\contentsline {subsection}{\numberline {7.6}Fazit}{39}
+\contentsline {section}{\numberline {8}Fazit}{40}
+\contentsline {section}{Literatur}{41}

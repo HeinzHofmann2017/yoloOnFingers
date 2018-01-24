@@ -1,6 +1,5 @@
 \newpage
 \section{Resultate}
-
 \subsection{Testvoraussetzungen}
 Das Netzwerk wurde auf 1'200'000 Bildern des ImageNet-1000-class-Datasets vortrainiert.
 Danach wurde es auf rund 13'900 Bildern aus dem Testaufbau \cite{TabeasFingertracking} trainiert. 
@@ -10,7 +9,7 @@ Ausserdem wurden diese Bilder so gewählt, dass Sie nicht gleichzeitig aufgenomm
 Dies verhindert, dass fast identische Bilder im Training und im Test vorkommen. 
 
 \subsection{Analyse}
-Um die Genauigkeit der Predictions unseres Neuronalen Netzwerkes möglichst genau beschreiben zu können wurden die zwei Werte Distanz und IOU gewählt. 
+Um die Genauigkeit der Predictions unseres Neuronalen Netzwerkes möglichst genau beschreiben zu können wurden die zwei Werte Distanz und IOU gewählt (siehe Kapitel \ref{chapter:letztendlicher_test}). 
 Obwohl die beiden Werte korrelieren sagt jeder für sich nicht die volle Wahrheit über die Genauigkeit der Vorhersagen aus. 
 Die Distanz ist für die geplante Anwendung der wesentlichere Wert, weil diese Informationen über den Standort des Fingers im Bild preisgibt.
 Die IOU ist mit der Distanz klar korreliert, denn ist die Distanz zu gross, ist die IOU schnell gleich Null. 
@@ -88,6 +87,12 @@ Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei ein
 
 Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind verfälschen zu lassen, wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. Spannend: Der Mittelwert ist sofort um einen Drittel kleiner als zuvor. 
 
+Wie man ausserdem aus Kapitel \ref{chapter:fingerdetektion} entnehmen kann, gab es schon in der Erzeugung der Labels eine gewisse Unschärfe.
+So hat der y-Wert im Vergleich vom einen Bild zum anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
+Klar, um dieses Problem aufzeigen zu können wurde ein Bild mit einem klaren Unterschied verwendet, was bedeutet dass die meisten Labels Fehler haben die kleiner als diese Grenze sind.
+Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Lücken aufweisen.
+\todo[inline,size=\Large]{Hier evtl. bemerken, dass Jonas genauere Labels hingekriegt hat mit der Methode des 3-D-Raums}
+
 \subsubsection{Intersection Over Union IOU}
 %Beispielbilder IOU
 \begin{figure}
@@ -134,3 +139,5 @@ So fiel die Entscheidung den Threshold konservativ zu wählen, sodass nur Werte 
 
 Auch für die IOU gibt es zur Übersicht eine Wahrscheinlichkeitsdichte die in Abbildung \ref{img:iou_dichte} betrachtet werden kann.
 Aus dieser Grafik kann gelesen werden, dass rund 6\% der Vorhersagen klar falsch sind, weil die IOU nur null ist, wenn sich die beiden Boundingboxen nicht berühren. Entsprechend kann gesagt werden, dass rund 94\% der vorhersagen zumindest sehr grob richtig sind, weil sich bei diesen 94\% die Boundingboxen von Label und Prediction zumindest ein ganz kleines bisschen überlappen. 
+
+

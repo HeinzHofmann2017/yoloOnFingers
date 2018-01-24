@@ -5,14 +5,14 @@
 \contentsline {figure}{\numberline {4}{\ignorespaces Effekte (Extremer Anstieg der Kosten innert einer Epoche) im Pretraining(links) und im Training(rechts). x-Achse=Zeit, y-Achse=Kosten. Weinrot=Pretraining-Trainingsdaten, Hellblau=Pretraining-Validierungsdaten, Gr\IeC {\"u}n=Training-Trainingsdaten, Grau=Training-Validierungsdaten}}{17}
 \contentsline {figure}{\numberline {5}{\ignorespaces Prediction-Tensor}}{21}
 \contentsline {figure}{\numberline {6}{\ignorespaces Berechnung der IOU}}{22}
-\contentsline {figure}{\numberline {7}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{28}
-\contentsline {figure}{\numberline {8}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{29}
-\contentsline {figure}{\numberline {9}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{29}
-\contentsline {figure}{\numberline {10}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{30}
-\contentsline {figure}{\numberline {11}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{30}
-\contentsline {figure}{\numberline {12}{\ignorespaces Prediction knapp besser als IOU=0.4}}{32}
-\contentsline {figure}{\numberline {13}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{32}
-\contentsline {figure}{\numberline {14}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{33}
-\contentsline {figure}{\numberline {15}{\ignorespaces Kosten und Top5-Test von vergleichbaren Tasks im Pretraining \IeC {\"u}ber einen beschr\IeC {\"a}nkten Zeitraum. links: [x-Achse=Zeit, y-Achse=Kosten] rechts: [x-Achse=Zeit, y-Achse=Top-5 Treffer in \%] SGD=dunkelblau. ADAM=hellblau.}}{34}
-\contentsline {figure}{\numberline {16}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit(x-Achse=Zeit, y-Achse=Top-5-Treffer in \%)}}{36}
-\contentsline {figure}{\numberline {17}{\ignorespaces Effekte in Training(Weinrot) und Validierung(Hellblau) mit Float16. x-Achse=Zeit, y-Achse=Kosten}}{38}
+\contentsline {figure}{\numberline {7}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{30}
+\contentsline {figure}{\numberline {8}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{31}
+\contentsline {figure}{\numberline {9}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{31}
+\contentsline {figure}{\numberline {10}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{32}
+\contentsline {figure}{\numberline {11}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{32}
+\contentsline {figure}{\numberline {12}{\ignorespaces Prediction knapp besser als IOU=0.4}}{34}
+\contentsline {figure}{\numberline {13}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{34}
+\contentsline {figure}{\numberline {14}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{35}
+\contentsline {figure}{\numberline {15}{\ignorespaces Kosten und Top5-Test von vergleichbaren Tasks im Pretraining \IeC {\"u}ber einen beschr\IeC {\"a}nkten Zeitraum. links: [x-Achse=Zeit, y-Achse=Kosten] rechts: [x-Achse=Zeit, y-Achse=Top-5 Treffer in \%] SGD=dunkelblau. ADAM=hellblau.}}{36}
+\contentsline {figure}{\numberline {16}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit(x-Achse=Zeit, y-Achse=Top-5-Treffer in \%)}}{38}
+\contentsline {figure}{\numberline {17}{\ignorespaces Effekte in Training(Weinrot) und Validierung(Hellblau) mit Float16. x-Achse=Zeit, y-Achse=Kosten}}{40}
