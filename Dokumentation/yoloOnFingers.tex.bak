@@ -58,6 +58,9 @@
   \ORGeqfloat
 }
 
+%Inhaltsverzeichnis im PDF klickbar machen:
+\usepackage{hyperref}
+
 
 \pagestyle{headings}
 
@@ -70,14 +73,16 @@
 
 \input{Kapitel/00Titelblatt/Titelblatt.tex}
 
+\input{Kapitel/10Abstract/Abstract.tex}
 
 \newpage
+%Inhaltsverzeichnis im PDF klickbar machen:
+\pdfbookmark[1]{\contentsname}{\contentsname}
+\hypersetup{hidelinks} % Don't format as links
 %Inhaltsverzeichnis
 \tableofcontents
-% das Abbildungsverzeichnis
-\listoffigures
 
-\input{Kapitel/10Abstract/Abstract.tex}
+\input{Kapitel/15Einleitung/Einleitung.tex}
 
 \input{Kapitel/30DatenPipeline/DatenPipeline.tex}
 
@@ -98,5 +103,6 @@
 \addcontentsline{toc}{section}{Literatur}
 %Literaturverzeichnis anzeigen:
 \bibliography{Kapitel/90Literaturverzeichnis/literatur}
-
+% das Abbildungsverzeichnis
+\listoffigures
 \end{document}

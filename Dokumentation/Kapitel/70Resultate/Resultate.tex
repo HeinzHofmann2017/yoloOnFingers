@@ -1,5 +1,6 @@
 \newpage
 \section{Resultate}
+\label{chapter:resultate}
 \subsection{Testvoraussetzungen}
 Das Netzwerk wurde auf 1'200'000 Bildern des ImageNet-1000-class-Datasets vortrainiert.
 Danach wurde es auf rund 13'900 Bildern aus dem Testaufbau \cite{TabeasFingertracking} trainiert. 
@@ -91,7 +92,11 @@ Wie man ausserdem aus Kapitel \ref{chapter:fingerdetektion} entnehmen kann, gab 
 So hat auf Abbildung \ref{img:HoughTransformation}  der y-Wert im Vergleich vom einen Bild zum anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
 Klar, um dieses Problem aufzeigen zu können wurde ein Bild mit einem klaren Unterschied verwendet, was bedeutet dass die meisten Labels Fehler haben die kleiner als diese Grenze sind.
 Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Lücken aufweisen.
-\todo[inline,size=\Large]{Hier evtl. bemerken, dass Jonas genauere Labels hingekriegt hat mit der Methode des 3-D-Raums}
+
+Es kann sehr gut sein, dass in der Arbeit \grqq{}Hand Pose Estimation\grqq{} \cite{HandPoseEstimation} bessere Labels erzeugt wurden.
+Denn in dieser Arbeit\cite{HandPoseEstimation} wurden die Fingerspitzen im 3D-Raum bestimmt und anschliessend in den 2D-Raum zurückgemappt.
+Ausserdem wurde eine Fehlerrechnung gemacht, wie weit die 2D-Labels mit den zurückprojezierten Labels aus dem 3D-Raum übereinstimmen. 
+Allerdings wurde in der erwähnten Arbeit\cite{HandPoseEstimation} kein Vergleich gemacht wie dies in dieser Arbeit der Fall ist, weshalb keine abschliessende Aussage zu diesem Thema gemacht werden kann.
 
 \subsubsection{Intersection Over Union IOU}
 %Beispielbilder IOU

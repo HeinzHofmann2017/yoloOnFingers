@@ -21,6 +21,12 @@ Joseph Redmon and Ali Farhadi.
 \newblock {YOLO9000:} better, faster, stronger.
 \newblock {\em CoRR}, abs/1612.08242, 2016.
 
+\bibitem{HandPoseEstimation}
+Jonas Schmid.
+\newblock {H}and {P}ose {E}stimation: {H}and and {F}ingertip {D}etection using
+  {D}eep {C}onvolutional {N}eural {N}etworks.
+\newblock Master's thesis, HSR, Februar 2018.
+
 \bibitem{PrivateCommunication}
 Guido Schuster, Tabea M\'{e}ndez, Hannes Badertscher, and Jonas Schmid.
 \newblock personal communication.
