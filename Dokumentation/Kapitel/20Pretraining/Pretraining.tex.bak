@@ -9,13 +9,13 @@ Dabei handelte es sich um das ImageNet 1000-Klassen Wettbewerbsdatenset.
 Dieses Datenset bestand aus rund 1.3 Millionen Bildern, welche alle ein Objekt aus genau 1000 möglichen Objekten enthielten.
 Das Label wird über einen eineindeutigen Code im Namen identifiziert.
 \subsection{Architektur}
-Die Architektur, welche im Pretraining verwendet wurde war derjenigen, welche später auch im Training (Tabelle \ref{tbl:yolo_architektur}) verwendet wurde sehr ähnlich.
+Die Architektur, welche im Pretraining verwendet wurde (Tabelle \ref{tbl:pretraining_Architektur}) war derjenigen, welche später auch im Training (Tabelle \ref{tbl:yolo_architektur}) verwendet wurde sehr ähnlich.
 So ist die Architektur der Layer von Layer 0-24 absolut identisch. 
 Die Layer 25 \& 26 unterscheiden sich beim Pretraining stark vom Training, wobei die Layer 27-30 im Pretraining gar nicht vorkommen.
 Was sich bei allen Layern im Pretraining vom Training unterscheidet sind die Outputs. 
 Dies, weil das Input-Bild, und entsprechend auch alle Outputs im Training doppelt so gross sind wie im Pretraining. 
-Der Grund dafür ist, dass dies im originalen Yolo-Paper \cite{yolo} ebenso gehandhabt wurde.
-Den genauen Aufbau der Pretraining-Architektur kann man in der Tabelle \ref{tbl:pretraining_Architektur} betrachten.
+Der Grund dafür ist, dass dies im originalen Yolo-Paper \cite{yolo} ebenso gehandhabt und begründet wurde.
+
 \begin{table}
 \centering
 \begin{tabularx}{1.1\textwidth}{|l|l|l|l|l|X|}
@@ -67,8 +67,8 @@ Es gab allerdings auch eine Peinlichkeit im Zusammenhang mit dem Adamoptimizer.
 So wurde in dieser Arbeit viel mit verschiedenen Lernraten experimentiert, wie z.B. eine regelmässige Reduktion der Lernrate nach jeweils einer bestimmten Anzahl Epochen.
 Diese Experimente ergaben keinerlei verwertbare Resultate.
 Der Grund dafür war, dass man den Adam-Optimizer noch nicht richtig verstanden hatte.
-Denn ein zentraler Wert des Adam-Optimizers ist, dass dieser die Lernrate selber automatisch im Laufe des Trainings anpasst.
-Entsprechend ist eine \grqq{}manuelle\grqq{} Anpassung der Lernrate völlig Sinnlos.
+Denn ein zentraler Wert des Adam-Optimizers ist, dass dieser die Lernrate selber automatisch im Laufe des Trainings \grqq{}anpasst\grqq{}.
+Entsprechend ist eine manuelle Anpassung der Lernrate völlig Sinnlos.
 
 \begin{figure}
 	\centering
@@ -98,15 +98,16 @@ Das Testen dieses Tasks war sehr einfach.
 Es konnte einfach aus dem Outputvektor der Index des Elements mit dem Grössten Wert genommen und mit dem One-Hot-Index des Label-Vektors verglichen werden. 
 Waren die beiden identisch, war die Vorhersage korrekt. 
 Um das Resultat mit dem Resultat aus dem Yolo-Paper \cite{yolo} vergleichen zu können, wurde nicht nur der Index des höchsten Wertes im Output-Vektor verwendet, sondern gleich die Indexen der 5 höchsten Werte. 
-Wie man in der Abbildung \ref{img:test_top5} wurde nach 6 Tagen Lernzeit im Top5-Test im Schnitt eine Treffsicherheit von rund 80\% erreicht.
-Da im nach dem originalen Yolo-Paper \cite{yolo} eine Treffsicherheit von 88\% erreicht wurde, war das Resultat dieser Arbeit um rund 8\% schlechter.
+Wie man in der Abbildung \ref{img:test_top5} erkennen kann, wurde nach 6 Tagen Lernzeit im Top5-Test im Schnitt eine Treffsicherheit von rund 80\% erreicht.
+Da im originalen Yolo-Paper \cite{yolo} eine Treffsicherheit von 88\% erreicht wurde, war das Resultat dieser Arbeit um rund 8\% schlechter.
 
 Es gibt zwei unbestätigte Vermutungen, was der Grund für diese schlechtere Performance sein könnte: 
 \begin{enumerate}
 \item In dieser Arbeit wurden nur Grayscaleinformationen eines Bildes verwendet, während im originalen Yolo-Paper \cite{yolo} die volle Farbinformation mitverwendet wurde. Der Grund, weshalb grayscale verwendet wurde ist, dass wir für das spätere Training ebenfalls nur Grayscale-Bilder zur Verfügung hatten.
 \item Um Aufwand einzusparen wurde in dieser Arbeit nicht auf dem Image-Net Validation-Set validiert, sondern ein Teil der Trainingsdaten zum validieren verwendet. Diese Daten fehlten entsprechend im Training, was ebenfalls eine Reduktion der Treffsicherheit zur Folge gehabt haben könnte. 
 \end{enumerate}
-Diesen Vermutungen wurde während dieser Arbeit nicht nachgegangen, da mit 80\% Genauigkeit im Top5-Test erst einmal vorwärts gearbeitet werden konnte. 
+Diesen Vermutungen wurde während dieser Arbeit nicht nachgegangen.
+Denn mit 80\% Genauigkeit im Top5-Test war man genügend genau, um sich erst einmal auf das eigentliche Training fokussieren zu können. 
 
 
 

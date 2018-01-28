@@ -11,14 +11,14 @@ Und an diesem Punkt kommt \grqq{}Yolo auf Finger\grqq{} ins Spiel.
 Das Ziel ist es nun mithilfe von 4 Kameras die Finger des Piloten in Echtzeit und im 3D-Raum zu tracken und anschliessend animiert in der Virtual-Reality-Brille wieder darzustellen.
 
 Einige erste Schritte in diese Richtung wurden bereits mit der Arbeit \grqq{}Fingerspitzen-Tracking im 3D-Raum\grqq{} \cite{TabeasFingertracking} erbracht.
-So wurde ein System entwickelt, dass es erlaubt mit 4 Kameras Punkte auf von den 2D-Bilder in den 3D-Raum zu mappen.
+So wurde ein System entwickelt, dass es erlaubt mit 4 Kameras Punkte von den 2D-Bilder in den 3D-Raum zu mappen.
 Ausserdem wurde im selben Rahmen ein Testaufbau gebaut, welcher es erlaubt mithilfe von UV Licht Label-Daten aufzunehmen.
 
 \subsection{Ziel}
 Die Aufgabe von dieser Arbeit ist es herauszufinden, ob Algorithmen die auf dem Konzept von Yolo\cite{yolo} aufbauen geeignet sind, um im 2D-Raum die Position der Fingerspitzen einer Person nur aufgrund von Trainingsdaten auf 0.1mm genau zu finden.
 
 \subsection{Hauptquellen}
-Diese Arbeit hatte vor allem der Arbeit \grqq{}You Only Look Once\grqq{}\cite{yolo} aufgebaut.
+Diese Arbeit hatte vor allem auf der Arbeit \grqq{}You Only Look Once\grqq{}\cite{yolo} aufgebaut.
 Darin wird die Architektur eines Neuronalen Netzwerks beschrieben, welches mit schier unglaublicher Performance und einer akzeptablen Genauigkeit Gegenstände und Objekte in 2D-Bildern erkennt und dazu auch gleich deren Standort im Bild detektiert.
 Diese Arbeit ist zusammen mit Ihrer Nachfolgearbeit \grqq{}Yolo9000\grqq{} der aktuelle State of the Art was Klassifizierung kombiniert mit Detektion angeht.
 
@@ -26,10 +26,11 @@ Die Arbeit \grqq{}Fingerspitzen-Tracking im 3D-Raum\grqq{} von Tabea Méndez \ci
 
 Teilweise als Theoretische Grundlage diente das Buch Deeplearning\cite{deeplearning}, welches im Inhalt ebenfalls dem aktuellen State of the Art entspricht.
 
-Die wahrscheinlich Wertvollste Quelle dieser Arbeit war wohl die Diskussionen und Anregungen von und mit Prof. Dr. Guido Schuster, Tabea Méndez, Hannes Badertscher und Jonas Schmid \cite{PrivateCommunication}. An dieser Stelle ein Herzliches Dankeschön an die betroffenen Personen, dass all den Störungen und Fragen mit viel Geduld und Kompetenz standgehalten hatten. 
+Die wahrscheinlich wertvollste Quelle dieser Arbeit war wohl die Diskussionen und Anregungen von und mit Prof. Dr. Guido Schuster, Tabea Méndez, Hannes Badertscher und Jonas Schmid \cite{PrivateCommunication}. An dieser Stelle ein herzliches Dankeschön an die betroffenen Personen, welche all den Störungen und Fragen mit viel Geduld und Kompetenz standgehalten hatten. 
 
 \subsection{Vorgehen}
-In einem ersten Schritt sollen mithilfe des Testaufbaus\cite{TabeasFingertracking} genügend Daten aufgenommen werden, sodass ein Neuronales Netzwerk darauf trainiert werden kann.
+\label{chapter:vorgehen}
+In einem ersten Schritt sollen mit Hilfe des Testaufbaus\cite{TabeasFingertracking} gerade genügend Daten aufgenommen werden, sodass ein Neuronales Netzwerk darauf trainiert werden kann.
 
 Als nächstes soll die Programmierung von Tensorflow in Python erarbeitet und gelernt werden.
 
@@ -40,14 +41,15 @@ Sobald diese Version lauffähig ist, ist das Ziel diese zu optimieren, sodass da
 Falls man soweit kommt, wäre es gut, wenn das Netzwerk sogar noch auf Yolo v2\cite{yolo2} erweitert und damit weiter auf den Task optimiert werden könnte.
 
 \subsection{Aufbau}
-In dieser schriftlichen Dokumentation wird vor allem in den Kapiteln \ref{chapter:daten_pipeline}-\ref{chapter:tests} auf die einzelnen Punkte im Aufbau des Netzwerks vom erzeugen der Daten bis zum Test der Resultate genau ausgeleuchtet.
+In dieser schriftlichen Dokumentation werden vor allem in den Kapiteln \ref{chapter:daten_pipeline}-\ref{chapter:tests} die einzelnen Punkte im Aufbau des Netzwerks vom erzeugen der Daten bis zum Test der Resultate genau ausgeleuchtet.
 In diesen Kapiteln wird auch beschrieben, wo Hürden oder Schwierigkeiten lagen und wie diese falls möglich überwindet werden konnten.
 
 Ein spannendes Kapitel ist das Kapitel \ref{chapter:resultate}, worin die erreichten Resultate dieser Arbeit beschrieben werden.
-Anhand dieses Kapitels ist am besten ablesbar, wo diese Technologie aktuell steht, und was in diesem alles möglich ist.
+Anhand dieses Kapitels ist am besten ablesbar, wo diese Technologie aktuell steht, und was damit alles möglich ist.
 
-Bevor im letzten Kapitel ein Fazit zur gesamten Arbeit gezogen wird, wird im Kapitel \ref{chapter:Pretraining} genauer auf die Art und Weise eingegangen, wie das Netzwerk vor-trainiert (Pretrainig) wurde. Dieser Punkt erhält ein eigenes Kapitel, weil diese Arbeit parallel zum eigentlichen Training aufgebaut und ausgeführt wurde.
+Bevor im letzten Kapitel ein Fazit zur gesamten Arbeit gezogen wird, wird im Kapitel \ref{chapter:Pretraining} genauer auf die Art und Weise eingegangen, wie das Netzwerk vor-trainiert (Pretraining) wurde. 
+Dieser Punkt erhält ein eigenes Kapitel, weil diese Arbeit \grqq{}parallel\grqq{} zum eigentlichen Training aufgebaut und ausgeführt wurde.
 
-Das Ziel dieser Dokumentation ist es vor allem Probleme und gelerntes so aufzuarbeiten, dass zukünftige Studenten/Assistenten, welche sich mit dem Thema auseinandersetzen müssen schnell einen Überblick über gelerntes und die aufgetretenen Probleme erhalten.
+Das Ziel dieser Dokumentation ist es vor allem Probleme und Gelerntes so aufzuarbeiten, dass zukünftige Studenten/Assistenten, welche sich mit dem Thema auseinandersetzen müssen schnell einen Überblick über gelerntes und die aufgetretenen Probleme erhalten.
 So sollten allfällige Fehler nicht zweimal gemacht werden.
 

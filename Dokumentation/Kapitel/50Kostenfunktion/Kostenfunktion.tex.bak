@@ -4,35 +4,35 @@
 \subsection{Erster Wurf}
 \label{chapter:erster_wurf}
 In einem ersten Wurf war das Ziel eine Kostenfunktion zu erstellen, welche so einfach wie nur möglich sein sollte. 
-So sollte man schnellstmöglich ein funktionierendes Netzwerk haben, welches einfach zu debuggen ist und später Schritt für Schritt verbessert werden konnte.
-Dabei sollte der Output des Netzwerks lediglich 3 Variablen umfassen. Eine, welche die x-Koordinaten des rechten Zeigefingers vorhersagt, eine, welche die y-Koordinaten vorhersagt, und eine letzte, welche die Wahrscheinlichkeit dass sich ein rechter Zeigefinger in diesem Bild befindet vorhersagt.
+So sollte man schnellstmöglich ein funktionierendes Netzwerk haben, welches einfach zu debuggen ist und später Schritt für Schritt verbessert werden könnte.
+Dabei sollte der Output des Netzwerks lediglich 3 Variablen umfassen. Eine, welche die x-Koordinaten des rechten Zeigefingers vorhersagt, eine, welche die y-Koordinaten vorhersagt, und eine Letzte, welche die Wahrscheinlichkeit dass sich ein rechter Zeigefinger in diesem Bild befindet vorhersagt.
 Die Kosten sollten dabei wie beim originalen Yolo-Netzwerk mit den kleinsten Fehlerquadraten der Distanz von Label zu Prediction berechnet werden.
 Dieser Ansatz hatte überhaupt nicht funktioniert.
 Die Predictions waren irgendwo im Bild und mit menschlichem Auge keine Korrelation mit den Labels ersichtlich. 
 
-Es wurde die Hypothese erstellt, dass dies daran läge, dass man mit dem Pretraining (Details im Kapitel \ref{chapter:Pretraining}) eigentlich Hauptsächlich einen Klassifizierer \grqq{}gezüchtet\grqq{} hatte, aber für die zwei essentiellen Predictions(x-/ y-Wert) eigentlich nur eine Regression verwendet wurde.
-Beim originalen Output des Yolo-Netzwerks könnte man sich vorstellen, dass das Netzwerk für jede Gitterzelle eine intuitiv eine Klassifizierung durchführt, und entsprechend den Fehler schon stark eingrenzen kann.
-Aufgrund dieser Intuitiven Erklärung wurde der Plan gefasst, die Kostenfunktion stärker an der originalen Kostenfunktion zu orientieren.
+Es wurde die Hypothese erstellt, dass dies daran läge, dass man mit dem Pretraining (Details später im Kapitel \ref{chapter:Pretraining}) eigentlich Hauptsächlich einen Klassifizierer \grqq{}gezüchtet\grqq{} hatte, aber für die zwei essentiellen Predictions(x-/ y-Wert) eigentlich nur eine Regression verwendet wurde.
+Beim originalen Output des Yolo-Netzwerks könnte man sich vorstellen, dass das Netzwerk für jede Gitterzelle intuitiv eine Klassifizierung durchführt, und entsprechend den Fehler schon stark eingrenzen kann.
+Aufgrund dieser Intuitiven Erklärung wurde der Plan gefasst, die Kostenfunktion stärker an der originalen Yolo v1 Kostenfunktion zu orientieren.
 
 \subsection{Netzwerkoutput}
-Im ersten Schritt wurde der Output des Netzwerks nahezu genau nach dem Vorbild aus dem Yolo-Papers \cite{yolo} aufgebaut. 
+Im ersten Schritt wurde der Output des Netzwerks fast genau wie das Vorbild aus dem Yolo-Paper \cite{yolo} aufgebaut. 
 Die einzigen Unterschiede lagen darin, dass man pro Gitterzelle nur eine anstelle von zwei Bounding-Boxen ausgibt und dass man nur eine anstelle von 10 Klassen vorhersagt. 
-Damit war der Output des Netzwerks (Abbildung \ref{img:prediction_tensor}) nahezu identisch mit dem Label-Tensor (Abbildung \ref{img:label_tensor} \& Beschreibung in Kapitel \ref{chapter:label_tensor}).
-Der einzige Unterschied zwischen dem Output-Tensor und dem Label-Tensor lag darin, dass jede Gitterzelle auch eine Vorhersage zur Confidence enthält. 
+Damit war der Output des Netzwerks (Abbildung \ref{img:output_tensor}) nahezu identisch mit dem Label-Tensor (Abbildung \ref{img:label_tensor} \& Beschreibung in Kapitel \ref{chapter:label_tensor}).
+Der einzige Unterschied zwischen dem Output-Tensor und dem Label-Tensor lag darin, dass jede Output-Gitterzelle auch eine Vorhersage zur Confidence enthält. 
 
 %Prediction-Tensor
 \begin{figure}	
 	\centering
 	\includegraphics[width=.7\textwidth]{Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf}
-	\caption{Prediction-Tensor}
-	\label{img:prediction_tensor}
+	\caption{Output-Tensor}
+	\label{img:output_tensor}
 \end{figure} 
 
-Die Confidence war deshalb nicht explizit in den Labels enthalten, weil sie aus den Vorhersagen zu x, y, w und h sowie den entsprechenden Labels berechnet wurde.
+Die Confidence war deshalb nicht explizit in den Labels enthalten, weil sie erst mit den Vorhersagen zu x, y, w und h sowie den entsprechenden Labels berechnet werden konnte.
 Die Label-Confidence ist eigentlich nichts anderes als die IOU\footnote{\label{foot:1}IOU = Intersection Over Union} zwischen der vorhergesagten Bounding-Box und der Label-Bounding-Box einer bestimmten Gitterzelle. 
 Die Berechnung der IOU aus diesen beiden Bounding-Boxen erfolgt wie aus Abbildung \ref{img:IOU} ersichtlich.
 
-Es befinden sich allerdings in den meisten Gitterzellen keine rechten Zeigefinger. 
+Es befinden sich allerdings in den meisten Gitterzellen keine rechten Zeigefingerspitzen. 
 Aus diesem Grund existieren in diesen Gitterzellen auch keine Labels zu x,y,w und h, weshalb auch keine Label-Bounding-Boxen existieren.
 In jeder dieser Gitterzellen, in welchen keine Label-Boundingboxen existieren ist die Label-Confidence automatisch=0. 
 So wird man nach dem Training aufgrund der Confidence-Variable im Output für jede Gitterzelle ablesen können, ob sich darin irgend ein Objekt befindet, und wie gut dieses wahrscheinlich auf die Vorhersage von x,y,w und h passt.
@@ -77,9 +77,13 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 \hline  $h_i$  & Höhe der Label-Boundingbox für die Gitterzelle i\\
 \hline  $C_i$  & Label-Confidence für die Boundingbox in der Gitterzelle i\\
 \hline  $p_i$  & Label-Wahrscheinlichkeit, dass sich ein rechter Zeigefinger in der Gitterzelle i befindet. \\	
-\hline  $\hat{x},\hat{y},\hat{w},\hat{h},\hat{C},\hat{p}$  & Dies sind die Predictions des Netzwerks, welche den oben definierten entsprechenden Labels gegenübergestellt werden.\\
-\hline  $\mathds{1}_{i}^{obj}$  & Dieses Objekt ist = 1, wenn in der Gitterzelle i ein rechter Zeigefingerspitz enthalten ist. Dieses Objekt ist = 0, wenn in der Gitterzelle i \textbf{kein} rechter Zeigefingerspitz enthalten ist.\\	
-\hline  $\mathds{1}_{i}^{noobj}$  & Dieses Objekt ist = 1, wenn in der Gitterzelle i \textbf{kein} rechter Zeigefingerspitz enthalten ist. Dieses Objekt ist = 0, wenn in der Gitterzelle i ein rechter Zeigefingerspitz enthalten ist.\\
+\hline  $\hat{x},\hat{y},\hat{w},\hat{h},\hat{C},\hat{p}$  & Dies sind die Outputs des Netzwerks, welche den oben definierten entsprechenden Labels gegenübergestellt werden.\\
+\hline  $\mathds{1}_{i}^{obj}$  & Dieses Objekt ist = 1, wenn in der Gitterzelle i ein rechter Zeigefingerspitz enthalten ist. 
+
+Dieses Objekt ist = 0, wenn in der Gitterzelle i \textbf{kein} rechter Zeigefingerspitz enthalten ist.\\	
+\hline  $\mathds{1}_{i}^{noobj}$  & Dieses Objekt ist = 1, wenn in der Gitterzelle i \textbf{kein} rechter Zeigefingerspitz enthalten ist. 
+
+Dieses Objekt ist = 0, wenn in der Gitterzelle i ein rechter Zeigefingerspitz enthalten ist.\\
 \hline $\sum_{i}^{7*7}$ & Summe über alle Gitterzellen, wobei i immer einer Gitterzelle entspricht.\\
 \hline
 \end{tabularx}
@@ -93,7 +97,7 @@ Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in Gleichu
 Diese Kostenfunktion ist etwas einfacher als die Kostenfunktion, wie Sie im Yolo v1 Paper zu sehen ist. 
 Dies hat zwei Gründe. 
 Zum einen wurde pro Gitterzelle nur eine Boundingbox vorhergesagt. 
-So fällt für Zeile 1-4 der Kostenfunktion das zweite Summenzeichen, sowie deren iteration über die Variable j weg. 
+So fällt für Zeile 1-4 der Kostenfunktion das zweite Summenzeichen, sowie deren iteration über die Variable j (also über mehrere Bounding-Boxen) weg. 
 Zum anderen wurde nur eine Klasse(rechter Zeigefinger) gelabelt und vorhergesagt.
 So fällt auf der Zeile 5 das Summenzeichen und deren entsprechende Iteration über alle Klassen weg.
 
@@ -102,8 +106,9 @@ So gingen die Vorhersagen für die $p_i$'s je länger man lernte desto stärker 
 Der Grund dafür lag darin, dass $\mathds{1}_{i}^{obj}$ immer = 0 war, wenn \textbf{kein} rechter Zeigefingerspitz in dieser Gitterzelle enthalten ist.
 So wird das Netzwerk nie korrigiert, wenn es die Wahrscheinlichkeit höher einschätzt, als sie tatsächlich ist. 
 Dies stellte allerdings kein Problem dar. 
-Denn die letztendliche Identifikation des Fingers, welche mit dem resultierenden Wert aus $c_i * p_i$ ermittelt wurde, war wegen der Nähe von $p_i$ zu 1 sozusagen gleichzusetzen mit $c_i$.
-Da auch mit mehreren Klassen $c_i$ eine Dominante Rolle spielen würde, wenn es darum geht, ob ein Objekt erkannt wurde oder nicht, würde höchstwahrscheinlich die Performance nicht besser, wenn man Yolo mit mehr als einer Klasse trainieren würde.
+Denn die letztendliche Identifikation des Fingers, welche mit dem resultierenden Wert aus $c_i * p_i$ ermittelt wurde, war wegen der Nähe von $p_i$ zu 1 sozusagen gleichzusetzen mit $\hat{c_i$.
+
+Da auch mit mehreren Klassen $\hat{c_i$ eine Dominante Rolle spielen würde, wenn es darum geht, ob ein Objekt erkannt wurde oder nicht, würde höchstwahrscheinlich die Performance nicht besser, wenn man Yolo mit mehr als einer Klasse trainieren würde.
 
 
 

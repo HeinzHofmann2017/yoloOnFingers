@@ -2,16 +2,20 @@
 \section{Daten-Pipeline}
 \label{chapter:daten_pipeline}
 \subsection{Bilder aufnehmen}
-Die Aufnahme der Bilder geschah unverändert mit Apparatur und C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstand. 
-Das Ergebnis waren jeweils 8 Bilder aus einer Situation. 
-Eine Situation bestand aus 4 Kameras, wobei jede Kamera jeweils ein schwarzweiß-Bild mit UV-Beleuchtung und ein schwarzweiß-Bild mit normaler weisser Beleuchtung gemacht hatte.
-Wegen schlechter Erfahrungen mit Restlicht wurde der Aufbau mit schwarzem Papier abgedeckt. Diese schlechten Erfahrungen wurden gemacht, weil zu diesem Zeitpunkt zum Labeling der Daten noch keine Zeitinformation verwendet, also die Finger noch nicht von Bild zu Bild getrackt wurden.  
-Pro Durchgang konnten maximal 6000 Situationen aufgenommen werden, bevor der Arbeitsspeicher des dafür verwendeten Computers an seine Grenzen kam. 
+Die Aufnahme der Bilder geschah unverändert mit Apparatur und C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstanden. 
+Das Ergebnis bestand jeweils aus 8 Bildern aus einer Situation. 
+Eine Situation bestand aus 4 Kameras.
+Dabei hatte jede Kamera jeweils ein schwarzweiß-Bild mit UV-Beleuchtung und ein schwarzweiß-Bild mit normaler weisser Beleuchtung gemacht.
+Wegen schlechter Erfahrungen mit Restlicht wurde der Aufbau mit schwarzem Papier abgedeckt. 
+Diese schlechten Erfahrungen wurden gemacht, weil zu diesem Zeitpunkt zum Labeling der Daten noch keine Zeitinformation verwendet, also die Finger noch nicht von Bild zu Bild getrackt wurden.
+So wurden helle Punkte im Hintergrund oft als Finger erkannt.
 
+Pro Durchgang konnten maximal 6000 Situationen aufgenommen werden, bevor der Arbeitsspeicher des dafür verwendeten Computers an seine Grenzen kam. 
 Eine Verbesserung könnte hier erreicht werden, wenn man das Programm in 2 verschiedene Threads aufteilen würde.
-Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das abspeichern derselben zuständig.
-So könnte \grqq{}zeitlich unbegrenzt\grqq{} Daten aufgenommen werden. 
+Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das Abspeichern derselben zuständig.
+So könnten \grqq{}zeitlich unbegrenzt\grqq{} Daten aufgenommen werden. 
 Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Daten aufgenommen würden.
+
 \subsection{Fingerdetektion}
 \label{chapter:fingerdetektion}
 \begin{figure}
@@ -23,8 +27,8 @@ Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Dat
 	\begin{minipage}[b]{0.48\textwidth}		
 		\includegraphics[trim = 270mm 90mm 90mm 170mm, clip,width=\textwidth]{Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png}
 	\end{minipage}
-	\caption{Resultate Hough-Transformation}
-	\label{img:HoughTransformation}
+	\caption{Resultate der Erosion}
+	\label{img:Erosion}
 \end{figure}
 Zur Fingerdetektion wurde der Matlab-Fingerdetektor aus der Masterarbeit von Tabea Méndez \cite{TabeasFingertracking} verwendet. 
 Um Zeit bei der Datenaufnahme einzusparen wurde Zeit und Rauminformation nicht miteinbezogen. 
@@ -33,9 +37,9 @@ So wurden auch mit Restlicht beleuchtete Punkte im Hintergrund oder LED's, als F
 Dieses Problem konnte aber weitgehend behoben werden, indem in den Matlab-Fingerdetektor noch einige Filter eingebaut wurden.
 \begin{enumerate}
 \item Überspringen von Bildern, welche eine gewisse Helligkeit überschreiten. 
-Dies sortiert Bilder aus, welche eine grosse Hintergrundhelligkeit und dadurch auch viele fehlerhaft erkannten Fingerspitzen enthält aus.  
-\item Aussortieren von erkannten Punkten, die zu gross sind, als dass Sie ein Fingerspitz sein könnten. 
-Dieser Punkt ist teilweise redundant mit dem ersten Punkt, da so grosse Punkte nur im Hintergrund bei einer extrem grossen Helligkeit auftreten können.  
+Dies sortierte Bilder aus, welche eine grosse Hintergrundhelligkeit und dadurch auch viele fehlerhaft erkannten Fingerspitzen enthielten.  
+\item Aussortieren von erkannten Punkten, die zu gross sind, als dass Sie eine Fingerspitze sein könnten. 
+Dieser Punkt ist teilweise redundant mit dem ersten Punkt, da so grosse Punkte im Hintergrund oft nur bei einer extrem grossen Helligkeit auftreten können.  
 \item Aussortieren von erkannten Punkten, welche zu klein sind, als dass Sie eine Fingerspitze sein könnten. 
 Damit werden die meisten LED-Punkte entfernt.
 \item Von den übrigen Punkten wird dann nur noch der Grösste behalten.
@@ -44,22 +48,22 @@ Diesem wird somit das Label \grqq{}rechter Zeigefingerspitz\grqq{} verliehen.
 Mit diesen Filtern konnte ein hoher Prozentsatz der rechten Zeigefinger korrekt detektiert werden.
 Auf den Finger selber bezogen war die Genauigkeit leider jedoch relativ schlecht.
 Dies aus dem einfachen Grund, dass die Detektionspunkte nicht immer genau in der Mitte des Fingers zu liegen kamen. 
-Weiter waren auch die Boundingboxen, welche sich aus dem Resultat der Hough-Transformation \cite{TabeasFingertracking} berechnen liessen nicht sehr genau. 
-Wie man in der Abbildung \ref{img:HoughTransformation} sehen kann, können sich diese innerhalb des Fingers auch bei sehr ähnlichen Bildern stark unterscheiden.
+Weiter waren auch die Boundingboxen, welche sich aus dem Resultat der Erosion \cite{TabeasFingertracking} berechnen liessen nicht sehr genau. 
+Wie man in der Abbildung \ref{img:Erosion} sehen kann, können sich diese innerhalb des Fingers auch bei sehr ähnlichen Bildern stark unterscheiden.
 
 \subsection{CSV generieren}
 Das Fingerspitzentracking wurde mit Matlab gemacht und die entsprechenden Labels als .mat-File abgespeichert.
-Das Deeplearning hingegen wurde mit Tensorflow und entsprechend mit Python angegangen. 
+Yolo hingegen wurde mit Tensorflow und entsprechend mit Python angegangen. 
 Leider war es nicht möglich mit Python direkt .mat-Files zu öffnen. 
 Aus diesem Grund wurde ein kleines Matlab-Skript erstellt, welches die Labels als CSV abspeichert. 
-Im Zuge dieses Skripts wurden ausserdem die Daten in Test und in Trainingsdaten aufgeteilt und je einem seperaten CSV abgespeichert.
+Im Zuge dieses Skripts wurden ausserdem die Daten in Test und in Trainingsdaten aufgeteilt und je in einem seperaten CSV abgespeichert.
 In diesem CSV gehört jedem Bild eine Zeile. 
 Pro Zeile bzw. Bild werden folgende Punkte beschrieben:
 \begin{enumerate}
 \item Eindeutiger Bildname, mit welchem das Bild aus dem Directory geladen werden kann. 
 \item X-Koordinaten im Range [0:1280]
 \item Y-Koordinaten im Range [0:960]
-\item Durchmesser des Resultats der Hough-Transformation
+\item Durchmesser des Resultats der Erosion
 \item Wahrscheinlichkeit, dass ein rechter Zeigefinger in diesem Bild ist. 
 (Entweder 1 oder 0, je nach dem, ob ein Finger erkannt wurde.)
 \end{enumerate}
