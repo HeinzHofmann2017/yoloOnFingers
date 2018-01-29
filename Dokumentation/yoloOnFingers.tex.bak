@@ -14,6 +14,10 @@
 % Festlegung Art der Zitierung
 \bibliographystyle{plain}
 
+%Mit dem Abstand von Kopfzeile zum Text experimentieren
+\setlength{\topmargin}{0mm}
+\setlength{\headsep}{15mm}
+
 % Grafikpaket laden
 \usepackage{graphicx}
 

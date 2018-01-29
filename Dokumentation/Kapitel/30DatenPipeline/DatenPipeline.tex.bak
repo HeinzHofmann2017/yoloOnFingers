@@ -2,19 +2,21 @@
 \section{Daten-Pipeline}
 \label{chapter:daten_pipeline}
 \subsection{Bilder aufnehmen}
-Die Aufnahme der Bilder geschah unverändert mit Apparatur und C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstanden. 
-Das Ergebnis bestand jeweils aus 8 Bildern aus einer Situation. 
-Eine Situation bestand aus 4 Kameras.
-Dabei hatte jede Kamera jeweils ein schwarzweiß-Bild mit UV-Beleuchtung und ein schwarzweiß-Bild mit normaler weisser Beleuchtung gemacht.
-Wegen schlechter Erfahrungen mit Restlicht wurde der Aufbau mit schwarzem Papier abgedeckt. 
-Diese schlechten Erfahrungen wurden gemacht, weil zu diesem Zeitpunkt zum Labeling der Daten noch keine Zeitinformation verwendet, also die Finger noch nicht von Bild zu Bild getrackt wurden.
+\label{chapter:bilder_aufnehmen}
+Die Aufnahme der Bilder geschah unverändert mit der Apparatur und dem C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstanden. 
+Das Ergebnis bestand jeweils aus acht Bildern von einer Situation. 
+Eine Situation bestand aus vier Kameras.
+Dabei machte jede Kamera jeweils ein schwarzweiss-Bild mit UV-Beleuchtung und ein schwarzweiss-Bild mit normaler weisser Beleuchtung.
+Als die Daten gelablet wurden, wurden noch keine Zeitinformation verwendet.
+Das heisst die Finger wurden noch nicht von Bild zu Bild getrackt.
 So wurden helle Punkte im Hintergrund oft als Finger erkannt.
+Um dies zu umgehen wurde der Aufbau im Hintergrund mit schwarzem Papier abgedeckt.
 
 Pro Durchgang konnten maximal 6000 Situationen aufgenommen werden, bevor der Arbeitsspeicher des dafür verwendeten Computers an seine Grenzen kam. 
-Eine Verbesserung könnte hier erreicht werden, wenn man das Programm in 2 verschiedene Threads aufteilen würde.
-Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das Abspeichern derselben zuständig.
+Eine Verbesserung könnte hier erreicht werden, wenn man das Programm in zwei verschiedene Threads aufteilen würde.
+Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das Abspeichern zuständig.
 So könnten \grqq{}zeitlich unbegrenzt\grqq{} Daten aufgenommen werden. 
-Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Daten aufgenommen würden.
+Dies würde aber nur nötig, falls in Zukunft ein Roboter verwendet wird, um Daten aufzunehmen.
 
 \subsection{Fingerdetektion}
 \label{chapter:fingerdetektion}
@@ -31,22 +33,23 @@ Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Dat
 	\label{img:Erosion}
 \end{figure}
 Zur Fingerdetektion wurde der Matlab-Fingerdetektor aus der Masterarbeit von Tabea Méndez \cite{TabeasFingertracking} verwendet. 
-Um Zeit bei der Datenaufnahme einzusparen wurde Zeit und Rauminformation nicht miteinbezogen. 
+Um Zeit bei der Datenaufnahme einzusparen wurden Zeit- und Rauminformationen nicht miteinbezogen. 
 Dies brachte einige neue Probleme mit sich.   
 So wurden auch mit Restlicht beleuchtete Punkte im Hintergrund oder LED's, als Finger erkannt.
-Dieses Problem konnte aber weitgehend behoben werden, indem in den Matlab-Fingerdetektor noch einige Filter eingebaut wurden.
+Dieses Problem konnte weitgehend behoben werden, indem in den Matlab-Fingerdetektor noch einige Filter eingebaut wurden.
+Diese Filter hatten folgende Funktionen.
 \begin{enumerate}
 \item Überspringen von Bildern, welche eine gewisse Helligkeit überschreiten. 
 Dies sortierte Bilder aus, welche eine grosse Hintergrundhelligkeit und dadurch auch viele fehlerhaft erkannten Fingerspitzen enthielten.  
-\item Aussortieren von erkannten Punkten, die zu gross sind, als dass Sie eine Fingerspitze sein könnten. 
-Dieser Punkt ist teilweise redundant mit dem ersten Punkt, da so grosse Punkte im Hintergrund oft nur bei einer extrem grossen Helligkeit auftreten können.  
-\item Aussortieren von erkannten Punkten, welche zu klein sind, als dass Sie eine Fingerspitze sein könnten. 
-Damit werden die meisten LED-Punkte entfernt.
+\item Aussortieren von erkannten Punkten, welche zu gross waren, als dass Sie eine Fingerspitze sein könnten. 
+Dieser Punkt ist teilweise redundant mit dem ersten Punkt, da grosse Punkte im Hintergrund oft nur bei einer extrem grossen Helligkeit auftreten können.  
+\item Aussortieren von erkannten Punkten, welche zu klein waren, als dass Sie eine Fingerspitze sein konnten. 
+Damit wurden die meisten LED-Punkte entfernt.
 \item Von den übrigen Punkten wird dann nur noch der Grösste behalten.
-Diesem wird somit das Label \grqq{}rechter Zeigefingerspitz\grqq{} verliehen. 
+Diesem wurde somit das Label \grqq{}rechter Zeigefingerspitz\grqq{} verliehen. 
 \end{enumerate}
 Mit diesen Filtern konnte ein hoher Prozentsatz der rechten Zeigefinger korrekt detektiert werden.
-Auf den Finger selber bezogen war die Genauigkeit leider jedoch relativ schlecht.
+Auf den Finger selber bezogen, war die Genauigkeit leider jedoch relativ schlecht.
 Dies aus dem einfachen Grund, dass die Detektionspunkte nicht immer genau in der Mitte des Fingers zu liegen kamen. 
 Weiter waren auch die Boundingboxen, welche sich aus dem Resultat der Erosion \cite{TabeasFingertracking} berechnen liessen nicht sehr genau. 
 Wie man in der Abbildung \ref{img:Erosion} sehen kann, können sich diese innerhalb des Fingers auch bei sehr ähnlichen Bildern stark unterscheiden.
@@ -90,26 +93,26 @@ Dabei wird das Bild in ein 7x7 Raster aufgeteilt.
 Für jedes Element dieses Gitternetzes werden folgende Punkte gespeichert:
 \begin{labeling}{Label-Tensor}
 \item[x] Die Distanz des Zentrums der Fingerspitze zum linken Rand der Gitterzelle.
-
 Ist kein Finger in dieser Gitterzelle, ist diese Variable gleich Null.
+
 Diese Variable ist folgendermassen normiert: 
 Ist das Zentrum der Fingerspitze ganz links in der entsprechenden Gitterzelle, ist die Variable gleich null.
 Ist das Zentrum der Fingerspitze ganz rechts in der entsprechenden Gitterzelle, ist die Variable gleich eins.
 \item[y] Die Distanz des Zentrums der Fingerspitze zum oberen Rand der Gitterzelle.
-
 Ist kein Finger in dieser Gitterzelle, ist diese Variable gleich Null. 
+
 Diese Variable ist folgendermassen normiert:
 Ist das Zentrum der Fingerspitze ganz oben in der entsprechenden Gitterzelle, ist die Variable gleich null.
 Ist das Zentrum der Fingerspitze ganz unten in der entsprechenden Gitterzelle, ist die Variable gleich eins.
 \item[h] Die Höhe der entsprechenden Bounding Box.
-
 Ist kein Finger in dieser Gitterzelle, ist diese Höhe gleich null.
+
 Diese Variable ist folgendermassen normiert:
 Ist die Box insgesamt so hoch wie das Bild, ist diese Variable gleich eins. 
 Ist die Box \grqq{}unendlich\grqq{} klein, so ist diese Variable gleich null.
 \item[w] Die Breite der entsprechenden Bounding Box.
-
 Ist kein Finger in dieser Gitterzelle, ist diese Höhe gleich null.
+
 Diese Variable ist folgendermassen normiert:
 Ist die Box insgesamt so breit wie das Bild, ist diese Variable gleich eins.
 Ist die Box \grqq{}unendlich\grqq{} schmal, so ist diese Variable gleich null.
@@ -160,7 +163,8 @@ Bis die Bilder wirklich ins Netzwerk gefüttert werden passieren noch folgenden 
 \item Eine Funktion, welche die Bildnamen durch die echten Bilder ersetzt. 
 Der Vorteil einer solchen Funktion ist, dass die Bilder wirklich erst geladen werden, wenn die Daten auch benötigt werden. 
 So werden im Punkt 2 nicht die schwergewichtigen Bilder sondern nur deren Namen aus der Liste durchgemischelt. 
-\item Eine letzte Funktion, welche das organisieren des Minibatches übernimmt. Sodass die grösse des Minibatches flexibel bestimmt werden kann.
+\item Eine Funktion übernimmt das organisieren des Minibatches. 
+So kann die Grösse des Minibatches flexibel bestimmt werden.
 \item Die Bilder wurden von der Grösse 1280*960 auf 448*448 umgewandelt. 
 Um diesen Punkt auf die GPU auszulagern wurde dafür eine eigenständige Tensorflow-Funktion verwendet (tf.image.resize\_images). 
 \item Die Bilder wurden normalisiert. 

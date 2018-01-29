@@ -3,19 +3,20 @@
 \label{chapter:daten_pipeline}
 \subsection{Bilder aufnehmen}
 \label{chapter:bilder_aufnehmen}
-Die Aufnahme der Bilder geschah unverändert mit Apparatur und C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstanden. 
-Das Ergebnis bestand jeweils aus 8 Bildern aus einer Situation. 
-Eine Situation bestand aus 4 Kameras.
-Dabei hatte jede Kamera jeweils ein schwarzweiß-Bild mit UV-Beleuchtung und ein schwarzweiß-Bild mit normaler weisser Beleuchtung gemacht.
-Wegen schlechter Erfahrungen mit Restlicht wurde der Aufbau mit schwarzem Papier abgedeckt. 
-Diese schlechten Erfahrungen wurden gemacht, weil zu diesem Zeitpunkt zum Labeling der Daten noch keine Zeitinformation verwendet, also die Finger noch nicht von Bild zu Bild getrackt wurden.
+Die Aufnahme der Bilder geschah unverändert mit der Apparatur und dem C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstanden. 
+Das Ergebnis bestand jeweils aus acht Bildern von einer Situation. 
+Eine Situation bestand aus vier Kameras.
+Dabei machte jede Kamera jeweils ein schwarzweiss-Bild mit UV-Beleuchtung und ein schwarzweiss-Bild mit normaler weisser Beleuchtung.
+Als die Daten gelablet wurden, wurden noch keine Zeitinformation verwendet.
+Das heisst die Finger wurden noch nicht von Bild zu Bild getrackt.
 So wurden helle Punkte im Hintergrund oft als Finger erkannt.
+Um dies zu umgehen wurde der Aufbau im Hintergrund mit schwarzem Papier abgedeckt.
 
 Pro Durchgang konnten maximal 6000 Situationen aufgenommen werden, bevor der Arbeitsspeicher des dafür verwendeten Computers an seine Grenzen kam. 
-Eine Verbesserung könnte hier erreicht werden, wenn man das Programm in 2 verschiedene Threads aufteilen würde.
-Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das Abspeichern derselben zuständig.
+Eine Verbesserung könnte hier erreicht werden, wenn man das Programm in zwei verschiedene Threads aufteilen würde.
+Dabei wäre ein Thread für das Aufnehmen der Daten und der andere für das Abspeichern zuständig.
 So könnten \grqq{}zeitlich unbegrenzt\grqq{} Daten aufgenommen werden. 
-Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Daten aufgenommen würden.
+Dies würde aber nur nötig, falls in Zukunft ein Roboter verwendet wird, um Daten aufzunehmen.
 
 \subsection{Fingerdetektion}
 \label{chapter:fingerdetektion}
@@ -32,23 +33,24 @@ Dies würde aber nur nötig, falls tatsächlich in Zukunft mit einem Roboter Dat
 	\label{img:Erosion}
 \end{figure}
 Zur Fingerdetektion wurde der Matlab-Fingerdetektor aus der Masterarbeit von Tabea Méndez \cite{TabeasFingertracking} verwendet. 
-Um Zeit bei der Datenaufnahme einzusparen wurde Zeit und Rauminformation nicht miteinbezogen. 
+Um Zeit bei der Datenaufnahme einzusparen wurden Zeit- und Rauminformationen nicht miteinbezogen. 
 Dies brachte einige neue Probleme mit sich.   
 So wurden auch mit Restlicht beleuchtete Punkte im Hintergrund oder LED's, als Finger erkannt.
-Dieses Problem konnte aber weitgehend behoben werden, indem in den Matlab-Fingerdetektor noch einige Filter eingebaut wurden.
+Dieses Problem konnte weitgehend behoben werden, indem in den Matlab-Fingerdetektor noch einige Filter eingebaut wurden.
+Diese Filter hatten folgende Funktionen.
 \begin{enumerate}
 \item Überspringen von Bildern, welche eine gewisse Helligkeit überschreiten. 
 Dies sortierte Bilder aus, welche eine grosse Hintergrundhelligkeit und dadurch auch viele fehlerhaft erkannten Fingerspitzen enthielten.  
-\item Aussortieren von erkannten Punkten, die zu gross sind, als dass Sie eine Fingerspitze sein könnten. 
-Dieser Punkt ist teilweise redundant mit dem ersten Punkt, da so grosse Punkte im Hintergrund oft nur bei einer extrem grossen Helligkeit auftreten können.  
-\item Aussortieren von erkannten Punkten, welche zu klein sind, als dass Sie eine Fingerspitze sein könnten. 
-Damit werden die meisten LED-Punkte entfernt.
+\item Aussortieren von erkannten Punkten, welche zu gross waren, als dass Sie eine Fingerspitze sein könnten. 
+Dieser Punkt ist teilweise redundant mit dem ersten Punkt, da grosse Punkte im Hintergrund oft nur bei einer extrem grossen Helligkeit auftreten können.  
+\item Aussortieren von erkannten Punkten, welche zu klein waren, als dass Sie eine Fingerspitze sein konnten. 
+Damit wurden die meisten LED-Punkte entfernt.
 \item Von den übrigen Punkten wird dann nur noch der Grösste behalten.
-Diesem wird somit das Label \grqq{}rechter Zeigefingerspitz\grqq{} verliehen. 
+Diesem wurde somit das Label \grqq{}rechter Zeigefingerspitz\grqq{} verliehen. 
 \end{enumerate}
 Mit diesen Filtern konnte ein hoher Prozentsatz der rechten Zeigefinger korrekt detektiert werden.
-Auf den Finger selber bezogen war die Genauigkeit leider jedoch relativ schlecht.
-Dies aus dem einfachen Grund, dass die Detektionspunkte nicht immer genau in der Mitte des Fingers zu liegen kamen. 
+Auf den Finger selber bezogen, war die Genauigkeit leider jedoch relativ schlecht.
+Es lag daran, dass die Detektionspunkte nicht immer genau in der Mitte des Fingers lagen. 
 Weiter waren auch die Boundingboxen, welche sich aus dem Resultat der Erosion \cite{TabeasFingertracking} berechnen liessen nicht sehr genau. 
 Wie man in der Abbildung \ref{img:Erosion} sehen kann, können sich diese innerhalb des Fingers auch bei sehr ähnlichen Bildern stark unterscheiden.
 
@@ -56,8 +58,8 @@ Wie man in der Abbildung \ref{img:Erosion} sehen kann, können sich diese innerh
 Das Fingerspitzentracking wurde mit Matlab gemacht und die entsprechenden Labels als .mat-File abgespeichert.
 Yolo hingegen wurde mit Tensorflow und entsprechend mit Python angegangen. 
 Leider war es nicht möglich mit Python direkt .mat-Files zu öffnen. 
-Aus diesem Grund wurde ein kleines Matlab-Skript erstellt, welches die Labels als CSV abspeichert. 
-Im Zuge dieses Skripts wurden ausserdem die Daten in Test und in Trainingsdaten aufgeteilt und je in einem seperaten CSV abgespeichert.
+Aus diesem Grund wurde ein kleines Matlab-Skript erstellt, welches die Labels als CSV abspeicherte. 
+In diesem Skript wurden ausserdem die Daten in Test und in Trainingsdaten aufgeteilt und je in einem seperaten CSV abgespeichert.
 In diesem CSV gehört jedem Bild eine Zeile. 
 Pro Zeile bzw. Bild werden folgende Punkte beschrieben:
 \begin{enumerate}
@@ -71,14 +73,14 @@ Pro Zeile bzw. Bild werden folgende Punkte beschrieben:
 
 
 \subsection{Python-Objekt generieren}
-Um die Daten einfach im Trainingsprozess aufrufen zu können, wurde eigens eine kleine Python-Klasse geschrieben.
-Die Daten müssen allerdings noch vor deren Verwendung im Training durch eine Funktion dieser Klasse vorverarbeitet werden.
+Um die Daten einfach im Trainingsprozess aufrufen zu können, wurde eine kleine Python-Klasse geschrieben.
+Die Daten mussten allerdings vor der Verwendung im Training durch eine Funktion dieser Klasse vorverarbeitet werden.
 Die Gründe für die Vorverarbeitung sind: 
 \begin{enumerate}
-\item Die Bilder wurden bisher Kameraweise bearbeitet.
-Dies bedeutet, die Bilder heissen bei verschiedenen Kameras genau gleich.
-Mit der Vorverarbeitung werden alle Bilder an einem gemeinsamen Ort gespeichert.
-Ausserdem erhält jedes Bild einen neuen Namen / eine neue Nummerierung, wodurch es möglich wird sie eineindeutig zuzuordnen. 
+\item Die Bilder wurden bisher kameraweise bearbeitet.
+Dies bedeutet, die Bilder hiessen bei verschiedenen Kameras genau gleich.
+Mit der Vorverarbeitung wurden alle Bilder an einem gemeinsamen Ort gespeichert.
+Ausserdem erhielt jedes Bild einen neuen Namen / eine neue Nummerierung, wodurch es möglich wurde sie eindeutig zuzuordnen. 
 \item Um im Training einfach mit den Label-Daten umgehen zu können und um Rechenaufwand während dem Training zu sparen wurden in der Vorverarbeitung die Labels zu demjenigen Tensor zusammengefügt, welcher in Abbildung \ref{img:label_tensor} zu sehen ist.
 \item Die Distanzen X und Y sowie die Höhe und Breite der Boundingbox mussten noch normalisiert werden, damit beim Training einfacher gerechnet werden kann.
 \end{enumerate}
