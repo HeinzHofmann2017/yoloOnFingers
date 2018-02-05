@@ -2,26 +2,26 @@
 %Kapitelüberschrift
 \section{Fazit} 
 \subsection{Gipshände}
-Es wurde versucht eine Aussage machen zu können, ob Gipshände geeignet wären, um zukünftig Trainingsdaten zu generieren oder trainierte Netzwerke zu verifizieren.
+Es wurde versucht, eine Aussage machen zu können, ob Gipshände geeignet wären, um zukünftig Trainingsdaten zu generieren oder trainierte Netzwerke zu verifizieren.
 Leider war der Hintergrund, auf den Fotos mit den Gipshänden komplett anders als in den Trainingsdaten von Yolo (schwarz abgedeckt, siehe Kapitel \ref{chapter:bilder_aufnehmen}).
-Entsprechend wurde die Gipshand kaum erkannt und viel mehr völlig willkürliche Predictions gemacht.
-Aus diesem Grund kann zu diesem Punkt an dieser Stelle leider keine Aussage gemacht werden.
+Entsprechend wurde die Gipshand kaum erkannt und die Predictions fielen willkürlich aus.
+Aus diesem Grund kann zum Thema Gipshände leider noch keine Aussage gemacht werden.
 
 \subsection{Yolo}
 Die Genauigkeit von Yolo v1 auf Distanz und IOU ist aus menschlich subjektiver Sicht befriedigend. 
-Leider aber ist die Genauigkeit noch weit vom gesteckten Ziel von 0.1 mm entfernt.
-Die härtesten Gründe dafür sind:
+Die Genauigkeit ist allerdings noch weit vom gesteckten Ziel von 0.1 mm entfernt.
+Die wichtigsten Gründe dafür sind:
 \begin{enumerate}
 \item Die Bilder müssen für Ihre Verwendung in Yolo auf eine Grösse von 448x448 geschrumpft werden. Entsprechend ist  das erreichen einer Genauigkeit unter 1mm in diesem Kontext nicht oder kaum vorstellbar.
-\item Die Label-Daten hatten selber noch Fehler, die klar über 1mm lagen, entsprechend konnte es dem Netzwerk nicht möglich sein eine bessere Performance zu erlangen als dies das Trainingsset erlaubte.
+\item Die Label-Daten hatten selber noch Fehler, die weit über 0.1mm lagen, entsprechend konnte es dem Netzwerk nicht möglich sein eine bessere Performance zu erlangen als dies das Trainingsset erlaubte.
 \item Es wurde noch nicht alles aus dem Konzept Yolo herausgepresst, so stellt das Paper Yolo-v2 \cite{yolo2} einige Features vor, welche auch die Performance dieses Tasks verbessern könnten.
 \end{enumerate}
 
-Um auf die eigentliche Frage zurück zu kommen.
+Die ursprüngliche Frage lautete:
 Ist Yolo, bzw. Deep-Learning im allgemeinen geeignet um die 2-D-Position von Fingerspitzen auf Bildern zu ermitteln?
-Lautet die Antwort höchstwahrscheinlich Ja.
-Ein Grund für diese Antwort ist, dass mit nur relativ wenigen Daten, welche sich auch als nicht allzu hochwertig herausgestellt haben mit dieser Methode trotzdem an der Grenze des möglichen gekratzt wurde.
-Wieviel mehr wäre da mit hochwertigeren Daten, mehr Daten und einem verbesserten Neuronalen Netzerk möglich...
+Die Antwort lautet höchstwahrscheinlich ja.
+Ein Grund für diese Antwort ist, dass man mit nur relativ wenigen Daten, welche sich auch als nicht allzu hochwertig herausgestellt haben, mit dieser Methode trotzdem sehr nahe an der Grenze des Möglichen gelangt war.
+Mit hochwertigeren Daten, mehr Daten und einem verbesserten Neuronalen Netzerk wäre höchstwahrscheinlich viel mehr möglich...
 
 
 \subsection{Vorschläge für weitere Schritte}
@@ -30,14 +30,14 @@ Um in erster Instanz das Ziel eines 2-D-Fingertrackers auf Basis von Deep-Learni
 \begin{enumerate}
 \item Bessere Daten Sammeln. 
 
-Es gibt die Faustregel, dass man dreimal Daten aufnimmt, bis man endlich die richtigen Daten hat, um sein Netzwerk optimal zu trainieren\cite{PrivateCommunication}. 
+Es gibt die Faustregel, dass man dreimal Daten aufnimmt, bis man die richtigen Daten hat, um sein Netzwerk optimal zu trainieren\cite{PrivateCommunication}. 
 Entsprechend sollte dabei unbedingt darauf geachtet werden, dass man mit berücksichtigt, welche Handstellen (Finger, Knöchel, Gelenke, etc.) man überhaupt braucht, damit man die Daten nicht nochmals aufnehmen muss. 
-Nach dieser Projektarbeit, welche Daten aus einer Hervorragenden Masterarbeit \cite{TabeasFingertracking} verwenden durfte, ist klar, dass automatisch und maschinell erstellte Daten nicht zum optimalen Ziel führen können. 
+Nach dieser Projektarbeit, welche Daten aus einer hervorragenden Masterarbeit \cite{TabeasFingertracking} verwenden durfte, ist klar, dass automatisch und maschinell erstellte Daten nicht zum optimalen Ziel führen können. 
 Entsprechend sollte das Labeling von Fingern, etc. in Zukunft von Menschen gemacht werden. 
 \item Mehr Daten Sammeln. 
 
-Wie Ian Goodfellow schon in seinem Buch Deeplearning \cite{deeplearning} geschrieben hatte, wenn man alles ausprobiert hat und nichts mehr nützt, dann sammle mehr Daten. 
-Entsprechend sollte bei der Generierung der Daten wie im Punkt 1 erwähnt darauf geachtet werden, dass die Daten so generiert werden, dass sie einfach per Computer vervielfältigt werden können. 
+Wie Ian Goodfellow schon in seinem Buch Deeplearning \cite{deeplearning} geschrieben hatte, wenn alles ausprobiert wurde und nichts mehr nützte, müsse man mehr Daten sammeln. 
+Entsprechend sollte bei der Generierung der Daten wie im Punkt 1 erwähnt darauf geachtet werden, dass die Daten so generiert werden, dass sie problemlos per Computer vervielfältigt werden können. 
 \item Die besten Stücke aus Yolo v1 und Yolo v2 herauspicken und ein optimales Netzwerk für diesen Task erschaffen. 
 
 Für diesen Punkt sollte allerdings noch die Arbeit von Jonas Schmid \cite{HandPoseEstimation} berücksichtigt werden, weil dort höchstwahrscheinlich ebenfalls wichtige Erkenntnisse zu diesen Thema enthalten sind.

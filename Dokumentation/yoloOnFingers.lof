@@ -7,13 +7,13 @@
 \contentsline {figure}{\numberline {6}{\ignorespaces Aufbau eines Convolutional-Layers}}{20}{figure.6}
 \contentsline {figure}{\numberline {7}{\ignorespaces Output-Tensor}}{23}{figure.7}
 \contentsline {figure}{\numberline {8}{\ignorespaces Berechnung der IOU}}{23}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{33}{figure.9}
-\contentsline {figure}{\numberline {10}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{34}{figure.10}
-\contentsline {figure}{\numberline {11}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{34}{figure.11}
-\contentsline {figure}{\numberline {12}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{35}{figure.12}
-\contentsline {figure}{\numberline {13}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{35}{figure.13}
-\contentsline {figure}{\numberline {14}{\ignorespaces Prediction knapp besser als IOU=0.4}}{37}{figure.14}
-\contentsline {figure}{\numberline {15}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{37}{figure.15}
-\contentsline {figure}{\numberline {16}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{38}{figure.16}
-\contentsline {figure}{\numberline {17}{\ignorespaces Kosten und Top5-Test von vergleichbaren Tasks im Pretraining \IeC {\"u}ber einen beschr\IeC {\"a}nkten Zeitraum. links: [x-Achse=Zeit, y-Achse=Kosten] rechts: [x-Achse=Zeit, y-Achse=Top-5 Treffer in \%] SGD=dunkelblau. ADAM=hellblau.}}{42}{figure.17}
-\contentsline {figure}{\numberline {18}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit(x-Achse=Zeit, y-Achse=Top-5-Treffer in \%)}}{43}{figure.18}
+\contentsline {figure}{\numberline {9}{\ignorespaces Bedeutung der normierten Distanzwerte in der realen Welt}}{32}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces Prediction knapp besser als Distanz=0.02}}{33}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Prediction knapp schlechter als Distanz=0.02}}{33}{figure.11}
+\contentsline {figure}{\numberline {12}{\ignorespaces Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}}{34}{figure.12}
+\contentsline {figure}{\numberline {13}{\ignorespaces Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet (Grenze: Dist=0.02)}}{34}{figure.13}
+\contentsline {figure}{\numberline {14}{\ignorespaces Prediction knapp besser als IOU=0.4}}{36}{figure.14}
+\contentsline {figure}{\numberline {15}{\ignorespaces Prediction knapp schlechter als IOU=0.4}}{36}{figure.15}
+\contentsline {figure}{\numberline {16}{\ignorespaces Wahrscheinlichkeits-Dichte-Funktion der IOU (Grenze: IOU=0.4)}}{37}{figure.16}
+\contentsline {figure}{\numberline {17}{\ignorespaces Kosten und Top5-Test von vergleichbaren Tasks im Pretraining \IeC {\"u}ber einen beschr\IeC {\"a}nkten Zeitraum. links: [x-Achse=Zeit, y-Achse=Kosten] rechts: [x-Achse=Zeit, y-Achse=Top-5 Treffer in \%] SGD=dunkelblau. ADAM=hellblau.}}{41}{figure.17}
+\contentsline {figure}{\numberline {18}{\ignorespaces Test-Top5 nach 6 Tagen Lernzeit(x-Achse=Zeit, y-Achse=Top-5-Treffer in \%)}}{42}{figure.18}

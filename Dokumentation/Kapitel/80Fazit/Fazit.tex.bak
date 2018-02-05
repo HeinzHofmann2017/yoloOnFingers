@@ -2,25 +2,25 @@
 %Kapitelüberschrift
 \section{Fazit} 
 \subsection{Gipshände}
-Es wurde versucht eine Aussage machen zu können, ob die Gipshände geeignet wären, um zukünftig Trainingsdaten zu generieren oder einfach trainierte Netzwerke zu verifizieren.
-Leider war der Hintergrund, auf den Fotos mit den Gipshänden komplett anders als in den Trainingsdaten von Yolo.
-Entsprechend wurde die Gipshand kaum erkannt und viel mehr völlig willkürliche Predictions gemacht.
-Entsprechend kann zu diesem Punkt an dieser Stelle leider keine Aussage gemacht werden.
+Es wurde versucht, eine Aussage machen zu können, ob Gipshände geeignet wären, um zukünftig Trainingsdaten zu generieren oder trainierte Netzwerke zu verifizieren.
+Leider war der Hintergrund, auf den Fotos mit den Gipshänden komplett anders als in den Trainingsdaten von Yolo (schwarz abgedeckt, siehe Kapitel \ref{chapter:bilder_aufnehmen}).
+Entsprechend wurde die Gipshand kaum erkannt und die Predictions fielen willkürlich aus.
+Aus diesem Grund kann zum Thema Gipshände leider noch keine Aussage gemacht werden.
 
 \subsection{Yolo}
 Die Genauigkeit von Yolo v1 auf Distanz und IOU ist aus menschlich subjektiver Sicht befriedigend. 
-Leider aber ist die Genauigkeit noch weit vom gesteckten Ziel von 0.1 mm entfernt.
-Die härtesten Gründe dafür sind:
+Die Genauigkeit ist allerdings noch weit vom gesteckten Ziel von 0.1 mm entfernt.
+Die wichtigsten Gründe dafür sind:
 \begin{enumerate}
-\item Die Bilder müssen für Ihre Verwendung in Yolo auf eine Grösse von 448x448 geschrumpft werden. Entsprechend ist  das erreichen einer Genauigkeit unter 1mm in diesem Kontext nicht vorstellbar.
-\item Die Label-Daten hatten selber noch Fehler, die klar über 1mm lagen, entsprechend konnte es dem Netzwerk nicht möglich sein eine bessere Performance zu erlangen als dies das Trainingsset erlaubte.
+\item Die Bilder müssen für Ihre Verwendung in Yolo auf eine Grösse von 448x448 geschrumpft werden. Entsprechend ist  das erreichen einer Genauigkeit unter 1mm in diesem Kontext nicht oder kaum vorstellbar.
+\item Die Label-Daten hatten selber noch Fehler, die weit über 0.1mm lagen, entsprechend konnte es dem Netzwerk nicht möglich sein eine bessere Performance zu erlangen als dies das Trainingsset erlaubte.
 \item Es wurde noch nicht alles aus dem Konzept Yolo herausgepresst, so stellt das Paper Yolo-v2 \cite{yolo2} einige Features vor, welche auch die Performance dieses Tasks verbessern könnten.
 \end{enumerate}
 
-Um auf die eigentliche Frage zurück zu kommen.
+Die ursprüngliche Frage lautete:
 Ist Yolo, bzw. Deep-Learning im allgemeinen geeignet um die 2-D-Position von Fingerspitzen auf Bildern zu ermitteln?
-Lautet die Antwort höchstwahrscheinlich Ja.
-Ein Grund für diese Antwort ist, dass mit nur relativ wenigen Daten, welche sich auch als nicht allzu hochwertig herausgestellt haben mit dieser Methode trotzdem an der Grenze des möglichen gekratzt wurde.
+Die Antwort lautet höchstwahrscheinlich ja.
+Ein Grund für diese Antwort ist, dass mit nur relativ wenigen Daten, welche sich auch als nicht allzu hochwertig herausgestellt haben, mit dieser Methode trotzdem sehr nahe an der Grenze des Möglichen gelangt war.
 Wieviel mehr wäre da mit hochwertigeren Daten, mehr Daten und einem verbesserten Neuronalen Netzerk möglich...
 
 

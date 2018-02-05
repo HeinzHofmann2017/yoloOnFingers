@@ -130,10 +130,12 @@ Folgende Punkte konnten aus dieser Arbeit gelernt werden, bzw. sollten im Falle 
 Wie im Kapitel \ref{chapter:erster_wurf} ersichtlich wird, darf nicht angenommen werden, dass die Kostenfunktion frei und ohne gross nachzudenken gewählt werden kann. 
 Vielmehr muss die Wahl der Kostenfunktion stark mit dem Netzwerk und dem Problem interagieren. 
 
-\item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt (Dies um die Komplexität vorerst niedrig zu halten). Wahrscheinlich könnte die Performance noch verbessert werden, wenn anstelle von einer mindestens zwei Boundingboxen pro Gitterzelle vorhergesagt würden. Dies aufgrund der Theorie \cite{PrivateCommunication}, dass mit mehreren Boundingboxen verschiedene Features eines Bildes verwendet werden können, um einen Finger vorherzusagen.
+\item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt.
+Dies um die Komplexität vorerst niedrig zu halten. 
+Wahrscheinlich könnte die Performance verbessert werden, wenn anstelle von einer mindestens zwei Boundingboxen pro Gitterzelle vorhergesagt würden. Dies aufgrund der Theorie \cite{PrivateCommunication}, dass mit mehreren Boundingboxen verschiedene Features eines Bildes verwendet werden können, um einen Finger vorherzusagen.
 
-\item Zum Vergleich: Im Paper Yolo v2 wurde anstelle von 7x7 Gitterzellen 13x13 Gitterzellen verwendet, was in einer höheren Präzision resultieren würde. 
+\item Zum Vergleich: Im Paper Yolo v2 wurde anstelle von 7x7 Gitterzellen 13x13 Gitterzellen verwendet, was zu einer höheren Präzision führen würde. 
 Eine höhere Präzision wäre für das Endziel dieser Arbeit nur zu begrüssen. 
-Wenn dies allerdings mit Yolo v1 umgesetzt würde, hätte man das Problem, dass wegen dem Grösseren Speicheraufwand, welcher für die zusätzlichen Elemente \grqq{}verbraucht\grqq{} würde die Minibatchsize verkleinert werden müsste. 
-Deshalb wird angenommen, dass mit einer kompletten Umstellung auf Yolo v2 ein besseres Resultat erzielt würde, als wenn man Yolo v1 einfach erweitern würde.
+Wenn dies allerdings mit Yolo v1 umgesetzt würde, hätte man das Problem, dass wegen dem grösseren Speicheraufwand, welcher für die zusätzlichen Elemente \grqq{}verbraucht\grqq{} würde, die Minibatchsize verkleinert werden müsste. 
+Deshalb wird angenommen, dass mit einer kompletten Umstellung auf Yolo v2 ein besseres Resultat erzielt würde, als wenn man Yolo v1 erweitern würde.
 \end{enumerate}

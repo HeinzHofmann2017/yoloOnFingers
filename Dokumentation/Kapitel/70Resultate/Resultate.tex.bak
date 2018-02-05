@@ -6,15 +6,15 @@ Das Netzwerk wurde auf 1'200'000 Bildern des ImageNet-1000-class-Datasets vortra
 Danach wurde es auf rund 13'900 Bildern aus dem Testaufbau \cite{TabeasFingertracking} trainiert. 
 Der Test wiederum wurde auf rund 1'500 Bildern ebenfalls aus dem Testaufbau \cite{TabeasFingertracking} getestet. 
 Diese Testbilder waren dem Algorithmus während des Lernprozesses nicht zugänglich und haben entsprechend keinen Einfluss auf den Lernprozess genommen. 
-Ausserdem wurden diese Bilder so gewählt, dass Sie nicht gleichzeitig mit den Trainingsbildern aufgenommen wurden. 
-Dies verhindert, dass fast identische Bilder im Training und im Test vorkommen. 
+Ausserdem wurden diese Bilder so gewählt, dass sie nicht gleichzeitig mit den Trainingsbildern aufgenommen wurden. 
+Dies verhinderte, dass fast identische Bilder im Training und im Test vorkommen. 
 
 \subsection{Analyse}
-Um die Genauigkeit der Predictions unseres Neuronalen Netzwerkes möglichst genau beschreiben zu können wurden die zwei Werte Distanz und IOU gewählt (siehe Kapitel \ref{chapter:letztendlicher_test}). 
-Obwohl die beiden Werte korrelieren sagt jeder für sich nicht die volle Wahrheit über die Genauigkeit der Vorhersagen aus. 
-Die Distanz ist für die geplante Anwendung der wesentlichere Wert, weil diese Informationen über den Standort der Fingerspitze im Bild preisgibt.
-Die IOU ist mit der Distanz teilweise korreliert, da die IOU von der Distanz aber auch von der Grösse der Boundingboxen abhängt.
-Sobald die Boundingbox der Prediction und die Boundingbox des Labels sich beginnen zu überlappen sagt die IOU etwas über die korrekte Vorhersage von Breite und Höhe der Boundingbox aus.
+Um die Genauigkeit der Predictions unseres Neuronalen Netzwerkes möglichst exakt beschreiben zu können, wurden die zwei Werte Distanz und IOU gewählt (siehe Kapitel \ref{chapter:letztendlicher_test}). 
+Obwohl die beiden Werte korrelieren, sagt jeder für sich nicht die volle Wahrheit über die Genauigkeit der Vorhersagen aus. 
+Die Distanz ist für die geplante Anwendung der wesentlichere Wert, weil sie Informationen über den Standort der Fingerspitze im Bild preisgibt.
+Die IOU ist mit der Distanz teilweise korreliert, da die IOU neben der Distanz auch von der Grösse der Boundingboxen abhängt.
+Sobald die Boundingbox der Prediction und die Boundingbox des Labels sich zu überlappen beginnen, sagt die IOU etwas über die korrekte Vorhersage von Breite und Höhe der Boundingbox aus.
 
 \subsubsection{Distanz}
 
@@ -72,32 +72,34 @@ Die Distanz beschreibt die normierte Differenz zwischen dem Zentrumspunkt des La
 Sämtliche Distanzen wurden so normiert, dass die Höhe des Bildes und auch die Breite gleich eins sind. 
 Die maximale Distanz zwischen zwei Punkten ist also die Diagonale über ein Bild, welche entsprechend sqrt(2) ist.
 Was diese Normierten Distanzen in der realen Welt bedeuten ist auf Abbildung \ref{img:explain_normed_distance} erklärt. 
-Zum Vergleich, ein Menschlicher Zeigefinger ist zwischen 10 und 20 mm breit.
+Zum Vergleich, ein menschlicher Zeigefinger ist zwischen 10 und 20 mm breit.
 Eine normierte Distanz von 0.02 entspricht auf unserem Versuchsaufbau somit ziemlich genau der Breite eines menschlichen Fingers. 
 
 Um die Resultate in gut und schlecht einteilen zu können wurde ein Threshold von 0.02 definiert.
 Die Definition dieses Thresholds wurde gemacht, indem Bilder zusammen mit der entsprechenden Distanz analysiert wurden.
 Der Wert 0.02 entspricht somit derjenigen Distanz, welche gerade noch knapp annehmbar ist, um einen Finger als detektiert gelten zu lassen.
-Um ein Gefühl für diese Distanzen zu kriegen lohnt es sich die Abbildungen \ref{img:distanz_knapp_gut} \& \ref{img:distanz_knapp_schlecht} anzusehen, welche Bilder zeigen, die eine Distanz nahe dieses Thresholds aufweisen. 
+Um ein Gefühl für diese Distanzen zu bekommen, lohnt es sich die Abbildungen \ref{img:distanz_knapp_gut} \& \ref{img:distanz_knapp_schlecht} anzusehen, welche Bilder zeigen, die eine Distanz nahe dieses Thresholds aufweisen. 
 
 Um die Verteilung der Distanzen gut verstehen zu können, ist in Abbildung \ref{img:dist_dichte} eine Wahrscheinlichkeitsdichte der Distanzen im Testset zu sehen. Diese Dichtefunktion wurde erst nach der Bestimmung des Thresholds erzeugt und zeigt, dass rund 84\% der Distanzen kürzer sind als 0.02 und somit die entsprechenden Finger \grqq{}erfolgreich\grqq{} erkannt wurden.
 
 Erstaunlich ist auch, dass die Distanzen, welche grösser als 0.25 sind in der Wahrscheinlichkeitsdichte in kleinen Bündeln vorkommen. 
 Dies lässt darauf schliessen, dass die Trainingsdaten nicht komplett Bias-Frei sind.
-Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei einer Distanz von ca. 0.4 immer ein bestimmter Punkt des Hintergrundes vorhergesagt wurde, welcher tatsächlich ganz selten in den Labels als Finger markiert wurde. 
+Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei einer Distanz von ca. 0.4 immer ein bestimmter Punkt des Hintergrundes vorhergesagt wurde, welcher sehr selten in den Labels als Finger markiert wurde. 
 
-Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind verfälschen zu lassen, wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. 
-Dabei wurden alle Distanzen, welche grösser als 0.25 waren gelöscht.
+Die Statistik sollte nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind,verfälscht werden.
+Deshalb wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. 
+Dabei wurden alle Distanzen, welche grösser als 0.25 waren, gelöscht.
 
 Wie man ausserdem aus Kapitel \ref{chapter:fingerdetektion} entnehmen kann, gab es schon in der Erzeugung der Labels eine gewisse Unschärfe.
-So hat auf Abbildung \ref{img:Erosion}  der y-Wert im Vergleich vom einen Bild zum Anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
-Klar, um dieses Problem aufzeigen zu können wurde ein Bild mit einem klaren Unterschied verwendet, was bedeutet dass die meisten Labels Fehler haben die kleiner als diese Grenze sind.
-Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Abweichungen aufweisen.
+So hat auf Abbildung \ref{img:Erosion}  der y-Wert im Vergleich vom einen Bild zum anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
+Um dieses Problem aufzeigen zu können wurde ein Bild mit einem klaren Unterschied verwendet, was bedeutet dass die meisten Labels Fehler haben, die kleiner als diese Grenze sind.
+Nichtsdestotrotz wird man wohl nie in der Lage sein, viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Abweichungen aufweisen.
 
 Es kann sehr gut sein, dass in der Arbeit \grqq{}Hand Pose Estimation\grqq{} \cite{HandPoseEstimation} bessere Labels erzeugt wurden.
 Denn in dieser Arbeit\cite{HandPoseEstimation} wurden die Fingerspitzen im 3D-Raum bestimmt und anschliessend in den 2D-Raum zurückgemappt.
 Ausserdem wurde eine Fehlerrechnung gemacht, wie weit die 2D-Labels mit den zurückprojezierten Labels aus dem 3D-Raum übereinstimmen. 
-Allerdings wurde in der erwähnten Arbeit\cite{HandPoseEstimation} kein Vergleich gemacht wie dies in dieser Arbeit der Fall ist, weshalb keine abschliessende Aussage zu diesem Thema gemacht werden kann.
+Allerdings wurde in der erwähnten Arbeit\cite{HandPoseEstimation} kein Vergleich gemacht wie dies in dieser Arbeit der Fall ist.
+Deshalb kann keine abschliessende Aussage zu diesem Thema gemacht werden kann.
 
 \subsubsection{Intersection Over Union IOU}
 %Beispielbilder IOU

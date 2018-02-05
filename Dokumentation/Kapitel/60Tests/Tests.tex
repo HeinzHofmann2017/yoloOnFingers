@@ -15,67 +15,70 @@ Ein Test ermittelte aufgrund von $\hat{p}_i$ und einem beliebigen Threshold eine
 \item \grqq{}False-Negative\grqq{}
 \end{itemize}
 
-Wer das Kapitel \ref{chapter:design_kostenfunktion} gelesen hat, kann jetzt schon schlussfolgern, dass dies keine brauchbaren Resultate liefern konnte.
+Dies lieferte keine brauchbaren Resultate. (siehe auch Kapitel \ref{chapter:design_kostenfunktion})
 Denn wenn die Variable $\hat{p}_i$ mit andauerndem Lernen gegen 1 tendiert und nie nach unten korrigiert wird, übersteigt Sie somit irgendwann jeglichen Threshold und sagt in jeder Gitterzelle einen rechten Zeigefingerspitz voraus. 
-Entsprechend ergaben die \grqq{}True-Positives\grqq{} und die \grqq{}False-Positives\grqq{} zusammen irgendwann = 1, während die \grqq{}True-Negatives\grqq{} und die \grqq{}False-Negatives\grqq{} zusammen = 0 ergaben.
-Somit war dieser Test gegenstandslos und man wusste, dass die Variable $\hat{p}_i$ keine Rolle spielen wird, solange nur Labels mit einem Finger verwendet werden und entsprechend nur eine Klasse existiert.
+Entsprechend ergaben die \grqq{}True-Positives\grqq{} und die \grqq{}False-Positives\grqq{} zusammen irgendwann = 1, und die \grqq{}True-Negatives\grqq{} und die \grqq{}False-Negatives\grqq{} zusammen = 0.
+Somit war dieser Test gegenstandslos und man wusste, dass die Variable $\hat{p}_i$ keine Rolle spielen wird, solange nur Labels mit einem Finger verwendet wurden und entsprechend nur eine Klasse existierte.
 
-Ein weiterer Test hatte das Ziel, dass jeweils rund um das jeweilige Label ein Kreis mit einem bestimmten Radius gelegt wird.
-Die Vorhersagen wurden nun aufgeteilt in Vorhersagen, welche innerhalb des Kreises lagen, und Vorhersagen ausserhalb des Kreises.
-Die Frage war nur noch, wie bestimmt man, welche der 7x7 Boundingboxen als \textbf{die} Vorhersage verwendet wurde, welche mit dem Label verglichen werden konnte.
-Die Antwort ist dank dem Wissen über die Aufgabe, welche das Netz erfüllen muss relativ schnell beantwortet.
-Denn wir wissen, dass in der Aufgabe, welche gelöst werden soll immer nur eine rechte Zeigefingerspitze pro Bild vorhanden sein wird.
-So musste dafür kein Threshold bestimmt werden, sondern es wurde einfach diejenige Boundingbox gewählt, welche die grösste Confidence lieferte.
+Ein weiterer Test hatte das Ziel, dass jeweils rund um das jeweilige Label ein Kreis mit einem bestimmten Radius gelegt wurde.
+Die Vorhersagen wurden aufgeteilt in Vorhersagen, welche innerhalb des Kreises lagen, und solche ausserhalb des Kreises.
+Es war nur noch folgende Frage offen. 
+Wie bestimmt man, welche der 7x7 Boundingboxen als \textbf{die} Vorhersage verwendet werden sollte?
+Die Antwort konnte dank dem Wissen über die Aufgabe, welche das Netz erfüllen musste, relativ schnell beantwortet werden.
+Denn wir wissen, dass in der Aufgabe, welche gelöst werden soll, immer nur eine rechte Zeigefingerspitze pro Bild vorhanden sein wird.
+So musste dafür kein Threshold bestimmt werden, sondern es wurde diejenige Boundingbox gewählt, welche die grösste Confidence lieferte.
 
-Mit diesem Ansatz hatte man nun ein Test, der tatsächlich etwas über das Resultat aussagte. 
+Mit diesem Ansatz lag ein Test vor, der tatsächlich etwas über das Resultat aussagte. 
 So wurden verschieden grosse Kreise um die Labels gezogen um prozentuale Aussagen zu deren Genauigkeit zu kriegen.
 Allerdings wurde relativ bald klar, dass es keinen grossen Sinn machen würde für jede Genauigkeit einen Kreis zu ziehen und diese dann einzeln auszuwerten.
 
 Ausserdem wurde von Guido Schuster \cite{PrivateCommunication} in einem Gespräch folgende Bemerkung gemacht:
 "Man sollte das Netzwerk darauf testen, worauf man es auch trainiert hatte."
-Dieser Bemerkung folgte schliesslich die Schlussfolgerung, dass mit den Tests auch die IOU der Predictions gegenüber den Labels genauer betrachtet werden sollte.
+Dieser Bemerkung folgte schliesslich die Schlussfolgerung, dass mit den Tests auch die IOU der Predictions gegenüber den Labels genauer betrachtet werden sollten.
 
 \subsection{Letztendlicher Test}
 \label{chapter:letztendlicher_test}
-Aus den Erkenntnissen der ersten Ansätze konnte ermittelt werden, dass der Optimale Output aus den Tests ein Histogram, bzw. eine Wahrscheinlichkeitsdichteverteilung sein sollte.
+Aus den Erkenntnissen der ersten Ansätze konnte ermittelt werden, dass der optimale Output aus den Tests ein Histogram, bzw. eine Wahrscheinlichkeitsdichteverteilung sein sollte.
 So konnte der Code relativ schnell so angepasst werden, dass bei einem Testlauf die Distanz von Label zu Prediction (L2-Norm) für jedes Testbild in ein Element eines Vektors gespeichert wurde.
 Aus diesem Vektor konnte dann ein schönes Histogramm erstellt werden, aus welchem mit einem Blick gelesen werden konnte, wie sich die Distanzen von Predictions zu den Labels über das gesamte Testset verhielten.
 
-Nach Fertigstellung dieses Tests war es ein Leichtes dasselbe für die IOU anstelle der Distanz zu machen. 
+Nach Fertigstellung dieses Tests war es ein Leichtes, dasselbe für die IOU anstelle der Distanz zu machen. 
 
 Die Wahl der besten Prediction wurde ebenfalls nochmals verbessert.
-Es wurde in diesem Punkt viel herumexperimentiert und ausprobiert, obwohl in der Gleichung 1 im Yolo-Paper \cite{yolo} klar ersichtlich ist, dass für die Bestimmung der besten Prediction das Produkt aus $\hat{p}_i$ und $\hat{c}_i$ massgebend ist.
+Es wurde in diesem Punkt viel experimentiert und ausprobiert, obwohl in der Gleichung 1 im Yolo-Paper \cite{yolo} klar ersichtlich ist, dass für die Bestimmung der besten Prediction das Produkt aus $\hat{p}_i$ und $\hat{c}_i$ massgebend ist.
 Daraus konnte gelernt werden, dass bei einem Aufbau einer Arbeit auf einem Paper dieses in regelmässigen Abständen wieder durchgelesen oder zumindest überflogen werden sollte.
-Natürlich machte dies aber auch keinen Unterschied mehr, da $\hat{p}_i$ nahezu = 1 war, war die Prediction aus $\hat{p}_i * \hat{c}_i$ dieselbe wie wenn nur $\hat{c}_i$ verwendet wurde.
+Natürlich machte dies aber auch keinen Unterschied mehr.
+Da $\hat{p}_i$ nahezu = 1 war, war die Prediction aus $\hat{p}_i * \hat{c}_i$ dieselbe wie wenn nur $\hat{c}_i$ verwendet wurde.
 
 Somit war das Training des Netzwerks auf die Variable $\hat{p}_i$ sowie dessen Verwendung bisher nur irreführend und hatte keinen Nutzen.
-Für die Zukunft aber ist es wichtig, dass dieses Yolo auch mehrere Klassen vorhersagen kann.
+Für die Zukunft ist es wichtig, dass dieses Yolo auch mehrere Klassen vorhersagen kann.
 Dadurch macht es Sinn, diese Variable und die damit verbundenen Berechnungen in der Implementation zu belassen. 
 
 Die Wahrscheinlichkeitsdichtefunktion, welche schliesslich bei diesen Tests durch die L2-Distanz erzeugt wurde, hatte eine etwas spezielle Form (siehe Abbildung \ref{img:dist_dichte_improved}).
-Dies sorgte Anfangs für Verwirrung. 
-Allerdings konnte ein Gespräch mit Guido Schuster \cite{PrivateCommunication} schnell Klarheit bringen, da es sich \grqq{}offensichtlich\grqq{} um eine Rayleigh-Verteilung handelte. 
-Eine solche Verteilung entsteht, wenn zwei Gaussverteilte Variablen über die L2-Norm miteinander verbunden werden.
-Da genau dies in diesem Test geschieht, war somit dieser Punkt restlos geklärt.
+Dies sorgte anfangs für Verwirrung. 
+Allerdings konnte ein Gespräch mit Guido Schuster \cite{PrivateCommunication} Klarheit bringen, da es sich \grqq{}offensichtlich\grqq{} um eine Rayleigh-Verteilung handelte. 
+Eine solche Verteilung entsteht, wenn zwei gaussverteilte Variablen über die L2-Norm miteinander verbunden werden.
+Da genau dies im Test geschieht, war somit dieser Punkt restlos geklärt.
 
 \subsection{Seed}
-Um während den vielen Tests endlich ganz genaue Vergleiche zu erhalten wurde im Laufe der Arbeit ein fixer Seed implementiert und an Tensorflow übergeben.
+Um während den vielen Tests genaue Vergleiche zu erhalten wurde im Laufe der Arbeit ein fixer Seed implementiert und an Tensorflow übergeben.
 Allerdings hatte dies zwei Tücken.
 Dies waren auch die Gründe, warum dieser fixe Seed wieder aufgehoben wurde.
 
-Die erste Tücke war, dass trotz der Übergabe eines fixen Seeds an Tensorflow die Ergebnisse trotzdem nicht reproduzierbar waren.
+Die erste Tücke war, dass trotz der Übergabe eines fixen Seeds an Tensorflow, die Ergebnisse nicht reproduzierbar waren.
 Offensichtlich hat es in Tensorflow noch weitere zufällige Werte, welche man auch mit einem festen Seed initialisieren müsste.
 Diese wurden allerdings nicht gefunden.
 
-Die zweite Tücke war jedesmal, wenn man während dem Training zwischen dem Trainingsset und dem Validierungsset hin und her wechselte.
+Die zweite Tücke zeigte sich jedes Mal, wenn man während dem Training zwischen dem Trainingsset und dem Validierungsset hin und her wechselte.
 So wurden die Bilder für das Training wieder in der genau gleichen Reihenfolge geladen wie in der letzten Epoche.
-Zuerst sah es so aus, als würde der Trainingsfehler einfach in ungeheurem Tempo gegen 0 gehen, während sich der Validierungsfehler relativ schnell von jeglich vernünftigem verabschiedete.
-Allerdings wurden einzig und allein die ersten paar Bilder auswendig gelernt.
+Zuerst sah es so aus, als würde der Trainingsfehler einfach in ungeheurem Tempo gegen 0 gehen, während sich der Validierungsfehler relativ schnell von jeglich Vernünftigem verabschiedete.
+Allerdings wurden lediglich die ersten paar Bilder auswendig gelernt.
 
-Der Vorteil an der zweiten Tücke war, dass man aus einem Versehen heraus sogleich überprüft hatte, ob das Netzwerk in der Lage ist overzufitten. $==>$ Ja ist es!
+Der Vorteil an der zweiten Tücke war, dass man aus einem Versehen heraus sogleich überprüft hatte, ob das Netzwerk in der Lage war um overzufitten.
+Es zeigte sich, dass dies der Fall war.
 
 \subsection{Fazit}
 Bei einem Neuronalen Netzwerk sollte sich früher Gedanken gemacht werden, wie man das Resultat möglichst praxistauglich testen kann.
-Dies wurde in dieser Arbeit klar falsch gemacht.
+Dies wurde in dieser Arbeit falsch gemacht.
 Man hatte eine funktionierende Kostenfunktion und wollte diese nach Möglichkeit verbessern.
-Allerdings ist das Ziel eines neuronalen Netzwerks nicht eine tiefe Kostenfunktion zu haben, sondern den Task wozu es verwendet wird möglichst gut zu erfüllen.
+Allerdings ist das Ziel eines neuronalen Netzwerks nicht eine tiefe Kostenfunktion zu haben, sondern den Task, wozu es verwendet wird, möglichst gut zu erfüllen.
