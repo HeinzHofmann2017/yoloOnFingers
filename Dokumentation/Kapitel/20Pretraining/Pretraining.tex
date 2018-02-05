@@ -6,7 +6,7 @@
 \subsection{Daten}
 Für das Pretraining des Yolo-Netzwerks wurden dieselben Daten verwendet wie im originalen Yolo-Paper \cite{yolo}.
 Dabei handelte es sich um das ImageNet 1000-Klassen Wettbewerbsdatenset.
-Dieses Datenset bestand aus rund 1.3 Millionen Bildern, welche alle ein Objekt aus genau 1000 möglichen Objekten enthielten.
+Dieses Datenset bestand aus rund 1.2 Millionen Bildern, welche alle ein Objekt aus genau 1000 möglichen Objekten enthielten.
 Das Label wird über einen eineindeutigen Code im Namen identifiziert.
 \subsection{Architektur}
 Die Architektur, welche im Pretraining verwendet wurde (Tabelle \ref{tbl:pretraining_Architektur}) war derjenigen, welche später auch im Training (Tabelle \ref{tbl:yolo_architektur}) verwendet wurde sehr ähnlich.
@@ -63,7 +63,7 @@ Der Output, welcher ebenfalls ein Vektor mit 1000 Elementen ist, wird nun mit de
 Als Optimierer wurde zuerst ein einfacher Stochastic-Gradient-Descent verwendet, welcher später durch einen Adam-Optimierer ersetzt wurde. 
 Einerseits wurde im Buch Deep Learning \cite{deeplearning} empfohlen einen Optimierer mit adaptivem Momentum zu verwenden, andererseits hat sich beim ausprobieren auch einfach herausgestellt, dass die Performance von Adam gegenüber SGD massgeblich gesteigert hatte. (Abbildung \ref{img:SGDvsADAM})
 
-Es gab allerdings auch eine Peinlichkeit im Zusammenhang mit dem Adamoptimizer.
+Es gab allerdings auch einen Fehler im Zusammenhang mit dem Adamoptimizer.
 So wurde in dieser Arbeit viel mit verschiedenen Lernraten experimentiert, wie z.B. eine regelmässige Reduktion der Lernrate nach jeweils einer bestimmten Anzahl Epochen.
 Diese Experimente ergaben keinerlei verwertbare Resultate.
 Der Grund dafür war, dass man den Adam-Optimizer noch nicht richtig verstanden hatte.

@@ -1,16 +1,17 @@
 \newpage
 %Kapitelüberschrift
 \section{Architektur}
+\label{chapter:architektur}
 \subsection{Auswahl der Architektur}
 Die Architektur wurde stark dem Yolo-Paper \cite{yolo} angelehnt. 
 Dies obwohl zu diesem Zeitpunkt auch schon das Yolo v2-Paper \cite{yolo2} erschienen war.
-Es gab damals schon viele gute Gründe dafür von Beginn weg das Netzwerk und Kostenfunktionen nach dem Yolo v2-Paper aufzubauen.
+Es gab damals schon viele gute Gründe dafür, von Beginn weg das Netzwerk und Kostenfunktionen nach dem Yolo v2-Paper aufzubauen.
 So ist Yolo v2 nach dessen Paper zu urteilen schneller und genauer. 
-Der Grund, warum trotzdem Yolo v1 verwendet wurde war, dass die Beschreibung z.B. der Kostenfunktion und der Architektur im Paper von Yolo v1 um einiges genauer und verständlicher war als im Paper von Yolo v2.
+Es wurde trotzdem Yolo v1 verwendet, weil die Beschreibung z.B. der Kostenfunktion und der Architektur im Paper von Yolo v1 um einiges genauer und verständlicher war als im Paper von Yolo v2.
 Ausserdem ging man mit der Einstellung an die Arbeit, dass wenn erst das \grqq{}einfache\grqq{} Yolo v1  erfolgreich implementiert wurde, dieses entsprechend immer noch zur 2. Version erweitert werden könnte.
 
 Das Vorgehen (Kapitel \ref{chapter:vorgehen}) aber wurde im Nachhinein betrachtet falsch angeordnet. 
-So ist das experimentieren/optimieren eines Neuronalen Netzwerks etwas extrem Zeitaufwendiges, das man nie wirklich abschliessen kann.
+So ist das Experimentieren/Optimieren eines Neuronalen Netzwerks etwas extrem Zeitaufwendiges, was man nie wirklich abschliessen kann.
 So gesehen hätte das Vorgehen folgendermassen geplant werden müssen.
 Sobald eine lauffähige fehlerfreie Version von Yolo v1 erreicht wurde, hätte sofort mit dem Architekturaufbau von Yolo v2 begonnen werden müssen.
 Es wird davon ausgegangen, dass so noch bessere Resultate hätten erzielt werden können.
@@ -18,6 +19,7 @@ Es wird davon ausgegangen, dass so noch bessere Resultate hätten erzielt werden
 \subsection{Architekturaufbau}
 \label{chapter:Architekturaubau}
 \subsubsection{Hauptgraph}
+\label{chapter:hauptgraph}
 
 \begin{table}
 \centering
@@ -64,7 +66,7 @@ Es wird davon ausgegangen, dass so noch bessere Resultate hätten erzielt werden
 
 Der grundlegende Aufbau der Architektur, wie sie letztendlich aussah kann man in der Tabelle \ref{tbl:yolo_architektur} betrachten. 
 Dies sah allerdings noch nicht immer so aus.
-Obwohl die Convolution-Filter schon immer in dieser Form angeordnet waren, sah der ursprüngliche Bildinput und entsprechend die Outputs der verschiedenen Layers mal anders aus.
+Obwohl die Convolution-Filter schon immer in dieser Form angeordnet waren, sahen der ursprüngliche Bildinput und entsprechend die Outputs der verschiedenen Layers ursprünglich anders aus.
 Nach ausführlicher Diskussion \cite{PrivateCommunication} wurde zu Beginn des Architekturdesigns entschieden, dass man nicht mit 448x448 Bildern arbeitet, wie dies im Yolo-Paper \cite{yolo} gemacht wurde.
 Der Grund dafür war, dass für das Training wie auch später für den Praxiseinsatz immer 1280x960 grosse Bilder zur Verfügung standen und man entsprechend nicht Informationen \grqq{}wegwerfen\grqq{} sondern so lange wie möglich im Netz behalten wollte.
 So war der Input (Layer 0 in Tabelle \ref{tbl:yolo_architektur}) damals 1280x960x1.
@@ -77,13 +79,16 @@ Layer 29 war dabei für ein Zeropadding und Layer 30 für ein Maxpooling mit Str
 	\centering
 	\begin{minipage}[b]{0.48\textwidth}	
 		\includegraphics[width=\textwidth]{Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf}
+		\caption{Effekt (Extremer Anstieg der Kosten innert einer Epoche) im Pretraining. X-Achse = Zeit, Y-Achse = Kosten, Weinrot=Trainingsdate, hellblau = Validierungsdaten}
+		\label{img:Overflow_pretraining}
 	\end{minipage}
 	\hfill
 	\begin{minipage}[b]{0.48\textwidth}		
 		\includegraphics[width=\textwidth]{Kapitel/40Architektur/Bilder/OverflowInTraining.pdf}
+		\caption{Effekt (Extremer Anstieg der Kosten innert einer Epoche) im Training. X-Achse = Zeit, Y-Achse = Kosten, grün=Trainingsdate, grau = Validierungsdaten}
+		\label{img:Overflow_training}
 	\end{minipage}
-			\caption{Effekte (Extremer Anstieg der Kosten innert einer Epoche) im Pretraining(links) und im Training(rechts). x-Achse=Zeit, y-Achse=Kosten. Weinrot=Pretraining-Trainingsdaten, Hellblau=Pretraining-Validierungsdaten, Grün=Training-Trainingsdaten, Grau=Training-Validierungsdaten}
-	\label{img:Overflow}
+	
 \end{figure}
 
 
@@ -92,14 +97,14 @@ Diese damalige Architektur war zu gross, um sie auch nur mit Minibatchsize=1 und
 Entsprechend wurden alle Gewichte und Knoten mit Float16 initialisiert. 
 Seit dieser Initialisierung war eine Minibatchsize=7 möglich.
 
-Mit dieser Architektur wurde eine Zeit lang trainiert, bis sich immer mehr spezielle Effekte (Siehe Abbildung \ref{img:Overflow}) im Training, wie auch im Pretraining (Details zum Pretraining im Kapitel \ref{chapter:Pretraining}) häuften.
+Mit dieser Architektur wurde eine Zeit lang trainiert, bis sich immer mehr spezielle Effekte (siehe Abbildung \ref{img:Overflow_pretraining} \& \ref{img:Overflow_training}) im Training, wie auch im Pretraining (Details zum Pretraining im Kapitel \ref{chapter:Pretraining}) häuften.
 Es konnte auch nach längerer Analyse nicht abschliessend geklärt werden, was die Ursache für diese Effekte  war.
 Die Vermutung lag jedoch darin, dass es sich um Overflow-Probleme im Zusammenhang mit den verwendeten Float16 handeln könnte.
 Entsprechend wurde die Architektur umgebaut, sodass die Input-Bilder künstlich verkleinert wurden, um im Gegenzug dafür Float32 verwenden zu können.
 In diesem Schritt war es naheliegend, dass man sich gleich den originalen Werten, wie sie von Yolo \cite{yolo} verwendet wurden annäherte.
 Entsprechend wurden die Input-Bilder auf 448x448 verkleinert.
 Dies hatte wiederum zur Folge, dass seit diesem Zeitpunkt sogar eine Minibatchsize=24 verwendet werden konnte.
-Ausserdem, und dies war noch viel wichtiger, traten die genannten speziellen Effekte (Abbildung \ref{img:Overflow}) weder im Pretraining noch im Training je wieder auf. 
+Ausserdem, und dies war noch viel wichtiger, traten die genannten speziellen Effekte (Abbildung \ref{img:Overflow_pretraining} \& \ref{img:Overflow_training}) weder im Pretraining noch im Training je wieder auf. 
 
 \begin{table}
 \centering
@@ -118,19 +123,24 @@ Ausserdem, und dies war noch viel wichtiger, traten die genannten speziellen Eff
 
 Aus dieser Erfahrung kann man ableiten, dass bei Convolutional-Neural-Networks die Grösse der Input-Bilder mehr ins Gewicht fallen als die Anzahl Gewichte. 
 Dies scheint nachträglich auch logisch, denn die Bilder werden während dem \grqq{}flow\grqq{} durch das Netzwerk mehrmals zwischengespeichert.
-In der Tabelle \ref{tbl:anzahl_gewichte_knoten} ist die Berechnung, der Anzahl Gewichte und der Anzahl Knoten unter der Annahme, dass jedes Bild zwischen den Layern einmal als Knoten abgespeichert wird.
+In der Tabelle \ref{tbl:anzahl_gewichte_knoten} dargestellt ist die Berechnung der Anzahl Gewichte und der Anzahl Knoten unter der Annahme, dass jedes Bild zwischen den Layern einmal als Knoten abgespeichert wird.
 Dabei wurde nicht berücksichtigt, dass es pro Layer mehrere Einheiten von Knoten geben kann, wie z.B. vor und nach der Aktivierungsfunktion, Batchnorm, etc. 
-Auch ohne diese zusätzlichen Layer kann man aber deutlich erkennen, dass wenn man die Minibatchsize solange erhöht, bis das GPU-RAM (im Rahmen dieser Arbeit 16GB) voll ist, man klar mehr Speicher für Knoten benötigt, als für Gewichte.
+Auch ohne diese zusätzlichen Layer kann man aber deutlich erkennen, dass wenn man die Minibatchsize solange erhöht, bis das GPU-RAM (im Rahmen dieser Arbeit 16GB) voll ist, viel mehr Speicher für Knoten benötigt wird als für Gewichte.
 
 \subsubsection{Minibatchnorm}
-Zu Beginn des Trainings gab es immer wieder das Problem von vanishing Gradients (Die Gradienten wurden im Verlauf der Backpropagation immer kleiner, bis sie nur noch gleich Null waren.).
-Um diesem Problem entgegenzuwirken wurde die relativ junge Allzweckwaffe der Minibatch-Normalisierung angewandt.
+Zu Beginn des Trainings gab es immer wieder das Problem von vanishing Gradients. Das bedeutet, dass die Gradienten im Verlauf der Backpropagation immer kleiner wurden, bis sie nur noch gleich Null waren.
+Um diesem Problem entgegenzuwirken, wurde die relativ junge Allzweckwaffe der Minibatch-Normalisierung angewandt.
 Dabei wird in jedem Convolutional Layer direkt nach dem Convolutional-Filter der Ausgang über den ganzen Minibatch normiert.
-Es wurde auch ausprobiert die Minibatchnorm nach der Relu einzusetzen, anstelle von davor, allerdings waren die Ergebnisse der Kostenfunktion bei der Anordnung in Abbildung \ref{img:Conv-Layer} ganz leicht besser.
-Die Verbesserung war allerdings nur sehr marginal, weshalb sie auch gerade so gut zufällig sein konnte.
+Es wurde auch ausprobiert die Minibatchnorm nach der Relu (Kapitel \ref{chapter:aktivierungsfunktion}) einzusetzen, anstelle von davor.
+Allerdings waren die Ergebnisse der Kostenfunktion bei der Anordnung in Abbildung \ref{img:Conv-Layer} ein wenig besser.
+Die Verbesserung war allerdings nur sehr klein.
+Es ist nach je einem vergleichbaren Trainingslauf aber schwierig zu sagen, ob dies Zufall war, oder ob die eine Variante immer besser sein sollte als die andere.
+Eine saubere statistische Aussage zu diesem Punkt war im Rahmen dieser Arbeit aber nicht das Ziel.
+
 Seit dem Einsetzen der Minibatchnorm war das Netzwerk hervorragend in der Lage die Gradienten per Backpropagation bis zum Eingang des Netzwerks zurück zu tragen. 
 
 \subsubsection{Aktivierungsfunktion}
+\label{chapter:aktivierungsfunktion}
 \begin{figure}
 	\centering	
 	\includegraphics[width=0.5\textwidth]{Kapitel/40Architektur/Bilder/GraphProLayer.pdf}
@@ -138,31 +148,35 @@ Seit dem Einsetzen der Minibatchnorm war das Netzwerk hervorragend in der Lage d
 	\label{img:Conv-Layer}
 \end{figure}
 
-Wie in Abbildung \ref{img:Conv-Layer} ersichtlich wurde als Aktivierungsfunktion eine simple Relu (Rectified Linear Unit) verwendet. Dies obwohl in yolo v1 eine leaky Relu verwendet wurde.
+Wie in Abbildung \ref{img:Conv-Layer} ersichtlich, wurde als Aktivierungsfunktion eine simple Relu (Rectified Linear Unit) verwendet. Dies obwohl in yolo v1 eine leaky Relu verwendet wurde.
 Der Grund für diesen Wandel war, dass seit dem verwenden der Minibatchnorm eine leaky Relu dieselbe Performance an den Tag legte wie eine normale Relu.
 
 \subsubsection{Dropout}
-Es wurde im Rahmen dieser Arbeit zur Optimierung viel mit Dropout Experimentiert.
+Es wurde im Rahmen dieser Arbeit zur Optimierung viel mit Dropout experimentiert.
 So wurde Dropout in allen, nur in den letzten, nur in den fully-connected Layer oder auch in gar keinem Layer getestet.
-Die besten Performance wurden erreicht, wenn entweder nur in den letzten paar Layern oder auch nur in den fully-connected Layern Dropout eingesetzt wurde.
+Die beste Performance wurde erreicht, wenn entweder nur in den letzten paar Layern oder auch nur in den fully-connected Layern Dropout eingesetzt wurde.
 Wurde Dropout in allen Layern angewandt, war das Resultat massiv schlechter.
 
-Wichtig zu wissen: Wenn man Dropout in Convolutional Layern anwendet, sollte darauf geachtet werden, dass man nicht einzelne Knoten von Dropout \grqq{}ausknipsen\grqq{} lässt, sondern gleich ganze Featuremaps.
+Wichtig zu wissen: Wenn man Dropout in Convolutional Layern anwendet, sollte darauf geachtet werden, dass man nicht nur einzelne Knoten von Dropout \grqq{}ausknipsen\grqq{} lässt, sondern ganze Featuremaps.
 Der Grund dafür liegt darin, dass man mit der ursprünglichen Philosophie von Dropout eigentlich Gewichte zwischenzeitlich ausschalten möchte.
-Bei Fullyconnected Netzwerken ist dies problemlos möglich, indem man einfach Knoten zufällig auf Null setzt. 
+Bei Fullyconnected Netzwerken ist dies problemlos möglich, indem man Knoten zufällig auf Null setzt, womit automatisch die zugehörigen Gewichte ausgeschaltet wurden. 
 In Convolutional Neural Networks hingegen werden die Gewichte nicht ausgeschaltet, indem man einen Knoten ausschaltet.
 Dies, weil die Gewichte über die Bilder oder Feature-Maps geschoben werden und nicht einzelnen Knoten zugeteilt sind.
 
 
 \subsection{Fazit}
-Was die Architektur angeht kann man aus dieser Arbeit die folgenden beiden Punkte lernen:
+Was die Architektur angeht, kann man aus dieser Arbeit die folgenden Punkte lernen:
 \begin{enumerate}
-\item Wenn in Convolutional Neural Networks Speicherknappheit ein Problem ist, sollte entweder die Tiefe des Netzwerks verkleinert (weniger Layer = weniger Knoten) oder der Input verkleinert (= ebenfalls weniger Knoten) werden. Nicht aber sollte man auf Bastellösungen ausweichen, sodass man sich was Datentypen angeht ausserhalb des Tensorflow-Standardbereichs aufhält. Es sei denn natürlich, man weiss ganz genau was man tut, und kennt entsprechend den Source-Code von Tensorflow in- und auswendig. Wenn dem aber so wäre, würden Sie diese Arbeit wohl kaum lesen ;) .
-\item Wenn man eine Architektur nach entsprechend einer Vorlage aufbaut, sollte man nicht schon bevor man eine erfolgreich lauffähige Version hat an Parametern wie der Input-Grösse herumoptimieren. Optimieren sollte man erst, wenn man eine Lauffähige Fehlerfreie Version hat, sodass man jederzeit wieder zu dieser Lauffähigen Version zurückkehren kann.
-\item Es trat zu Beginn des Trainings öfters das Problem auf, dass das Programm abstürzte.
-Dabei war die Fehlermeldung jeweils, dass NAN (Not a Number) oder Infinity ins Tensorboard gespeichert werden sollte.
-Seit die Gradienten auf die Zahl 5/-5 begrenzt wurden, trat dieses Problem auch nie mehr auf.
-Daraus folgt: Gradient Clipping ist nur zu empfehlen, da es nicht schadet aber auf jeden Fall allfällige Probleme fernhalten kann. 
+\item Wenn in Convolutional Neural Networks Speicherknappheit ein Problem ist, sollte entweder die Tiefe des Netzwerks (weniger Layer = weniger Knoten) oder der Input verkleinert (= ebenfalls weniger Knoten) werden. 
+Nicht aber sollte man zu weit von der Norm abweichen, sodass man sich was Datentypen angeht ausserhalb des Tensorflow-Standardbereichs aufhält.
+
+\item Wenn man eine Architektur nach einer bestimmten Vorlage aufbaut, sollte erst optimiert werden, wenn man eine lauffähige fehlerfreie Version hat.
+Somit kann jederzeit auf diese lauffähigen Version zurückgegriffen werden.
+
+\item Zu Beginn des Trainings stürzte das Programm öfters ab.
+Dabei war die Fehlermeldung jeweils, dass \grqq{}NAN\grqq{} (Not a Number) oder \grqq{}Infinity\grqq{} ins Tensorboard gespeichert werden sollte.
+Seit die Gradienten auf $\pm 5$\footnote{\label{gradientclipping} Im Normalfall wird gemässe Deeplearning-Buch \cite{deeplearning} ein Gradientclipping von $\pm 5$ angewendet. Entsprechend wurde dies ohne weitere Recherche / Überprüfung so übernommen.}  begrenzt wurden, trat dieses Problem nie mehr auf.
+Daraus folgt: Gradient Clipping ist sehr zu empfehlen, da es nicht schadet aber allfällige Probleme fernhalten kann. 
 \end{enumerate}
 
 

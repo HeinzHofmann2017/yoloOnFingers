@@ -36,15 +36,16 @@
 \BOOKMARK [2][-]{subsection.6.2}{Analyse}{section.6}% 36
 \BOOKMARK [3][-]{subsubsection.6.2.1}{Distanz}{subsection.6.2}% 37
 \BOOKMARK [3][-]{subsubsection.6.2.2}{Intersection Over Union IOU}{subsection.6.2}% 38
-\BOOKMARK [1][-]{section.7}{Pretraining}{}% 39
-\BOOKMARK [2][-]{subsection.7.1}{Daten}{section.7}% 40
-\BOOKMARK [2][-]{subsection.7.2}{Architektur}{section.7}% 41
-\BOOKMARK [2][-]{subsection.7.3}{Kostenfunktion und Optimierer}{section.7}% 42
-\BOOKMARK [2][-]{subsection.7.4}{Tests \046 Resultate}{section.7}% 43
-\BOOKMARK [2][-]{subsection.7.5}{Gewichte}{section.7}% 44
-\BOOKMARK [2][-]{subsection.7.6}{Fazit}{section.7}% 45
-\BOOKMARK [1][-]{section.8}{Fazit}{}% 46
-\BOOKMARK [2][-]{subsection.8.1}{Gipsh\344nde}{section.8}% 47
-\BOOKMARK [2][-]{subsection.8.2}{Yolo}{section.8}% 48
-\BOOKMARK [2][-]{subsection.8.3}{Vorschl\344ge f\374r weitere Schritte}{section.8}% 49
-\BOOKMARK [1][-]{Item.32}{Literatur}{}% 50
+\BOOKMARK [2][-]{subsection.6.3}{Erkenntnis}{section.6}% 39
+\BOOKMARK [1][-]{section.7}{Pretraining}{}% 40
+\BOOKMARK [2][-]{subsection.7.1}{Daten}{section.7}% 41
+\BOOKMARK [2][-]{subsection.7.2}{Architektur}{section.7}% 42
+\BOOKMARK [2][-]{subsection.7.3}{Kostenfunktion und Optimierer}{section.7}% 43
+\BOOKMARK [2][-]{subsection.7.4}{Tests \046 Resultate}{section.7}% 44
+\BOOKMARK [2][-]{subsection.7.5}{Gewichte}{section.7}% 45
+\BOOKMARK [2][-]{subsection.7.6}{Fazit}{section.7}% 46
+\BOOKMARK [1][-]{section.8}{Fazit}{}% 47
+\BOOKMARK [2][-]{subsection.8.1}{Gipsh\344nde}{section.8}% 48
+\BOOKMARK [2][-]{subsection.8.2}{Yolo}{section.8}% 49
+\BOOKMARK [2][-]{subsection.8.3}{Vorschl\344ge f\374r weitere Schritte}{section.8}% 50
+\BOOKMARK [1][-]{Item.34}{Literatur}{}% 51

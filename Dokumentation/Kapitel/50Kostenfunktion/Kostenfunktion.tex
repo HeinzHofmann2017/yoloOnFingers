@@ -1,24 +1,27 @@
 \newpage
 %Kapitelüberschrift
-\section{Kostenfunktion} 
+\section{Kostenfunktion}
+\label{chapter:kostenfunktion} 
 \subsection{Erster Wurf}
 \label{chapter:erster_wurf}
-In einem ersten Wurf war das Ziel eine Kostenfunktion zu erstellen, welche so einfach wie nur möglich sein sollte. 
+In einem ersten Wurf war das Ziel, eine Kostenfunktion zu erstellen, welche so einfach wie nur möglich sein sollte. 
 So sollte man schnellstmöglich ein funktionierendes Netzwerk haben, welches einfach zu debuggen ist und später Schritt für Schritt verbessert werden könnte.
-Dabei sollte der Output des Netzwerks lediglich 3 Variablen umfassen. Eine, welche die x-Koordinaten des rechten Zeigefingers vorhersagt, eine, welche die y-Koordinaten vorhersagt, und eine Letzte, welche die Wahrscheinlichkeit dass sich ein rechter Zeigefinger in diesem Bild befindet vorhersagt.
-Die Kosten sollten dabei wie beim originalen Yolo-Netzwerk mit den kleinsten Fehlerquadraten der Distanz von Label zu Prediction berechnet werden.
-Dieser Ansatz hatte überhaupt nicht funktioniert.
-Die Predictions waren irgendwo im Bild und mit menschlichem Auge keine Korrelation mit den Labels ersichtlich. 
+Dabei sollte der Output des Netzwerks lediglich 3 Variablen umfassen. 
+Die drei Variablen sagen die x-Koordinate, die y-Koordinate und die Wahrscheinlichkeit eines rechten Zeigefingers in einem Bild vorher.
+Die Kosten sollten dabei wie beim originalen Yolo-Netzwerk mit den kleinsten Fehlerquadraten, der Distanz von Label zu Prediction, berechnet werden.
+Dieser Ansatz funktionierte überhaupt nicht.
+Die Predictions waren irgendwo im Bild und mit menschlichem Auge war keine Korrelation mit den Labels ersichtlich. 
 
-Es wurde die Hypothese erstellt, dass dies daran läge, dass man mit dem Pretraining (Details später im Kapitel \ref{chapter:Pretraining}) eigentlich Hauptsächlich einen Klassifizierer \grqq{}gezüchtet\grqq{} hatte, aber für die zwei essentiellen Predictions(x-/ y-Wert) eigentlich nur eine Regression verwendet wurde.
+Beim Versuch dieses Verhalten intuitiv zu erklären, ging man davon aus, dass man mit dem Pretraining (Details später im Kapitel \ref{chapter:Pretraining}) eigentlich Hauptsächlich einen Klassifizierer \grqq{}gezüchtet\grqq{} hatte, aber für die zwei essentiellen Predictions (x-/y-Wert) eigentlich nur eine Regression verwendet wurde.
 Beim originalen Output des Yolo-Netzwerks könnte man sich vorstellen, dass das Netzwerk für jede Gitterzelle intuitiv eine Klassifizierung durchführt, und entsprechend den Fehler schon stark eingrenzen kann.
-Aufgrund dieser Intuitiven Erklärung wurde der Plan gefasst, die Kostenfunktion stärker an der originalen Yolo v1 Kostenfunktion zu orientieren.
+Aufgrund dieser Hypothese wurde der Plan gefasst, die Kostenfunktion stärker an der originalen Yolo v1 Kostenfunktion zu orientieren.
 
 \subsection{Netzwerkoutput}
+\label{chapter:netzwerkoutput}
 Im ersten Schritt wurde der Output des Netzwerks fast genau wie das Vorbild aus dem Yolo-Paper \cite{yolo} aufgebaut. 
 Die einzigen Unterschiede lagen darin, dass man pro Gitterzelle nur eine anstelle von zwei Bounding-Boxen ausgibt und dass man nur eine anstelle von 10 Klassen vorhersagt. 
 Damit war der Output des Netzwerks (Abbildung \ref{img:output_tensor}) nahezu identisch mit dem Label-Tensor (Abbildung \ref{img:label_tensor} \& Beschreibung in Kapitel \ref{chapter:label_tensor}).
-Der einzige Unterschied zwischen dem Output-Tensor und dem Label-Tensor lag darin, dass jede Output-Gitterzelle auch eine Vorhersage zur Confidence enthält. 
+Im Gegensatz zum Label-Tensor enthält der Output-Tensor zusätzlich für jede Gitterzelle eine Vorhersage zur Confidence.
 
 %Prediction-Tensor
 \begin{figure}	
@@ -27,17 +30,6 @@ Der einzige Unterschied zwischen dem Output-Tensor und dem Label-Tensor lag dari
 	\caption{Output-Tensor}
 	\label{img:output_tensor}
 \end{figure} 
-
-Die Confidence war deshalb nicht explizit in den Labels enthalten, weil sie erst mit den Vorhersagen zu x, y, w und h sowie den entsprechenden Labels berechnet werden konnte.
-Die Label-Confidence ist eigentlich nichts anderes als die IOU\footnote{\label{foot:1}IOU = Intersection Over Union} zwischen der vorhergesagten Bounding-Box und der Label-Bounding-Box einer bestimmten Gitterzelle. 
-Die Berechnung der IOU aus diesen beiden Bounding-Boxen erfolgt wie aus Abbildung \ref{img:IOU} ersichtlich.
-
-Es befinden sich allerdings in den meisten Gitterzellen keine rechten Zeigefingerspitzen. 
-Aus diesem Grund existieren in diesen Gitterzellen auch keine Labels zu x,y,w und h, weshalb auch keine Label-Bounding-Boxen existieren.
-In jeder dieser Gitterzellen, in welchen keine Label-Boundingboxen existieren ist die Label-Confidence automatisch=0. 
-So wird man nach dem Training aufgrund der Confidence-Variable im Output für jede Gitterzelle ablesen können, ob sich darin irgend ein Objekt befindet, und wie gut dieses wahrscheinlich auf die Vorhersage von x,y,w und h passt.
-
-
 %IOU
 \begin{figure}	
 	\centering
@@ -45,6 +37,18 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 	\caption{Berechnung der IOU}
 	\label{img:IOU}
 \end{figure} 
+
+Die Confidence war deshalb nicht explizit in den Labels enthalten, weil sie erst mit den Vorhersagen zu x, y, w und h sowie den entsprechenden Labels berechnet werden konnte.
+Die Label-Confidence ist die IOU\footnote{\label{foot:1}IOU = Intersection Over Union} zwischen der vorhergesagten Bounding-Box und der Label-Bounding-Box einer bestimmten Gitterzelle. 
+Die Berechnung der IOU aus diesen beiden Bounding-Boxen erfolgt wie aus Abbildung \ref{img:IOU} ersichtlich.
+
+Es befinden sich allerdings in den meisten Gitterzellen keine rechten Zeigefingerspitzen. 
+Aus diesem Grund existieren in diesen Gitterzellen auch keine Labels zu x,y,w und h, weshalb auch keine Label-Boundingboxen existieren.
+In jeder dieser Gitterzellen, in welchen keine Label-Boundingboxen, existieren ist die Label-Confidence automatisch=0. 
+So wird man nach dem Training aufgrund der Confidence-Variable im Output für jede Gitterzelle ablesen können, ob sich darin irgend ein Objekt befindet, und wie gut dieses wahrscheinlich auf die Vorhersage von x,y,w und h passt.
+
+
+
 
 
 \subsection{Design Kostenfunktion}
@@ -60,7 +64,7 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 	+ \sum_{i}^{7*7}&\mathds{1}_{i}^{obj} (p_{i}-\hat{p}_{i})^{2}
 \end{split} 
 \end{equation}
-\caption{abgespeckte Kostenfunktion wie Sie in dieser Arbeit verwendet wurde.}
+\caption{Abgespeckte Kostenfunktion wie Sie in dieser Arbeit verwendet wurde. Die vollständige Yolo v1 Kostenfunktion wird im Yolo-Paper\cite{yolo} genauer beschrieben.}
 \label{eq:Kostenfunktion}
 \end{eqfloat}
 
@@ -69,7 +73,7 @@ So wird man nach dem Training aufgrund der Confidence-Variable im Output für je
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline  \textbf{Symbol} & \textbf{Definition}\\
-\hline  $\lambda_{coord}$  & Faktor welcher verwendet wird um Fehler in den Koordinaten, sowie Höhe und Breite der Boundingboxen stärker zu gewichten. In diesem Fall wird hier ein Faktor von 5 verwendet. Diese Zahl ist so eins zu eins aus dem Yolo-Paper \cite{yolo} übernommen worden.\\
+\hline  $\lambda_{coord}$  & Faktor welcher verwendet wird, um Fehler in den Koordinaten, sowie Höhe und Breite der Boundingboxen stärker zu gewichten. In diesem Fall wird hier ein Faktor von 5 verwendet. Diese Zahl ist so eins zu eins aus dem Yolo-Paper \cite{yolo} übernommen worden.\\
 \hline  $\lambda_{noobj}$  & Faktor, welcher verwendet wird, damit der Confidence-Fehler nicht so stark gewichtet wird, wenn gar kein Objekt in dieser Gitterzelle vorhanden ist. In diesem Fall wird hier ein Faktor von 0.5 verwendet. Diese Zahl ist so eins zu eins aus dem Yolo-Paper \cite{yolo} übernommen worden.\\
 \hline  $x_i$  & x-Labelkoordinaten, welche für die Gitterzelle i die Distanz vom Mittelpunkt der Boundingbox zum linken Rand der Gitterzelle i angibt.\\
 \hline  $y_i$  & y-Labelkoordinaten, welche für die Gitterzelle i die Distanz vom Mittelpunkt der Boundingbox zum oberen Rand der Gitterzelle i angibt.\\
@@ -92,8 +96,9 @@ Dieses Objekt ist = 0, wenn in der Gitterzelle i ein rechter Zeigefingerspitz en
 \end{table} 
 
 Die Auswahl bzw. das Design der Kostenfunktion ist wahrscheinlich der wichtigste Schritt im Design eines Neuronalen Netzwerks. 
-In dieser Arbeit bestand das grosse Glück, dass die Kostenfunktion grösstenteils vom Yolo v1-Paper \cite{yolo} vorgegeben wurde (Was auch mit ein Grund für die Wahl von Yolo v1 war).
-Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde kann man in Gleichung \ref{eq:Kostenfunktion} betrachten. 
+In dieser Arbeit war es ein grosses Glück, dass die Kostenfunktion grösstenteils vom Yolo v1-Paper \cite{yolo} vorgegeben wurde.
+Dies war mit ein Grund für die Wahl von Yolo v1.
+Die Kostenfunktion, wie Sie in dieser Arbeit verwendet wurde, kann man in Gleichung \ref{eq:Kostenfunktion} betrachten. 
 Diese Kostenfunktion ist etwas einfacher als die Kostenfunktion, wie Sie im Yolo v1 Paper zu sehen ist. 
 Dies hat zwei Gründe. 
 Zum einen wurde pro Gitterzelle nur eine Boundingbox vorhergesagt. 
@@ -108,7 +113,7 @@ So wird das Netzwerk nie korrigiert, wenn es die Wahrscheinlichkeit höher einsc
 Dies stellte allerdings kein Problem dar. 
 Denn die letztendliche Identifikation des Fingers, welche mit dem resultierenden Wert aus $\hat{c}_i * \hat{p}_i$ ermittelt wurde, war wegen der Nähe von $\hat{p}_i$ zu 1 sozusagen gleichzusetzen mit $\hat{c}_i$.
 
-Da auch mit mehreren Klassen $\hat{c}_i$ eine Dominante Rolle spielen würde, wenn es darum geht, ob ein Objekt erkannt wurde oder nicht, würde höchstwahrscheinlich die Performance nicht besser, wenn man Yolo mit mehr als einer Klasse trainieren würde.
+Da auch mit mehreren Klassen $\hat{c}_i$ eine dominante Rolle spielen würde, wenn es darum geht, ob ein Objekt erkannt wurde oder nicht, würde höchstwahrscheinlich die Performance nicht besser, wenn man Yolo mit mehr als einer Klasse trainieren würde.
 
 
 
@@ -121,14 +126,14 @@ Da auch mit mehreren Klassen $\hat{c}_i$ eine Dominante Rolle spielen würde, we
 \subsection{Fazit}
 Folgende Punkte konnten aus dieser Arbeit gelernt werden, bzw. sollten im Falle einer Vertiefung beachtet werden. 
 \begin{enumerate}
-\item Man darf die Wahl der Kostenfunktion nicht unterschätzen. 
-Wie man im Kapitel \ref{chapter:erster_wurf} sehen kann, darf man nicht annehmen, dass die Kostenfunktion frei und ohne gross nachzudenken gewählt werden kann. 
+\item Die Wahl der Kostenfunktion darf nicht unterschätzen werden. 
+Wie im Kapitel \ref{chapter:erster_wurf} ersichtlich wird, darf nicht angenommen werden, dass die Kostenfunktion frei und ohne gross nachzudenken gewählt werden kann. 
 Vielmehr muss die Wahl der Kostenfunktion stark mit dem Netzwerk und dem Problem interagieren. 
 
-\item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt (Dies weil die Komplexität von zwei Boundingboxen in Tensorflow nahezu jegliches Mass überstiegen hätte.). Wahrscheinlich könnte die Performance noch verbessert werden, wenn anstelle von einer mindestens zwei Boundingboxen pro Gitterzelle vorhergesagt würden. Dies aufgrund der Theorie \cite{PrivateCommunication}, dass mit mehreren Boundingboxen verschiedene Features eines Bildes verwendet werden können, um einen Finger vorherzusagen.
+\item Für die Zukunft zu beachten: In dieser Arbeit wurde pro Gitterzelle nur eine Boundingbox vorhergestagt (Dies um die Komplexität vorerst niedrig zu halten). Wahrscheinlich könnte die Performance noch verbessert werden, wenn anstelle von einer mindestens zwei Boundingboxen pro Gitterzelle vorhergesagt würden. Dies aufgrund der Theorie \cite{PrivateCommunication}, dass mit mehreren Boundingboxen verschiedene Features eines Bildes verwendet werden können, um einen Finger vorherzusagen.
 
 \item Zum Vergleich: Im Paper Yolo v2 wurde anstelle von 7x7 Gitterzellen 13x13 Gitterzellen verwendet, was in einer höheren Präzision resultieren würde. 
 Eine höhere Präzision wäre für das Endziel dieser Arbeit nur zu begrüssen. 
 Wenn dies allerdings mit Yolo v1 umgesetzt würde, hätte man das Problem, dass wegen dem Grösseren Speicheraufwand, welcher für die zusätzlichen Elemente \grqq{}verbraucht\grqq{} würde die Minibatchsize verkleinert werden müsste. 
-So wird angenommen, dass mit einer kompletten Umstellung auf Yolo v2 ein besseres Resultat erzielt würde, als wenn man Yolo v1 einfach erweitern würde.  
+Deshalb wird angenommen, dass mit einer kompletten Umstellung auf Yolo v2 ein besseres Resultat erzielt würde, als wenn man Yolo v1 einfach erweitern würde.
 \end{enumerate}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  29 JAN 2018 15:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.12.11)  5 FEB 2018 15:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1146,17 +1146,17 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 32.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 45.
+(babel)             in language hidelinks on input line 47.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 45.
+(babel)             in language hidelinks on input line 47.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 57.
+(babel)             in language hidelinks on input line 55.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 57.
+(babel)             in language hidelinks on input line 55.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 57.
+(babel)             in language hidelinks on input line 55.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 57.
+(babel)             in language hidelinks on input line 55.
  [7])
 (./Kapitel/30DatenPipeline/DatenPipeline.tex
 Package babel Info: Redefining ngerman shorthand "|
@@ -1177,62 +1177,62 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 4.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 21.
+(babel)             in language hidelinks on input line 20.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 21.
+(babel)             in language hidelinks on input line 20.
 
-<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=317, 1284
+<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png, id=333, 1284
 .8pt x 963.6pt>
 File: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png Graphic 
 file (type png)
 
 <use Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/
-pic775.png used on input line 26.
+pic775.png used on input line 25.
 (pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
 
-<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=319, 1284
+<Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png, id=335, 1284
 .8pt x 963.6pt>
 File: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png Graphic 
 file (type png)
 
 <use Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/
-pic777.png used on input line 30.
+pic777.png used on input line 29.
 (pdftex.def)             Requested size: 187.19833pt x 160.8421pt.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 41.
+(babel)             in language hidelinks on input line 40.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 41.
+(babel)             in language hidelinks on input line 40.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 41.
+(babel)             in language hidelinks on input line 40.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 41.
+(babel)             in language hidelinks on input line 40.
  [9 <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic775.png (PNG co
 py)> <./Kapitel/30DatenPipeline/Bilder/schlechteBoundingboxen/pic777.png (PNG c
 opy)>]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 57.
+(babel)             in language hidelinks on input line 58.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 57.
+(babel)             in language hidelinks on input line 58.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 65.
+(babel)             in language hidelinks on input line 66.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 65.
+(babel)             in language hidelinks on input line 66.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 65.
+(babel)             in language hidelinks on input line 66.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 65.
+(babel)             in language hidelinks on input line 66.
 
 [10]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 75.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 75.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 87.
+(babel)             in language hidelinks on input line 88.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 87.
+(babel)             in language hidelinks on input line 88.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 95.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1243,53 +1243,52 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 95.
  [11]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 129.
+(babel)             in language hidelinks on input line 125.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 129.
+(babel)             in language hidelinks on input line 125.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 129.
+(babel)             in language hidelinks on input line 125.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 129.
+(babel)             in language hidelinks on input line 125.
  [12]
-<Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf, id=361, 341.275pt x 341.275pt>
+<Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf, id=377, 341.275pt x 341.275pt>
 File: Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf Graphic file (type pdf)
 <use Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf used on
- input line 134.
+ input line 135.
 (pdftex.def)             Requested size: 272.99881pt x 273.01515pt.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 139.
+(babel)             in language hidelinks on input line 140.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 139.
-
-<Kapitel/30DatenPipeline/Bilder/LabelList.pdf, id=363, 1138.2525pt x 1707.37875
+(babel)             in language hidelinks on input line 140.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 147.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 147.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 147.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 147.
+ [13 <./Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>]
+<Kapitel/30DatenPipeline/Bilder/LabelList.pdf, id=393, 1138.2525pt x 1707.37875
 pt>
 File: Kapitel/30DatenPipeline/Bilder/LabelList.pdf Graphic file (type pdf)
  <use Kapitel/30DatenPipeline/Bilder/LabelList.pdf>
 Package pdftex.def Info: Kapitel/30DatenPipeline/Bilder/LabelList.pdf used on i
-nput line 150.
+nput line 151.
 (pdftex.def)             Requested size: 155.99762pt x 233.97722pt.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 154.
+(babel)             in language hidelinks on input line 155.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 154.
+(babel)             in language hidelinks on input line 155.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 160.
+(babel)             in language hidelinks on input line 165.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 160.
+(babel)             in language hidelinks on input line 165.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 160.
+(babel)             in language hidelinks on input line 165.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 160.
- [13 <./Kapitel/30DatenPipeline/Bilder/LabelTensor.pdf>]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 168.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 168.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 168.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 168.
+(babel)             in language hidelinks on input line 165.
  [14 <./Kapitel/30DatenPipeline/Bilder/LabelList.pdf>]) (./Kapitel/40Architektu
 r/Architektur.tex
 Package babel Info: Redefining ngerman shorthand "|
@@ -1300,115 +1299,122 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 1.
- [15]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 3.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 3.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 4.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 4.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 18.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 18.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 20.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 20.
 
-Overfull \hbox (39.00238pt too wide) in paragraph at lines 59--60
+[15]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 3.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 3.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 5.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 5.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 19.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 19.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 21.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 21.
+
+Overfull \hbox (39.00238pt too wide) in paragraph at lines 61--62
  [][] 
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 [16]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 74.
+(babel)             in language hidelinks on input line 76.
  [17]
-<Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf, id=418, 507.496pt x 28
+<Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf, id=436, 507.496pt x 28
 6.671pt>
 File: Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf Graphic file (type
  pdf)
  <use Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf>
 Package pdftex.def Info: Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf
- used on input line 79.
+ used on input line 81.
 (pdftex.def)             Requested size: 187.19833pt x 105.7429pt.
 
-<Kapitel/40Architektur/Bilder/OverflowInTraining.pdf, id=419, 488.224pt x 276.2
+Underfull \hbox (badness 2781) in paragraph at lines 82--82
+\OT1/cmr/m/n/12 che) im Pre-trai-ning. X-Achse =
+ []
+
+
+Underfull \hbox (badness 4001) in paragraph at lines 82--82
+\OT1/cmr/m/n/12 Zeit, Y-Achse = Kos-ten, Wein-
+ []
+
+
+<Kapitel/40Architektur/Bilder/OverflowInTraining.pdf, id=437, 488.224pt x 276.2
 3201pt>
 File: Kapitel/40Architektur/Bilder/OverflowInTraining.pdf Graphic file (type pd
 f)
  <use Kapitel/40Architektur/Bilder/OverflowInTraining.pdf>
 Package pdftex.def Info: Kapitel/40Architektur/Bilder/OverflowInTraining.pdf us
-ed on input line 83.
+ed on input line 87.
 (pdftex.def)             Requested size: 187.19833pt x 105.91339pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--85
-[]\OT1/cmr/m/n/12 Abbildung 4: []Effekte (Ex-tre-mer An-stieg der Kos-ten in-ne
-rt ei-
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+[]\OT1/cmr/m/n/12 Abbildung 5: []Effekt (Ex-tre-mer
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--85
-\OT1/cmr/m/n/12 ner Epo-che) im Pre-trai-ning(links) und im Trai-ning(rechts). 
-x-
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+\OT1/cmr/m/n/12 An-stieg der Kos-ten in-nert ei-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--85
-\OT1/cmr/m/n/12 Achse=Zeit, y-Achse=Kosten. Weinrot=Pretraining-Trainingsdaten,
-
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+\OT1/cmr/m/n/12 ner Epo-che) im Trai-ning. X-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--85
-\OT1/cmr/m/n/12 Hellblau=Pretraining-Validierungsdaten, Gr[]un=Training-Trainin
-gsdaten,
+Underfull \hbox (badness 1122) in paragraph at lines 88--88
+\OT1/cmr/m/n/12 gr[]un=Trainingsdate, grau = Va-li-
  []
 
 
-Overfull \hbox (3.7937pt too wide) in paragraph at lines 114--114
+Overfull \hbox (3.7937pt too wide) in paragraph at lines 119--119
 []|\OT1/cmr/m/n/12 Knoten:Input=1280x960| 
  []
 
 
-Overfull \hbox (3.7937pt too wide) in paragraph at lines 114--114
+Overfull \hbox (3.7937pt too wide) in paragraph at lines 119--119
 []|\OT1/cmr/m/n/12 Knoten:Input=1280x960
  []
 
 
-Overfull \hbox (1.18262pt too wide) in paragraph at lines 114--114
+Overfull \hbox (1.18262pt too wide) in paragraph at lines 119--119
 []|\OT1/cmr/m/n/12 Knoten:Input=448x448,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--114
+Underfull \hbox (badness 10000) in paragraph at lines 119--119
 \OT1/cmr/m/n/12 Mi-ni-batch-si-ze=24,
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 124.
+(babel)             in language hidelinks on input line 129.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 124.
+(babel)             in language hidelinks on input line 129.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 124.
+(babel)             in language hidelinks on input line 129.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 124.
+(babel)             in language hidelinks on input line 129.
 [18 <./Kapitel/40Architektur/Bilder/OverflowInPretraining.pdf> <./Kapitel/40Arc
 hitektur/Bilder/OverflowInTraining.pdf
 
@@ -1416,55 +1422,54 @@ pdfTeX warning: pdflatex (file ./Kapitel/40Architektur/Bilder/OverflowInTrainin
 g.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 125.
+(babel)             in language hidelinks on input line 130.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 125.
-
-Overfull \hbox (26.47154pt too wide) in paragraph at lines 126--132
-\OT1/cmr/m/n/12 ge-wandt. Da-bei wird in je-dem Con-vo-lu-tio-nal Layer di-rekt
- nach dem Convolutional-
- []
-
+(babel)             in language hidelinks on input line 130.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 133.
+(babel)             in language hidelinks on input line 141.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 133.
+(babel)             in language hidelinks on input line 141.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 141.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 141.
+ [19]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 142.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 142.
 
-<Kapitel/40Architektur/Bilder/GraphProLayer.pdf, id=438, 350.10799pt x 479.391p
+<Kapitel/40Architektur/Bilder/GraphProLayer.pdf, id=467, 350.10799pt x 479.391p
 t>
 File: Kapitel/40Architektur/Bilder/GraphProLayer.pdf Graphic file (type pdf)
  <use Kapitel/40Architektur/Bilder/GraphProLayer.pdf>
 Package pdftex.def Info: Kapitel/40Architektur/Bilder/GraphProLayer.pdf used on
- input line 136.
+ input line 146.
 (pdftex.def)             Requested size: 195.0pt x 267.0161pt.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 139.
+(babel)             in language hidelinks on input line 154.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 139.
+(babel)             in language hidelinks on input line 154.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 139.
+(babel)             in language hidelinks on input line 159.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 139.
- [19]
+(babel)             in language hidelinks on input line 159.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 144.
+(babel)             in language hidelinks on input line 159.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 144.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 155.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 155.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 155.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 155.
+(babel)             in language hidelinks on input line 159.
  [20 <./Kapitel/40Architektur/Bilder/GraphProLayer.pdf>]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 157.
+(babel)             in language hidelinks on input line 167.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 157.
-)
-(./Kapitel/50Kostenfunktion/Kostenfunktion.tex
+(babel)             in language hidelinks on input line 167.
+
+Overfull \hbox (5.38702pt too wide) in paragraph at lines 173--175
+\OT1/cmr/m/n/12 on hat. So-mit kann je-der-zeit auf die-se lauff[]ahigen Ver-si
+-on zur[]uckgegriffen
+ []
+
+) (./Kapitel/50Kostenfunktion/Kostenfunktion.tex
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1479,97 +1484,105 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 3.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 4.
+(babel)             in language hidelinks on input line 5.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 4.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 17.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 17.
+(babel)             in language hidelinks on input line 5.
 
-<Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf, id=468, 341.275pt x 341.
+Overfull \hbox (9.35281pt too wide) in paragraph at lines 15--18
+\OT1/cmr/m/n/12 man mit dem Pre-trai-ning (De-tails sp[]ater im Ka-pi-tel []7[]
+) ei-gent-lich Haupts[]achlich
+ []
+
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 19.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 19.
+
+<Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf, id=495, 341.275pt x 341.
 275pt>
 File: Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf Graphic file (type p
 df)
  <use Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf>
 Package pdftex.def Info: Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf u
-sed on input line 26.
+sed on input line 29.
 (pdftex.def)             Requested size: 272.99881pt x 273.01515pt.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 34.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 34.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 34.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 34.
- [22]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 34.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 34.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 34.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 34.
- [23 <./Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf>]
-<Kapitel/50Kostenfunktion/Bilder/IOU.pdf, id=489, 525.965pt x 469.755pt>
+
+<Kapitel/50Kostenfunktion/Bilder/IOU.pdf, id=496, 525.965pt x 469.755pt>
 File: Kapitel/50Kostenfunktion/Bilder/IOU.pdf Graphic file (type pdf)
 
 <use Kapitel/50Kostenfunktion/Bilder/IOU.pdf>
 Package pdftex.def Info: Kapitel/50Kostenfunktion/Bilder/IOU.pdf used on input 
-line 44.
+line 36.
 (pdftex.def)             Requested size: 155.99762pt x 139.32198pt.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 50.
+(babel)             in language hidelinks on input line 44.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 50.
-LaTeX Font Info:    Try loading font information for U+dsrom on input line 61.
+(babel)             in language hidelinks on input line 44.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 44.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 44.
+ [22]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 44.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 44.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 44.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 44.
+ [23 <./Kapitel/50Kostenfunktion/Bilder/PredictionTensor.pdf> <./Kapitel/50Kost
+enfunktion/Bilder/IOU.pdf
 
-(/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+pdfTeX warning: pdflatex (file ./Kapitel/50Kostenfunktion/Bilder/IOU.pdf): PDF 
+inclusion: multiple pdfs with page group included in a single page
+>]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 54.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 54.
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 65.
+ (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
 Package hyperref Info: bookmark level for unknown eqfloat defaults to 0 on inpu
-t line 63.
+t line 67.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 108.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 108.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 108.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 108.
+ [24]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 108.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 108.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 108.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 108.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 103.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 103.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 103.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 103.
-[24 <./Kapitel/50Kostenfunktion/Bilder/IOU.pdf>]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 103.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 103.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 103.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 103.
- [25]
-Overfull \hbox (29.60382pt too wide) in paragraph at lines 111--112
-\OT1/cmr/m/n/12 es dar-um geht, ob ein Ob-jekt er-kannt wur-de oder nicht, w[]u
-rde h[]ochstwahrscheinlich
+[25]
+Overfull \hbox (17.1359pt too wide) in paragraph at lines 116--117
+\OT1/cmr/m/n/12 dar-um geht, ob ein Ob-jekt er-kannt wur-de oder nicht, w[]urde
+ h[]ochstwahrscheinlich
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 121.
+(babel)             in language hidelinks on input line 126.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 121.
+(babel)             in language hidelinks on input line 126.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 127.
+(babel)             in language hidelinks on input line 139.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 127.
+(babel)             in language hidelinks on input line 139.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 127.
+(babel)             in language hidelinks on input line 139.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 127.
+(babel)             in language hidelinks on input line 139.
 [26]) (./Kapitel/60Tests/Tests.tex
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
@@ -1596,36 +1609,45 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 33.
+(babel)             in language hidelinks on input line 30.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 33.
+(babel)             in language hidelinks on input line 30.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 33.
+(babel)             in language hidelinks on input line 30.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 33.
+(babel)             in language hidelinks on input line 30.
  [28]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 38.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 38.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 59.
+(babel)             in language hidelinks on input line 54.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 59.
+(babel)             in language hidelinks on input line 54.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 59.
+(babel)             in language hidelinks on input line 54.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 59.
+(babel)             in language hidelinks on input line 54.
  [29]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 60.
+(babel)             in language hidelinks on input line 61.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 60.
+(babel)             in language hidelinks on input line 61.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 76.
+(babel)             in language hidelinks on input line 77.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 76.
+(babel)             in language hidelinks on input line 77.
 )
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 98.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 98.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 98.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 98.
+ [30]
 (./Kapitel/70Resultate/Resultate.tex
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
@@ -1635,7 +1657,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 1.
- [30]
+ [31]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 2.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1665,7 +1687,7 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 19.
 
-<Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf, id=568, 597.23125pt x 569.
+<Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf, id=599, 597.23125pt x 569.
 12625pt>
 File: Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf Graphic file (type pdf
 )
@@ -1674,7 +1696,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf use
 d on input line 24.
 (pdftex.def)             Requested size: 272.99881pt x 260.15126pt.
 
-<Kapitel/70Resultate/Bilder/2distKnappGut.png, id=569, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/2distKnappGut.png, id=600, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/2distKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/2distKnappGut.png>
@@ -1682,7 +1704,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/2distKnappGut.png used on i
 nput line 33.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/5distKnappGut.png, id=570, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/5distKnappGut.png, id=601, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/5distKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/5distKnappGut.png>
@@ -1690,7 +1712,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/5distKnappGut.png used on i
 nput line 37.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/3distKnappSchlecht.png, id=571, 449.68pt x 449.68pt
+<Kapitel/70Resultate/Bilder/3distKnappSchlecht.png, id=602, 449.68pt x 449.68pt
 >
 File: Kapitel/70Resultate/Bilder/3distKnappSchlecht.png Graphic file (type png)
 
@@ -1699,7 +1721,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/3distKnappSchlecht.png used
  on input line 46.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/4distKnappSchlecht.png, id=572, 449.68pt x 449.68pt
+<Kapitel/70Resultate/Bilder/4distKnappSchlecht.png, id=603, 449.68pt x 449.68pt
 >
 File: Kapitel/70Resultate/Bilder/4distKnappSchlecht.png Graphic file (type png)
 
@@ -1708,7 +1730,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/4distKnappSchlecht.png used
  on input line 50.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/distProbDensity.pdf, id=573, 578.16pt x 433.62pt>
+<Kapitel/70Resultate/Bilder/distProbDensity.pdf, id=604, 578.16pt x 433.62pt>
 File: Kapitel/70Resultate/Bilder/distProbDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/70Resultate/Bilder/distProbDensity.pdf>
@@ -1716,7 +1738,7 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/distProbDensity.pdf used on
  input line 59.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-<Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf, id=574, 578.16pt x 43
+<Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf, id=605, 578.16pt x 43
 3.62pt>
 File: Kapitel/70Resultate/Bilder/distProbDensity_improved.pdf Graphic file (typ
 e pdf)
@@ -1725,129 +1747,134 @@ Package pdftex.def Info: Kapitel/70Resultate/Bilder/distProbDensity_improved.pd
 f used on input line 66.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 78.
+(babel)             in language hidelinks on input line 82.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 78.
+(babel)             in language hidelinks on input line 82.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 78.
+(babel)             in language hidelinks on input line 82.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 78.
- [31]
+(babel)             in language hidelinks on input line 82.
+ [32]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 
-[32 <./Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>]
+[33 <./Kapitel/70Resultate/Bilder/DistanzenBerechnung.pdf>]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 88.
- [33 <./Kapitel/70Resultate/Bilder/2distKnappGut.png (PNG copy)> <./Kapitel/70R
+(babel)             in language hidelinks on input line 91.
+ [34 <./Kapitel/70Resultate/Bilder/2distKnappGut.png (PNG copy)> <./Kapitel/70R
 esultate/Bilder/5distKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/3di
 stKnappSchlecht.png (PNG copy)> <./Kapitel/70Resultate/Bilder/4distKnappSchlech
 t.png (PNG copy)>]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 88.
+(babel)             in language hidelinks on input line 91.
 
-[34 <./Kapitel/70Resultate/Bilder/distProbDensity.pdf> <./Kapitel/70Resultate/B
+[35 <./Kapitel/70Resultate/Bilder/distProbDensity.pdf> <./Kapitel/70Resultate/B
 ilder/distProbDensity_improved.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/70Resultate/Bilder/distProbDensity_imp
 roved.pdf): PDF inclusion: multiple pdfs with page group included in a single p
 age
 >]
-
-LaTeX Warning: Reference `img:HoughTransformation' on page 35 undefined on inpu
-t line 92.
-
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 101.
+(babel)             in language hidelinks on input line 102.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 101.
-<Kapitel/70Resultate/Bilder/7iouKnappGut.png, id=712, 449.68pt x 449.68pt>
+(babel)             in language hidelinks on input line 102.
+ <Kapitel/70Resultate/Bilder/7iouKnappGut.png, id=743, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/7iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/7iouKnappGut.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/7iouKnappGut.png used on in
-put line 106.
+put line 107.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/8iouKnappGut.png, id=713, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/8iouKnappGut.png, id=744, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/8iouKnappGut.png Graphic file (type png)
 
 <use Kapitel/70Resultate/Bilder/8iouKnappGut.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/8iouKnappGut.png used on in
-put line 110.
+put line 111.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png, id=714, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png, id=745, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png Graphic file (type png)
 <use Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/6iouKnappSchlecht.png used 
-on input line 119.
+on input line 120.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png, id=715, 449.68pt x 449.68pt>
+<Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png, id=746, 449.68pt x 449.68pt>
 File: Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png Graphic file (type png)
 <use Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/9iouKnappSchlecht.png used 
-on input line 123.
+on input line 124.
 (pdftex.def)             Requested size: 187.19833pt x 187.19695pt.
 
-<Kapitel/70Resultate/Bilder/IOUprobDensity.pdf, id=716, 578.16pt x 433.62pt>
+<Kapitel/70Resultate/Bilder/IOUprobDensity.pdf, id=747, 578.16pt x 433.62pt>
 File: Kapitel/70Resultate/Bilder/IOUprobDensity.pdf Graphic file (type pdf)
 
 <use Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>
 Package pdftex.def Info: Kapitel/70Resultate/Bilder/IOUprobDensity.pdf used on 
-input line 131.
+input line 132.
 (pdftex.def)             Requested size: 272.99881pt x 204.74759pt.
 
-Underfull \hbox (badness 3302) in paragraph at lines 132--132
-[]\OT1/cmr/m/n/12 Abbildung 15: []Wahrscheinlichkeits-Dichte-Funktion der IOU (
+Underfull \hbox (badness 3302) in paragraph at lines 133--133
+[]\OT1/cmr/m/n/12 Abbildung 16: []Wahrscheinlichkeits-Dichte-Funktion der IOU (
 Gren-ze:
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 147.
+(babel)             in language hidelinks on input line 148.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 147.
+(babel)             in language hidelinks on input line 148.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 147.
+(babel)             in language hidelinks on input line 148.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 147.
-[35]
+(babel)             in language hidelinks on input line 148.
+[36]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 147.
+(babel)             in language hidelinks on input line 148.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 147.
+(babel)             in language hidelinks on input line 148.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 147.
+(babel)             in language hidelinks on input line 148.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 147.
- [36 <./Kapitel/70Resultate/Bilder/7iouKnappGut.png (PNG copy)> <./Kapitel/70Re
+(babel)             in language hidelinks on input line 148.
+ [37 <./Kapitel/70Resultate/Bilder/7iouKnappGut.png (PNG copy)> <./Kapitel/70Re
 sultate/Bilder/8iouKnappGut.png (PNG copy)> <./Kapitel/70Resultate/Bilder/6iouK
 nappSchlecht.png (PNG copy)> <./Kapitel/70Resultate/Bilder/9iouKnappSchlecht.pn
 g (PNG copy)>]
-
-LaTeX Warning: Reference `img:HoughTransformation' on page 37 undefined on inpu
-t line 149.
-
-) (./Kapitel/20Pretraining/Pretraining.tex
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 154.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 154.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 160.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 160.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language hidelinks on input line 160.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language hidelinks on input line 160.
+ [38 <./Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>])
+(./Kapitel/20Pretraining/Pretraining.tex
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1856,7 +1883,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 1.
- [37 <./Kapitel/70Resultate/Bilder/IOUprobDensity.pdf>]
+ [39]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 3.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1886,7 +1913,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 66.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 66.
-[38]
+[40]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 66.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1895,8 +1922,8 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 66.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 66.
- [39]
-<Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf, id=804, 347.69899pt x 216.81pt
+ [41]
+<Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf, id=843, 347.69899pt x 216.81pt
 >
 File: Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf Graphic file (type pdf)
  <use Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf>
@@ -1904,7 +1931,7 @@ Package pdftex.def Info: Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf used on
  input line 76.
 (pdftex.def)             Requested size: 187.19833pt x 116.73158pt.
 
-<Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf, id=805, 350.91101pt x 213.598p
+<Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf, id=844, 350.91101pt x 213.598p
 t>
 File: Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf Graphic file (type pdf)
  <use Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf>
@@ -1913,7 +1940,7 @@ Package pdftex.def Info: Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf used on
 (pdftex.def)             Requested size: 187.19833pt x 113.94624pt.
 
 Underfull \hbox (badness 3108) in paragraph at lines 86--86
-[]\OT1/cmr/m/n/12 Abbildung 16: []Kosten und Top5-Test von ver-gleich-ba-ren Ta
+[]\OT1/cmr/m/n/12 Abbildung 17: []Kosten und Top5-Test von ver-gleich-ba-ren Ta
 sks im
  []
 
@@ -1933,7 +1960,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 89.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 89.
-<Kapitel/20Pretraining/Bilder/Test_top5.pdf, id=806, 355.72899pt x 204.765pt>
+<Kapitel/20Pretraining/Bilder/Test_top5.pdf, id=845, 355.72899pt x 204.765pt>
 File: Kapitel/20Pretraining/Bilder/Test_top5.pdf Graphic file (type pdf)
 
 <use Kapitel/20Pretraining/Bilder/Test_top5.pdf>
@@ -1942,19 +1969,19 @@ ut line 93.
 (pdftex.def)             Requested size: 272.99881pt x 157.14774pt.
 
 Underfull \hbox (badness 5403) in paragraph at lines 94--94
-[]\OT1/cmr/m/n/12 Abbildung 17: []Test-Top5 nach 6 Ta-gen Lernzeit(x-Achse=Zeit
+[]\OT1/cmr/m/n/12 Abbildung 18: []Test-Top5 nach 6 Ta-gen Lernzeit(x-Achse=Zeit
 , y-
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 105.
+(babel)             in language hidelinks on input line 106.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 105.
+(babel)             in language hidelinks on input line 106.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language hidelinks on input line 105.
+(babel)             in language hidelinks on input line 106.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language hidelinks on input line 105.
-[40 <./Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf> <./Kapitel/20Pretraining
+(babel)             in language hidelinks on input line 106.
+[42 <./Kapitel/20Pretraining/Bilder/SGDvsADAMcost.pdf> <./Kapitel/20Pretraining
 /Bilder/SGDvsADAMtop5.pdf
 
 pdfTeX warning: pdflatex (file ./Kapitel/20Pretraining/Bilder/SGDvsADAMtop5.pdf
@@ -1972,7 +1999,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 120.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 120.
- [41 <./Kapitel/20Pretraining/Bilder/Test_top5.pdf>]
+ [43 <./Kapitel/20Pretraining/Bilder/Test_top5.pdf>]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 121.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1987,7 +2014,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 1.
- [42]
+ [44]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 3.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2018,7 +2045,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 31.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 31.
-[43])
+[45])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 105.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2027,21 +2054,15 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 105.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 105.
- [44]
+ [46]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 107.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 107.
  (./yoloOnFingers.bbl) (./yoloOnFingers.lof
-Overfull \hbox (74.82658pt too wide) in paragraph at lines 5--5
- \OT1/cmr/m/n/12 Achse=Kosten. Weinrot=Pretraining-Trainingsdaten, Hellblau=Pre
-training- 
- []
-
-
-Overfull \hbox (31.19695pt too wide) in paragraph at lines 5--5
- \OT1/cmr/m/n/12 Validierungsdaten, Gr[]un=Training-Trainingsdaten, Grau=Traini
-ng- 
+Overfull \hbox (22.3451pt too wide) in paragraph at lines 6--6
+ \OT1/cmr/m/n/12 Trai-ning. X-Achse = Zeit, Y-Achse = Kos-ten, gr[]un=Trainings
+date, 
  []
 
 Package babel Info: Redefining ngerman shorthand "|
@@ -2052,20 +2073,20 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 13.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 13.
-[45]
-Overfull \hbox (12.03703pt too wide) in paragraph at lines 13--13
+[47]
+Overfull \hbox (12.03703pt too wide) in paragraph at lines 14--14
  [][] [][]\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichtefunktion der Di-stanz. Aus-
 reis-ser nicht 
  []
 
 
-Overfull \hbox (4.33194pt too wide) in paragraph at lines 16--16
+Overfull \hbox (4.33194pt too wide) in paragraph at lines 17--17
  [][] [][]\OT1/cmr/m/n/12 Wahrscheinlichkeits-Dichte-Funktion der IOU (Gren-ze:
  IOU=0.4)[] [][]  
  []
 
 
-Overfull \hbox (2.5348pt too wide) in paragraph at lines 18--18
+Overfull \hbox (2.5348pt too wide) in paragraph at lines 19--19
  [][] [][]\OT1/cmr/m/n/12 Test-Top5 nach 6 Ta-gen Lernzeit(x-Achse=Zeit, y-Achs
 e=Top- 
  []
@@ -2082,31 +2103,24 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language hidelinks on input line 112.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language hidelinks on input line 112.
- [46]
+ [48]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 112.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 112.
  (./yoloOnFingers.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 112.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 112.
 Package rerunfilecheck Info: File `yoloOnFingers.out' has not changed.
-(rerunfilecheck)             Checksum: F045E8E51E322997B742C5568B2086D7;3111.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+(rerunfilecheck)             Checksum: B3B67D1CE23B827366D1EA2C2CBFE036;3171.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 112.
  ) 
 Here is how much of TeX's memory you used:
- 18755 strings out of 494860
- 346826 string characters out of 6177601
- 450281 words of memory out of 5000000
- 21435 multiletter control sequences out of 15000+600000
- 14568 words of font info for 60 fonts, out of 8000000 for 9000
+ 18775 strings out of 494860
+ 347130 string characters out of 6177601
+ 450616 words of memory out of 5000000
+ 21446 multiletter control sequences out of 15000+600000
+ 14856 words of font info for 63 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 62i,19n,56p,648b,504s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,19n,56p,640b,504s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
@@ -2123,10 +2137,10 @@ share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/doublestroke/dsrom12.pfb>
-Output written on yoloOnFingers.pdf (46 pages, 3817311 bytes).
+Output written on yoloOnFingers.pdf (48 pages, 3828906 bytes).
 PDF statistics:
- 995 PDF objects out of 1000 (max. 8388607)
- 739 compressed objects within 8 object streams
- 165 named destinations out of 1000 (max. 500000)
- 545 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1035 PDF objects out of 1200 (max. 8388607)
+ 776 compressed objects within 8 object streams
+ 173 named destinations out of 1000 (max. 500000)
+ 553 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -2,11 +2,11 @@
 %Kapitelüberschrift
 \section{Tests} 
 \label{chapter:tests}
-\subsection{erste Ansätze}
-Am Anfang ging man von der falschen Vorstellung aus, dass die Detektion der Finger über die Variable $\hat{p}_i$ im Output des Neuronalen Netzwerks (Tabelle \ref{tbl:beschr_kostenfuntion}) läuft. 
+\subsection{Erste Ansätze}
+Am Anfang ging man von der falschen Vorstellung\footnote{\label{grund_falscher_test}Der Grund für diese Fehler war, dass zu Beginn der Arbeit noch nicht von allen Variablen der Yolo-Kostenfunktion Sinn und Zweck komplett verstanden wurden. Die Erkenntnis aus diesem Fehler ist einmal mehr, dass beim Aufbau einer Arbeit auf einem bestehenden Paper dieses in noch mehr Iterationen durchgelesen werden sollte.} aus, dass die Detektion der Finger über die Variable $\hat{p}_i$ im Output des Neuronalen Netzwerks (Tabelle \ref{tbl:beschr_kostenfuntion}) läuft. 
 Aus diesem Grund wurden verschiedene Tests aufgebaut.
 
-Ein Test ermittelte aufgrund von $\hat{p}_i$ und einem beliebigen Threshold einen Status für jede Gitterzelle. Diese Stati waren: 
+Ein Test ermittelte aufgrund von $\hat{p}_i$ und einem beliebigen Threshold einen Status für jede Gitterzelle. Diese Status waren: 
 
 \begin{itemize}
 \item \grqq{}True-Positive\grqq{}
@@ -44,7 +44,8 @@ Aus diesem Vektor konnte dann ein schönes Histogramm erstellt werden, aus welch
 Nach Fertigstellung dieses Tests war es ein Leichtes dasselbe für die IOU anstelle der Distanz zu machen. 
 
 Die Wahl der besten Prediction wurde ebenfalls nochmals verbessert.
-Im Nachherein ist es ein wenig peinlich, dass in diesem Punkt so viel herumexperimentiert und ausprobiert wurde, da in der Gleichung 1 im Yolo-Paper \cite{yolo} klar ersichtlich ist, dass für die Bestimmung der besten Prediction das Produkt aus $\hat{p}_i$ und $\hat{c}_i$ massgebend ist.
+Es wurde in diesem Punkt viel herumexperimentiert und ausprobiert, obwohl in der Gleichung 1 im Yolo-Paper \cite{yolo} klar ersichtlich ist, dass für die Bestimmung der besten Prediction das Produkt aus $\hat{p}_i$ und $\hat{c}_i$ massgebend ist.
+Daraus konnte gelernt werden, dass bei einem Aufbau einer Arbeit auf einem Paper dieses in regelmässigen Abständen wieder durchgelesen oder zumindest überflogen werden sollte.
 Natürlich machte dies aber auch keinen Unterschied mehr, da $\hat{p}_i$ nahezu = 1 war, war die Prediction aus $\hat{p}_i * \hat{c}_i$ dieselbe wie wenn nur $\hat{c}_i$ verwendet wurde.
 
 Somit war das Training des Netzwerks auf die Variable $\hat{p}_i$ sowie dessen Verwendung bisher nur irreführend und hatte keinen Nutzen.
@@ -57,11 +58,10 @@ Allerdings konnte ein Gespräch mit Guido Schuster \cite{PrivateCommunication} s
 Eine solche Verteilung entsteht, wenn zwei Gaussverteilte Variablen über die L2-Norm miteinander verbunden werden.
 Da genau dies in diesem Test geschieht, war somit dieser Punkt restlos geklärt.
 
-IOU nicht sehr aussagekräftig...(wahrscheinlich schon im Resultat beschrieben.)
-
 \subsection{Seed}
 Um während den vielen Tests endlich ganz genaue Vergleiche zu erhalten wurde im Laufe der Arbeit ein fixer Seed implementiert und an Tensorflow übergeben.
-Allerdings hatte dies zwei Tücken, welche auch der Grund waren, warum dieser fixe Seed wieder aufgehoben wurde.
+Allerdings hatte dies zwei Tücken.
+Dies waren auch die Gründe, warum dieser fixe Seed wieder aufgehoben wurde.
 
 Die erste Tücke war, dass trotz der Übergabe eines fixen Seeds an Tensorflow die Ergebnisse trotzdem nicht reproduzierbar waren.
 Offensichtlich hat es in Tensorflow noch weitere zufällige Werte, welche man auch mit einem festen Seed initialisieren müsste.
@@ -72,10 +72,10 @@ So wurden die Bilder für das Training wieder in der genau gleichen Reihenfolge 
 Zuerst sah es so aus, als würde der Trainingsfehler einfach in ungeheurem Tempo gegen 0 gehen, während sich der Validierungsfehler relativ schnell von jeglich vernünftigem verabschiedete.
 Allerdings wurden einzig und allein die ersten paar Bilder auswendig gelernt.
 
-Der Vorteil an der zweiten Tücke war, dass man aus versehen sogleich überprüft hatte, ob das Netzwerk in der Lage ist overzufitten. $==>$ Ja ist es!
+Der Vorteil an der zweiten Tücke war, dass man aus einem Versehen heraus sogleich überprüft hatte, ob das Netzwerk in der Lage ist overzufitten. $==>$ Ja ist es!
 
 \subsection{Fazit}
-Bei einem Neuronalen Netzwerk sollte sich früher Gedanken gemacht werden, wie man das Resultat möglichst Praxistauglich testen kann.
+Bei einem Neuronalen Netzwerk sollte sich früher Gedanken gemacht werden, wie man das Resultat möglichst praxistauglich testen kann.
 Dies wurde in dieser Arbeit klar falsch gemacht.
 Man hatte eine funktionierende Kostenfunktion und wollte diese nach Möglichkeit verbessern.
 Allerdings ist das Ziel eines neuronalen Netzwerks nicht eine tiefe Kostenfunktion zu haben, sondern den Task wozu es verwendet wird möglichst gut zu erfüllen.

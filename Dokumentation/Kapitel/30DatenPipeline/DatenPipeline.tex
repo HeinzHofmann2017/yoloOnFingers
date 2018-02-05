@@ -5,10 +5,9 @@
 \label{chapter:bilder_aufnehmen}
 Die Aufnahme der Bilder geschah unverändert mit der Apparatur und dem C++ Code von Tabea Méndez welche aus Ihrer Masterarbeit \cite{TabeasFingertracking} entstanden. 
 Das Ergebnis bestand jeweils aus acht Bildern von einer Situation. 
-Eine Situation bestand aus vier Kameras.
-Dabei machte jede Kamera jeweils ein schwarzweiss-Bild mit UV-Beleuchtung und ein schwarzweiss-Bild mit normaler weisser Beleuchtung.
+Dabei machte jede einzelne von vier Kameras jeweils ein schwarzweiss-Bild mit UV-Beleuchtung und ein schwarzweiss-Bild mit normaler weisser Beleuchtung.
 Als die Daten gelablet wurden, wurden noch keine Zeitinformation verwendet.
-Das heisst die Finger wurden noch nicht von Bild zu Bild getrackt.
+Das heisst die Finger wurden noch nicht von Situation zu Situation getrackt.
 So wurden helle Punkte im Hintergrund oft als Finger erkannt.
 Um dies zu umgehen wurde der Aufbau im Hintergrund mit schwarzem Papier abgedeckt.
 
@@ -49,10 +48,12 @@ Damit wurden die meisten LED-Punkte entfernt.
 Diesem wurde somit das Label \grqq{}rechter Zeigefingerspitz\grqq{} verliehen. 
 \end{enumerate}
 Mit diesen Filtern konnte ein hoher Prozentsatz der rechten Zeigefinger korrekt detektiert werden.
-Auf den Finger selber bezogen, war die Genauigkeit leider jedoch relativ schlecht.
+Auf den Finger selber bezogen, war die Genauigkeit leider jedoch relativ schlecht (Abweichung bis 10Pixel mit Auflösung 448x448).
 Es lag daran, dass die Detektionspunkte nicht immer genau in der Mitte des Fingers lagen. 
-Weiter waren auch die Boundingboxen, welche sich aus dem Resultat der Erosion \cite{TabeasFingertracking} berechnen liessen nicht sehr genau. 
+Weiter waren auch die Boundingboxen, welche sich aus dem Resultat der Erosion \cite{TabeasFingertracking} berechnen liessen nicht sehr genau.
 Wie man in der Abbildung \ref{img:Erosion} sehen kann, können sich diese innerhalb des Fingers auch bei sehr ähnlichen Bildern stark unterscheiden.
+Das heisst auf nahezu identischen Bildern kann die IOU zwischen zwei Labels (Siehe Kapitel \ref{chapter:netzwerkoutput}) auf nahezu 0.4 runter gehen. 
+
 
 \subsection{CSV generieren}
 Das Fingerspitzentracking wurde mit Matlab gemacht und die entsprechenden Labels als .mat-File abgespeichert.
@@ -68,7 +69,7 @@ Pro Zeile bzw. Bild werden folgende Punkte beschrieben:
 \item Y-Koordinaten im Range [0:960]
 \item Durchmesser des Resultats der Erosion
 \item Wahrscheinlichkeit, dass ein rechter Zeigefinger in diesem Bild ist. 
-(Entweder 1 oder 0, je nach dem, ob ein Finger erkannt wurde.)
+(Entweder 1 oder 0)
 \end{enumerate}
 
 
@@ -122,10 +123,10 @@ Ist eine rechte Zeigefingerspitze in dieser Gitterzelle, so ist diese Variable g
 Ist keine rechte Zeigefingerspitze in dieser Gitterzelle, so ist diese Variable gleich null.
 
 In diesem vereinfachten Fall gibt es nur eine p-Schicht.
-(Weil nur der rechte Zeigefingerspitz gelabelt wurde.)
+Dies ist der Fall, weil nur der rechte Zeigefingerspitz gelabelt wurde.
 Wären aber auf dem Bild alle Finger einzeln gelabelt, müsste der Labeltensor für jeden zusätzlich labelbaren Finger eine weitere Schicht p haben. 
 Würden also alle 10 Finger eines Menschen gelabelt, müsste der Labeltensor entsprechend 10 verschiedene p-Schichten haben.
-(Die Anzahl x, y, h \& w - Schichten bleibt gleich) 
+(Die Anzahl x, y, h \& w - Schichten bleibt gleich.) 
 \end{labeling}
 
 %Label-Tensor
@@ -141,7 +142,7 @@ Diese Label-Tensoren enthalten alle wichtigen Labels von je einem Bild.
 Allerdings lassen Sie sich mit den darin enthaltenen Informationen nicht eindeutig einem Bild zuordnen. 
 Um dies zu ermöglichen wurde eine Liste (Abbildung \ref{img:label_list}) erstellt, welche zwei Spalten und beliebig viele Zeilen enthält.
 In der ersten Spalte wird der Name der zum Label gehörenden Bilddatei gespeichert, während in der zweiten Spalte der Label-Tensor selber gespeichert wird. 
-Diese Liste wiederum wird mit pickle als python Objekt abgespeichert.
+Diese Liste wird mit pickle als python Objekt abgespeichert.
 Der Speicherort dieser Liste ist derselbe wie derjenige, an welchem alle Bilder des entsprechenden Testsets oder Trainingsets abgespeichert wurden.
 
 %Label-List
@@ -152,20 +153,22 @@ Der Speicherort dieser Liste ist derselbe wie derjenige, an welchem alle Bilder 
 	\label{img:label_list}
 \end{figure} 
 \subsection{Daten in Neuronales Netzwerk einlesen}
-Das einlesen der Daten in das Programm, in welchem das Neuronale Netzwerk trainiert wird ist dank dem vorbereiteten Tensor und dessen Klasse, welche die Tensoren einfach laden lässt kein Problem. 
+Das Einlesen der Daten in das Programm, in welchem das Neuronale Netzwerk trainiert wird, ist dank dem vorbereiteten Tensor und dessen Klasse, welche die Tensoren einfach laden lässt, kein Problem. 
 Die Daten schön für Tensorflow bereitzustellen ist etwas umständlich.
-Dies aber nur bis man es mal zum laufen gebracht hat. 
+Das liegt daran, dass es keine standardisierte Form für Daten gibt.
+Da Tensorflow aber in der Lage sein muss, eigenständig und zufällig Daten auszuwählen und diese zu Minibatchen zusammenzufügen, ist diese Struktur entsprechend komplex.
+Dies aber nur bis man es mal zum Laufen gebracht hat. 
 Danach stellt dies kein Problem mehr dar. 
-Bis die Bilder wirklich ins Netzwerk gefüttert werden passieren noch folgenden Punkte. 
+Bis die Bilder wirklich ins Netzwerk gefüttert werden, passieren noch folgenden Punkte. 
 \begin{enumerate}
 \item Listen mit Bildnamen und Labels laden und als Tensorflow Datenset anlegen.
-\item Einen \grqq{}Shuffler\grqq{} einfügen, der jedes Mal wenn das Neuronale Netzwerk einen neuen Minibatch verlangt die entsprechenden Daten Zufällig auswählt.
+\item Einen \grqq{}Shuffler\grqq{} einfügen, der jedes Mal wenn das Neuronale Netzwerk einen neuen Minibatch verlangt die entsprechenden Daten zufällig auswählt.
 \item Eine Funktion, welche die Bildnamen durch die echten Bilder ersetzt. 
-Der Vorteil einer solchen Funktion ist, dass die Bilder wirklich erst geladen werden, wenn die Daten auch benötigt werden. 
+Der Vorteil einer solchen Funktion ist, dass die Bilder erst geladen werden, wenn die Daten auch benötigt werden. 
 So werden im Punkt 2 nicht die schwergewichtigen Bilder sondern nur deren Namen aus der Liste durchgemischelt. 
-\item Eine Funktion übernimmt das organisieren des Minibatches. 
+\item Eine Funktion übernimmt das Organisieren des Minibatches. 
 So kann die Grösse des Minibatches flexibel bestimmt werden.
-\item Die Bilder wurden von der Grösse 1280*960 auf 448*448 umgewandelt. 
+\item Die Bilder wurden von der Grösse 1280*960 auf 448*448 umgewandelt. (Genaueres in Kapitel \ref{chapter:hauptgraph}) 
 Um diesen Punkt auf die GPU auszulagern wurde dafür eine eigenständige Tensorflow-Funktion verwendet (tf.image.resize\_images). 
 \item Die Bilder wurden normalisiert. 
 Dafür wurde eine eigene Funktion geschrieben, welche wiederum aus mehreren Tensorflow-Funktionen bestand. 

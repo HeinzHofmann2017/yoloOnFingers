@@ -6,7 +6,7 @@
 \subsection{Daten}
 Für das Pretraining des Yolo-Netzwerks wurden dieselben Daten verwendet wie im originalen Yolo-Paper \cite{yolo}.
 Dabei handelte es sich um das ImageNet 1000-Klassen Wettbewerbsdatenset.
-Dieses Datenset bestand aus rund 1.3 Millionen Bildern, welche alle ein Objekt aus genau 1000 möglichen Objekten enthielten.
+Dieses Datenset bestand aus rund 1.2 Millionen Bildern, welche alle ein Objekt aus genau 1000 möglichen Objekten enthielten.
 Das Label wird über einen eineindeutigen Code im Namen identifiziert.
 \subsection{Architektur}
 Die Architektur, welche im Pretraining verwendet wurde (Tabelle \ref{tbl:pretraining_Architektur}) war derjenigen, welche später auch im Training (Tabelle \ref{tbl:yolo_architektur}) verwendet wurde sehr ähnlich.
@@ -63,7 +63,7 @@ Der Output, welcher ebenfalls ein Vektor mit 1000 Elementen ist, wird nun mit de
 Als Optimierer wurde zuerst ein einfacher Stochastic-Gradient-Descent verwendet, welcher später durch einen Adam-Optimierer ersetzt wurde. 
 Einerseits wurde im Buch Deep Learning \cite{deeplearning} empfohlen einen Optimierer mit adaptivem Momentum zu verwenden, andererseits hat sich beim ausprobieren auch einfach herausgestellt, dass die Performance von Adam gegenüber SGD massgeblich gesteigert hatte. (Abbildung \ref{img:SGDvsADAM})
 
-Es gab allerdings auch eine Peinlichkeit im Zusammenhang mit dem Adamoptimizer.
+Es gab allerdings auch einen Fehler im Zusammenhang mit dem Adamoptimizer.
 So wurde in dieser Arbeit viel mit verschiedenen Lernraten experimentiert, wie z.B. eine regelmässige Reduktion der Lernrate nach jeweils einer bestimmten Anzahl Epochen.
 Diese Experimente ergaben keinerlei verwertbare Resultate.
 Der Grund dafür war, dass man den Adam-Optimizer noch nicht richtig verstanden hatte.
@@ -114,23 +114,15 @@ Denn mit 80\% Genauigkeit im Top5-Test war man genügend genau, um sich erst ein
 \subsection{Gewichte}
 Während dem Training wurden die Gewichte erst einmal regelmässig als Tensorflow-Gewichte-Dateien abgespeichert.
 Um jedoch später möglichst flexibel zu sein wurden die besten Gewichte zusätzlich noch als Python-Objekte abgespeichert.
-Dies geschah aus dem Grund, dass es zwischenzeitlich Probleme gab vortrainierte Gewichte direkt ins echte Training einzulesen, wenn man nicht genau dieselbe Architektur hatte wie im Pretraining, was offensichtlich der Fall war (Siehe Abbildung \ref{tbl:pretraining_Architektur} \& \ref{tbl:yolo_architektur}).
+Dies geschah aus dem Grund, dass es zwischenzeitlich Probleme gab vortrainierte Tensorflow-Gewichte direkt ins echte Training einzulesen, wenn man nicht genau dieselbe Architektur hatte wie im Pretraining, was offensichtlich der Fall war (Siehe Tabellen \ref{tbl:pretraining_Architektur} \& \ref{tbl:yolo_architektur}).
 Es gäbe zwar Tricks, wie man einen Graph aufsplitten und so die Gewichte vom Pretraining im Training verwenden könnte. 
 Dieser Ansatz wurde aber nicht weiter verfolgt, weil es einerseits mit den Pythongewichten gut funktioniert hatte und andererseits, weil der Speicher der GPU's beim Training schon voll war und die Gewichte des Pretraining-Astes nicht auch noch Platz gehabt hätten.
 
 \subsection{Fazit}
-Sobald man Tensorflow grundsätzlich verstanden hat, ist das bauen einer Klassifizierungs-Architektur eigentlich sehr einfach. 
+Sobald man Tensorflow grundsätzlich verstanden hat, ist das Bauen einer Klassifizierungs-Architektur eigentlich sehr einfach. 
 Man muss dafür nicht einmal unbedingt die Theorie hinter dem Deeplearning verstanden haben, sondern muss einfach wissen, welche Bausteine \grqq{}man\grqq{} nimmt und wie diese angeordnet werden müssen.
-Weil für das Training in einer ersten Phase entschieden wurde, dass für Gewichte und Knoten Float16 verwendet werden soll (siehe Kapitel \ref{chapter:Architekturaubau}), musste dies entsprechend auch im Pretraining so gemacht werden. 
-Aus diesem Grund gab es auch im Pretraining einige Probleme mit nicht direkt erklärbaren Effekten (Abbildung \ref{img:overflow_pretraining}).
-Es gab Vermutungen, dass es sich bei diesen Problemen um Overflow-Probleme gehandelt hatte.
-Seit alles auf Float32(Standard in Tensorflow) umgestellt wurde, gab es entsprechend keinerlei solche Probleme mehr.
-Dementsprechend ist die Empfehlung in Tensorflow was die Datentypen angeht, möglichst nicht vom Standard abzuweichen, auch wenn dies Einfluss auf die Architektur und andere wichtige Punkte nehmen kann.
-\todo[inline,size=\Large]{Hier überprüfen, ob dieses Bild und der Abschnitt nicht allzu redundant mit dem Kapitel Training sind....}
-\begin{figure}
-	\centering
-	\includegraphics[width=.7\textwidth]{Kapitel/20Pretraining/Bilder/Overflow.pdf}
-	\caption{Effekte in Training(Weinrot) und Validierung(Hellblau) mit Float16. x-Achse=Zeit, y-Achse=Kosten}
-	\label{img:overflow_pretraining}
-\end{figure}  
- 
+
+Obwohl der Aufbau einer Klassifizierungsarchitektur so einfach ist, darf das Debugging nicht unterschätzt werden.
+Viele Fehler sind (wenn überhaupt) erst nach mehrtägigem Training offen ersichtlich.
+Entsprechend musste auch beim Test von Korrekturen jedes Mal ein bis zwei Tage gewartet werden, bis man ein Feedback bekam.
+Neben Experimenten mit Lernraten, Dropout, etc., welche ebenfalls viel Zeit in Anspruch nahmen, bis ein Feedback verfügbar war, war dies der Hauptgrund für die zeitliche Verzögerungen in dieser Arbeit.

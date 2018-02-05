@@ -20,8 +20,8 @@ Sind Algorithmen, welche auf dem Konzept von Yolo\cite{yolo} aufbauen geeignet u
 
 \subsection{Hauptquellen}
 Diese Studienarbeit wurde vor allem auf der Arbeit \grqq{}You Only Look Once\grqq{}\cite{yolo} aufgebaut.
-Darin wird die Architektur eines Neuronalen Netzwerks beschrieben, welches mit nahezu unglaublicher Performance und einer akzeptablen Genauigkeit Gegenstände und Objekte in 2D-Bildern erkennt und deren Standort im Bild detektiert.
-Diese Arbeit ist zusammen mit Ihrer Nachfolgearbeit \grqq{}Yolo9000\grqq{} der aktuelle State of the Art was Klassifizierung kombiniert mit Detektion angeht.
+Darin wird die Architektur eines Neuronalen Netzwerks beschrieben, welches mit im Vergleich hervorragender Performance und einer nur leicht schlechteren Genauigkeit Gegenstände und Objekte in 2D-Bildern erkennt und deren Standort im Bild detektiert.
+Diese Arbeit ist zusammen mit Ihrer Nachfolgearbeit \grqq{}Yolo9000\grqq{} \cite{yolo2} der aktuelle State of the Art was Klassifizierung kombiniert mit Detektion angeht. \cite{yolo} \cite{yolo2}
 
 Die Arbeit \grqq{}Fingerspitzen-Tracking im 3D-Raum\grqq{} von Tabea Méndez \cite{TabeasFingertracking} war gerade wegen der gebauten Vorrichtung zur Datengeneration der Ausgangspunkt für diese Arbeit.
 
@@ -31,13 +31,15 @@ Die wahrscheinlich wertvollste Quelle dieser Arbeit waren die Diskussionen und A
 
 \subsection{Vorgehen}
 \label{chapter:vorgehen}
-In einem ersten Schritt wurde mit Hilfe des Testaufbaus\cite{TabeasFingertracking} genügend Daten aufgenommen, damit ein Neuronales Netzwerk darauf trainiert werden kann.
+In einem ersten Schritt wurde mit Hilfe des Testaufbaus\cite{TabeasFingertracking} genügend Daten aufgenommen, damit ein Neuronales Netzwerk darauf trainiert werden kann. (Kapitel \ref{chapter:daten_pipeline})
 
 Als nächstes wurde Programmierung von Tensorflow in Python erarbeitet und gelernt.
 
-Danach wurde eine erste, möglichst einfache Version von Yolo v1\cite{yolo} implementiert.
+Danach wurde eine erste, möglichst einfache Version von Yolo v1\cite{yolo} implementiert. (Kapitel \ref{chapter:architektur} \& \ref{chapter:kostenfunktion})
 
-Sobald diese Version lauffähig war, wurde diese optimiert, sodass damit ein möglichst gutes Resultat erzeugt werden konnte. 
+Sobald diese Version lauffähig war, wurde diese optimiert, sodass damit ein möglichst gutes Resultat erzeugt werden konnte.
+
+Gleichzeitig wurde ein Test entwickelt, welcher letztendlich zeigen soll, wie es um die Qualität der Vorhersagen steht. (Kapitel \ref{chapter:tests}) 
 
 Als letztes sollte das Netzwerk noch auf Yolo v2\cite{yolo2} erweitert werden. 
 Dazu kam es aber aus Gründen der Zeit und der Planung nicht mehr.

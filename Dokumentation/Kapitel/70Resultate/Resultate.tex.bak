@@ -6,15 +6,15 @@ Das Netzwerk wurde auf 1'200'000 Bildern des ImageNet-1000-class-Datasets vortra
 Danach wurde es auf rund 13'900 Bildern aus dem Testaufbau \cite{TabeasFingertracking} trainiert. 
 Der Test wiederum wurde auf rund 1'500 Bildern ebenfalls aus dem Testaufbau \cite{TabeasFingertracking} getestet. 
 Diese Testbilder waren dem Algorithmus während des Lernprozesses nicht zugänglich und haben entsprechend keinen Einfluss auf den Lernprozess genommen. 
-Ausserdem wurden diese Bilder so gewählt, dass Sie nicht gleichzeitig aufgenommen wurden. 
+Ausserdem wurden diese Bilder so gewählt, dass Sie nicht gleichzeitig mit den Trainingsbildern aufgenommen wurden. 
 Dies verhindert, dass fast identische Bilder im Training und im Test vorkommen. 
 
 \subsection{Analyse}
 Um die Genauigkeit der Predictions unseres Neuronalen Netzwerkes möglichst genau beschreiben zu können wurden die zwei Werte Distanz und IOU gewählt (siehe Kapitel \ref{chapter:letztendlicher_test}). 
 Obwohl die beiden Werte korrelieren sagt jeder für sich nicht die volle Wahrheit über die Genauigkeit der Vorhersagen aus. 
-Die Distanz ist für die geplante Anwendung der wesentlichere Wert, weil diese Informationen über den Standort des Fingers im Bild preisgibt.
-Die IOU ist mit der Distanz klar korreliert, denn ist die Distanz zu gross, ist die IOU schnell gleich Null. 
-Sobald die Boundingbox der Prediction und die Boundingbox des Labels sich beginnen zu überlappen sagt die IOU etwas über die korrekte Vorhersage von Breite und Höhe der Boundingbox aus. Auch darüber ob die Box am richtigen Ort liegt, können aufgrund der IOU vage Annahmen getroffen werden. Aber wie gesagt, die Distanz ist dafür der sicherere Wert. 
+Die Distanz ist für die geplante Anwendung der wesentlichere Wert, weil diese Informationen über den Standort der Fingerspitze im Bild preisgibt.
+Die IOU ist mit der Distanz teilweise korreliert, da die IOU von der Distanz aber auch von der Grösse der Boundingboxen abhängt.
+Sobald die Boundingbox der Prediction und die Boundingbox des Labels sich beginnen zu überlappen sagt die IOU etwas über die korrekte Vorhersage von Breite und Höhe der Boundingbox aus.
 
 \subsubsection{Distanz}
 
@@ -80,18 +80,19 @@ Die Definition dieses Thresholds wurde gemacht, indem Bilder zusammen mit der en
 Der Wert 0.02 entspricht somit derjenigen Distanz, welche gerade noch knapp annehmbar ist, um einen Finger als detektiert gelten zu lassen.
 Um ein Gefühl für diese Distanzen zu kriegen lohnt es sich die Abbildungen \ref{img:distanz_knapp_gut} \& \ref{img:distanz_knapp_schlecht} anzusehen, welche Bilder zeigen, die eine Distanz nahe dieses Thresholds aufweisen. 
 
-Um die Verteilung der Distanzen gut verstehen zu können, ist in Abbildung \ref{img:dist_dichte} eine Wahrscheinlichkeitsdichte der Distanzen im Testset zu sehen. Diese Dichtefunktion wurde erst nach der Bestimmung des Thresholds erzeugt und zeigt, dass rund 84\% der Distanzen kürzer sind als 0.02 und somit die entsprechenden Finger "erfolgreich" erkannt wurden.
+Um die Verteilung der Distanzen gut verstehen zu können, ist in Abbildung \ref{img:dist_dichte} eine Wahrscheinlichkeitsdichte der Distanzen im Testset zu sehen. Diese Dichtefunktion wurde erst nach der Bestimmung des Thresholds erzeugt und zeigt, dass rund 84\% der Distanzen kürzer sind als 0.02 und somit die entsprechenden Finger \grqq{}erfolgreich\grqq{} erkannt wurden.
 
 Erstaunlich ist auch, dass die Distanzen, welche grösser als 0.25 sind in der Wahrscheinlichkeitsdichte in kleinen Bündeln vorkommen. 
 Dies lässt darauf schliessen, dass die Trainingsdaten nicht komplett Bias-Frei sind.
 Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei einer Distanz von ca. 0.4 immer ein bestimmter Punkt des Hintergrundes vorhergesagt wurde, welcher tatsächlich ganz selten in den Labels als Finger markiert wurde. 
 
-Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind verfälschen zu lassen, wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. Spannend: Der Mittelwert ist sofort um einen Drittel kleiner als zuvor. 
+Um die Statistik nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind verfälschen zu lassen, wurde wie in Abbildung \ref{img:dist_dichte_improved} noch eine zweite Wahrscheinlichkeitsdichte-Funktion erstellt. 
+Dabei wurden alle Distanzen, welche grösser als 0.25 waren gelöscht.
 
 Wie man ausserdem aus Kapitel \ref{chapter:fingerdetektion} entnehmen kann, gab es schon in der Erzeugung der Labels eine gewisse Unschärfe.
-So hat auf Abbildung \ref{img:HoughTransformation}  der y-Wert im Vergleich vom einen Bild zum anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
+So hat auf Abbildung \ref{img:Erosion}  der y-Wert im Vergleich vom einen Bild zum Anderen und relativ zum Finger eine Differenz von rund 10 Pixeln, was im normierten Mass einer Distanz von rund 0.02 entspricht.
 Klar, um dieses Problem aufzeigen zu können wurde ein Bild mit einem klaren Unterschied verwendet, was bedeutet dass die meisten Labels Fehler haben die kleiner als diese Grenze sind.
-Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Lücken aufweisen.
+Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Abweichungen aufweisen.
 
 Es kann sehr gut sein, dass in der Arbeit \grqq{}Hand Pose Estimation\grqq{} \cite{HandPoseEstimation} bessere Labels erzeugt wurden.
 Denn in dieser Arbeit\cite{HandPoseEstimation} wurden die Fingerspitzen im 3D-Raum bestimmt und anschliessend in den 2D-Raum zurückgemappt.
@@ -143,15 +144,24 @@ Um ein Gefühl für diesen Threshold zu kriegen lohnt es sich die Abbildungen \r
 So fiel die Entscheidung den Threshold konservativ zu wählen, sodass nur Werte als gut erachtet werden könne, welche auch gut sind. 
 
 Auch für die IOU gibt es zur Übersicht eine Wahrscheinlichkeitsdichte die in Abbildung \ref{img:iou_dichte} betrachtet werden kann.
-Aus dieser Grafik kann gelesen werden, dass rund 6\% der Vorhersagen klar falsch sind, weil die IOU nur null ist, wenn sich die beiden Boundingboxen nicht berühren. Entsprechend kann gesagt werden, dass rund 94\% der vorhersagen zumindest sehr grob richtig sind, weil sich bei diesen 94\% die Boundingboxen von Label und Prediction zumindest ein ganz kleines bisschen überlappen. 
+Aus dieser Grafik kann gelesen werden, dass rund 6\% der Vorhersagen klar falsch sind, weil die IOU nur Null ist, wenn sich die beiden Boundingboxen nicht berühren. Entsprechend kann gesagt werden, dass rund 94\% der Vorhersagen zumindest sehr grob richtig sind, weil sich bei diesen 94\% die Boundingboxen von Label und Prediction zumindest ein ganz kleines bisschen überlappen. 
 
-Genau wie bei der Distanz gibt es auch bei der IOU, bzw. bei den Boundingboxen eine gewisse Unschärfe in den Labels (siehe Kapitel \ref{chapter:fingerdetektion}.
-So haben die beiden Bilder in Abbildung \ref{img:HoughTransformation} wenn man Sie zueinander normiert gegenüber einander eine IOU von knapp $0.4$.
+Genau wie bei der Distanz gibt es auch bei der IOU, bzw. bei den Boundingboxen eine gewisse Unschärfe in den Labels (siehe Kapitel \ref{chapter:fingerdetektion}).
+So haben die beiden Bilder in Abbildung \ref{img:Erosion} wenn man Sie zueinander normiert gegenüber einander eine IOU von knapp $0.4$.
 Wie bei den Labelfehlern in der Distanz dürften die Fehler auch bei den Boundingboxen klar kleiner als im hier berechneten Beispiel sein.
-Nichtsdestotrotz wird man wohl nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Lücken aufweisen.
+Nichtsdestotrotz wird man wohl auch hier nie in der Lage sein viel bessere Resultate in der Genauigkeit einzufahren, wenn die Labels noch solche Abweichungen aufweisen.
 
+\subsection{Erkenntnis}
 Dass die Fehler in Distanz und IOU nahezu genau auf die gesetzten Grenzen zur Bewertung der Resultate fielen, war reiner Zufall.
-So sind die Grenzen gemacht worden, bevor IOU und Distanz der Labels dieser zwei Bilder zueinander berechnet wurden.
+So sind die Grenzen gemacht worden, bevor IOU und Distanz der Labels dieser zwei Bilder (Abbildung \ref{img:Erosion}) zueinander berechnet wurden.
+
+Diese Erkenntnis jedoch relativiert sämtliche Resultate, wie sie in diesem Kapitel beschrieben wurden.
+Angenommen es könnten noch mit perfekten Labels gearbeitet werden, gibt es folgende Hypothesen, wie sich die Vorhersagen verhalten werden:
+\begin{enumerate}
+\item Die Vorhersagen werden ebenfalls besser, weil es sich bei den Fehlern in den Labels um einen Bias und nicht bloss um Varianz gehandelt hatte.
+\item Die Vorhersagen bleiben gleich gut, weil es sich bei den Fehlern in den Labels um Varianz und nicht um einen Bias gehandelt hatte.
+\end{enumerate}
+Beide Hypothesen wären möglich, können aber leider erst überprüft werden, wenn \grqq{}perfekte\grqq{} Label-Daten zur Verfügung stehen. 
 
 
 

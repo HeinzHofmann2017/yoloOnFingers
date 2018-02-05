@@ -3,10 +3,10 @@
 \section{Tests} 
 \label{chapter:tests}
 \subsection{Erste Ansätze}
-Am Anfang ging man von der falschen Vorstellung aus, dass die Detektion der Finger über die Variable $\hat{p}_i$ im Output des Neuronalen Netzwerks (Tabelle \ref{tbl:beschr_kostenfuntion}) läuft. 
+Am Anfang ging man von der falschen Vorstellung\footnote{\label{grund_falscher_test}Der Grund für diese Fehler war, dass zu Beginn der Arbeit noch nicht von allen Variablen der Yolo-Kostenfunktion Sinn und Zweck komplett verstanden wurden. Die Erkenntnis aus diesem Fehler ist einmal mehr, dass beim Aufbau einer Arbeit auf einem bestehenden Paper dieses in noch mehr Iterationen durchgelesen werden sollte.} aus, dass die Detektion der Finger über die Variable $\hat{p}_i$ im Output des Neuronalen Netzwerks (Tabelle \ref{tbl:beschr_kostenfuntion}) läuft. 
 Aus diesem Grund wurden verschiedene Tests aufgebaut.
 
-Ein Test ermittelte aufgrund von $\hat{p}_i$ und einem beliebigen Threshold einen Status für jede Gitterzelle. Diese Stati waren: 
+Ein Test ermittelte aufgrund von $\hat{p}_i$ und einem beliebigen Threshold einen Status für jede Gitterzelle. Diese Status waren: 
 
 \begin{itemize}
 \item \grqq{}True-Positive\grqq{}
@@ -44,7 +44,8 @@ Aus diesem Vektor konnte dann ein schönes Histogramm erstellt werden, aus welch
 Nach Fertigstellung dieses Tests war es ein Leichtes dasselbe für die IOU anstelle der Distanz zu machen. 
 
 Die Wahl der besten Prediction wurde ebenfalls nochmals verbessert.
-Im Nachherein ist es ein wenig peinlich, dass in diesem Punkt so viel herumexperimentiert und ausprobiert wurde, da in der Gleichung 1 im Yolo-Paper \cite{yolo} klar ersichtlich ist, dass für die Bestimmung der besten Prediction das Produkt aus $\hat{p}_i$ und $\hat{c}_i$ massgebend ist.
+Es wurde in diesem Punkt viel herumexperimentiert und ausprobiert, obwohl in der Gleichung 1 im Yolo-Paper \cite{yolo} klar ersichtlich ist, dass für die Bestimmung der besten Prediction das Produkt aus $\hat{p}_i$ und $\hat{c}_i$ massgebend ist.
+Daraus konnte gelernt werden, dass bei einem Aufbau einer Arbeit auf einem Paper dieses in regelmässigen Abständen wieder durchgelesen oder zumindest überflogen werden sollte.
 Natürlich machte dies aber auch keinen Unterschied mehr, da $\hat{p}_i$ nahezu = 1 war, war die Prediction aus $\hat{p}_i * \hat{c}_i$ dieselbe wie wenn nur $\hat{c}_i$ verwendet wurde.
 
 Somit war das Training des Netzwerks auf die Variable $\hat{p}_i$ sowie dessen Verwendung bisher nur irreführend und hatte keinen Nutzen.
