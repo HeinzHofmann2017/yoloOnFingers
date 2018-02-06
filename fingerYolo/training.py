@@ -537,7 +537,7 @@ def main():
             y_prob_diff = tf.subtract(y_labels_global, y_probs)
             x_conf_diff = tf.subtract(x_labels_global, x_confs)
             y_conf_diff = tf.subtract(y_labels_global, y_confs)
-            x_probconf_diff = tf.subtract(tf.subtract(x_labels_global, x_probconfs),0.001)
+            x_probconf_diff = tf.subtract(x_labels_global, x_probconfs)
             y_probconf_diff = tf.subtract(y_labels_global, y_probconfs)            
             
             distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
@@ -683,7 +683,7 @@ def main():
             
             sess.run(testing_init_op)
             print("Try to restore")
-            saver.restore(sess,origin_path + "../../../weights/139_9000Set_newPipe/139_9000Set_newPipe.ckpt-00645000")                
+            saver.restore(sess,origin_path + "../../../weights/139_9000Set_newPipe/139_9000Set_newPipe.ckpt-00510000")                
             print("Restored")  
             
 
@@ -785,56 +785,67 @@ def main():
 #                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
 #==============================================================================
                 
-            #Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
-            plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-            plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-            plt.xlabel("IOU (mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
-            plt.ylabel("Probability in % [1/100]")
-            plt.plot([0.4,0.4],[0,10], 'orange')
-            plt.text(0.3, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
-            plt.text(0.45,55, "good", bbox=dict(facecolor='green', alpha=0.5))
-            plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
-            plt.close()
-            
-            plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-            plt.xlabel("Distance (mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
-            plt.ylabel("Probability in % [1/100]")
-            plt.plot([0.02,0.02],[0,60], 'orange')
-            plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
-            plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
-            plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
-            plt.close()  
-            
-            distance_array_without_outliers = []
-            for dist in distance_array:
-                if dist < 0.25:
-                    distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
-            plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
-            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
-            plt.xlabel("Distance (mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
-            plt.ylabel("Probability in Promille [1/1000]")
-            plt.plot([0.02,0.02],[0,100], 'orange')
-            plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
-            plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
-            plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
-            plt.close() 
-
-            plt.hist(distance_x_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
-            plt.title("X-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-            plt.xlabel("x-Distance (mean="+str(round(np.mean(distance_x_array),3))+", stdev="+str(round(np.std(distance_x_array),3))+")")
-            plt.ylabel("Probability/Distance")
-            plt.plot([0.0,0.0],[0,100], 'orange')
-            plt.savefig(origin_path+"picsRecognized/xDistance.pdf")
-            plt.close()    
-
-            plt.hist(distance_y_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
-            plt.title("Y-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-            plt.xlabel("y-Distance (mean="+str(round(np.mean(distance_y_array),3))+", stdev="+str(round(np.std(distance_y_array),3))+")")
-            plt.ylabel("Probability/Distance")
-            plt.plot([0.0,0.0],[0,100], 'orange')
-            plt.savefig(origin_path+"picsRecognized/yDistance.pdf")
-            plt.close()              
+                #Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
+                plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+                plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("IOU (median="+str(round(np.median(iou_array),3))+", mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
+                plt.ylabel("Probability in % [1/100]")
+                plt.plot([0.4,0.4],[0,10], 'orange')
+                plt.text(0.3, 9, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(0.45,9, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
+                plt.close()
+                
+                plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("Distance (median="+str(round(np.median(distance_array),3))+", mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
+                plt.ylabel("Probability in % [1/100]")
+                plt.plot([0.02,0.02],[0,60], 'orange')
+                plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
+                plt.close()  
+                
+                plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("Distance (median="+str(round(np.median(distance_array),3))+", mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
+                plt.ylabel("Probability in % [1/100] (Log-Scale)")
+                plt.plot([0.02,0.02],[0,100], 'orange')
+                plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.yscale('log')
+                plt.savefig(origin_path+"picsRecognized/logdistProbDensity.pdf")
+                plt.close() 
+                
+                distance_array_without_outliers = []
+                for dist in distance_array:
+                    if dist < 0.25:
+                        distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
+                plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
+                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
+                plt.xlabel("Distance (median="+str(round(np.median(distance_array_without_outliers),3))+", mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
+                plt.ylabel("Probability in Promille [1/1000]")
+                plt.plot([0.02,0.02],[0,100], 'orange')
+                plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
+                plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
+                plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
+                plt.close() 
+    
+                plt.hist(distance_x_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
+                plt.title("X-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("x-Distance (median="+str(round(np.median(distance_x_array),3))+", mean="+str(round(np.mean(distance_x_array),3))+", stdev="+str(round(np.std(distance_x_array),3))+")")
+                plt.ylabel("Probability/Distance")
+                plt.plot([0.0,0.0],[0,100], 'orange')
+                plt.savefig(origin_path+"picsRecognized/xDistance.pdf")
+                plt.close()    
+    
+                plt.hist(distance_y_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
+                plt.title("Y-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+                plt.xlabel("y-Distance (median="+str(round(np.median(distance_y_array),3))+", mean="+str(round(np.mean(distance_y_array),3))+", stdev="+str(round(np.std(distance_y_array),3))+")")
+                plt.ylabel("Probability/Distance")
+                plt.plot([0.0,0.0],[0,100], 'orange')
+                plt.savefig(origin_path+"picsRecognized/yDistance.pdf")
+                plt.close()              
 
     print("finished")
 

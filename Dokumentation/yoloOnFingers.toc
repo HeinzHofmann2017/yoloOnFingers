@@ -35,8 +35,8 @@
 \contentsline {subsection}{\numberline {6.1}Testvoraussetzungen}{31}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}Analyse}{31}{subsection.6.2}
 \contentsline {subsubsection}{\numberline {6.2.1}Distanz}{31}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{35}{subsubsection.6.2.2}
-\contentsline {subsection}{\numberline {6.3}Erkenntnis}{37}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.2.2}Intersection Over Union IOU}{36}{subsubsection.6.2.2}
+\contentsline {subsection}{\numberline {6.3}Erkenntnis}{36}{subsection.6.3}
 \contentsline {section}{\numberline {7}Pretraining}{39}{section.7}
 \contentsline {subsection}{\numberline {7.1}Daten}{39}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Architektur}{39}{subsection.7.2}

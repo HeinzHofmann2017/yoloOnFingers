@@ -60,6 +60,13 @@ Sobald die Boundingbox der Prediction und die Boundingbox des Labels sich zu üb
 	\caption{Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz (Grenze: Dist=0.02)}
 	\label{img:dist_dichte}
 \end{figure}
+%Komplette Wahrscheinlichkeits-Dichte-Funktion mit Logarithmischer y-Achse
+\begin{figure}	
+	\centering
+	\includegraphics[width=.7\textwidth]{Kapitel/70Resultate/Bilder/logdistProbDensity.pdf}
+	\caption{Komplette Wahrscheinlichkeits-Dichte-Funktion der Distanz mit Logarithmischer y-Achse (Grenze: Dist=0.02)}
+	\label{img:log_dist_dichte}
+\end{figure}
 %Wahrscheinlichkeits-Dichtefunktion der Distanz. Ausreisser nicht miteingerechnet
 \begin{figure}	
 	\centering
@@ -84,6 +91,8 @@ Um die Verteilung der Distanzen gut verstehen zu können, ist in Abbildung \ref{
 
 Erstaunlich ist auch, dass die Distanzen, welche grösser als 0.25 sind in der Wahrscheinlichkeitsdichte in kleinen Bündeln vorkommen. 
 Dies lässt darauf schliessen, dass die Trainingsdaten nicht komplett Bias-Frei sind.
+Erstaunlich ist auch, dass es um die Distanz von 0.4 die Wahrscheinlichkeitsdichte als eine Art Bündel auftritt.
+Dies ist in der Abbildung \ref{img:log_dist_dichte}, welche eine logarithmisches Abbild von Abbildung \ref{img:dist_dichte} ist, gut zu sehen.
 Nach kurzer Kontrolle konnte tatsächlich festgestellt werden, dass z.B. bei einer Distanz von ca. 0.4 immer ein bestimmter Punkt des Hintergrundes vorhergesagt wurde, welcher sehr selten in den Labels als Finger markiert wurde. 
 
 Die Statistik sollte nicht von Ausreissern, welche aufgrund von falschen Labels entstanden sind,verfälscht werden.
