@@ -2,7 +2,7 @@
 %Kapitelüberschrift
 \section*{Abstract}
 \subsection*{Aufgabenstellung}
-Das Ziel dieser Projektarbeit bestand darin, herauszufinden, ob Yolo geeignet wäre, die Fingerspitzen einer Hand in einem Bild zu klassifizieren (Was ist das Objekt im Bild $\rightarrow$ z.B. Eine rechte Zeigefingerspitze) und genau zu detektieren (Wo ist das Objekt im Bild  $\rightarrow$ z.B. oben rechts). 
+Das Ziel dieser Projektarbeit bestand darin, herauszufinden, ob Yolo geeignet wäre, die Fingerspitzen einer Hand in einem Bild zu klassifizieren\footnote{\label{foot:klassifizieren}Klassifizieren: Erkennen, was sich für ein Objekt im Bild befindet. $\rightarrow$ z.B. Eine rechte Zeigefingerspitze} und genau zu detektieren \footnote{\label{detektieren} Detektieren: Erkennen, wo sich ein Objekt im Bild befindet.  $\rightarrow$ z.B. oben rechts}. 
 Die Genauigkeit sollte bei maximal 0.1mm liegen.
 Yolo ist eine Möglichkeit, mittels Deep-Learning Objekte in einem Bild zu klassifizieren und gleichzeitig deren genaue Position zu detektieren. 
 Daher auch der Ausdruck Yolo (You only look once).
@@ -26,7 +26,7 @@ Es sollte herausgefunden werden, mit welchen Änderungen und Einstellungen das L
 Das Pretraining und auch das Training hatten seine Tücken.
 Das originale Yolo-Netzwerk war extrem gross und brauchte entsprechend nahezu den ganzen RAM-Speicher einer GPU.
 Deswegen blieb nur noch begrenzt Platz für Daten übrig. 
-Diese Probleme konnten umgangen werden, hatten jedoch zur Folge, dass die Bilder von 1280x960 auf 448x448 verkleinert werden mussten, um das Netzwerk zum Laufen zu bringen. 
+Diese Probleme konnten umgangen werden, hatten jedoch zur Folge, dass die Bilder am Netzwerk-Input von 1280x960 auf 448x448 verkleinert werden mussten, um das Netzwerk zum Laufen zu bringen. 
 Dies hatte zur Folge, dass ein Pixel bereits bis zu 1,5mm entsprechen konnte.
 Trotzdem wurde mit rund 84\% der Predictions nur eine Genauigkeit von 15mm erreicht, was in etwa 10 Pixeln entsprach. 
 Mit diesem Ergebnis wurde zwar das Ziel der Aufgabenstellung (0.1mm) um Faktor 150 verpasst, allerdings in 84\% der Fälle Vorhersagen gemacht, welche aus subjektiver menschlicher Sicht \grqq{}gut\grqq{} aussehen (Das heisst ein menschlicher Betrachter würde die Vorhersage mindestens als grob richtig beurteilen.). 
