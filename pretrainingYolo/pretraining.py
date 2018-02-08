@@ -17,11 +17,8 @@ import os
 import sys
 
 import tensorflow as tf
-from tensorflow.python.ops import array_ops
 from tensorflow.contrib.data import Dataset, Iterator
-from tensorflow.python.platform import gfile
-import time
-import numpy as np
+
 
 this_folder =  os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnILSVRCdata/')
@@ -52,7 +49,6 @@ batchnorm                       = parser_object.batchnorm_bool
 
 def dataset_preprocessor(picname,labels):
     content = tf.read_file(origin_path + "../ILSVRC2012_img_train_t12_grayscale/" + picname)
-    #content = tf.read_file(image_path+"../ILSVRC2012_img_train_t12_grayscale/"+picname)
     image = tf.image.decode_jpeg(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float32)
     image = tf.random_crop(image,[224,224,1])
@@ -179,8 +175,8 @@ def main():
                                       lambda:input_26)
         W26 = tf.Variable(tf.truncated_normal(shape=[4*4*1024,1000],stddev=0.01,dtype=tf.float32),name="W26") #Todo: Set the 1 back to 4
         b26 = tf.Variable(tf.truncated_normal(shape=[1000],stddev=0.01,dtype=tf.float32),name="b26")
-        W26_h = tf.summary.histogram("weights26",W26)
-        b26_h = tf.summary.histogram("biases26",b26)
+        tf.summary.histogram("weights26",W26)
+        tf.summary.histogram("biases26",b26)
         prerelu26 = tf.matmul(input_26,W26)+b26
         with tf.name_scope("batch_norm"):
             input_depth_26 = prerelu26.get_shape().as_list()[-1]#takes the last element which is in this case 64
@@ -191,7 +187,7 @@ def main():
                 gamma26 = tf.Variable(tf.constant(1.0,shape=[input_depth_26],dtype=tf.float32),name="gamma",trainable=True)
             batch_mean26, batch_variance26 = tf.nn.moments(x=prerelu26,axes=[0,1])
             prerelu26 = tf.nn.batch_normalization(x=prerelu26,mean=batch_mean26,variance=batch_variance26,offset=beta26,scale=gamma26,variance_epsilon=1e-4,name=None)
-        prerelu26_h = tf.summary.histogram("prerelu26",prerelu26)
+        tf.summary.histogram("prerelu26",prerelu26)
         fully_26 = prerelu26#tf.nn.relu(prerelu26)
 
 
@@ -199,7 +195,7 @@ def main():
     with tf.name_scope("cost_function") as scope:
         fully_26 = tf.cast(fully_26, tf.float32)
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=fully_26))
-        cost_h = tf.summary.scalar("Costs",cost)
+        tf.summary.scalar("Costs",cost)
         
         
         
@@ -227,14 +223,14 @@ def main():
         test_vectors = tf.squeeze(tf.one_hot(tf.nn.top_k(fully_26).indices,tf.shape(fully_26)[1]))
         number_of_matches = tf.reduce_sum(tf.multiply(x=test_vectors,y=labels))    
         matches_in_percent= tf.div(x=tf.multiply(x=number_of_matches,y=100),y=batchSize)
-        test_h = tf.summary.scalar("Test",matches_in_percent)
+        tf.summary.scalar("Test",matches_in_percent)
         
     with tf.name_scope("Test_top5") as scope:
         #make one-hot-vector for every top-5 Probability  and reduce them together (squeezes are for get rid of unused dimensionalities)
         top5_test_vectors = tf.squeeze(tf.reduce_sum(tf.squeeze(tf.one_hot(tf.nn.top_k(fully_26,k=5).indices,tf.shape(fully_26)[1])),axis=1))
         top5_number_of_matches = tf.reduce_sum(tf.multiply(x=top5_test_vectors,y=labels))    
         top5_matches_in_percent= tf.div(x=tf.multiply(x=top5_number_of_matches,y=100),y=batchSize)
-        top5_test_h = tf.summary.scalar("Top5_Test",top5_matches_in_percent)
+        tf.summary.scalar("Top5_Test",top5_matches_in_percent)
         
 
 
@@ -271,39 +267,29 @@ def main():
         print("start training....\n")
         for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
             #training:
-            if (i*nr_of_epochs_until_save_model) < 250000:
-                lr = learning_rate
-            elif (i*nr_of_epochs_until_save_model) < 500000:
-                lr = learning_rate/10
-            else:
-                lr = learning_rate/100
-            print("actual learningrate = "+str(lr))
             for j in range(nr_of_epochs_until_save_model):
-                _ = sess.run([train_step],feed_dict={training: True, learnrate:lr})
+                _ = sess.run([train_step],feed_dict={training: True, learnrate:learning_rate})
 
-
-            #testing while training on traindata
-            
+            #testing while training on traindata            
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
-            sumsum,_,sumsum2 = sess.run([merged_summary_op,train_step,merged_summary_op],feed_dict={training: True,learnrate:lr})
+            sumsum,_,sumsum2 = sess.run([merged_summary_op,train_step,merged_summary_op],feed_dict={training: True,learnrate:learning_rate})
             train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now)) 
             train_train2_writer.add_summary(sumsum,(numbers_of_iterations_until_now))
-               
-                
+                               
             #testing on traindata
             numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1
-            train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False,learnrate:lr}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False,learnrate:lr})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False,learnrate:lr})
+            train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False,learnrate:learning_rate}),(numbers_of_iterations_until_now))
+            matches = sess.run(matches_in_percent,feed_dict={training: False,learnrate:learning_rate})
+            matches = sess.run(top5_matches_in_percent,feed_dict={training: False,learnrate:learning_rate})
             if(matches > training_matches):
                 training_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-training \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+ " Steps")
             
             #testing on validationdata:
             sess.run(validation_init_op)
-            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False,learnrate:lr}),(numbers_of_iterations_until_now))
-            matches = sess.run(matches_in_percent,feed_dict={training: False,learnrate:lr})
-            matches = sess.run(top5_matches_in_percent,feed_dict={training: False,learnrate:lr})
+            valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False,learnrate:learning_rate}),(numbers_of_iterations_until_now))
+            matches = sess.run(matches_in_percent,feed_dict={training: False,learnrate:learning_rate})
+            matches = sess.run(top5_matches_in_percent,feed_dict={training: False,learnrate:learning_rate})
             if(matches > validation_matches):
                 validation_matches=matches
                 mailer.mailto("\n\n"+name+"\n\n top5-validation \n\n Reached: "+str(matches)+" %. \n\n Done in "+ str(numbers_of_iterations_until_now)+" Steps")
