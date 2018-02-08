@@ -56,12 +56,6 @@ class make_parser(object):
         
         parser.add_argument('--originPath',
                             nargs = '?',
-                            #const = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
-                            #default = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
-                            #const = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
-                            #default = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/6000_readyTOlearn/trainData/",
-                            #const = "/media/hhofmann/dgx/data_hhofmann/Data/DataGipshand/test_Gibshand_dunkler/trainData/",
-                            #default = "/media/hhofmann/dgx/data_hhofmann/Data/DataGipshand/test_Gibshand_dunkler/trainData/",
                             const = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/",
                             default = "/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/",
                             help = "Path to the list with all Files, this is the origin-path, from it everything will be handled",

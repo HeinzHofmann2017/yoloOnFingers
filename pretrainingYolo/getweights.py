@@ -16,9 +16,7 @@ from __future__ import print_function
 import pickle
 
 import tensorflow as tf
-from tensorflow.python.ops import array_ops
-from tensorflow.contrib.data import Dataset, Iterator
-from tensorflow.python.platform import gfile
+
 
 
 
