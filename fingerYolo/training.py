@@ -18,9 +18,7 @@ import sys
 import numpy as np
 
 import tensorflow as tf
-from tensorflow.python.ops import array_ops
 from tensorflow.contrib.data import Dataset, Iterator
-from tensorflow.python.platform import gfile
 
 this_folder =  os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnTabeasData/Step4CollectTogether/')
