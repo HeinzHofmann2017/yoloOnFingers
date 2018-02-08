@@ -6,19 +6,20 @@ Created on Wed Nov  1 10:20:51 2017
 """
 
 from __future__ import print_function
-#from PIL import Image
-import numpy as np
+
 import os
 import sys
-import csv
 import pickle
-import random
+
+#uncomment this three comment-blocks, if you need them for making Data
 #==============================================================================
+# import csv
+# import numpy as np
+# import random
 # import cv2
 #==============================================================================
 this_folder =  os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, this_folder+ '/../../../helperfunctions/')
-import mailer
 
 
 class Dataset_Heinz(object):
@@ -31,8 +32,8 @@ class Dataset_Heinz(object):
         self.valid_picnames = []
         self.valid_labels = []
         
+        
 #==============================================================================
-#         
 #         #This path btw. this folder "trainData" has to be in the same folder in which the Four Camera_Folders are
 #     def make_lists(self,origin_path="/media/hhofmann/dgx/data_hhofmann/Data/indexfinger_right/9000/",nrOfCams=4):
 #         self.all_picture_names = 12
