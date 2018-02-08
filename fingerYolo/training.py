@@ -26,7 +26,6 @@ this_folder =  os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, this_folder+ '/../dataPreprocessing/OnTabeasData/Step4CollectTogether/')
 import analyse_Fingerset
 sys.path.insert(0,this_folder+"/../helperfunctions/")
-import mailer
 import heinzAPI as hAPI
 import parserClassFingers as pC
 
@@ -55,13 +54,13 @@ def traindata_preprocessor(picname,label):
     content = tf.read_file(origin_path + "trainDataset/" + picname)
     image = tf.image.decode_png(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float32)
-    #here could be done a random crop, but atention to the labels!!
+    #here could be done a random crop, but attention to the labels!!
     return image,label
 def validdata_preprocessor(picname,label):
     content = tf.read_file(origin_path +"validDataset/"+ picname)
     image = tf.image.decode_png(content,channels=1)
     image = tf.image.convert_image_dtype(image,tf.float32)
-    #here could be done a random crop, but atention to the labels!!
+    #here could be done a random crop, but attention to the labels!!
     return image,label
     
 def main():
@@ -101,9 +100,12 @@ def main():
         test_data      = test_data.map(map_func=validdata_preprocessor,
                                          num_threads=num_threads,
                                          output_buffer_size=10000)
+        #No Shuffler and no Repeat for Testdata, because every Testpicture
+        #shall be used exactly once
         test_data       = test_data.batch(batchSize)
 
     print("finished read all Pictures and Labels, start Data-iterator")
+    
     with tf.name_scope("Data-Iterator") as scope:        
         iterator        = Iterator.from_structure(train_data.output_types, train_data.output_shapes)
         images_unnormalized, labels  = iterator.get_next()
@@ -111,22 +113,20 @@ def main():
         training_init_op    = iterator.make_initializer(train_data)
         validation_init_op  = iterator.make_initializer(valid_data)
         testing_init_op     = iterator.make_initializer(test_data)
-        images_unnormalized = tf.image.resize_images(images_unnormalized,[448,448])#TODO:eventually reverse image resizing
+        images_unnormalized = tf.image.resize_images(images_unnormalized,[448,448])
         images_unnormalized = tf.cast(images_unnormalized,tf.float32)
         
-        #To test, how the croped picters look like, when they are used to learn...
+        #Puts the a few of the first Pictures to tensorboard
         tf.summary.image('images_after_crop',tensor = images_unnormalized , max_outputs=20)
             
-    #is true,if the model is training right now, and is False, if the model is testing.
+    #is true,if the model is training right now, and is False, if the model is in validation.
     training = tf.placeholder(tf.bool, name='training')
     learnrate = tf.placeholder(tf.float32, name='learnrate')
         
     with tf.name_scope("normalize_pictures") as scope:                            
         images = hAPI.normalize_pictures(tensor=images_unnormalized)
-#==============================================================================
-#                                                       
-# HIer Graph aufbauen:                                                      
-#                                                       
+#==============================================================================                                                 
+# Graph                                           
 #==============================================================================
     #Conv. Layer 7x7x64-s-2                                                  
     output_1 = hAPI.convLayerPretrained(tensor=images,layerNr=1,batchSize=batchSize, filterwidth=7, inputdepth=1, outputdepth=64, strides=2, batchnorm_=batchnorm, dropout_=False,training=training,origin_path=origin_path)
@@ -188,15 +188,6 @@ def main():
     output_27 = hAPI.convLayer(tensor=output_26,layerNr=27,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
     #Conv Layer 3x3x1024
     output_28 = hAPI.convLayer(tensor=output_27,layerNr=28,batchSize=batchSize, filterwidth=3, inputdepth=1024, outputdepth=1024, strides=1, batchnorm_=batchnorm, dropout_=False,training=training)
-#TODO:eventually reverse image resizing
-#==============================================================================
-#     #Zero Padding        
-#     with tf.name_scope("Layer29_ZeroPadding") as scope:
-#         output_29=tf.pad(output_28, np.array([[0,0],[3,3],[1,0],[0,0]]))
-#     #Maxpool 3x3 -s-3
-#     with tf.name_scope("Layer30_maxpool") as scope:
-#         output_30 = tf.nn.max_pool(output_29,ksize=[1,3,3,1],strides=[1,3,3,1], padding="SAME")
-#==============================================================================
     #Fully-Connected Layer ==> make vector
     with tf.name_scope("Layer31_full") as scope:
         input_31 = tf.reshape(tensor=output_28,shape=[batchSize,7*7*1024])
@@ -383,80 +374,21 @@ def main():
 
         
     with tf.name_scope("optimizer") as scope:
-        # Gradient descen
-        #TODO: Gradient Decent durch ADAM ersetzen
-        #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-        optimizer = tf.train.AdamOptimizer(learning_rate=learnrate,epsilon=1e-04)#From 64lRate0_1_ to 114_01lRate098Ptest everything learned with the Adam default-learnrate of 0.001
-        tf.summary.scalar("Learnrate",learnrate)
-        # grads_and_vars is a list of tuples (gradient, variable). Do whatever you
-        # need to the 'gradient' part, for example cap them, etc.
+
+        optimizer = tf.train.AdamOptimizer(learning_rate=learnrate,epsilon=1e-04)
+
         grads_and_vars = optimizer.compute_gradients(costs)
         capped_gvs = [(tf.clip_by_value(grad, -5., 5.), var) for grad, var in grads_and_vars]
         
         # Ask the optimizer to apply the capped gradients.
         train_step = optimizer.apply_gradients(capped_gvs)
-#==============================================================================
-#     for grad, var in grads_and_vars:
-#         if grad is not None:
-#             tf.summary.histogram(var.op.name +"gradients", grad)
-#==============================================================================
+
+    #Save Gradients in Tensorboard
     for grad, var in capped_gvs:
         if grad is not None:
             tf.summary.histogram(var.op.name +"capped_gradients",grad)
-    with tf.name_scope("Validation_Numbers") as scope:
-            true_probabilities = tf.div(tf.reduce_sum(tf.multiply(p_output,p_label)),tf.reduce_sum(p_label))
-            max_probabilities = tf.reduce_mean(tf.reduce_max(p_output,[1,2]))
-            mean_probabilities = tf.reduce_mean(p_output)
-            true_confidence = tf.div(tf.reduce_sum(tf.multiply(c1_output,p_label)),tf.reduce_sum(p_label))
-            max_confidence = tf.reduce_mean(tf.reduce_max(c1_output,[1,2]))
-            mean_confidence = tf.reduce_mean(c1_output)
-            tf.summary.scalar("true_probabilities",true_probabilities)
-            tf.summary.scalar("max_probabilities",max_probabilities)
-            tf.summary.scalar("mean_probabilities",mean_probabilities)
-            tf.summary.scalar("true_confidence",true_confidence)
-            tf.summary.scalar("max_confidence",max_confidence)
-            tf.summary.scalar("mean_confidence",mean_confidence)
         
-    with tf.name_scope("Test") as scope:
-        total_nr_of_Gridcells = tf.reduce_sum(tf.maximum(tf.add(p_label,2),1))
-        with tf.name_scope("true_positives"):     
-            true_probs = tf.multiply(p_output,p_label)
-            normed_probs_tp = tf.subtract(true_probs,0.995)
-            deleted_probs_tp = tf.maximum(normed_probs_tp,np.float32(0))
-            residual_probs_tp = tf.multiply(deleted_probs_tp,1000.0)
-            true_positives = tf.minimum(residual_probs_tp,np.float32(1))
-            true_positives = tf.reduce_sum(true_positives)
-            true_positives_normed = tf.div(true_positives,total_nr_of_Gridcells)
-            tf.summary.scalar("true_positives",true_positives_normed)
-        with tf.name_scope("false_positives"):   
-            false_probs = tf.multiply(p_output,p_label_invers)
-            normed_probs_fp = tf.subtract(false_probs,0.995)
-            deleted_probs_fp = tf.maximum(normed_probs_fp,np.float32(0))
-            residual_probs_fp = tf.multiply(deleted_probs_fp,1000.0)
-            false_positives = tf.minimum(residual_probs_fp,np.float32(1))
-            false_positives = tf.reduce_sum(false_positives)            
-            false_positives_normed = tf.div(false_positives,total_nr_of_Gridcells)
-            tf.summary.scalar("false_positives",false_positives_normed)
-        with tf.name_scope("true_negatives"):
-            p_label_invers_1000 = tf.add(tf.multiply(p_label,999),1)
-            false_probs = tf.multiply(p_label_invers_1000,p_output)            
-            normed_probs_tn = tf.subtract(false_probs,0.995)
-            deleted_probs_tn = tf.minimum(normed_probs_tn,np.float32(0))
-            residual_probs_tn = tf.multiply(deleted_probs_tn,-1000.0)
-            true_negatives = tf.minimum(residual_probs_tn,np.float32(1))
-            true_negatives = tf.reduce_sum(true_negatives)
-            true_negatives_normed = tf.div(true_negatives,total_nr_of_Gridcells)
-            tf.summary.scalar("true_negatives",true_negatives_normed)
-        with tf.name_scope("false_negatives"):
-            p_label_1000 = tf.add(tf.multiply(p_label_invers,999),1)
-            true_probs = tf.multiply(p_label_1000,p_output)            
-            normed_probs_fn = tf.subtract(true_probs,0.995)
-            deleted_probs_fn = tf.minimum(normed_probs_fn,np.float32(0))
-            residual_probs_fn = tf.multiply(deleted_probs_fn,-1000.0)
-            false_negatives = tf.minimum(residual_probs_fn,np.float32(1))
-            false_negatives = tf.reduce_sum(false_negatives)
-            false_negatives_normed = tf.div(false_negatives,total_nr_of_Gridcells)
-            tf.summary.scalar("false_negatives",false_negatives_normed)
+    with tf.name_scope("Test") as scope:        
         with tf.name_scope("IOU"):
             nr_of_fingers_in_batch = tf.reduce_sum(p_label)
             
@@ -467,10 +399,6 @@ def main():
             h_label_global = tf.reduce_max(h_label,axis=[1,2])
             w_label_global = tf.reduce_max(w_label,axis=[1,2])
             
-            y_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[2]),axis=1)
-            x_prob_index = tf.argmax(tf.reduce_max(p_output, axis=[1]),axis=1)
-            y_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[2]),axis=1)
-            x_conf_index = tf.argmax(tf.reduce_max(c1_output, axis=[1]),axis=1)
             probconf_output = tf.multiply(p_output,c1_output)            
             y_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[2]),axis=1)
             x_probconf_index = tf.argmax(tf.reduce_max(probconf_output, axis=[1]),axis=1)
@@ -478,28 +406,8 @@ def main():
             
             #make tensor to extract the values for x,y,w & h at the point with highest prob/conf
             enumerator = tf.constant(range(batchSize),tf.int64)
-            prob_indices_tensor = tf.stack([enumerator,y_prob_index,x_prob_index],1)            
-            conf_indices_tensor = tf.stack([enumerator,y_conf_index,x_conf_index],1)
             probconf_indices_tensor = tf.stack([enumerator,y_probconf_index,x_probconf_index],1)
             
-            y_prob_coarse = tf.cast(y_prob_index,tf.float32)/7            
-            y_prob_fine = tf.squeeze(tf.gather_nd(y1_output,prob_indices_tensor))/7
-            y_prob = tf.add(y_prob_coarse, y_prob_fine)
-            x_prob_coarse = tf.cast(x_prob_index,tf.float32)/7
-            x_prob_fine = tf.squeeze(tf.gather_nd(x1_output,prob_indices_tensor))/7
-            x_prob = tf.add(x_prob_coarse, x_prob_fine)
-            h_prob =  tf.squeeze(tf.gather_nd(h1_output,prob_indices_tensor))
-            w_prob =  tf.squeeze(tf.gather_nd(w1_output,prob_indices_tensor))
-
-            y_conf_coarse = tf.cast(y_conf_index,tf.float32)/7            
-            y_conf_fine = tf.squeeze(tf.gather_nd(y1_output,conf_indices_tensor))/7
-            y_conf = tf.add(y_conf_coarse, y_conf_fine)
-            x_conf_coarse = tf.cast(x_conf_index,tf.float32)/7
-            x_conf_fine = tf.squeeze(tf.gather_nd(x1_output,conf_indices_tensor))/7
-            x_conf = tf.add(x_conf_coarse, x_conf_fine)
-            h_conf =  tf.squeeze(tf.gather_nd(h1_output,conf_indices_tensor))
-            w_conf =  tf.squeeze(tf.gather_nd(w1_output,conf_indices_tensor))
-
             y_probconf_coarse = tf.cast(y_probconf_index,tf.float32)/7            
             y_probconf_fine = tf.squeeze(tf.gather_nd(y1_output,probconf_indices_tensor))/7
             y_probconf = tf.add(y_probconf_coarse, y_probconf_fine)
@@ -509,67 +417,46 @@ def main():
             h_probconf =  tf.squeeze(tf.gather_nd(h1_output,probconf_indices_tensor))
             w_probconf =  tf.squeeze(tf.gather_nd(w1_output,probconf_indices_tensor))            
 
-            iou_max_prob = hAPI.iou(x_label_global,y_label_global,h_label_global,w_label_global,y_prob,x_prob,h_prob,w_prob)           
-            iou_max_conf = hAPI.iou(x_label_global,y_label_global,h_label_global,w_label_global,y_conf,x_conf,h_conf,w_conf)
             iou_max_prob_conf = hAPI.iou(x_label_global,y_label_global,h_label_global,w_label_global,y_probconf,x_probconf,h_probconf,w_probconf)
             
-            iou_max_prob_mean = tf.reduce_sum(iou_max_prob)/nr_of_fingers_in_batch
-            iou_max_conf_mean = tf.reduce_sum(iou_max_conf)/nr_of_fingers_in_batch
             iou_max_probconf_mean = tf.reduce_sum(iou_max_prob_conf)/nr_of_fingers_in_batch
             
-            tf.summary.scalar("iou_max_prob",iou_max_prob_mean)
-            tf.summary.scalar("iou_max_conf",iou_max_conf_mean)
+
             tf.summary.scalar("iou_max_probconf",iou_max_probconf_mean)
             
         with tf.name_scope("distance"):
             #only test the pictures with fingers on distance, those, which don't have a finger, mustn't be tested!!!
             p_labels = tf.reduce_sum(p_label,axis=[1,2])
-            x_probs = tf.multiply(x_prob,p_labels)
-            y_probs = tf.multiply(y_prob,p_labels)
-            x_confs = tf.multiply(x_conf,p_labels)
-            y_confs = tf.multiply(y_conf,p_labels)
             x_probconfs = tf.multiply(x_probconf,p_labels)
             y_probconfs = tf.multiply(y_probconf,p_labels)
             x_labels_global = tf.multiply(x_label_global,p_labels)
             y_labels_global = tf.multiply(y_label_global,p_labels)
             
-            x_prob_diff = tf.subtract(x_labels_global, x_probs)
-            y_prob_diff = tf.subtract(y_labels_global, y_probs)
-            x_conf_diff = tf.subtract(x_labels_global, x_confs)
-            y_conf_diff = tf.subtract(y_labels_global, y_confs)
             x_probconf_diff = tf.subtract(x_labels_global, x_probconfs)
             y_probconf_diff = tf.subtract(y_labels_global, y_probconfs)            
             
-            distance_prob = tf.sqrt(tf.add(tf.square(x_prob_diff),tf.square(y_prob_diff)))
-            distance_conf = tf.sqrt(tf.add(tf.square(x_conf_diff),tf.square(y_conf_diff)))
             distance_probconf = tf.sqrt(tf.add(tf.square(x_probconf_diff),tf.square(y_probconf_diff)))
             #Problem: when only testing distance on pictures with fingers, the pictures without fingers have distance 0, what makes a bias to the mean-distance.
             #Solution: Make new vectors, which doesn't include Pictures, where no finger exist.
-            zeros_vector = tf.zeros(batchSize)#TODO:change it back to batchSize, if possible
+            zeros_vector = tf.zeros(batchSize)
             boolean_vector = tf.squeeze(tf.not_equal(zeros_vector,p_labels))
             boolean_vector.set_shape([None])#to prevent problems with tf.boolean_mask()
-            distance_probs=tf.boolean_mask(distance_prob,boolean_vector)
-            distance_confs=tf.boolean_mask(distance_conf,boolean_vector)
             distance_probconfs = tf.boolean_mask(distance_probconf,boolean_vector)
             
-            mean_distance_prob, var_distance_prob = tf.nn.moments(distance_probs,axes=[0])
-            mean_distance_conf, var_distance_conf = tf.nn.moments(distance_confs,axes=[0])
             mean_distance_probconf, var_distance_probconf = tf.nn.moments(distance_probconfs, axes=[0])
             
-            tf.summary.scalar("mean_distance_prob",mean_distance_prob)
-            tf.summary.scalar("var_distance_prob",var_distance_prob)
-            tf.summary.scalar("mean_distance_conf",mean_distance_conf)
-            tf.summary.scalar("var_distance_conf",var_distance_conf)
             tf.summary.scalar("mean_distance_probconf",mean_distance_probconf)
             tf.summary.scalar("var_distance_probconf",var_distance_probconf)
                         
-
+    
     init_op = tf.group(tf.global_variables_initializer(),tf.local_variables_initializer())
+    #initialize the Saver, which organizes the Saving of all Weights
     saver = tf.train.Saver(
         max_to_keep=5,
         keep_checkpoint_every_n_hours=4.0, 
         pad_step_number=True,
         save_relative_paths=True,)
+    #Make a own directory for the weights of this Training.
     if not os.path.exists(origin_path + "../../../weights/"+name+"/"):
         os.makedirs(origin_path + "../../../weights/"+name+"/")
 
@@ -577,29 +464,14 @@ def main():
     merged_summary_op = tf.summary.merge_all()
 
     with tf.Session() as sess:
+        #Initialize different Datasets
         sess.run(testing_init_op)
         sess.run(validation_init_op)
         sess.run(training_init_op)
         sess.run(init_op)
-#==============================================================================
-#         for i in range(5):
-#             label, hoehenvector, hoehenindex, breitenvector, breitenindex = sess.run([p_label,height_vector,height_index,width_vector,width_index])
-#   
-#             print("p_label")
-#             print(label)
-#             print("height-vector")
-#             print(hoehenvector)
-#             print("height-index")
-#             print(hoehenindex)
-#             print("width_vector")
-#             print(breitenvector)
-#             print("width-index")
-#             print(breitenindex)
-#         while True :
-#             x=2
-#==============================================================================
                 
         if(test==False):
+            #initialize three different Tensorflow-Summaries
             train_train_writer = tf.summary.FileWriter(origin_path + "../../../summarys/training/summary_" + name + "_traintrain")
             train_train_writer.add_graph(sess.graph)             
             train_writer=tf.summary.FileWriter(origin_path + "../../../summarys/training/summary_" + name + "_train")
@@ -612,62 +484,20 @@ def main():
             #saver.restore(sess=sess, save_path=origin_path + "../../../weights/7BnormBeforeRelu2.ckpt-00103000")
             print("start training....\n")
             for i in range(nr_of_epochs/nr_of_epochs_until_save_model):
-                if (i*nr_of_epochs_until_save_model) < 150000:
-                    lr = learning_rate
-                elif (i*nr_of_epochs_until_save_model) < 250000:
-                    lr = learning_rate/10 
-                elif (i*nr_of_epochs_until_save_model) < 350000:
-                    lr = learning_rate/100  
-                else:
-                    lr = learning_rate/1000
-                print("actual learnrat = " + str(lr))
                 for j in range(nr_of_epochs_until_save_model):
-                    _ = sess.run([train_step],feed_dict={training: True, learnrate : lr})                        
+                    _ = sess.run([train_step],feed_dict={training: True, learnrate : learning_rate})                        
                 
                 #testing in traindata while training
                 numbers_of_iterations_until_now = i*nr_of_epochs_until_save_model+j+1 
-                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : lr})                
+                _,sumsum = sess.run([train_step,merged_summary_op],feed_dict={training: True, learnrate : learning_rate})                
                 train_train_writer.add_summary(sumsum,(numbers_of_iterations_until_now))                
                 
                 #testing on traindata
-                train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : lr}),(numbers_of_iterations_until_now))
-                tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
-                                                                false_positives, 
-                                                                true_negatives, 
-                                                                false_negatives,
-                                                                true_probabilities,
-                                                                max_probabilities,
-                                                                mean_probabilities,
-                                                                true_confidence,
-                                                                max_confidence,
-                                                                mean_confidence],feed_dict={training: False, learnrate : lr})
-                print("\n\n\n\nTraining "+name+"\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
-                print("mean of the true training Probability = " + str(pt))
-                print("mean of the max training Probabilitys = " + str(mp))
-                print("mean of all training Probabilitys = " + str(meanp))
-                print("mean of the true training Confidences = " + str(tc))
-                print("mean of the max training Confidences = " + str(mc))
-                print("mean of all training Confidences = " + str(meanc))
+                train_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : learning_rate}),(numbers_of_iterations_until_now))
+
                 #testing on validationdata:
                 sess.run(validation_init_op)
-                valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : lr}),(numbers_of_iterations_until_now))
-                tp,fp,tn,fn,pt,mp,meanp,tc,mc,meanc = sess.run([true_positives,         
-                                                                false_positives, 
-                                                                true_negatives, 
-                                                                false_negatives,
-                                                                true_probabilities,
-                                                                max_probabilities,
-                                                                mean_probabilities,
-                                                                true_confidence,
-                                                                max_confidence,
-                                                                mean_confidence],feed_dict={training: False, learnrate : lr})
-                print("\nValidation "+name+"\ntrue-positives ="+str(tp)+"\nfalse-positives ="+str(fp)+"\ntrue-negatives ="+str(tn)+"\nfalse-negatives ="+str(fn)+" . \nDone in "+ str(numbers_of_iterations_until_now)+ " Steps")
-                print("mean of the true training Probability = " + str(pt))
-                print("mean of the max training Probabilitys = " + str(mp))
-                print("mean of all training Probabilitys = " + str(meanp))
-                print("mean of the true training Confidences = " + str(tc))
-                print("mean of the max training Confidences = " + str(mc))
-                print("mean of all training Confidences = " + str(meanc))              
+                valid_writer.add_summary(sess.run(merged_summary_op,feed_dict={training: False, learnrate : learning_rate}),(numbers_of_iterations_until_now))            
                 sess.run(training_init_op)
                 
                 #save Model
@@ -678,15 +508,18 @@ def main():
 
 
         else:
+            #Make directory to store Results in Pictures and Histogramms
             if not os.path.exists(origin_path +"picsRecognized/"):
                 os.makedirs(origin_path +"picsRecognized/")             
             
             sess.run(testing_init_op)
+            #Restore Weights for Testing
+            #only needed, if Test is done without Training.
             print("Try to restore")
             saver.restore(sess,origin_path + "../../../weights/139_9000Set_newPipe/139_9000Set_newPipe.ckpt-00510000")                
             print("Restored")  
             
-
+            #initialize running Variables
             nr_of_fingers = 0
             nr_of_coarse_recognized_fingers = 0
             nr_of_recognized_fingers = 0
@@ -697,43 +530,53 @@ def main():
             distance_x_array = []
             distance_y_array = []
             for i in range(len(test_picnames)/batchSize):
-                testimages,probconfs_y,probconfs_x,probconfs_h,probconfs_w,labels_y,labels_x,labels_h,labels_w,probconfs_iou,probconfs_distance,labels_p,probconfs_x_diff, probconfs_y_diff = sess.run([images_unnormalized,
-                                                                                                                                                                                                          y_probconf,
-                                                                                                                                                                                                          x_probconf,
-                                                                                                                                                                                                          h_probconf,
-                                                                                                                                                                                                          w_probconf,
-                                                                                                                                                                                                          y_label_global,
-                                                                                                                                                                                                          x_label_global,
-                                                                                                                                                                                                          h_label_global,
-                                                                                                                                                                                                          w_label_global,
-                                                                                                                                                                                                          iou_max_prob_conf,
-                                                                                                                                                                                                          distance_probconf,
-                                                                                                                                                                                                          p_labels,
-                                                                                                                                                                                                          x_probconf_diff,
-                                                                                                                                                                                                          y_probconf_diff],        
-                                                                                                                                                                                                          feed_dict={training: False})
-
+                #let one Batch flow through the Graph
+                (testimages,
+                 probconfs_y,
+                 probconfs_x,
+                 probconfs_h,
+                 probconfs_w,
+                 labels_y,
+                 labels_x,
+                 labels_h,
+                 labels_w,
+                 probconfs_iou,
+                 probconfs_distance,
+                 labels_p,
+                 probconfs_x_diff, 
+                 probconfs_y_diff)  = sess.run([images_unnormalized,
+                                                y_probconf,
+                                                x_probconf,
+                                                h_probconf,
+                                                w_probconf,
+                                                y_label_global,
+                                                x_label_global,
+                                                h_label_global,
+                                                w_label_global,
+                                                iou_max_prob_conf,
+                                                distance_probconf,
+                                                p_labels,
+                                                x_probconf_diff,
+                                                y_probconf_diff],   feed_dict={training: False})
+                                                
+                #Analyze every Element of the Batch
                 for b in range(batchSize):
                     print(str(i*batchSize+b))
-#==============================================================================
-#                     testimage = testimages[b]*200
-#                     probconf_y  = probconfs_y[b] * 448
-#                     probconf_x  = probconfs_x[b] * 448
-#                     probconf_h  = probconfs_h[b] * 448
-#                     probconf_w  = probconfs_w[b] * 448
-#==============================================================================
+                    testimage = testimages[b]*200
+                    probconf_y  = probconfs_y[b] * 448
+                    probconf_x  = probconfs_x[b] * 448
+                    probconf_h  = probconfs_h[b] * 448
+                    probconf_w  = probconfs_w[b] * 448
                     probconf_iou= probconfs_iou[b]
                     probconf_distance=probconfs_distance[b]
                     probconf_x_diff = probconfs_x_diff[b]
                     probconf_y_diff = probconfs_y_diff[b]
-#==============================================================================
-#                     label_y     = labels_y[b] * 448
-#                     label_x     = labels_x[b] * 448
-#                     label_h     = labels_h[b] * 448
-#                     label_w     = labels_w[b] * 448
-#                     print("iou                                                      = "+str(probconf_iou))
-#                     print("distance                                                 = " + str(probconf_distance))
-#==============================================================================
+                    label_y     = labels_y[b] * 448
+                    label_x     = labels_x[b] * 448
+                    label_h     = labels_h[b] * 448
+                    label_w     = labels_w[b] * 448
+                    print("iou                                                      = "+str(probconf_iou))
+                    print("distance                                                 = " + str(probconf_distance))
                     if(labels_p[b]!=0):
                             
                         #make array with all valid iou's and distances, to make later histograms, variances, etc.
@@ -744,10 +587,8 @@ def main():
 
                         nr_of_fingers += 1
 
-#==============================================================================
-#                         print("mean_iou                                                 = " + str(np.mean(iou_array)))
-#                         print("mean_distance                                            = " + str(np.mean(distance_array)))
-#==============================================================================
+                        print("mean_iou                                                 = " + str(np.mean(iou_array)))
+                        print("mean_distance                                            = " + str(np.mean(distance_array)))
                         
                         if probconf_distance < 0.04:
                             nr_of_coarse_recognized_fingers += 1
@@ -769,83 +610,82 @@ def main():
                         
                         
    
-#==============================================================================
-#                     #save picture in own folder for recognized fingers 
-#                     sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
-#                     
-#                     #get picture back with cv2
-#                     img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
-# 
-#                     cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
-#                     cv2.putText(img,'Prediction',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-#                     cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-#                     cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
-#                     cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
-#                     cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
-#                     cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
-#==============================================================================
+                    #save picture in own folder for recognized fingers 
+                    sess.run(tf.write_file(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",tf.image.encode_png(testimage)))
+                    
+                    #get picture back with cv2
+                    img = cv2.imread(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png")
+
+                    cv2.rectangle(img,(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),(int(probconf_x+(probconf_w/2)),int(probconf_y+(probconf_h/2))),(0,0,255),1)     
+                    cv2.putText(img,'Prediction',(int(probconf_x-(probconf_w/2)),int(probconf_y-(probconf_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    cv2.putText(img,'iou='+str(probconf_iou),(0,25),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    cv2.putText(img,'dist='+str(probconf_distance),(0,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),1)
+                    cv2.rectangle(img,(int(label_x-(label_w/2)),int(label_y-(label_h/2))),(int(label_x+(label_w/2)),int(label_y+(label_h/2))),(255,255,0),1)     
+                    cv2.putText(img,'Label',(int(label_x-(label_w/2)),int(label_y-(label_h/2))),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),1)                    
+                    cv2.imwrite(origin_path+"picsRecognized/pic" + str(batchSize*i+b)+".png",img)
                 
-                #Here shall the whole mean, variance and histograms of the iou and the distance be calculated!!
-                plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-                plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("IOU (median="+str(round(np.median(iou_array),3))+", mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
-                plt.ylabel("Probability in % [1/100]")
-                plt.plot([0.4,0.4],[0,10], 'orange')
-                plt.text(0.3, 9, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(0.45,9, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
-                plt.close()
-                
-                plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("Distance (median="+str(round(np.median(distance_array),3))+", mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
-                plt.ylabel("Probability in % [1/100]")
-                plt.plot([0.02,0.02],[0,60], 'orange')
-                plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
-                plt.close()  
-                
-                plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
-                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("Distance (median="+str(round(np.median(distance_array),3))+", mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
-                plt.ylabel("Probability in % [1/100] (Log-Scale)")
-                plt.plot([0.02,0.02],[0,100], 'orange')
-                plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.yscale('log')
-                plt.savefig(origin_path+"picsRecognized/logdistProbDensity.pdf")
-                plt.close() 
-                
-                distance_array_without_outliers = []
-                for dist in distance_array:
-                    if dist < 0.25:
-                        distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
-                plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
-                plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
-                plt.xlabel("Distance (median="+str(round(np.median(distance_array_without_outliers),3))+", mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
-                plt.ylabel("Probability in Promille [1/1000]")
-                plt.plot([0.02,0.02],[0,100], 'orange')
-                plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
-                plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
-                plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
-                plt.close() 
-    
-                plt.hist(distance_x_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
-                plt.title("X-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("x-Distance (median="+str(round(np.median(distance_x_array),3))+", mean="+str(round(np.mean(distance_x_array),3))+", stdev="+str(round(np.std(distance_x_array),3))+")")
-                plt.ylabel("Probability/Distance")
-                plt.plot([0.0,0.0],[0,100], 'orange')
-                plt.savefig(origin_path+"picsRecognized/xDistance.pdf")
-                plt.close()    
-    
-                plt.hist(distance_y_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
-                plt.title("Y-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
-                plt.xlabel("y-Distance (median="+str(round(np.median(distance_y_array),3))+", mean="+str(round(np.mean(distance_y_array),3))+", stdev="+str(round(np.std(distance_y_array),3))+")")
-                plt.ylabel("Probability/Distance")
-                plt.plot([0.0,0.0],[0,100], 'orange')
-                plt.savefig(origin_path+"picsRecognized/yDistance.pdf")
-                plt.close()              
+            #At the End of the Test-Sequence:
+            #Here shall the whole median, mean, variance and histograms of the iou and the distance be calculated and plottet to PDF!!
+            plt.hist(iou_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+            plt.title("IOU Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("IOU (median="+str(round(np.median(iou_array),3))+", mean="+str(round(np.mean(iou_array),3))+", stdev="+str(round(np.std(iou_array),3))+")")
+            plt.ylabel("Probability in % [1/100]")
+            plt.plot([0.4,0.4],[0,10], 'orange')
+            plt.text(0.3, 9, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(0.45,9, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.savefig(origin_path+"picsRecognized/IOUprobDensity.pdf")
+            plt.close()
+            
+            plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("Distance (median="+str(round(np.median(distance_array),3))+", mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
+            plt.ylabel("Probability in % [1/100]")
+            plt.plot([0.02,0.02],[0,60], 'orange')
+            plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.savefig(origin_path+"picsRecognized/distProbDensity.pdf")
+            plt.close()  
+            
+            plt.hist(distance_array,bins=np.arange(0.0,1.0,0.01),normed=1)
+            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("Distance (median="+str(round(np.median(distance_array),3))+", mean="+str(round(np.mean(distance_array),3))+", stdev="+str(round(np.std(distance_array),3))+") \n max. possible distance = sqrt(2)")
+            plt.ylabel("Probability in % [1/100] (Log-Scale)")
+            plt.plot([0.02,0.02],[0,100], 'orange')
+            plt.text(0.05, 55, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(-0.07,55, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.yscale('log')
+            plt.savefig(origin_path+"picsRecognized/logdistProbDensity.pdf")
+            plt.close() 
+            
+            distance_array_without_outliers = []
+            for dist in distance_array:
+                if dist < 0.25:
+                    distance_array_without_outliers = np.concatenate((distance_array_without_outliers,[dist]))
+            plt.hist(distance_array_without_outliers,bins=np.arange(0.0,0.25,0.001),normed=1)
+            plt.title("Label/Prediction-Center-Distance Probability-Density \n on Testset ("+str(nr_of_fingers)+"Pictures) Without Outliers(Cut at 0.25)")
+            plt.xlabel("Distance (median="+str(round(np.median(distance_array_without_outliers),3))+", mean="+str(round(np.mean(distance_array_without_outliers),3))+", stdev="+str(round(np.std(distance_array_without_outliers),3))+")")
+            plt.ylabel("Probability in Promille [1/1000]")
+            plt.plot([0.02,0.02],[0,100], 'orange')
+            plt.text(0.025,90, "bad", bbox=dict(facecolor='red', alpha=0.5))
+            plt.text(-0.002,90, "good", bbox=dict(facecolor='green', alpha=0.5))
+            plt.savefig(origin_path+"picsRecognized/distProbDensity_improved.pdf")
+            plt.close() 
+
+            plt.hist(distance_x_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
+            plt.title("X-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("x-Distance (median="+str(round(np.median(distance_x_array),3))+", mean="+str(round(np.mean(distance_x_array),3))+", stdev="+str(round(np.std(distance_x_array),3))+")")
+            plt.ylabel("Probability/Distance")
+            plt.plot([0.0,0.0],[0,100], 'orange')
+            plt.savefig(origin_path+"picsRecognized/xDistance.pdf")
+            plt.close()    
+
+            plt.hist(distance_y_array,bins=np.arange(-0.125,0.125,0.001),normed=1)
+            plt.title("Y-Distance \n on Testset ("+str(nr_of_fingers)+"Pictures)")
+            plt.xlabel("y-Distance (median="+str(round(np.median(distance_y_array),3))+", mean="+str(round(np.mean(distance_y_array),3))+", stdev="+str(round(np.std(distance_y_array),3))+")")
+            plt.ylabel("Probability/Distance")
+            plt.plot([0.0,0.0],[0,100], 'orange')
+            plt.savefig(origin_path+"picsRecognized/yDistance.pdf")
+            plt.close()              
 
     print("finished")
 
